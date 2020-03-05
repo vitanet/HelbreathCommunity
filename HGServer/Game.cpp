@@ -15813,7 +15813,6 @@ void CGame::AdminOrder_Summon(int iClientH, char *pData, DWORD dwMsgSize)
  char   * token, cBuff[256], cName_Master[10], cName_Slave[10], cNpcName[256], cWaypoint[11], cSA; 
  int    pX, pY, j, iNum, iNamingValue;
  class  CStrTok * pStrTok;
- BOOL   bMaster;
 
 	if (m_pClientList[iClientH] == NULL) return;
 	if ((dwMsgSize)	<= 0) return;
@@ -15864,7 +15863,7 @@ void CGame::AdminOrder_Summon(int iClientH, char *pData, DWORD dwMsgSize)
 		cName_Master[0] = '_';
 		cName_Master[1] = m_pClientList[iClientH]->m_cMapIndex + 65;
 			
-		if ((bMaster = bCreateNewNpc(cNpcName, cName_Master, m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_cName, (rand() % 3), cSA, DEF_MOVETYPE_RANDOM, &pX, &pY, cWaypoint, NULL, NULL, -1, FALSE, FALSE, FALSE, TRUE)) == FALSE) {
+		if (bCreateNewNpc(cNpcName, cName_Master, m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_cName, (rand() % 3), cSA, DEF_MOVETYPE_RANDOM, &pX, &pY, cWaypoint, NULL, NULL, -1, FALSE, FALSE, FALSE, TRUE) == FALSE) {
 			m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->SetNamingValueEmpty(iNamingValue);
 		}
 	}

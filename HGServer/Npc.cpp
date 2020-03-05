@@ -1202,19 +1202,6 @@ void CGame::DeleteNpc(int iNpcH)
 
 			// new 05/10/2004
 		case 66: // Wyvern
-			bGetMultipleItemNamesWhenDeleteNpc(m_pNpcList[iNpcH]->m_sType,	// NPC Type
-				50,							// È®·ü( ÃÖ¼Ò ~ ÃÖ´ë »çÀÌÀÇ ¾ÆÀÌÅÛÀÌ ³ª¿Ã È®·ü , 100 ÀÌ¸é ÃÖ´ë °¹¼ö ¸¸Å­ ³ª¿Â´Ù.)
-				5,							// ³ª¿Í¾ß ÇÏ´Â Item ÃÖ¼Ò °³¼ö
-				15,							// ³ª¿Ã¼ö ÀÖ´Â Item ÃÖ´ë °³¼ö
-				m_pNpcList[iNpcH]->m_sX,	// ±âÁØ ÁÂÇ¥ X
-				m_pNpcList[iNpcH]->m_sY,	// ±âÁØ ÁÂÇ¥ Y
-				DEF_ITEMSPREAD_FIXED,		// ¾ÆÀÌÅÛ »Ñ¸®´Â ¹æ¹ý (RANDOM, FIXED)
-				4,							// ¾ÆÀÌÅÛ »Ñ¸± ¹üÀ§, DEF_ITEMSPREAD_RANDOM ÀÏ¶§¸¸ »ç¿ë
-				iItemIDs,					// ¹Þ¾Æ¿Ã ¾ÆÀÌÅÛ Idµé
-				ItemPositions,				// ¾ÆÀÌÅÛµéÀÇ À§Ä¡
-				&iNumItem);					// ¾ÆÀÌÅÛÀÇ ÃÑ °¹¼ö
-			break;
-
 		case 73: // Fire-Wyvern
 			bGetMultipleItemNamesWhenDeleteNpc(m_pNpcList[iNpcH]->m_sType,	// NPC Type
 				50,							// È®·ü( ÃÖ¼Ò ~ ÃÖ´ë »çÀÌÀÇ ¾ÆÀÌÅÛÀÌ ³ª¿Ã È®·ü , 100 ÀÌ¸é ÃÖ´ë °¹¼ö ¸¸Å­ ³ª¿Â´Ù.)
@@ -3632,7 +3619,7 @@ void CGame::MobGenerator()
 	char cNpcName[21], cName_Master[11], cName_Slave[11], cWaypoint[11];
 	char cSA;
 	int  pX, pY, iMapLevel, iProbSA, iKindSA, iResultNum, iNpcID;
-	BOOL bMaster, bFirmBerserk, bIsSpecialEvent;
+	BOOL bFirmBerserk, bIsSpecialEvent;
 	bool bIsGuard;
 
 	if (m_bOnExitProcess == TRUE) return;
@@ -4343,7 +4330,7 @@ void CGame::MobGenerator()
 					cSA = _cGetSpecialAbility(iKindSA);
 				}
 
-				if ((bMaster = bCreateNewNpc(cNpcName, cName_Master, m_pMapList[i]->m_cName, (rand() % 3), cSA, DEF_MOVETYPE_RANDOM, &pX, &pY, cWaypoint, NULL, NULL, -1, FALSE, FALSE, bFirmBerserk, TRUE)) == FALSE) {
+				if (bCreateNewNpc(cNpcName, cName_Master, m_pMapList[i]->m_cName, (rand() % 3), cSA, DEF_MOVETYPE_RANDOM, &pX, &pY, cWaypoint, NULL, NULL, -1, FALSE, FALSE, bFirmBerserk, TRUE) == FALSE) {
 					m_pMapList[i]->SetNamingValueEmpty(iNamingValue);
 				}
 
@@ -4416,7 +4403,6 @@ void CGame::MobGenerator()
 				break;
 			}
 
-			if (bMaster == FALSE) iTotalMob = 0;
 
 			if (iTotalMob > 2) {
 				switch (iResult) {
