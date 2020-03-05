@@ -1,0 +1,76 @@
+[FILE-DATE]
+
+file-saved-date:  Time(2017/4/1/1/28)
+
+[NAME-ACCOUNT]
+
+character-name     = GM2
+account-name       = GM2
+account-password   = 123
+
+[STATUS]
+
+character-location   = NONE
+character-guild-name = NONE
+character-guild-rank = -1
+
+character-loc-map  = default
+character-loc-x	  = -1
+character-loc-y	  = -1
+
+character-HP       = 37
+character-MP       = 27
+character-SP       = 22
+character-DefenseRatio = 10
+character-LEVEL    = 1
+character-STR      = 10
+character-INT      = 14
+character-VIT      = 12
+character-DEX      = 10
+character-MAG      = 14
+character-CHARISMA = 10
+character-LUCK     = 10
+character-EXP      = 0
+character-LU_Str    = 0
+character-LU_Vit    = 0
+character-LU_Int    = 0
+character-LU_Mag    = 0
+character-LU_Char   = 0
+character-EK-Count  = 0
+character-PK-Count  = 0
+sex-status       = 2
+skin-status      = 2
+hairstyle-status = 3
+haircolor-status = 13
+underwear-status = 2
+
+appr1 = 978
+appr2 = 0
+appr3 = 0
+appr4 = 0
+
+[ITEMLIST]
+
+character-item = Dagger               1 0 0 0 0 0 0 0 0 300 0
+character-item = RecallScroll         1 0 0 0 0 0 0 0 0 300 0
+character-item = BigRedPotion         1 0 0 0 0 0 0 0 0 300 0
+character-item = BigGreenPotion	     1 0 0 0 0 0 0 0 0 300 0
+character-item = BigBluePotion        1 0 0 0 0 0 0 0 0 300 0
+character-item = Map			         1 0 0 0 0 0 0 0 0 300 0
+character-item = Chemise(W)	         1 0 0 0 0 9 0 0 0 300 0
+
+[MAGIC-SKILL-MASTERY]
+
+magic-mastery     = 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+
+skill-mastery     = 0 0 0 3 20 24 0 24 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+skill-SSN     = 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+
+[ITEM-EQUIP-STATUS]
+
+item-equip-status = 00000110000000000000000000000000000000000000000000
+
+[EOF]
+
+
+

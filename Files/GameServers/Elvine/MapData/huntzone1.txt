@@ -1,0 +1,66 @@
+[MAP-INFO]
+
+map-location  = elvine
+level-limit   = 20
+
+initial-point = 1  50  122
+initial-point = 2  103 75
+initial-point = 3  138 57
+
+//-Teleportation-Set----SX-----SY-----DestMapName---------DX-----DY----Dir---;
+
+teleport-loc     =      44    179     elvine              223    23   5
+teleport-loc     =      45    179     elvine              223    23   5
+teleport-loc     =      46    179     elvine              223    23   5
+teleport-loc     =      47    179     elvine              223    23   5
+teleport-loc     =      48    179     elvine              223    23   5
+teleport-loc     =      49    179     elvine              223    23   5
+teleport-loc     =      50    179     elvine              223    23   5
+teleport-loc     =      51    179     elvine              223    23   5
+teleport-loc     =      52    179     elvine              223    23   5
+teleport-loc     =      53    179     elvine              223    23   5
+teleport-loc     =      54    179     elvine              223    23   5
+teleport-loc     =      55    179     elvine              223    23   5
+teleport-loc     =      56    179     elvine              223    23   5
+teleport-loc     =      57    179     elvine              223    23   5
+teleport-loc     =      58    179     elvine              223    23   5
+
+teleport-loc     =      115   115     elvined1            87     95   5
+teleport-loc     =      116   115     elvined1            87     95   5
+teleport-loc     =      116   114     elvined1            87     95   5
+
+teleport-loc     =      171   20      huntzone3           50     166  5
+teleport-loc     =      172   20      huntzone3           50     166  5
+teleport-loc     =      173   20      huntzone3           50     166  5
+teleport-loc     =      174   20      huntzone3           50     166  5
+teleport-loc     =      175   20      huntzone3           50     166  5
+teleport-loc     =      176   20      huntzone3           50     166  5
+
+teleport-loc     =      20    48      elvuni              173    24   5
+teleport-loc     =      20    49      elvuni              173    24   5
+teleport-loc     =      20    50      elvuni              173    24   5
+teleport-loc     =      20    51      elvuni              173    24   5
+teleport-loc     =      20    52      elvuni              173    24   5
+teleport-loc     =      20    53      elvuni              173    24   5
+teleport-loc     =      20    54      elvuni              173    24   5
+teleport-loc     =      20    55      elvuni              173    24   5
+teleport-loc     =      20    56      elvuni              173    24   5
+
+
+
+//-WayPoint-Set---------Num-----X-----Y----;
+waypoint          =     0       55    94
+waypoint          =     1       113   76
+waypoint          =     2       156   104
+waypoint          =     3       187   140
+waypoint          =     4       161   164
+waypoint          =     5       135   169
+waypoint          =     6       109   191
+waypoint          =     7       98    162
+waypoint          =     8       64    137
+waypoint          =     9       198   105
+
+maximum-object		= 350
+random-mob-generator	= 1  16
+
+[END-MAP-INFO]

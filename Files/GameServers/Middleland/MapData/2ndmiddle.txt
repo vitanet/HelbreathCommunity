@@ -1,0 +1,94 @@
+[MAP-INFO]
+
+map-location = 2ndmiddle
+initial-point = 1  125 125
+upper-level-limit = 120
+
+
+//-Teleportation-Set----SX-----SY-----DestMapName---------DX-----DY----Dir---;
+//-Dir
+//------7(8)---8(1)---9(2)
+//------4(7)---5------6(3)
+//------1(6)---2(5)---3(4)
+
+teleport-loc     =     135    228     arefarm             120    25    5
+teleport-loc     =     136    228     arefarm             120    25    5
+teleport-loc     =     137    228     arefarm             120    25    5
+teleport-loc     =     138    228     arefarm             120    25    5
+teleport-loc     =     139    228     arefarm             120    25    5
+teleport-loc     =     140    228     arefarm             120    25    5
+teleport-loc     =     141    228     arefarm             120    25    5
+teleport-loc     =     142    228     arefarm             120    25    5
+teleport-loc     =     143    228     arefarm             120    25    5
+teleport-loc     =     144    228     arefarm             120    25    5
+teleport-loc     =     145    228     arefarm             120    25    5
+
+teleport-loc     =     121     21     elvfarm             160    227   1
+teleport-loc     =     122     21     elvfarm             160    227   1
+teleport-loc     =     123     21     elvfarm             160    227   1
+teleport-loc     =     124     21     elvfarm             160    227   1
+teleport-loc     =     125     21     elvfarm             160    227   1
+teleport-loc     =     126     21     elvfarm             160    227   1
+teleport-loc     =     127     21     elvfarm             160    227   1
+teleport-loc     =     128     21     elvfarm             160    227   1
+teleport-loc     =     129     21     elvfarm             160    227   1
+teleport-loc     =     130     21     elvfarm             160    227   1
+teleport-loc     =     131     21     elvfarm             160    227   1
+
+
+//-WayPoint-Set---------Num-----X-----Y----;
+waypoint          =     0       75    75
+waypoint          =     1       75   200
+waypoint          =     2      200   200
+waypoint          =     3      200    75
+waypoint          =     4      125   125
+
+
+
+//-No-Attack-Area----------Num-----RECT-------------
+no-attack-area           = 1       115  18 135  25
+no-attack-area           = 2       130 224 150 233
+
+
+maximum-object		= 400
+random-mob-generator	= 1  8
+
+//-----------------------Num-Type-RECT---------------Mob-MobNum
+
+//Cyclops & Troll
+spot-mob-generator	= 1   1    112 110 139 137	13	10
+spot-mob-generator	= 2   1    112 110 139 137	28	10
+
+//Scorpion
+spot-mob-generator	= 3   1     38 157  73 173	17	10
+spot-mob-generator	= 4   1     45  85  66 100	17	10
+
+//Skeleton
+spot-mob-generator	= 5   1     81 198 100 210	11	10
+spot-mob-generator	= 6   1    152  51 167  67	11	10
+
+//Magic-Orc
+spot-mob-generator	= 7   1     47  38  63  57	14	10
+spot-mob-generator	= 8   1    167 179 185 200	14	10
+
+//Clay-Golem & Stone-Golem
+spot-mob-generator	= 9   1    192 107 217 122	23	10
+spot-mob-generator	= 10  1    192 144 218 162	12	10
+
+//Zombie
+spot-mob-generator	= 11  1    109  63 141  83	18	10
+spot-mob-generator	= 12  1    126 193 150 210	18	10
+
+//³¬½Ã_Æ÷ÀÎÆ®
+//max-fish   = 8
+//fish-point = 0   46 287
+//fish-point = 1   44 350
+
+
+//strategic-point-Num-Side-Value--X----Y
+//strategic-point = 1   0    2     176  224
+//strategic-point = 2   0    1     456  213
+//strategic-point = 3   0    1     275  286
+
+
+[END-MAP-INFO]

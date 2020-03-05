@@ -1,0 +1,33 @@
+Account-generated:  Time(2019/1/14/15/5)  IP(172.16.46.243)
+
+[NAME]
+
+account-name     = test
+
+[PASSWORD]
+
+account-password = test
+
+[ACCOUNT-STATUS]
+
+account-valid-time = 0
+account-valid-date = 2019 1 21
+
+account-change-password = 2019 1 14
+[ETC]
+
+account-Gender   =  
+account-Age      = 
+account-Birth-Year =  
+account-Birth-Month =  
+account-Birth-Day   =  
+account-RealName = 
+account-SSN      = -
+account-Email    = test@gmail.com
+account-Quiz     = TEst?
+account-Answer   = test
+account-created-by = 
+
+[CHARACTERS]
+account-character  = testo
+

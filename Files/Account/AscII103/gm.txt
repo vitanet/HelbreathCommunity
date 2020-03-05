@@ -1,0 +1,32 @@
+Account-generated:  Time(2015/3/17/22/29)  IP(192.168.0.40)
+
+[NAME]
+
+account-name     = gm
+
+[PASSWORD]
+
+account-password = gm2
+
+[ACCOUNT-STATUS]
+
+account-valid-time = 0
+account-valid-date = 2015 3 24
+
+account-change-password = 2015 3 17
+[ETC]
+
+account-Gender   =  
+account-Age      = 
+account-Birth-Year =  
+account-Birth-Month =  
+account-Birth-Day   =  
+account-RealName = 
+account-SSN      = -
+account-Email    = centu@gmail.org
+account-Quiz     = mascota?
+account-Answer   = perra
+account-created-by = 
+
+[CHARACTERS]
+

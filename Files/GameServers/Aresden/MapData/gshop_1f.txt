@@ -1,0 +1,36 @@
+[MAP-INFO]
+
+map-location  = aresden
+initial-point = 1  51 41
+
+//-Teleportation-Set----SX-----SY-----DestMapName---------DX-----DY----Dir---;
+teleport-loc       =    49     36     arefarm             63     72    4
+teleport-loc       =    50     36     arefarm             63     72    4
+teleport-loc       =    49     37     arefarm             63     72    4
+teleport-loc       =    50     37     arefarm             63     72    4
+teleport-loc       =    51     37     arefarm             63     72    4
+
+//-WayPoint-Set---------Num-----X-----Y----;
+waypoint          =     1      59    42
+waypoint          =     2      59    42
+waypoint          =     3      59    42
+waypoint          =     4      59    42
+waypoint          =     5      59    42
+waypoint          =     6      59    42
+waypoint          =     7      59    42
+waypoint          =     8      59    42
+waypoint          =     9      59    42
+waypoint          =     10     59    42
+
+
+//-NPC-setting--------Name---------------MoveType----WaypointIndex(10)-------NamePrefix-------;
+
+npc               =   ShopKeeper-W       2           1 2 3 4 5 6 7 8 9 10         1  
+
+
+//-No-Attack-Area----------Num-----RECT-------------
+no-attack-area           = 1       -10 -10 -10 -10
+
+fixed-dayornight-mode = 1
+
+[END-MAP-INFO]

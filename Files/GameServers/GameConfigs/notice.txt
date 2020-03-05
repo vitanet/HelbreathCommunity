@@ -1,0 +1,7 @@
+notify_msg = Heldenian Real Battle: Sunday - 14.30 P.M.
+notify_msg = Server By Centuu.-
+notify_msg = 1st Crusade War: Tuesday - 6.30 A.M.
+notify_msg = 2nd Crusade War: Thursday - 22.30 P.M.
+notify_msg = 3rd Crusade War: Saturday - 14.30 P.M.
+notify_msg = Apocalypse: Sunday - 23.59 P.M.
+notify_msg = Event by GM - N/A

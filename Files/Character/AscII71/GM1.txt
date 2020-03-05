@@ -1,0 +1,163 @@
+[FILE-DATE]
+
+file-saved-date: 2020 2 29 18 15
+
+[NAME-ACCOUNT]
+
+character-name     = GM1
+account-name       = GM
+
+[STATUS]
+
+character-profile 	=__________
+character-location   = aresden
+character-guild-name = HbTest_Server
+character-guild-GUID = 101046832
+character-guild-rank = 0
+character-loc-map = aresden
+character-loc-x   = 129
+character-loc-y   = 169
+
+character-HP       = 1025
+character-MP       = 621
+character-SP       = 776
+character-LEVEL    = 180
+character-RATING   = 135
+character-STR      = 130
+character-INT      = 67
+character-VIT      = 150
+character-DEX      = 200
+character-MAG      = 40
+character-CHARISMA = 20
+character-LUCK     = 10
+character-EXP      = 692376729
+character-LU_Pool  = 3
+character-EK-Count = 0
+character-PK-Count = 0
+character-reward-gold = 0
+character-downskillindex = 2
+character-IDnum1 = 5881
+character-IDnum2 = 198
+character-IDnum3 = 1
+party-rank = -1
+sex-status       = 1
+skin-status      = 1
+hairstyle-status = 7
+haircolor-status = 15
+underwear-status = 1
+hunger-status    = 100
+timeleft-shutup  = 0
+timeleft-rating  = 0
+timeleft-force-recall  = 0
+timeleft-firm-staminar = 0
+admin-user-level = 4
+penalty-block-date = 0 0 0
+character-quest-number = 0
+character-quest-ID     = 0
+current-quest-count    = 0
+quest-reward-type      = 0
+quest-reward-amount    = 0
+character-contribution = 9999
+character-war-contribution = 0
+character-quest-completed = 0
+special-event-id = 200081
+super-attack-left = 9474
+reserved-fightzone-id = 0 0 0
+special-ability-time = 0
+locked-map-name = NONE
+locked-map-time = 0
+crusade-job = 0
+crusade-GUID = 0
+construct-point = 0
+dead-penalty-time = 0
+party-id = 0
+majestic-level = 74
+gizon-item-upgrade-left = 102
+character-Deaths = 0
+character-TotalDGKills = 8
+character-DGPoints = 0
+character-TotalDGDeaths = 0
+character-DGKills = 5
+max-ek = 900
+ip2 = ip
+ip = 192.168.0.28
+heldenian-GUID = 0
+
+
+appr1 = 2033
+appr2 = -3552
+appr3 = -26972
+appr4 = 1024
+appr-color = 15728640
+
+[ITEMLIST]
+
+character-item = aHeroHelm(M)         1 2 23227 17904 314 0 0 0 0 2500 0
+character-item = aHeroHauberk(M)      1 2 18408 18743 314 0 0 0 0 2000 0
+character-item = aHeroLeggings(M)     1 2 26912 1763 314 0 0 0 0 3000 0
+character-item = aHeroArmor(M)        1 2 1077 24562 314 15 0 0 0 5000 0
+character-item = AresdenHeroCape+1    1 1 5881 198 1 0 0 0 0 300 0
+character-item = AngelicPandent(STR)  1 1 5881 198 1 6 0 0 0 300 805306368
+character-item = BerserkWand(MS.20)   1 2 2472 3374 315 0 0 0 0 4984 0
+character-item = RingoftheAbaddon     1 2 29992 4165 315 0 0 0 0 300 0
+character-item = NecklaceOfXelima     1 2 15868 21718 315 5 0 0 0 300 0
+character-item = RedCandy             1 2 6504 16651 1 0 0 0 0 1 0
+character-item = RedCandy             1 2 32166 25552 1 0 0 0 0 1 0
+character-item = RedCandy             1 2 17271 3626 1 0 0 0 0 1 0
+character-item = RedCandy             1 2 17729 15772 1 0 0 0 0 1 0
+character-item = Gold                 130903 2 30908 23178 1 0 0 0 0 0 0
+character-item = MerienShield         1 2 30805 6984 1 0 0 0 0 1600 0
+character-item = NecklaceOfBeholder   1 2 12547 14008 114 0 0 0 0 300 0
+character-item = Flameberge+3(LLF)    1 2 6458 25825 30935 0 0 0 0 7928 0
+character-item = RubyRing             1 2 26647 32028 -923 0 0 0 0 5000 0
+character-item = StoneOfMerien        1 2 29023 28220 12 0 0 0 0 3 0
+character-item = GiantBattleHammer    1 2 24189 11698 10674 9 0 0 0 6000 0
+character-item = ZemstoneofSacrifice  1 2 8141 26426 21109 0 0 0 0 3 0
+character-item = Fire-Bow             1 0 0 0 0 0 0 0 0 956 0
+character-item = Arrow                71 0 0 0 0 0 0 0 0 1 0
+character-item = Direction-Bow        1 0 0 0 0 0 0 0 0 1178 0
+character-item = Flowerpot            1 0 0 0 0 0 0 0 0 1 0
+character-item = MagicWand(M.Shield)  1 2 17173 19486 4874 0 0 0 0 5000 0
+character-item = Dagger               1 0 0 0 0 0 0 0 0 300 0
+character-item = ScaleMail(M)         1 0 0 0 0 0 0 0 0 600 0
+character-item = AngelicPandent(DEX)  1 0 0 0 0 6 0 0 0 300 1073741824
+
+
+character-bank-item = KneeTrousers(M)      1 0 0 0 0 0 0 0 0 300 0
+character-bank-item = WoodShield           1 0 0 0 0 0 0 0 0 300 0
+character-bank-item = GreenPotion          1 0 0 0 0 0 0 0 0 300 0
+character-bank-item = BluePotion           1 0 0 0 0 0 0 0 0 300 0
+character-bank-item = RedPotion            1 0 0 0 0 0 0 0 0 300 0
+character-bank-item = Dagger               1 0 0 0 0 0 0 0 0 300 0
+character-bank-item = Map                  1 0 0 0 0 0 0 0 0 300 0
+character-bank-item = MainGauche           1 2 9342 708 316 0 0 0 0 461 0
+character-bank-item = MainGauche           1 2 29855 7761 316 0 0 0 0 495 0
+character-bank-item = eHeroCap(M)          1 2 29768 510 4 15 0 0 0 1500 0
+character-bank-item = PickAxe              1 0 0 0 0 0 0 0 0 1000 0
+character-bank-item = StoneOfMerien        1 2 15746 13488 4 0 0 0 0 3 0
+character-bank-item = ArmorDye(White)      1 2 10042 28532 4 15 0 0 0 1 0
+character-bank-item = StoneOfMerien        1 2 20691 21129 4 0 0 0 0 3 0
+character-bank-item = eHeroRobe(M)         1 2 1533 19796 4 15 0 0 0 4000 0
+character-bank-item = BattleAxe+1          1 0 0 0 0 0 0 0 0 2000 0
+character-bank-item = XelimaAxe            1 2 8378 20114 315 0 0 0 0 5000 0
+character-bank-item = BattleHammer         1 0 0 0 0 0 0 0 0 4000 0
+character-bank-item = The_Devastator       1 2 15580 22178 4 0 0 0 0 3000 0
+character-bank-item = ArmorDye(White)      1 2 22946 23200 4 15 0 0 0 1 0
+
+
+[MAGIC-SKILL-MASTERY]
+
+//------------------012345678901234567890123456789012345678901234567890
+magic-mastery     = 1111111111111111111111111111111111100001000010001110100000110000000111000001001100000111110011000101
+skill-mastery     = 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 0 0 100 100 100 100 100 100 100 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+skill-SSN     = 0 0 0 0 282 0 552 127 36574 137 211 0 0 0 1054 0 0 0 0 5 0 340 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[ITEM-EQUIP-STATUS]
+
+item-equip-status = 11111111100000000000000000000000000000000000000000
+item-position-x = 65 14 0 2 40 0 13 45 3 65 68 64 66 113 119 86 0 38 63 28 159 39 103 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 
+item-position-y = 95 82 43 44 30 -4 82 65 68 30 31 29 30 90 7 86 70 83 92 84 50 33 50 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 
+
+[EOF]
+
+
+

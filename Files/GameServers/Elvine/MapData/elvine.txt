@@ -1,0 +1,205 @@
+[MAP-INFO]
+
+map-location  = elvine
+initial-point = 1  158 57
+initial-point = 2  110 89
+initial-point = 3  170 145
+initial-point = 4  242 129
+initial-point = 5  158 249
+
+//-Teleportation-Set----SX-----SY-----DestMapName---------DX-----DY----Dir---;
+
+teleport-loc     =      135    133    cityhall_2          57     43    6
+teleport-loc     =      136    133    cityhall_2          57     43    6
+teleport-loc     =      137    133    cityhall_2          57     43    6
+teleport-loc     =      137    132    cityhall_2          57     43    6
+
+teleport-loc     =      144    127    cityhall_2          57     43    6
+teleport-loc     =      145    127    cityhall_2          57     43    6
+teleport-loc     =      145    126    cityhall_2          57     43    6
+teleport-loc     =      146    126    cityhall_2          57     43    6
+
+teleport-loc     =      131    77     cath_2              40     40    4
+teleport-loc     =      132    77     cath_2              40     40    4
+teleport-loc     =      132    76     cath_2              40     40    4
+teleport-loc     =      133    76     cath_2              40     40    4
+
+teleport-loc     =      239    107    bsmith_2            34     37    4
+teleport-loc     =      240    107    bsmith_2            34     37    4
+teleport-loc     =      241    107    bsmith_2            34     37    4
+teleport-loc     =      241    106    bsmith_2            34     37    4
+
+teleport-loc     =      229    112    bsmith_2            43     32    5
+teleport-loc     =      229    113    bsmith_2            43     32    5
+teleport-loc     =      230    113    bsmith_2            43     32    5
+
+teleport-loc     =      197    127    wrhus_2             56     36    4
+teleport-loc     =      198    128    wrhus_2             56     36    4
+teleport-loc     =      199    129    wrhus_2             56     36    4
+teleport-loc     =      203    129    wrhus_2             56     36    4
+
+teleport-loc     =      87     174    elvwrhus            56     36    4
+teleport-loc     =      88     175    elvwrhus            56     36    4
+teleport-loc     =      89     176    elvwrhus            56     36    4
+teleport-loc     =      93     176    elvwrhus            56     36    4
+
+teleport-loc     =      76     141    gldhall_2           54     41    6
+teleport-loc     =      77     140    gldhall_2           54     41    6
+teleport-loc     =      77     141    gldhall_2           54     41    6
+teleport-loc     =      78     141    gldhall_2           54     41    6
+
+teleport-loc     =      180    77     wzdtwr_2            43     34    4
+teleport-loc     =      181    77     wzdtwr_2            43     34    4
+teleport-loc     =      181    76     wzdtwr_2            43     34    4
+
+teleport-loc     =      225    151    gshop_2             50     39    4
+teleport-loc     =      225    152    gshop_2             50     39    4
+teleport-loc     =      226    152    gshop_2             50     39    4
+teleport-loc     =      229    152    gshop_2             50     39    4
+teleport-loc     =      230    151    gshop_2             50     39    4
+
+teleport-loc     =      21     277    middleland          103    23    5
+teleport-loc     =      22     277    middleland          103    23    5
+teleport-loc     =      23     277    middleland          103    23    5
+teleport-loc     =      24     277    middleland          103    23    5
+teleport-loc     =      25     277    middleland          103    23    5
+teleport-loc     =      26     277    middleland          103    23    5
+
+teleport-loc     =      250    274    middleland          314    23    5
+teleport-loc     =      251    274    middleland          314    23    5
+teleport-loc     =      252    274    middleland          314    23    5
+teleport-loc     =      253    274    middleland          314    23    5
+teleport-loc     =      254    274    middleland          314    23    5
+teleport-loc     =      255    274    middleland          314    23    5
+teleport-loc     =      256    274    middleland          314    23    5
+teleport-loc     =      257    274    middleland          314    23    5
+
+teleport-loc     =      218    20     huntzone1           53     174   1
+teleport-loc     =      219    20     huntzone1           53     174   1
+teleport-loc     =      220    20     huntzone1           53     174   1
+teleport-loc     =      221    20     huntzone1           53     174   1
+teleport-loc     =      222    20     huntzone1           53     174   1
+teleport-loc     =      223    20     huntzone1           53     174   1
+teleport-loc     =      224    20     huntzone1           53     174   1
+teleport-loc     =      225    20     huntzone1           53     174   1
+teleport-loc     =      226    20     huntzone1           53     174   1
+teleport-loc     =      227    20     huntzone1           53     174   1
+teleport-loc     =      228    20     huntzone1           53     174   1
+teleport-loc     =      229    20     huntzone1           53     174   1
+teleport-loc     =      230    20     huntzone1           53     174   1
+
+teleport-loc     =      258    82     elvined1            105    159   1
+teleport-loc     =      258    83     elvined1            105    159   1
+teleport-loc     =      259    82     elvined1            105    159   1
+teleport-loc     =      259    81     elvined1            105    159   1
+teleport-loc     =      260    81     elvined1            105    159   1
+
+teleport-loc     =      277    192    elvfarm              23    149  1
+teleport-loc     =      277    193    elvfarm              23    149  1
+teleport-loc     =      277    194    elvfarm              23    149  1
+teleport-loc     =      277    195    elvfarm              23    149  1
+teleport-loc     =      277    196    elvfarm              23    149  1
+teleport-loc     =      277    197    elvfarm              23    149  1
+teleport-loc     =      277    198    elvfarm              23    149  1
+teleport-loc     =      277    199    elvfarm              23    149  1
+
+teleport-loc     =      213    89    CmdHall_2              51    50   1
+teleport-loc     =      214    89    CmdHall_2              51    50   1
+teleport-loc     =      214    88    CmdHall_2              51    50   1
+teleport-loc     =      220    87    CmdHall_2              40    52   1
+teleport-loc     =      221    87    CmdHall_2              40    52   1
+teleport-loc     =      222    87    CmdHall_2              40    52   1
+
+//-WayPoint-Set---------Num-----X-----Y----;
+waypoint          =     0        45    55
+waypoint          =     1       150    80
+waypoint          =     2       255    70
+waypoint          =     3        30   130
+waypoint          =     4       110   135
+waypoint          =     5       190   145
+waypoint          =     6       250   140
+waypoint          =     7        80   215
+waypoint          =     8       165   235
+waypoint          =     9       230   230
+
+
+
+//-No-Attack-Area----------Num-----RECT-------------
+no-attack-area           = 1       21 272 33 277
+no-attack-area           = 2       248 269 260 273
+
+no-attack-area           = 3       154 54 163 61
+no-attack-area           = 4       106 86 115 93
+no-attack-area           = 5       166 142 175 149
+no-attack-area           = 6       238 126 247 133
+no-attack-area           = 7       154 246 163 253
+
+maximum-object		= 600
+random-mob-generator	= 1  1
+
+
+//Npc생성금지구역
+npc-avoidrect           = 1  86 67 214 213
+
+//------------------------Num-Type-RECT---------------Mob-MobNum
+spot-mob-generator	= 1   1    147 30 166 42      10  20
+spot-mob-generator	= 2   1    126 236 142 259    10  20
+spot-mob-generator	= 3   1    36 56 59 71        10  20
+spot-mob-generator	= 4   1    252 174 269 191    10  20
+spot-mob-generator	= 5   1    227 210 257 223    10  20
+
+spot-mob-generator	= 6   1    34 176 61 196      22  20
+spot-mob-generator	= 7   1    42 205 66 224      22  20
+
+spot-mob-generator	= 8   1    120 27 139 43     17  20
+
+// 경비병 고정 좌표
+spot-mob-generator	= 9   1    153 52 164 63      25  2
+spot-mob-generator	= 10  1    105 84 116 95      25  2
+spot-mob-generator	= 11  1    165 140 176 151    25  2
+spot-mob-generator	= 12  1    237 124 248 135    25  2
+spot-mob-generator	= 13  1    153 244 163 255    25  2
+
+//도우미 고정 지역
+spot-mob-generator	= 14  1    142 131 175 149    67  1
+spot-mob-generator	= 15  1    216 148 240 163    68  1
+spot-mob-generator	= 16  1    192 121 213 133    69  1
+spot-mob-generator	= 17  1    222 105 244 117    67  1
+
+
+max-fish   = 25
+fish-point = 0  186 190
+fish-point = 1  186 191
+fish-point = 2  187 190
+fish-point = 3  199 182
+fish-point = 4  200 181
+fish-point = 5  206 177
+fish-point = 6  207 177
+fish-point = 7  208 178
+fish-point = 8  217 184
+fish-point = 9  219 185
+fish-point = 10 229 194
+fish-point = 11 230 193
+fish-point = 12 219 201
+fish-point = 13 220 200
+fish-point = 14 221 199
+fish-point = 15 206 209
+fish-point = 16 207 209
+fish-point = 17 208 208
+fish-point = 18 193 212
+fish-point = 19 195 213
+fish-point = 20 178 202
+fish-point = 21 179 202  
+fish-point = 22 180 203  
+fish-point = 23 196 19  
+fish-point = 24 197 19 
+fish-point = 25 238 25
+fish-point = 26 238 26
+
+//-strike-point--------Num----dX----dY----Hp----EffectLoc-------------------------------------Related-Map-Name
+strike-point      =     1     148   128   13    140 110  131 114  140 116  148 118  132 124   cityhall_2
+strike-point      =     2     229   150   13    226 140  222 142  231 145  224 147  219 148   gshop_2
+strike-point      =     3     239   110   13    235 100  240 101  230 103  234 106  228 109   bsmith_2
+strike-point      =     4     204   127   13    199 112  209 117  198 118  199 119  198 123   wrhus_2
+
+[END-MAP-INFO]

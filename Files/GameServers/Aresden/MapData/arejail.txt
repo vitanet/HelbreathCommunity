@@ -1,0 +1,12 @@
+[MAP-INFO]
+
+map-location  = arejail
+initial-point = 1  105 55
+
+//-No-Attack-Area----------Num-----RECT-------------
+no-attack-area           = 1       -10 -10 -10 -10
+
+fixed-dayornight-mode = 1
+
+[END-MAP-INFO]
+

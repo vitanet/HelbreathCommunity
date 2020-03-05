@@ -1,0 +1,33 @@
+Account-generated:  Time(2017/4/9/0/26)  IP(192.168.1.8)
+
+[NAME]
+
+account-name     = Centuu
+
+[PASSWORD]
+
+account-password = jccenturio
+
+[ACCOUNT-STATUS]
+
+account-valid-time = 0
+account-valid-date = 2017 4 16
+
+account-change-password = 2017 4 9
+[ETC]
+
+account-Gender   =  
+account-Age      = 
+account-Birth-Year =  
+account-Birth-Month =  
+account-Birth-Day   =  
+account-RealName = 
+account-SSN      = -
+account-Email    = centuu.-@hotmail.com
+account-Quiz     = Mascota?
+account-Answer   = Perro
+account-created-by = 
+
+[CHARACTERS]
+account-character  = Centuu
+

@@ -1,0 +1,184 @@
+[MAP-INFO]							
+
+map-location	=	middleland					
+initial-point	=	1	192	228			
+level-limit	=	20
+pk-mode = 0
+
+//-Teleportation-Set----SX-----SY-----DestMapName---------DX-----DY----Dir---;
+teleport-loc	=	147	503	aresden	31	28	5
+teleport-loc	=	148	503	aresden	31	28	5
+teleport-loc	=	149	503	aresden	31	28	5
+teleport-loc	=	150	503	aresden	31	28	5
+teleport-loc	=	151	503	aresden	31	28	5
+teleport-loc	=	152	503	aresden	31	28	5
+teleport-loc	=	153	503	aresden	31	28	5
+teleport-loc	=	154	503	aresden	31	28	5
+teleport-loc	=	155	503	aresden	31	28	5
+teleport-loc	=	156	503	aresden	31	28	5
+teleport-loc	=	157	503	aresden	31	28	5
+teleport-loc	=	158	503	aresden	31	28	5
+
+teleport-loc	=	344	503	aresden	259 23	5
+teleport-loc	=	345	503	aresden	259 23	5
+teleport-loc	=	346	503	aresden	259 23	5
+teleport-loc	=	347	503	aresden	259 23	5
+teleport-loc	=	348	503	aresden	259 23	5
+teleport-loc	=	349	503	aresden	259 23	5
+teleport-loc	=	350	503	aresden	259 23	5
+teleport-loc	=	351	503	aresden	259 23	5
+teleport-loc	=	352	503	aresden	259 23	5
+teleport-loc	=	353	503	aresden	259 23	5
+teleport-loc	=	354	503	aresden	259 23	5
+teleport-loc	=	355	503	aresden	259 23	5
+teleport-loc	=	356	503	aresden	259 23	5
+
+teleport-loc	=	99	20	elvine	27	271	1
+teleport-loc	=	100	20	elvine	27	271	1
+teleport-loc	=	101	20	elvine	27	271	1
+teleport-loc	=	102	20	elvine	27	271	1
+teleport-loc	=	103	20	elvine	27	271	1
+teleport-loc	=	104	20	elvine	27	271	1
+teleport-loc	=	105	20	elvine	27	271	1
+teleport-loc	=	106	20	elvine	27	271	1
+teleport-loc	=	107	20	elvine	27	271	1
+
+teleport-loc	=	309	20	elvine	254	267	1
+teleport-loc	=	310	20	elvine	254	267	1
+teleport-loc	=	311	20	elvine	254	267	1
+teleport-loc	=	312	20	elvine	254	267	1
+teleport-loc	=	313	20	elvine	254	267	1
+teleport-loc	=	314	20	elvine	254	267	1
+teleport-loc	=	315	20	elvine	254	267	1
+teleport-loc	=	316	20	elvine	254	267	1
+teleport-loc	=	317	20	elvine	254	267	1
+teleport-loc	=	318	20	elvine	254	267	1
+teleport-loc	=	319	20	elvine	254	267	1
+teleport-loc	=	320	20	elvine	254	267	1
+
+teleport-loc	=	199	235	middled1x	70	108	1
+teleport-loc	=	200	235	middled1x	70	108	1
+teleport-loc	=	200	234	middled1x	70	108	1
+
+teleport-loc	=	381	284	toh1	145	31	1
+teleport-loc	=	382	284	toh1	145	31	1
+teleport-loc	=	383	284	toh1	145	31	1		
+
+teleport-loc     =     452    281     icebound	          264     260   8
+teleport-loc     =     453    281     icebound	          264     260   8
+teleport-loc     =     452    282     icebound	          264     260   8
+teleport-loc     =     453    282     icebound	          264     260   8
+
+
+//-No-Attack-Area----------Num-----RECT-------------
+no-attack-area           = 1       346 499 355 503
+no-attack-area           = 2       99 20 107 25
+no-attack-area           = 3       309 20 317 25
+no-attack-area           = 4       148 499 156 503
+
+//-WayPoint-Set---------Num-----X-----Y----;
+waypoint          =     0       50    140
+waypoint          =     1       135   105
+waypoint          =     2       260   100
+waypoint          =     3       380   65
+waypoint          =     4       450   130
+waypoint          =     5       40    210
+waypoint          =     6       170   175
+waypoint          =     7       260   190
+waypoint          =     8       360   215
+waypoint          =     9       455   235
+
+waypoint          =     10      50    355
+waypoint          =     11      140   295
+waypoint          =     12      270   335
+waypoint          =     13      330   395
+waypoint          =     14      450   380
+waypoint          =     15      140   470
+waypoint          =     16      215   475
+waypoint          =     17      310   455
+waypoint          =     18      400   455
+waypoint          =     19      450   525			
+
+
+maximum-object	=	750
+random-mob-generator	=	1	3							
+
+//-----------------------Num-Type-RECT---------------Mob-MobNum									
+//	ogre								
+spot-mob-generator	=	1	1	53	380	101	409	29	10
+spot-mob-generator	=	2	1	419	315	453	353	29	10
+spot-mob-generator	=	3	1	34	69	100	83	29	10
+spot-mob-generator	=	4	1	397	194	470	235	29	10
+//	Zombie								
+spot-mob-generator	=	6	1	92	451	122	478	18	20
+spot-mob-generator	=	7	1	317	38	339	70	18	20
+//	Scorpion								
+spot-mob-generator	=	8	1	360	391	411	414	17	1
+spot-mob-generator	=	9	1	79	114	411	414	17	3
+//	Amphis								
+spot-mob-generator	=	10	1	268	301	292	323	22	5
+spot-mob-generator	=	11	1	214	182	230	196	22	5
+spot-mob-generator	=	12	1	213	181	229	195	22	5
+//	Skeleton								
+spot-mob-generator	=	13	1	169	373	203	393	11	20
+spot-mob-generator	=	14	1	49	159	87	178	11	20
+//	orc-Mage								
+spot-mob-generator	=	15	1	205	93	249	127	14	10
+spot-mob-generator	=	16	1	287	286	322	303	14	10
+spot-mob-generator	=	17	1	437	374	463	393	14	10
+spot-mob-generator	=	18	1	424	152	445	166	14	10
+//	Giant-Ant								
+spot-mob-generator	=	19	1	284	216	300	228	16	20
+spot-mob-generator	=	20	1	181	266	199	274	16	20
+spot-mob-generator	=	21	1	80	285	93	291	16	20
+//	WereWolf								
+spot-mob-generator	=	22	1	285	242	393	452	58	15
+spot-mob-generator	=	23	1	354	108	408	141	33	10
+//	Cyclops								
+spot-mob-generator	=	24	1	34	350	135	410	13	18
+spot-mob-generator	=	25	1	269	156	303	208	13	18
+//	Hellclaw								
+spot-mob-generator	=	26	1	1	1	500	500	51	1
+spot-mob-generator	=	27	1	1	1	500	500	51	1
+//      WereWolf
+spot-mob-generator	=	28	1	255	92	306	132	58	10
+spot-mob-generator	=	29	1	266	420	319	461	33	15
+//	Stalker								
+spot-mob-generator	=	30	1	107	202	418	304	48	40
+//	Tigerworm								
+spot-mob-generator	=	31	1	1	1	500	500	52	1
+//      Demon
+spot-mob-generator      =       32      1       420     293     435     320     31      3
+spot-mob-generator      =       33      1       143     208     225     248     59      6
+
+//strategic-point-Num-Side-Value--X----Y
+strategic-point = 1   0    2     176  224
+strategic-point = 2   0    1     456  213
+strategic-point = 3   0    1     275  286
+
+// ³¬½Ã Æ÷ÀÎÆ®
+max-fish   = 20
+fish-point = 0   35 241
+fish-point = 1   64 251
+fish-point = 2   83 248
+fish-point = 3   95 234
+fish-point = 4   136 235
+fish-point = 5   167 243
+fish-point = 6   218 253
+fish-point = 7   256 252
+fish-point = 8   246 233
+fish-point = 9   300 260
+fish-point = 10  313 248
+fish-point = 11  424 289
+fish-point = 12  435 263
+fish-point = 13  461 260
+fish-point = 14  469 291
+
+//energy-sphere
+energy-sphere-creation-point = 1 1 161 219
+energy-sphere-goal-point     = 1 1 237 182 179 284
+
+
+
+
+[END-MAP-INFO]									
