@@ -1,0 +1,73 @@
+C:\Documents and Settings\lucas\Escritorio\[SRC]Launcher & Update\Tasks\bin\Release\tasks.exe.config
+C:\Documents and Settings\lucas\Escritorio\[SRC]Launcher & Update\Tasks\bin\Release\tasks.exe
+C:\Documents and Settings\lucas\Escritorio\[SRC]Launcher & Update\Tasks\bin\Release\tasks.pdb
+C:\Documents and Settings\lucas\Escritorio\[SRC]Launcher & Update\Tasks\bin\Release\tasks.xml
+C:\Documents and Settings\lucas\Escritorio\Launcher\tasks.exe.config
+C:\Documents and Settings\lucas\Escritorio\Launcher\tasks.exe
+C:\Documents and Settings\lucas\Escritorio\Launcher\tasks.pdb
+C:\Documents and Settings\lucas\Escritorio\Launcher\tasks.xml
+C:\Documents and Settings\lucas\Escritorio\[SRC]Launcher & Update\Tasks\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Documents and Settings\lucas\Escritorio\[SRC]Launcher & Update\Tasks\obj\x86\Release\tasks.Resources.resources
+C:\Documents and Settings\lucas\Escritorio\[SRC]Launcher & Update\Tasks\obj\x86\Release\GenerateResource.read.1.tlog
+C:\Documents and Settings\lucas\Escritorio\[SRC]Launcher & Update\Tasks\obj\x86\Release\GenerateResource.write.1.tlog
+C:\Documents and Settings\lucas\Escritorio\[SRC]Launcher & Update\Tasks\obj\x86\Release\tasks.exe
+C:\Documents and Settings\lucas\Escritorio\[SRC]Launcher & Update\Tasks\obj\x86\Release\tasks.xml
+C:\Documents and Settings\lucas\Escritorio\[SRC]Launcher & Update\Tasks\obj\x86\Release\tasks.pdb
+C:\Users\prlucas\Desktop\[SRC]Launcher & Update\Build\tasks.exe.config
+C:\Users\prlucas\Desktop\[SRC]Launcher & Update\Build\tasks.exe
+C:\Users\prlucas\Desktop\[SRC]Launcher & Update\Build\tasks.pdb
+C:\Users\prlucas\Desktop\[SRC]Launcher & Update\Build\tasks.xml
+C:\Users\prlucas\Desktop\[SRC]Launcher & Update\Tasks\obj\x86\Release\tasks.Resources.resources
+C:\Users\prlucas\Desktop\[SRC]Launcher & Update\Tasks\obj\x86\Release\Reboot.vbproj.GenerateResource.Cache
+C:\Users\prlucas\Desktop\[SRC]Launcher & Update\Tasks\obj\x86\Release\tasks.exe
+C:\Users\prlucas\Desktop\[SRC]Launcher & Update\Tasks\obj\x86\Release\tasks.xml
+C:\Users\prlucas\Desktop\[SRC]Launcher & Update\Tasks\obj\x86\Release\tasks.pdb
+C:\Users\Lucas\Desktop\Ultimate Server 2015\Launcher\Build\tasks.exe.config
+C:\Users\Lucas\Desktop\Ultimate Server 2015\Launcher\Build\tasks.exe
+C:\Users\Lucas\Desktop\Ultimate Server 2015\Launcher\Build\tasks.pdb
+C:\Users\Lucas\Desktop\Ultimate Server 2015\Launcher\Build\tasks.xml
+C:\Users\Lucas\Desktop\Ultimate Server 2015\Launcher\Tasks\obj\x86\Release\tasks.Resources.resources
+C:\Users\Lucas\Desktop\Ultimate Server 2015\Launcher\Tasks\obj\x86\Release\Reboot.vbproj.GenerateResource.Cache
+C:\Users\Lucas\Desktop\Ultimate Server 2015\Launcher\Tasks\obj\x86\Release\tasks.exe
+C:\Users\Lucas\Desktop\Ultimate Server 2015\Launcher\Tasks\obj\x86\Release\tasks.xml
+C:\Users\Lucas\Desktop\Ultimate Server 2015\Launcher\Tasks\obj\x86\Release\tasks.pdb
+C:\Users\Lucas\Desktop\Ultimate ss server 2015\Launcher\Build\tasks.exe.config
+C:\Users\Lucas\Desktop\Ultimate ss server 2015\Launcher\Build\tasks.exe
+C:\Users\Lucas\Desktop\Ultimate ss server 2015\Launcher\Build\tasks.pdb
+C:\Users\Lucas\Desktop\Ultimate ss server 2015\Launcher\Build\tasks.xml
+C:\Users\Lucas\Desktop\Ultimate ss server 2015\Launcher\Tasks\obj\x86\Release\tasks.Resources.resources
+C:\Users\Lucas\Desktop\Ultimate ss server 2015\Launcher\Tasks\obj\x86\Release\Reboot.vbproj.GenerateResource.Cache
+C:\Users\Lucas\Desktop\Ultimate ss server 2015\Launcher\Tasks\obj\x86\Release\tasks.exe
+C:\Users\Lucas\Desktop\Ultimate ss server 2015\Launcher\Tasks\obj\x86\Release\tasks.xml
+C:\Users\Lucas\Desktop\Ultimate ss server 2015\Launcher\Tasks\obj\x86\Release\tasks.pdb
+C:\Users\Lucas\Desktop\Ultimate ss server 2015\New Launcher 2015\Build\tasks.exe.config
+C:\Users\Lucas\Desktop\Ultimate ss server 2015\New Launcher 2015\Build\tasks.exe
+C:\Users\Lucas\Desktop\Ultimate ss server 2015\New Launcher 2015\Build\tasks.pdb
+C:\Users\Lucas\Desktop\Ultimate ss server 2015\New Launcher 2015\Build\tasks.xml
+C:\Users\Lucas\Desktop\Ultimate ss server 2015\New Launcher 2015\Tasks\obj\x86\Release\tasks.Resources.resources
+C:\Users\Lucas\Desktop\Ultimate ss server 2015\New Launcher 2015\Tasks\obj\x86\Release\Reboot.vbproj.GenerateResource.Cache
+C:\Users\Lucas\Desktop\Ultimate ss server 2015\New Launcher 2015\Tasks\obj\x86\Release\tasks.exe
+C:\Users\Lucas\Desktop\Ultimate ss server 2015\New Launcher 2015\Tasks\obj\x86\Release\tasks.xml
+C:\Users\Lucas\Desktop\Ultimate ss server 2015\New Launcher 2015\Tasks\obj\x86\Release\tasks.pdb
+C:\Users\Administrador\Desktop\HelbreathSS\src\New Launcher 2015\Build\tasks.exe.config
+C:\Users\Administrador\Desktop\HelbreathSS\src\New Launcher 2015\Tasks\obj\x86\Release\tasks.exe
+C:\Users\Administrador\Desktop\HelbreathSS\src\New Launcher 2015\Tasks\obj\x86\Release\tasks.xml
+C:\Users\Administrador\Desktop\HelbreathSS\src\New Launcher 2015\Tasks\obj\x86\Release\tasks.pdb
+C:\Users\Administrador\Desktop\HelbreathSS\src\New Launcher 2015\Build\tasks.exe
+C:\Users\Administrador\Desktop\HelbreathSS\src\New Launcher 2015\Build\tasks.pdb
+C:\Users\Administrador\Desktop\HelbreathSS\src\New Launcher 2015\Build\tasks.xml
+C:\Users\Administrador\Desktop\HelbreathSS\src\New Launcher 2015\Tasks\obj\x86\Release\tasks.Resources.resources
+C:\Users\Administrador\Desktop\HelbreathSS\src\New Launcher 2015\Tasks\obj\x86\Release\Reboot.vbproj.GenerateResource.Cache
+C:\Users\Lucas\Desktop\HelbreathSS\src\New Launcher 2015\Build\tasks.exe.config
+C:\Users\Lucas\Desktop\HelbreathSS\src\New Launcher 2015\Tasks\obj\x86\Release\tasks.exe
+C:\Users\Lucas\Desktop\HelbreathSS\src\New Launcher 2015\Tasks\obj\x86\Release\tasks.xml
+C:\Users\Lucas\Desktop\HelbreathSS\src\New Launcher 2015\Tasks\obj\x86\Release\tasks.pdb
+C:\Users\Machine\Desktop\HelbreathSS\src\Launcher\Build\tasks.exe.config
+C:\Users\Machine\Desktop\HelbreathSS\src\Launcher\Build\tasks.exe
+C:\Users\Machine\Desktop\HelbreathSS\src\Launcher\Build\tasks.pdb
+C:\Users\Machine\Desktop\HelbreathSS\src\Launcher\Build\tasks.xml
+C:\Users\Machine\Desktop\HelbreathSS\src\Launcher\Tasks\obj\x86\Release\tasks.Resources.resources
+C:\Users\Machine\Desktop\HelbreathSS\src\Launcher\Tasks\obj\x86\Release\Reboot.vbproj.GenerateResource.Cache
+C:\Users\Machine\Desktop\HelbreathSS\src\Launcher\Tasks\obj\x86\Release\tasks.exe
+C:\Users\Machine\Desktop\HelbreathSS\src\Launcher\Tasks\obj\x86\Release\tasks.xml
+C:\Users\Machine\Desktop\HelbreathSS\src\Launcher\Tasks\obj\x86\Release\tasks.pdb

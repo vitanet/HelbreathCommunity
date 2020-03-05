@@ -1,0 +1,53 @@
+﻿  tif_xfile.cpp
+  ximabmp.cpp
+  ximadsp.cpp
+  ximaenc.cpp
+  ximaexif.cpp
+  xImage.cpp
+  ximagif.cpp
+  ximahist.cpp
+  ximaico.cpp
+  ximainfo.cpp
+  ximaint.cpp
+  ximaj2k.cpp
+  ximajas.cpp
+  ximajbg.cpp
+  ximajpg.cpp
+  ximalpha.cpp
+  ximalyr.cpp
+  ximamng.cpp
+  ximapal.cpp
+  ximapcx.cpp
+  Generating Code...
+  Compiling...
+  ximapng.cpp
+  ximasel.cpp
+  ximatga.cpp
+  ximath.cpp
+  ximatif.cpp
+  ximatran.cpp
+  ximawbmp.cpp
+  ximawmf.cpp
+  ximawnd.cpp
+  xmemfile.cpp
+  Generating Code...
+ximawmf.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+ximawbmp.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+ximatif.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+ximatga.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+ximasel.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+ximapng.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+ximapcx.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+ximamng.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+ximalyr.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+ximalpha.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+ximajbg.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+ximajas.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+ximaj2k.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+ximaint.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+ximaico.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+ximahist.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+ximagif.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+ximadsp.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+tif_xfile.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+  CxImage.vcxproj -> C:\Users\Administrator\Desktop\HBCentuu\Client\CxImage\.\Release\CxImage.lib

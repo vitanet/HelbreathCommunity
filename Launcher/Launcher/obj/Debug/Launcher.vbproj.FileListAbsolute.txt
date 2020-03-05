@@ -1,0 +1,98 @@
+C:\Documents and Settings\lucas\Helbreath\Launcher.exe.config
+C:\Documents and Settings\lucas\Helbreath\Launcher.exe
+C:\Documents and Settings\lucas\Helbreath\Launcher.pdb
+C:\Documents and Settings\lucas\Helbreath\Launcher.xml
+C:\Documents and Settings\lucas\Escritorio\[SRC]Launcher & Update\Launcher\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\lucas\Escritorio\[SRC]Launcher & Update\Launcher\obj\Debug\Launcher.Idioma.resources
+C:\Documents and Settings\lucas\Escritorio\[SRC]Launcher & Update\Launcher\obj\Debug\Launcher.Launcher.resources
+C:\Documents and Settings\lucas\Escritorio\[SRC]Launcher & Update\Launcher\obj\Debug\Launcher.Resources.resources
+C:\Documents and Settings\lucas\Escritorio\[SRC]Launcher & Update\Launcher\obj\Debug\GenerateResource.read.1.tlog
+C:\Documents and Settings\lucas\Escritorio\[SRC]Launcher & Update\Launcher\obj\Debug\GenerateResource.write.1.tlog
+C:\Documents and Settings\lucas\Escritorio\[SRC]Launcher & Update\Launcher.exe.config
+C:\Documents and Settings\lucas\Escritorio\[SRC]Launcher & Update\Launcher\obj\Debug\Launcher.exe
+C:\Documents and Settings\lucas\Escritorio\[SRC]Launcher & Update\Launcher\obj\Debug\Launcher.xml
+C:\Documents and Settings\lucas\Escritorio\[SRC]Launcher & Update\Launcher\obj\Debug\Launcher.pdb
+C:\Documents and Settings\lucas\Escritorio\[SRC]Launcher & Update\Launcher.exe
+C:\Documents and Settings\lucas\Escritorio\[SRC]Launcher & Update\Launcher.pdb
+C:\Documents and Settings\lucas\Escritorio\[SRC]Launcher & Update\Launcher.xml
+C:\Users\Lucas\Desktop\Ultimate Server 2015\Launcher\Build\Launcher.exe.config
+C:\Users\Lucas\Desktop\Ultimate Server 2015\Launcher\Build\Launcher.exe
+C:\Users\Lucas\Desktop\Ultimate Server 2015\Launcher\Build\Launcher.pdb
+C:\Users\Lucas\Desktop\Ultimate Server 2015\Launcher\Build\Launcher.xml
+C:\Users\Lucas\Desktop\Ultimate Server 2015\Launcher\Launcher\obj\Debug\Launcher.vbprojResolveAssemblyReference.cache
+C:\Users\Lucas\Desktop\Ultimate Server 2015\Launcher\Launcher\obj\Debug\Launcher.Idioma.resources
+C:\Users\Lucas\Desktop\Ultimate Server 2015\Launcher\Launcher\obj\Debug\Launcher.Launcher.resources
+C:\Users\Lucas\Desktop\Ultimate Server 2015\Launcher\Launcher\obj\Debug\Launcher.Resources.resources
+C:\Users\Lucas\Desktop\Ultimate Server 2015\Launcher\Launcher\obj\Debug\Launcher.vbproj.GenerateResource.Cache
+C:\Users\Lucas\Desktop\Ultimate Server 2015\Launcher\Launcher\obj\Debug\Launcher.exe
+C:\Users\Lucas\Desktop\Ultimate Server 2015\Launcher\Launcher\obj\Debug\Launcher.xml
+C:\Users\Lucas\Desktop\Ultimate Server 2015\Launcher\Launcher\obj\Debug\Launcher.pdb
+C:\Users\Administrator\Desktop\Launcher\Build\Launcher.exe.config
+C:\Users\Administrator\Desktop\Launcher\Build\Launcher.exe
+C:\Users\Administrator\Desktop\Launcher\Build\Launcher.pdb
+C:\Users\Administrator\Desktop\Launcher\Build\Launcher.xml
+C:\Users\Administrator\Desktop\Launcher\Launcher\obj\Debug\Launcher.Idioma.resources
+C:\Users\Administrator\Desktop\Launcher\Launcher\obj\Debug\Launcher.Launcher.resources
+C:\Users\Administrator\Desktop\Launcher\Launcher\obj\Debug\Launcher.Resources.resources
+C:\Users\Administrator\Desktop\Launcher\Launcher\obj\Debug\Launcher.Update.resources
+C:\Users\Administrator\Desktop\Launcher\Launcher\obj\Debug\Launcher.vbproj.GenerateResource.Cache
+C:\Users\Administrator\Desktop\Launcher\Launcher\obj\Debug\Launcher.exe
+C:\Users\Administrator\Desktop\Launcher\Launcher\obj\Debug\Launcher.xml
+C:\Users\Administrator\Desktop\Launcher\Launcher\obj\Debug\Launcher.pdb
+C:\Users\Lucas\Desktop\HelbreathSS\src\Launcher\Launcher\obj\Debug\OriginsLauncher.Launcher.resources
+C:\Users\Lucas\Desktop\HelbreathSS\src\Launcher\Launcher\obj\Debug\OriginsLauncher.Resources.resources
+C:\Users\Lucas\Desktop\HelbreathSS\src\Launcher\Launcher\obj\Debug\Launcher.vbproj.GenerateResource.Cache
+C:\Users\Lucas\Desktop\HelbreathSS\src\Launcher\Launcher\obj\Debug\Launcher.vbprojResolveAssemblyReference.cache
+C:\Users\Lucas\Desktop\HelbreathSS\src\Launcher\Build\Origins Launcher.exe.config
+C:\Users\Lucas\Desktop\HelbreathSS\src\Launcher\Build\Origins Launcher.exe
+C:\Users\Lucas\Desktop\HelbreathSS\src\Launcher\Build\Origins Launcher.pdb
+C:\Users\Lucas\Desktop\HelbreathSS\src\Launcher\Build\Origins Launcher.xml
+C:\Users\Lucas\Desktop\HelbreathSS\src\Launcher\Launcher\obj\Debug\Origins Launcher.exe
+C:\Users\Lucas\Desktop\HelbreathSS\src\Launcher\Launcher\obj\Debug\Origins Launcher.xml
+C:\Users\Lucas\Desktop\HelbreathSS\src\Launcher\Launcher\obj\Debug\Origins Launcher.pdb
+C:\Users\messi\Desktop\HelbreathSS\src\Launcher\Build\Origins Launcher.exe.config
+C:\Users\messi\Desktop\HelbreathSS\src\Launcher\Build\Origins Launcher.exe
+C:\Users\messi\Desktop\HelbreathSS\src\Launcher\Build\Origins Launcher.pdb
+C:\Users\messi\Desktop\HelbreathSS\src\Launcher\Build\Origins Launcher.xml
+C:\Users\messi\Desktop\HelbreathSS\src\Launcher\Launcher\obj\Debug\Launcher.vbprojResolveAssemblyReference.cache
+C:\Users\messi\Desktop\HelbreathSS\src\Launcher\Launcher\obj\Debug\OriginsLauncher.Launcher.resources
+C:\Users\messi\Desktop\HelbreathSS\src\Launcher\Launcher\obj\Debug\OriginsLauncher.Resources.resources
+C:\Users\messi\Desktop\HelbreathSS\src\Launcher\Launcher\obj\Debug\Launcher.vbproj.GenerateResource.Cache
+C:\Users\messi\Desktop\HelbreathSS\src\Launcher\Launcher\obj\Debug\Origins Launcher.exe
+C:\Users\messi\Desktop\HelbreathSS\src\Launcher\Launcher\obj\Debug\Origins Launcher.xml
+C:\Users\messi\Desktop\HelbreathSS\src\Launcher\Launcher\obj\Debug\Origins Launcher.pdb
+C:\Users\Machine\Desktop\HelbreathSS\src\Launcher\Launcher\obj\Debug\Launcher.vbprojResolveAssemblyReference.cache
+C:\Users\Machine\Desktop\HelbreathSS\src\Launcher\Launcher\obj\Debug\Launcher.vbproj.GenerateResource.Cache
+C:\Users\Machine\Desktop\HelbreathSS\src\Launcher\Build\Launcher.exe.config
+C:\Users\Machine\Desktop\HelbreathSS\src\Launcher\Build\Launcher.exe
+C:\Users\Machine\Desktop\HelbreathSS\src\Launcher\Build\Launcher.pdb
+C:\Users\Machine\Desktop\HelbreathSS\src\Launcher\Build\Launcher.xml
+C:\Users\Machine\Desktop\HelbreathSS\src\Launcher\Launcher\obj\Debug\Launcher.Launcher.resources
+C:\Users\Machine\Desktop\HelbreathSS\src\Launcher\Launcher\obj\Debug\Launcher.Resources.resources
+C:\Users\Machine\Desktop\HelbreathSS\src\Launcher\Launcher\obj\Debug\Launcher.exe
+C:\Users\Machine\Desktop\HelbreathSS\src\Launcher\Launcher\obj\Debug\Launcher.xml
+C:\Users\Machine\Desktop\HelbreathSS\src\Launcher\Launcher\obj\Debug\Launcher.pdb
+D:\Helbreath\Launcher\Build\Launcher.exe.config
+D:\Helbreath\Launcher\Build\Launcher.exe
+D:\Helbreath\Launcher\Build\Launcher.pdb
+D:\Helbreath\Launcher\Build\Launcher.xml
+D:\Helbreath\Launcher\Launcher\obj\Debug\Launcher.vbprojResolveAssemblyReference.cache
+D:\Helbreath\Launcher\Launcher\obj\Debug\Launcher.Launcher.resources
+D:\Helbreath\Launcher\Launcher\obj\Debug\Launcher.Resources.resources
+D:\Helbreath\Launcher\Launcher\obj\Debug\Launcher.vbproj.GenerateResource.Cache
+D:\Helbreath\Launcher\Launcher\obj\Debug\Launcher.exe
+D:\Helbreath\Launcher\Launcher\obj\Debug\Launcher.xml
+D:\Helbreath\Launcher\Launcher\obj\Debug\Launcher.pdb
+C:\Users\programadormtg2\Downloads\Launcher\Build\Launcher.exe.config
+C:\Users\programadormtg2\Downloads\Launcher\Build\Launcher.exe
+C:\Users\programadormtg2\Downloads\Launcher\Build\Launcher.pdb
+C:\Users\programadormtg2\Downloads\Launcher\Build\Launcher.xml
+C:\Users\programadormtg2\Downloads\Launcher\Launcher\obj\Debug\Launcher.Launcher.resources
+C:\Users\programadormtg2\Downloads\Launcher\Launcher\obj\Debug\Launcher.Resources.resources
+C:\Users\programadormtg2\Downloads\Launcher\Launcher\obj\Debug\Launcher.vbproj.GenerateResource.cache
+C:\Users\programadormtg2\Downloads\Launcher\Launcher\obj\Debug\Launcher.vbproj.CoreCompileInputs.cache
+C:\Users\programadormtg2\Downloads\Launcher\Launcher\obj\Debug\Launcher.vbproj.CopyComplete
+C:\Users\programadormtg2\Downloads\Launcher\Launcher\obj\Debug\Launcher.exe
+C:\Users\programadormtg2\Downloads\Launcher\Launcher\obj\Debug\Launcher.xml
+C:\Users\programadormtg2\Downloads\Launcher\Launcher\obj\Debug\Launcher.pdb
+C:\Users\programadormtg2\Downloads\Launcher\Launcher\obj\Debug\Launcher.vbprojAssemblyReference.cache

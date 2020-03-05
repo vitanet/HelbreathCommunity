@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Library">
+      <UniqueIdentifier>{034ff5bc-7d87-484a-9a1e-66f000b00aff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Language">
+      <UniqueIdentifier>{7bafe95d-47d4-41d9-bed5-33e13468cc18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ressources">
+      <UniqueIdentifier>{264ce842-bb86-4947-b703-3b1aec102e48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes">
+      <UniqueIdentifier>{79bad116-049d-40a2-bb66-2e9cc2eae647}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Cint.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="CNTREVNT.H">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="DDRAW.H">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="DINPUT.H">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="DSOUND.H">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="YWSound.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="lan_eng.h">
+      <Filter>Language</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Ressources</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildItem.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="CharInfo.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Curse.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="DXC_ddraw.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="DXC_dinput.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="DXC_dsound.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMonitor.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemName.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Magic.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="MapData.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseInterface.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Msg.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Mydib.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundBuffer.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="StrTok.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="TileSpr.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="XSocket.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionID.h" />
+    <ClInclude Include="DynamicObjectID.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GlobalDef.h" />
+    <ClInclude Include="NetMessages.h" />
+    <ClInclude Include="OnlineUser.h" />
+    <ClInclude Include="SpriteID.h" />
+    <ClInclude Include="Winmain.h" />
+    <ClInclude Include="MP3.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="YWSound.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildItem.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="CharInfo.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Curse.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="DXC_ddraw.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="DXC_dinput.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="DXC_dsound.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMonitor.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemName.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Magic.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="MapData.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseInterface.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Msg.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Mydib.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundBuffer.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="StrTok.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="TileSpr.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="XSocket.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="OnlineUser.cpp" />
+    <ClCompile Include="Wmain.cpp" />
+    <ClCompile Include="MP3.cpp" />
+    <ClCompile Include="Game2.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="AIcon.ico">
+      <Filter>Ressources</Filter>
+    </Image>
+    <Image Include="icon1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource.rc">
+      <Filter>Ressources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="readme.txt" />
+  </ItemGroup>
+</Project>

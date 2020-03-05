@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>Game</ProjectName>
+    <SccProjectName />
+    <SccLocalPath />
+    <ProjectGuid>{C5BDC627-DB02-417B-B412-660F50E0D20E}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>.\Release\</OutDir>
+    <IntDir>.\Release\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <StringPooling>true</StringPooling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <Optimization>MaxSpeed</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>.\Release\</AssemblerListingLocation>
+      <BrowseInformation>true</BrowseInformation>
+      <PrecompiledHeaderOutputFile>.\Release\Client.pch</PrecompiledHeaderOutputFile>
+      <ObjectFileName>.\Release\</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release\</ProgramDataBaseFileName>
+    </ClCompile>
+    <Midl>
+      <TypeLibraryName>.\Release\Client.tlb</TypeLibraryName>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0809</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Release\Client.bsc</OutputFile>
+    </Bscmake>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <SubSystem>Windows</SubSystem>
+      <IgnoreSpecificDefaultLibraries>MSVCRTD;LIBC;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <SetChecksum>true</SetChecksum>
+      <AdditionalDependencies>search.lib;wsock32.lib;DINPUT.LIB;DSOUND.LIB;DXGUID.LIB;ddraw.lib;IMM32.LIB;winmm.lib;Cint.lib;cximage/release/cximage.lib;jpeg/release/Jpeg.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="ActionID.h" />
+    <ClInclude Include="BuildItem.h" />
+    <ClInclude Include="CharInfo.h" />
+    <ClInclude Include="Cint.h" />
+    <ClInclude Include="CNTREVNT.H" />
+    <ClInclude Include="Curse.h" />
+    <ClInclude Include="DDRAW.H" />
+    <ClInclude Include="DINPUT.H" />
+    <ClInclude Include="DSOUND.H" />
+    <ClInclude Include="DXC_ddraw.h" />
+    <ClInclude Include="DXC_dinput.h" />
+    <ClInclude Include="DXC_dsound.h" />
+    <ClInclude Include="DynamicObjectID.h" />
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameMonitor.h" />
+    <ClInclude Include="GlobalDef.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemName.h" />
+    <ClInclude Include="lan_eng.h" />
+    <ClInclude Include="Magic.h" />
+    <ClInclude Include="MapData.h" />
+    <ClInclude Include="Misc.h" />
+    <ClInclude Include="MouseInterface.h" />
+    <ClInclude Include="MP3.h" />
+    <ClInclude Include="Msg.h" />
+    <ClInclude Include="Mydib.h" />
+    <ClInclude Include="NetMessages.h" />
+    <ClInclude Include="OnlineUser.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Skill.h" />
+    <ClInclude Include="SoundBuffer.h" />
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="SpriteID.h" />
+    <ClInclude Include="StrTok.h" />
+    <ClInclude Include="Tile.h" />
+    <ClInclude Include="TileSpr.h" />
+    <ClInclude Include="Winmain.h" />
+    <ClInclude Include="XSocket.h" />
+    <ClInclude Include="YWSound.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="BuildItem.cpp" />
+    <ClCompile Include="CharInfo.cpp" />
+    <ClCompile Include="Curse.cpp" />
+    <ClCompile Include="DXC_ddraw.cpp" />
+    <ClCompile Include="DXC_dinput.cpp" />
+    <ClCompile Include="DXC_dsound.cpp" />
+    <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Game2.cpp" />
+    <ClCompile Include="GameMonitor.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemName.cpp" />
+    <ClCompile Include="Magic.cpp" />
+    <ClCompile Include="MapData.cpp" />
+    <ClCompile Include="Misc.cpp" />
+    <ClCompile Include="MouseInterface.cpp" />
+    <ClCompile Include="MP3.cpp" />
+    <ClCompile Include="Msg.cpp" />
+    <ClCompile Include="Mydib.cpp" />
+    <ClCompile Include="OnlineUser.cpp" />
+    <ClCompile Include="Skill.cpp" />
+    <ClCompile Include="SoundBuffer.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="StrTok.cpp" />
+    <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="TileSpr.cpp" />
+    <ClCompile Include="Wmain.cpp" />
+    <ClCompile Include="XSocket.cpp" />
+    <ClCompile Include="YWSound.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="AIcon.ico" />
+    <Image Include="icon1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="readme.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

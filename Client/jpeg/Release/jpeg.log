@@ -1,0 +1,60 @@
+﻿  Jcapimin.c
+  Jcapistd.c
+  Jccoefct.c
+  Jccolor.c
+  Jcdctmgr.c
+  Jchuff.c
+  Jcinit.c
+  Jcmainct.c
+  Jcmarker.c
+  Jcmaster.c
+  Jcomapi.c
+  Jcparam.c
+  Jcphuff.c
+  Jcprepct.c
+  Jcsample.c
+  Jctrans.c
+  Jdapimin.c
+  Jdapistd.c
+  Jdatadst.c
+  Jdatasrc.c
+  Generating Code...
+  Compiling...
+  Jdcoefct.c
+  Jdcolor.c
+  Jddctmgr.c
+  Jdhuff.c
+  Jdinput.c
+  Jdmainct.c
+  Jdmarker.c
+  Jdmaster.c
+  Jdmerge.c
+  Jdphuff.c
+  Jdpostct.c
+  Jdsample.c
+  Jdtrans.c
+  Jerror.c
+Jerror.c(193): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+Jerror.c(195): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+  Jfdctflt.c
+  Jfdctfst.c
+  Jfdctint.c
+  Jidctflt.c
+  Jidctfst.c
+  Jidctint.c
+  Generating Code...
+  Compiling...
+  Jidctred.c
+  Jmemmgr.c
+Jmemmgr.c(1106): warning C4996: 'getenv': This function or variable may be unsafe. Consider using _dupenv_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdlib.h(1183): note: see declaration of 'getenv'
+Jmemmgr.c(1109): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(2254): note: see declaration of 'sscanf'
+  Jmemnobs.c
+  Jquant1.c
+  Jquant2.c
+  Jutils.c
+  Generating Code...
+  jpeg.vcxproj -> C:\Users\Administrator\Desktop\HBCentuu\Client\jpeg\.\Release\jpeg.lib

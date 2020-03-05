@@ -1,0 +1,172 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: jpeg - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\Windows\Temp\RSP840.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /Fo"Release/" /Fd"Release/" /FD /c 
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jcapimin.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jcapistd.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jccoefct.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jccolor.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jcdctmgr.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jchuff.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jcinit.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jcmainct.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jcmarker.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jcmaster.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jcomapi.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jcparam.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jcphuff.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jcprepct.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jcsample.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jctrans.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jdapimin.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jdapistd.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jdatadst.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jdatasrc.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jdcoefct.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jdcolor.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jddctmgr.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jdhuff.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jdinput.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jdmainct.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jdmarker.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jdmaster.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jdmerge.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jdphuff.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jdpostct.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jdsample.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jdtrans.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jerror.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jfdctflt.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jfdctfst.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jfdctint.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jidctflt.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jidctfst.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jidctint.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jidctred.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jmemmgr.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jmemnobs.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jquant1.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jquant2.c"
+"G:\Helbreath Server\Sources\HelGame\jpeg\Jutils.c"
+]
+Creating command line "cl.exe @C:\Windows\Temp\RSP840.tmp" 
+Creating temporary file "C:\Windows\Temp\RSP841.tmp" with contents
+[
+/nologo /out:"Release\jpeg.lib" 
+".\Release\Jcapimin.obj"
+".\Release\Jcapistd.obj"
+".\Release\Jccoefct.obj"
+".\Release\Jccolor.obj"
+".\Release\Jcdctmgr.obj"
+".\Release\Jchuff.obj"
+".\Release\Jcinit.obj"
+".\Release\Jcmainct.obj"
+".\Release\Jcmarker.obj"
+".\Release\Jcmaster.obj"
+".\Release\Jcomapi.obj"
+".\Release\Jcparam.obj"
+".\Release\Jcphuff.obj"
+".\Release\Jcprepct.obj"
+".\Release\Jcsample.obj"
+".\Release\Jctrans.obj"
+".\Release\Jdapimin.obj"
+".\Release\Jdapistd.obj"
+".\Release\Jdatadst.obj"
+".\Release\Jdatasrc.obj"
+".\Release\Jdcoefct.obj"
+".\Release\Jdcolor.obj"
+".\Release\Jddctmgr.obj"
+".\Release\Jdhuff.obj"
+".\Release\Jdinput.obj"
+".\Release\Jdmainct.obj"
+".\Release\Jdmarker.obj"
+".\Release\Jdmaster.obj"
+".\Release\Jdmerge.obj"
+".\Release\Jdphuff.obj"
+".\Release\Jdpostct.obj"
+".\Release\Jdsample.obj"
+".\Release\Jdtrans.obj"
+".\Release\Jerror.obj"
+".\Release\Jfdctflt.obj"
+".\Release\Jfdctfst.obj"
+".\Release\Jfdctint.obj"
+".\Release\Jidctflt.obj"
+".\Release\Jidctfst.obj"
+".\Release\Jidctint.obj"
+".\Release\Jidctred.obj"
+".\Release\Jmemmgr.obj"
+".\Release\Jmemnobs.obj"
+".\Release\Jquant1.obj"
+".\Release\Jquant2.obj"
+".\Release\Jutils.obj"
+]
+Creating command line "link.exe -lib @C:\Windows\Temp\RSP841.tmp"
+<h3>Output Window</h3>
+Compiling...
+Jcapimin.c
+Jcapistd.c
+Jccoefct.c
+Jccolor.c
+Jcdctmgr.c
+Jchuff.c
+Jcinit.c
+Jcmainct.c
+Jcmarker.c
+Jcmaster.c
+Jcomapi.c
+Jcparam.c
+Jcphuff.c
+Jcprepct.c
+Jcsample.c
+Jctrans.c
+Jdapimin.c
+Jdapistd.c
+Jdatadst.c
+Jdatasrc.c
+Generating Code...
+Compiling...
+Jdcoefct.c
+Jdcolor.c
+Jddctmgr.c
+Jdhuff.c
+Jdinput.c
+Jdmainct.c
+Jdmarker.c
+Jdmaster.c
+Jdmerge.c
+Jdphuff.c
+Jdpostct.c
+Jdsample.c
+Jdtrans.c
+Jerror.c
+Jfdctflt.c
+Jfdctfst.c
+Jfdctint.c
+Jidctflt.c
+Jidctfst.c
+Jidctint.c
+Generating Code...
+Compiling...
+Jidctred.c
+Jmemmgr.c
+Jmemnobs.c
+Jquant1.c
+Jquant2.c
+Jutils.c
+Generating Code...
+Creating library...
+
+
+
+<h3>Results</h3>
+jpeg.lib - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

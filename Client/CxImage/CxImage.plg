@@ -1,0 +1,122 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: CxImage - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\Windows\Temp\RSP81F.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /I "..\jpeg" /I "..\png" /I "..\zlib" /I "..\mng" /I "..\tiff" /I "..\j2k" /I "..\jasper\include" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "_AFXDLL" /D "JAS_WIN_MSVC_BUILD" /Fo"Release/" /Fd"Release/" /FD /c 
+"G:\Helbreath Server\Sources\HelGame\CxImage\tif_xfile.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximabmp.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximadsp.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximaenc.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximaexif.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\xImage.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximagif.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximahist.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximaico.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximainfo.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximaint.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximaj2k.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximajas.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximajbg.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximajpg.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximalpha.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximalyr.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximamng.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximapal.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximapcx.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximapng.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximasel.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximatga.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximath.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximatif.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximatran.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximawbmp.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximawmf.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\ximawnd.cpp"
+"G:\Helbreath Server\Sources\HelGame\CxImage\xmemfile.cpp"
+]
+Creating command line "cl.exe @C:\Windows\Temp\RSP81F.tmp" 
+Creating temporary file "C:\Windows\Temp\RSP820.tmp" with contents
+[
+/nologo /out:"Release\CxImage.lib" 
+".\Release\tif_xfile.obj"
+".\Release\ximabmp.obj"
+".\Release\ximadsp.obj"
+".\Release\ximaenc.obj"
+".\Release\ximaexif.obj"
+".\Release\xImage.obj"
+".\Release\ximagif.obj"
+".\Release\ximahist.obj"
+".\Release\ximaico.obj"
+".\Release\ximainfo.obj"
+".\Release\ximaint.obj"
+".\Release\ximaj2k.obj"
+".\Release\ximajas.obj"
+".\Release\ximajbg.obj"
+".\Release\ximajpg.obj"
+".\Release\ximalpha.obj"
+".\Release\ximalyr.obj"
+".\Release\ximamng.obj"
+".\Release\ximapal.obj"
+".\Release\ximapcx.obj"
+".\Release\ximapng.obj"
+".\Release\ximasel.obj"
+".\Release\ximatga.obj"
+".\Release\ximath.obj"
+".\Release\ximatif.obj"
+".\Release\ximatran.obj"
+".\Release\ximawbmp.obj"
+".\Release\ximawmf.obj"
+".\Release\ximawnd.obj"
+".\Release\xmemfile.obj"
+]
+Creating command line "link.exe -lib @C:\Windows\Temp\RSP820.tmp"
+<h3>Output Window</h3>
+Compiling...
+tif_xfile.cpp
+ximabmp.cpp
+ximadsp.cpp
+ximaenc.cpp
+ximaexif.cpp
+xImage.cpp
+ximagif.cpp
+ximahist.cpp
+ximaico.cpp
+ximainfo.cpp
+ximaint.cpp
+ximaj2k.cpp
+ximajas.cpp
+ximajbg.cpp
+ximajpg.cpp
+ximalpha.cpp
+ximalyr.cpp
+ximamng.cpp
+ximapal.cpp
+ximapcx.cpp
+Generating Code...
+Compiling...
+ximapng.cpp
+ximasel.cpp
+ximatga.cpp
+ximath.cpp
+ximatif.cpp
+ximatran.cpp
+ximawbmp.cpp
+ximawmf.cpp
+ximawnd.cpp
+xmemfile.cpp
+Generating Code...
+Creating library...
+
+
+
+<h3>Results</h3>
+CxImage.lib - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>
