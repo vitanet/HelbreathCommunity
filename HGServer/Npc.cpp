@@ -3619,7 +3619,7 @@ void CGame::MobGenerator()
 	char cNpcName[21], cName_Master[11], cName_Slave[11], cWaypoint[11];
 	char cSA;
 	int  pX, pY, iMapLevel, iProbSA, iKindSA, iResultNum, iNpcID;
-	BOOL bFirmBerserk, bIsSpecialEvent;
+	BOOL bFirmBerserk, bIsSpecialEvent, bMaster = FALSE;
 	bool bIsGuard;
 
 	if (m_bOnExitProcess == TRUE) return;
@@ -4330,8 +4330,12 @@ void CGame::MobGenerator()
 					cSA = _cGetSpecialAbility(iKindSA);
 				}
 
-				if (bCreateNewNpc(cNpcName, cName_Master, m_pMapList[i]->m_cName, (rand() % 3), cSA, DEF_MOVETYPE_RANDOM, &pX, &pY, cWaypoint, NULL, NULL, -1, FALSE, FALSE, bFirmBerserk, TRUE) == FALSE) {
+				bMaster = bCreateNewNpc(cNpcName, cName_Master, m_pMapList[i]->m_cName, (rand() % 3), cSA, DEF_MOVETYPE_RANDOM, &pX, &pY, cWaypoint, NULL, NULL, -1, FALSE, FALSE, bFirmBerserk, TRUE);
+
+				if (!bMaster)
+				{
 					m_pMapList[i]->SetNamingValueEmpty(iNamingValue);
+					iTotalMob = 0;
 				}
 
 			}
