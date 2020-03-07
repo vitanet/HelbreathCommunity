@@ -78,7 +78,7 @@ public:
 	
 	POINT m_pInitialPoint[DEF_MAXINITIALPOINT];
 
-	BOOL  m_bNamingValueUsingStatus[5000]; //LifeX Fix Mobs Respawn Limit 01/01
+	BOOL  m_bNamingValueUsingStatus[15000]; //LifeX Fix Mobs Respawn Limit 01/01
 	BOOL  m_bRandomMobGenerator;
 	char  m_cRandomMobGeneratorLevel;
 	int   m_iTotalActiveObject;

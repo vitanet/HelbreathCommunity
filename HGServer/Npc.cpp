@@ -4513,15 +4513,15 @@ void CGame::MobGenerator()
 			}
 		}
 
-		//50Cent - MobGenerator Fix
-		if (m_pMapList[i] != NULL) {
+		if ((m_pMapList[i] != NULL) && ((m_pMapList[i]->m_iMaximumObject) > m_pMapList[i]->m_iTotalActiveObject))
+		{
 			for (j = 1; j < DEF_MAXSPOTMOBGENERATOR; j++)
-				if ((m_pMapList[i]->m_iTotalActiveObject + m_pMapList[i]->m_stSpotMobGenerator[j].iCurMobs) < m_pMapList[i]->m_iMaximumObject) {
-
-					if ((iDice(1, 3) == 2) && (m_pMapList[i]->m_stSpotMobGenerator[j].bDefined == TRUE) &&
-						(m_pMapList[i]->m_stSpotMobGenerator[j].iMaxMobs > m_pMapList[i]->m_stSpotMobGenerator[j].iCurMobs)) {
-						iNamingValue = m_pMapList[i]->iGetEmptyNamingValue();
-						if (iNamingValue != -1) {
+				if ((iDice(1, 3) == 2) && (m_pMapList[i]->m_stSpotMobGenerator[j].bDefined == TRUE) &&
+					(m_pMapList[i]->m_stSpotMobGenerator[j].iMaxMobs > m_pMapList[i]->m_stSpotMobGenerator[j].iCurMobs))
+				{
+					iNamingValue = m_pMapList[i]->iGetEmptyNamingValue();
+					if (iNamingValue != -1)
+					{
 							bIsGuard = FALSE;
 							ZeroMemory(cNpcName, sizeof(cNpcName));
 							switch (m_pMapList[i]->m_stSpotMobGenerator[j].iMobType) {
@@ -4652,7 +4652,6 @@ void CGame::MobGenerator()
 							}
 						}
 					}
-				}
 		}
 	}
 }

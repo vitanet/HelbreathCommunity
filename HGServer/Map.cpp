@@ -66,7 +66,7 @@ CMap::CMap(class CGame * pGame)
 		m_pInitialPoint[i].y = -1;
 	}
  
-	for (i = 0; i < 5000; i++)
+	for (i = 0; i < 15000; i++)
 		m_bNamingValueUsingStatus[i] = FALSE; //LifeX Fix Mobs Respawn Limit 01/01
 
 	for (i = 0; i < DEF_MAXOCCUPYFLAG; i++)
@@ -630,7 +630,7 @@ int CMap::iGetEmptyNamingValue()
 {
   register int i;
 
-	for (i = 0; i < 5000; i++) //LifeX Fix Mobs Respawn Limit 01/01
+	for (i = 0; i < 15000; i++) //LifeX Fix Mobs Respawn Limit 01/01
 	if (m_bNamingValueUsingStatus[i] == FALSE) 
 	{
 		m_bNamingValueUsingStatus[i] = TRUE;
