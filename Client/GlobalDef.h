@@ -23,7 +23,7 @@
 #define MSG_FORUMPAGE           "http://www.helbreath.com"	// Forum Server
 
 #define DEF_UPPERVERSION		3
-#define DEF_LOWERVERSION		51
+#define DEF_LOWERVERSION		82
 
 #define DEF_SERVER_DNS			"hbtest.ddns.net"							// hbtest.ddns.net
 #define DEF_SERVER_PORT			2848											// WorldLServer Port

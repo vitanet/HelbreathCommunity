@@ -1,0 +1,35 @@
+﻿  BuildItem.cpp
+  CharInfo.cpp
+  Curse.cpp
+  DXC_ddraw.cpp
+  DXC_dinput.cpp
+  DXC_dsound.cpp
+  Effect.cpp
+  Game.cpp
+  Game2.cpp
+  GameMonitor.cpp
+  Item.cpp
+  ItemName.cpp
+  Magic.cpp
+  MapData.cpp
+  Misc.cpp
+  MouseInterface.cpp
+  MP3.cpp
+  Msg.cpp
+  Mydib.cpp
+  OnlineUser.cpp
+  Generating Code...
+  Compiling...
+  Skill.cpp
+  SoundBuffer.cpp
+  Sprite.cpp
+  StrTok.cpp
+  Tile.cpp
+  TileSpr.cpp
+  Wmain.cpp
+  XSocket.cpp
+  YWSound.cpp
+  Generating Code...
+     Creating library .\Release\Game.lib and object .\Release\Game.exp
+  Client.vcxproj -> C:\Users\Administrator\Source\Repos\vitanet\HelbreathCommunity\Client\.\Release\Game.exe
+  Client.vcxproj -> .\Release\Game.pdb (Full PDB)
