@@ -5066,7 +5066,7 @@ void CGame::DlgBoxClick_GMPanel(short msX, short msY)
 					}
 					if ((msY >= sY + 148 + 14 * 4) && (msY <= sY + 161 + 14 * 5))
 					{
-						strcpy(m_cChatMsg, "/onlines");
+						strcpy(m_cChatMsg, "/bigitems");
 					}
 					if ((msY >= sY + 148 + 14 * 5) && (msY <= sY + 161 + 14 * 6))
 					{
@@ -5162,7 +5162,7 @@ void CGame::DrawDialogBox_GMPanel(short msX, short msY) // Lo que muestra
 			PutString2(sX + 145, sY + 75 + 14 * 6, "Check Rep", 170, 170, 170);
 			PutString2(sX + 145, sY + 75 + 14 * 7, "Get Rep", 170, 170, 170);
 			PutString2(sX + 145, sY + 75 + 14 * 8, "Change City", 170, 170, 170);
-			PutString2(sX + 145, sY + 75 + 14 * 9, "Onlines", 170, 170, 170);
+			PutString2(sX + 145, sY + 75 + 14 * 9, "Big Items", 170, 170, 170);
 			PutString2(sX + 145, sY + 75 + 14 * 10, "Criticals", 170, 170, 170);
 
 			PutString2(sX + 145, sY + 75 + 14 * 11, "TP to Event", 170, 170, 170);
@@ -18004,7 +18004,7 @@ int CGame::_iCheckDlgBoxFocus(short msX, short msY, char cButtonSide)
 					case 38:
 					case 40:
 					case 50: // resur
-						// NPC
+					case 56: //LifeX Fix Player Panel Moveable
 					case 67:
 					case 68:
 					case 69:
