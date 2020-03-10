@@ -712,6 +712,7 @@ public:
 		char  cMode;
 		BOOL  bIsScrollSelected;
 	} m_stDialogBoxInfo[61];	 // Snoopy passé à 61 (origine 41, Alastor 60), j'ai mis +20 car plus pratique.
+
 	char m_cDialogBoxOrder[61];
 	CInt m_bIsDialogEnabled[61];//was BOOL
 //Snoopy=>>>>>>>>>>>>>>>>>>>>>

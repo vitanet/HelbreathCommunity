@@ -180,7 +180,7 @@ CGame::CGame()
 
 	//Guide Map Dialog
 #ifdef RES_HIGH
-	m_stDialogBoxInfo[9].sX = 800 - 128;
+	m_stDialogBoxInfo[9].sX = 672; //LifeX Fix Map
 #else
 	m_stDialogBoxInfo[9].sX = 512;
 #endif
@@ -190,9 +190,7 @@ CGame::CGame()
 
 	//Chatting History Dialog(F9)
 	m_stDialogBoxInfo[10].sX = 135;
-
 	m_stDialogBoxInfo[10].sY = 273;
-
 	m_stDialogBoxInfo[10].sSizeX = 364;
 	m_stDialogBoxInfo[10].sSizeY = 162;
 
@@ -27345,13 +27343,11 @@ void CGame::DlbBoxDoubleClick_GuideMap(short msX, short msY)
 	szY = m_stDialogBoxInfo[9].sSizeY;
 	if( sX < 20 ) sX = 0;
 	if( sY < 20 ) sY = 0;
-#ifdef RES_HIGH
-	if (sX > 798 - 128 - 20) sX = 798 - 128;
-	if (sY > 547 - 128 - 20) sY = 547 - 128;
-#else
-	if( sX > 640-128-20 ) sX = 640-128;
-	if( sY > 427-128-20 ) sY = 427-128;
-#endif
+
+	//LifeX Fix Map
+	if (sX > 400) sX = 800 - 128;
+	if (sY > 273) sY = 547 - 128;
+
 	if( m_bZoomMap )
 	{	shX = m_sPlayerX-64;
 		shY = m_sPlayerY-64;
@@ -29030,8 +29026,10 @@ void CGame::CommandProcessor(short msX, short msY, short indexX, short indexY, c
 			if ((m_cCommand == DEF_OBJECTMOVE) || (m_cCommand == DEF_OBJECTRUN)) goto MOTION_COMMAND_PROCESS;
 			return;
 		}
-		if (cLB == 0) {
-			switch (m_stMCursor.cSelectedObjectType) {
+		if (cLB == 0) 
+		{
+			switch (m_stMCursor.cSelectedObjectType) 
+			{
 			case DEF_SELECTEDOBJTYPE_DLGBOX:
 				if ((m_stMCursor.cSelectedObjectType == DEF_SELECTEDOBJTYPE_DLGBOX) &&
 					(m_stMCursor.sSelectedObjectID == 7) && (m_stDialogBoxInfo[7].cMode == 20))
@@ -29050,22 +29048,28 @@ void CGame::CommandProcessor(short msX, short msY, short indexX, short indexY, c
 					StartInputString(sX + 40, sY + 57, 11, m_cAmountString);
 					m_stDialogBoxInfo[17].cMode = 1;
 				}
+
 				if (m_stMCursor.sSelectedObjectID == 9)
 				{
-#ifdef RES_HIGH
+					{
+						if (msX < 400) //LifeX Fix Map
+						{
+							m_stDialogBoxInfo[9].sX = 0;
+						}
+						else 
+						{
+							m_stDialogBoxInfo[9].sX = 800 - m_stDialogBoxInfo[9].sSizeX;
+						}
 
-					if (msX < 400) m_stDialogBoxInfo[9].sX = 0;
-					else m_stDialogBoxInfo[9].sX = 798 - m_stDialogBoxInfo[9].sSizeX;
-					if (msY < 273) m_stDialogBoxInfo[9].sY = 0;
-					else m_stDialogBoxInfo[9].sY = 547 - m_stDialogBoxInfo[9].sSizeY;
-
-#else
-					if (msX < 320) m_stDialogBoxInfo[9].sX = 0;
-					else m_stDialogBoxInfo[9].sX = 640 - m_stDialogBoxInfo[9].sSizeX;
-					if (msY < 213) m_stDialogBoxInfo[9].sY = 0;
-					else m_stDialogBoxInfo[9].sY = 427 - m_stDialogBoxInfo[9].sSizeY;
-
-#endif
+						if (msY < 273)
+						{
+							m_stDialogBoxInfo[9].sY = 0;
+						}
+						else 
+						{
+							m_stDialogBoxInfo[9].sY = 547 - m_stDialogBoxInfo[9].sSizeY;
+						}
+					}
 				}
 
 				m_stMCursor.cPrevStatus = DEF_CURSORSTATUS_NULL;

@@ -17397,13 +17397,11 @@ void CGame::DrawDialogBox_GuideMap(short msX, short msY, char cLB)
 	szY = m_stDialogBoxInfo[9].sSizeY;
 	if (sX < 20) sX = 0;
 	if (sY < 20) sY = 0;
-#ifdef RES_HIGH
-	if (sX > 800 - 128 - 20) sX = 800 - 128;
-	if (sY > 547 - 128 - 20) sY = 547 - 128;
-#else
-	if (sX > 640 - 128 - 20) sX = 640 - 128;
-	if (sY > 427 - 128 - 20) sY = 427 - 128;
-#endif
+
+	//LifeX Fix Map
+	if (sX > 400) sX = 800 - 128;
+	if (sY > 273) sY = 547 - 128;
+
 	for (shX = -2; shX<130; shX++)
 	{
 		m_DDraw.PutPixel(sX + shX, sY - 2, 50, 50, 50);
