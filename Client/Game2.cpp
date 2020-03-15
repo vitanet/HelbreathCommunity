@@ -12015,51 +12015,27 @@ void CGame::DrawDialogBox_Quest(int msX, int msY)
 *************************************************************************************************/
 void CGame::DrawQuestHelper()
 {
-
-
 	char cTemp[21], cTxt[120];
-	if (m_bIsDialogEnabled[9]) {
+	// cc19
+	if (!m_bIsCTFMode && !m_bIsHeldenian) {
 		if (m_stQuest.sQuestType != NULL) {
-			PutString2(520, 130, DEF_QUESTHELPER, 255, 200, 0);
+			PutString2(10, 140, DEF_QUESTHELPER, 255, 200, 0);
 
 			if (m_stQuest.bIsQuestCompleted) {
-				PutString2(519, 142, DEF_QUESTHELPERCOMPLETE, 255, 0, 0);
+				PutString2(10, 152, DEF_QUESTHELPERCOMPLETE, 255, 0, 0);
 			}
 			else {
 				if (m_stQuest.sX != 0) {
 					ZeroMemory(cTxt, sizeof(cTxt));
 					wsprintf(cTxt, "%d,%d /%d", m_stQuest.sX, m_stQuest.sY, m_stQuest.sRange);
-					PutString2(520, 142, cTxt, 255, 255, 255);
+					PutString2(10, 152, cTxt, 255, 255, 255);
 				}
 				else {
 					ZeroMemory(cTemp, sizeof(cTemp));
 					GetNpcName(m_stQuest.sTargetType, cTemp);
 					ZeroMemory(cTxt, sizeof(cTxt));
 					wsprintf(cTxt, "%s: %d/%d", cTemp, (m_stQuest.sTargetCount - m_stQuest.sCurrentCount), m_stQuest.sTargetCount);
-					PutString2(520, 142, cTxt, 255, 255, 255);
-				}
-			}
-		}
-	}
-	else {
-		if (m_stQuest.sQuestType != NULL) {
-			PutString2(520, 5, DEF_QUESTHELPER, 255, 200, 0);
-
-			if (m_stQuest.bIsQuestCompleted) {
-				PutString2(519, 17, DEF_QUESTHELPERCOMPLETE, 255, 0, 0);
-			}
-			else {
-				if (m_stQuest.sX != 0) {
-					ZeroMemory(cTxt, sizeof(cTxt));
-					wsprintf(cTxt, "%d,%d/%d", m_stQuest.sX, m_stQuest.sY, m_stQuest.sRange);
-					PutString2(520, 17, cTxt, 255, 255, 255);
-				}
-				else {
-					ZeroMemory(cTemp, sizeof(cTemp));
-					GetNpcName(m_stQuest.sTargetType, cTemp);
-					ZeroMemory(cTxt, sizeof(cTxt));
-					wsprintf(cTxt, "%s: %d/%d", cTemp, (m_stQuest.sTargetCount - m_stQuest.sCurrentCount), m_stQuest.sTargetCount);
-					PutString2(520, 17, cTxt, 255, 255, 255);
+					PutString2(10, 152, cTxt, 255, 255, 255);
 				}
 			}
 		}
