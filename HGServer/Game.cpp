@@ -297,10 +297,7 @@ BOOL CGame::bAccept(class XSocket * pXSock)
 			m_iTotalClients++;
 			if (m_iTotalClients > m_iMaxClients) { 
 				m_iMaxClients = m_iTotalClients;
-				// new March 13, 2005 - Hypnotoad
-				GetLocalTime(&m_MaxUserSysTime);
-				wsprintf(G_cTxt, "Maximum Players: %d", m_iMaxClients);
-				PutLogFileList(G_cTxt);
+				
 			}
 			return TRUE;
 		}
@@ -730,7 +727,7 @@ void CGame::OnClientRead(int iClientH)
 	if (m_pClientList[iClientH] == NULL) return;
 	pData = m_pClientList[iClientH]->m_pXSock->pGetRcvDataPointer(&dwMsgSize, &cKey);
 	if (bPutMsgQuene(DEF_MSGFROM_CLIENT, pData, dwMsgSize, iClientH, cKey) == FALSE) {
-		PutLogList("@@@@@@ CRITICAL ERROR in MsgQuene!!! @@@@@@");
+		PutLogList("@@@@@@ CRITICAL ERROR in MsgQuene!!! (OnClientRead) @@@@@@");
 	}
 }
 
@@ -752,7 +749,7 @@ void CGame::DisplayInfo(HDC hdc)
     TextOut(hdc, 605, 40, cTxt, strlen(cTxt));
     wsprintf(cTxt, "Max Level: %d", m_iPlayerMaxLevel);
     TextOut(hdc, 605, 55, cTxt, strlen(cTxt));
-    wsprintf(cTxt, "Max Stats: %d", m_sCharStatLimit-21);
+    wsprintf(cTxt, "Max Stats: %d", m_sCharStatLimit-11);
     TextOut(hdc, 605, 70, cTxt, strlen(cTxt));
     wsprintf(cTxt, "Players Online: %d/%d", m_iTotalClients, m_iMaxClients);
     TextOut(hdc, 605, 85, cTxt, strlen(cTxt));
@@ -1963,7 +1960,7 @@ void CGame::RequestInitDataHandler(int iClientH, char * pData, char cKey, BOOL b
 	SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_SUPERATTACKLEFT, NULL, NULL, NULL, NULL);
 
 	// centu - sends max stats to client, and receive it when log in
-	SendNotifyMsg(NULL, iClientH, DEF_MAX_STATS, m_sCharStatLimit - 21, NULL, NULL, NULL);
+	SendNotifyMsg(NULL, iClientH, DEF_MAX_STATS, m_sCharStatLimit - 11, NULL, NULL, NULL);
 	
 	// SNOOPY: Send gate positions if applicable.
 	Notify_ApocalypseGateState(iClientH);
@@ -2732,7 +2729,7 @@ void CGame::OnMainLogRead()
 	pData = m_pMainLogSock->pGetRcvDataPointer(&dwMsgSize, &cKey);
 
 	if (bPutMsgQuene(DEF_MSGFROM_LOGSERVER, pData, dwMsgSize, NULL, cKey) == FALSE) {
-		PutLogList("@@@@@@ CRITICAL ERROR in MsgQuene!!! @@@@@@");
+		PutLogList("@@@@@@ CRITICAL ERROR in MsgQuene!!! (OnMainLogRead) @@@@@@");
 	}	
 }
 
@@ -6643,12 +6640,12 @@ DPDC_STOP_DECODING:;
 		GetMapInitialPoint(m_pClientList[iClientH]->m_cMapIndex, &m_pClientList[iClientH]->m_sX, &m_pClientList[iClientH]->m_sY, m_pClientList[iClientH]->m_cLocation);
 	}
 	if (m_pClientList[iClientH]->m_iLU_Pool < 3) m_pClientList[iClientH]->m_iLU_Pool = 3;
-	if ((m_pClientList[iClientH]->m_iStr < 10) || (m_pClientList[iClientH]->m_iStr > m_sCharStatLimit - 21)) return FALSE;
-	if ((m_pClientList[iClientH]->m_iDex < 10) || (m_pClientList[iClientH]->m_iDex > m_sCharStatLimit - 21)) return FALSE;
-	if ((m_pClientList[iClientH]->m_iVit < 10) || (m_pClientList[iClientH]->m_iVit > m_sCharStatLimit-21)) return FALSE;
-	if ((m_pClientList[iClientH]->m_iInt < 10) || (m_pClientList[iClientH]->m_iInt > m_sCharStatLimit - 21)) return FALSE;
-	if ((m_pClientList[iClientH]->m_iMag < 10) || (m_pClientList[iClientH]->m_iMag > m_sCharStatLimit - 21)) return FALSE;
-	if ((m_pClientList[iClientH]->m_iCharisma < 10) || (m_pClientList[iClientH]->m_iCharisma > m_sCharStatLimit-21)) return FALSE;
+	if ((m_pClientList[iClientH]->m_iStr < 10) || (m_pClientList[iClientH]->m_iStr > m_sCharStatLimit - 11)) return FALSE;
+	if ((m_pClientList[iClientH]->m_iDex < 10) || (m_pClientList[iClientH]->m_iDex > m_sCharStatLimit - 11)) return FALSE;
+	if ((m_pClientList[iClientH]->m_iVit < 10) || (m_pClientList[iClientH]->m_iVit > m_sCharStatLimit-11)) return FALSE;
+	if ((m_pClientList[iClientH]->m_iInt < 10) || (m_pClientList[iClientH]->m_iInt > m_sCharStatLimit - 11)) return FALSE;
+	if ((m_pClientList[iClientH]->m_iMag < 10) || (m_pClientList[iClientH]->m_iMag > m_sCharStatLimit - 11)) return FALSE;
+	if ((m_pClientList[iClientH]->m_iCharisma < 10) || (m_pClientList[iClientH]->m_iCharisma > m_sCharStatLimit-11)) return FALSE;
 	
 	int cStatPointTotal = m_pClientList[iClientH]->m_iStr + m_pClientList[iClientH]->m_iDex + m_pClientList[iClientH]->m_iVit +
 		m_pClientList[iClientH]->m_iInt + m_pClientList[iClientH]->m_iMag + m_pClientList[iClientH]->m_iCharisma;
@@ -9919,11 +9916,6 @@ void CGame::ClientKilledHandler(int iClientH, int iAttackerH, char cAttackerType
 					(m_pClientList[i]->m_iCrusadeDuty == 3)) {
 					m_pClientList[i]->m_iConstructionPoint += ((m_pClientList[iClientH]->m_iLevel+ m_pClientList[iClientH]->m_iMajesticLevel) / 2);
 
-
-
-					//testcode
-					wsprintf(G_cTxt, "Enemy Player Killed by Npc! Construction +%d", ((m_pClientList[iClientH]->m_iLevel+ m_pClientList[iClientH]->m_iMajesticLevel) / 2));
-					PutLogList(G_cTxt);
 					// ���ְ����� �ٷ� �뺸.
 					SendNotifyMsg(NULL, i, DEF_NOTIFY_CONSTRUCTIONPOINT, m_pClientList[i]->m_iConstructionPoint, m_pClientList[i]->m_iWarContribution, NULL, NULL);
 					return;
@@ -10140,7 +10132,7 @@ void CGame::OnGateRead()
 
 	if (bPutMsgQuene(DEF_MSGFROM_GATESERVER, pData, dwMsgSize, NULL, cKey) == FALSE) {
 		// ¸Þ½ÃÁö Å¥¿¡ ÀÌ»óÀÌ »ý°å´Ù. Ä¡¸íÀûÀÎ ¿¡·¯.
-		PutLogList("@@@@@@ CRITICAL ERROR in MsgQuene!!! @@@@@@");
+		PutLogList("@@@@@@ CRITICAL ERROR in MsgQuene!!! (OnGateRead) @@@@@@");
 	}	
 }
 
@@ -10391,8 +10383,7 @@ void CGame::StateChangeHandler(int iClientH, char * pData, DWORD dwMsgSize)
 	iOldInt = m_pClientList[iClientH]->m_iInt;
 	iOldMag = m_pClientList[iClientH]->m_iMag;
 	iOldChar = m_pClientList[iClientH]->m_iCharisma;	
-	wsprintf(G_cTxt, "(*) Char(%s) Str(%d) Vit(%d) Dex(%d) Int(%d) Mag(%d) Chr(%d) ", m_pClientList[iClientH]->m_cCharName, m_pClientList[iClientH]->m_iStr, m_pClientList[iClientH]->m_iVit, m_pClientList[iClientH]->m_iDex, m_pClientList[iClientH]->m_iInt, m_pClientList[iClientH]->m_iMag, m_pClientList[iClientH]->m_iCharisma);
-	PutLogList(G_cTxt);	
+		
 	if(!bChangeState(cStateChange1,&cStr,&cVit,&cDex,&cInt,&cMag,&cChar))
 	{	// SNOOPY: Stats order was wrong here !
 		SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_STATECHANGE_FAILED, NULL, NULL, NULL, NULL);
@@ -10423,32 +10414,32 @@ void CGame::StateChangeHandler(int iClientH, char * pData, DWORD dwMsgSize)
 	{	SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_STATECHANGE_FAILED, NULL, NULL, NULL, NULL);
 		return;
 	}
-	if ((m_pClientList[iClientH]->m_iStr - cStr > m_sCharStatLimit - 21) 
+	if ((m_pClientList[iClientH]->m_iStr - cStr > m_sCharStatLimit - 11) 
 		 || (m_pClientList[iClientH]->m_iStr - cStr < 10)) 
 	{	SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_STATECHANGE_FAILED, NULL, NULL, NULL, NULL);
 		return;
 	}
-	if ((m_pClientList[iClientH]->m_iVit - cVit > m_sCharStatLimit - 21)
+	if ((m_pClientList[iClientH]->m_iVit - cVit > m_sCharStatLimit - 11)
 		 || (m_pClientList[iClientH]->m_iVit - cVit < 10)) 
 	{	SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_STATECHANGE_FAILED, NULL, NULL, NULL, NULL);
 		return;
 	}
-	if ((m_pClientList[iClientH]->m_iDex - cDex > m_sCharStatLimit - 21)
+	if ((m_pClientList[iClientH]->m_iDex - cDex > m_sCharStatLimit - 11)
 		 || (m_pClientList[iClientH]->m_iDex - cDex < 10)) 
 	{	SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_STATECHANGE_FAILED, NULL, NULL, NULL, NULL);
 		return;
 	}
-	if ((m_pClientList[iClientH]->m_iInt - cInt > m_sCharStatLimit - 21)
+	if ((m_pClientList[iClientH]->m_iInt - cInt > m_sCharStatLimit - 11)
 		 || (m_pClientList[iClientH]->m_iInt - cInt < 10)) 
 	{	SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_STATECHANGE_FAILED, NULL, NULL, NULL, NULL);
 		return;
 	}
-	if ((m_pClientList[iClientH]->m_iMag - cMag > m_sCharStatLimit - 21)
+	if ((m_pClientList[iClientH]->m_iMag - cMag > m_sCharStatLimit - 11)
 		 || (m_pClientList[iClientH]->m_iMag - cMag < 10)) 
 	{	SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_STATECHANGE_FAILED, NULL, NULL, NULL, NULL);
 		return;
 	}
-	if ((m_pClientList[iClientH]->m_iCharisma - cChar > m_sCharStatLimit - 21)
+	if ((m_pClientList[iClientH]->m_iCharisma - cChar > m_sCharStatLimit - 11)
 		 || (m_pClientList[iClientH]->m_iCharisma - cChar < 10)) 
 	{	SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_STATECHANGE_FAILED, NULL, NULL, NULL, NULL);
 		return;
@@ -10466,15 +10457,7 @@ void CGame::StateChangeHandler(int iClientH, char * pData, DWORD dwMsgSize)
 	if (m_pClientList[iClientH]->m_iHP > iGetMaxHP(iClientH)) m_pClientList[iClientH]->m_iHP = iGetMaxHP(iClientH, FALSE);
 	if (m_pClientList[iClientH]->m_iMP > iGetMaxMP(iClientH)) m_pClientList[iClientH]->m_iMP = iGetMaxMP(iClientH);
 	if (m_pClientList[iClientH]->m_iSP > iGetMaxSP(iClientH)) m_pClientList[iClientH]->m_iSP = iGetMaxSP(iClientH);
-	ZeroMemory(cStateTxt,sizeof(cStateTxt));
-	wsprintf(cStateTxt, "STR(%d->%d)VIT(%d->%d)DEX(%d->%d)INT(%d->%d)MAG(%d->%d)CHARISMA(%d->%d)",
-		iOldStr, m_pClientList[iClientH]->m_iStr,
-		iOldVit, m_pClientList[iClientH]->m_iVit,
-		iOldDex, m_pClientList[iClientH]->m_iDex,
-		iOldInt, m_pClientList[iClientH]->m_iInt,
-		iOldMag, m_pClientList[iClientH]->m_iMag,
-		iOldChar,m_pClientList[iClientH]->m_iCharisma);
-	PutLogList(cStateTxt);
+	
 	SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_STATECHANGE_SUCCESS, NULL, NULL, NULL, NULL);
 }
 
@@ -10556,22 +10539,22 @@ void CGame::LevelUpSettingsHandler(int iClientH, char * pData, DWORD dwMsgSize)
 	}
 
 	// Level-Up Setting°ª¿¡ ¿À·ù°¡ ÀÖ´ÂÁö °Ë»çÇÑ´Ù.
-	if ((m_pClientList[iClientH]->m_iStr + cStr > m_sCharStatLimit - 21) || (cStr < 0))
+	if ((m_pClientList[iClientH]->m_iStr + cStr > m_sCharStatLimit - 11) || (cStr < 0))
 		return;
 
-	if ((m_pClientList[iClientH]->m_iDex + cDex > m_sCharStatLimit - 21) || (cDex < 0))
+	if ((m_pClientList[iClientH]->m_iDex + cDex > m_sCharStatLimit - 11) || (cDex < 0))
 		return;
 
-	if ((m_pClientList[iClientH]->m_iInt + cInt > m_sCharStatLimit - 21) || (cInt < 0))
+	if ((m_pClientList[iClientH]->m_iInt + cInt > m_sCharStatLimit - 11) || (cInt < 0))
 		return;
 
-	if ((m_pClientList[iClientH]->m_iVit + cVit > m_sCharStatLimit - 21) || (cVit < 0))
+	if ((m_pClientList[iClientH]->m_iVit + cVit > m_sCharStatLimit - 11) || (cVit < 0))
 		return;
 
-	if ((m_pClientList[iClientH]->m_iMag + cMag > m_sCharStatLimit - 21) || (cMag < 0))
+	if ((m_pClientList[iClientH]->m_iMag + cMag > m_sCharStatLimit - 11) || (cMag < 0))
 		return;
 
-	if ((m_pClientList[iClientH]->m_iCharisma + cChar > m_sCharStatLimit - 21) || (cChar < 0))
+	if ((m_pClientList[iClientH]->m_iCharisma + cChar > m_sCharStatLimit - 11) || (cChar < 0))
 		return;
 
 	iTotalSetting = m_pClientList[iClientH]->m_iStr + m_pClientList[iClientH]->m_iDex + m_pClientList[iClientH]->m_iVit + 
@@ -10963,10 +10946,6 @@ void CGame::EnemyKillRewardHandler(int iAttackerH, int iClientH)
 
 
 				m_pClientList[iAttackerH]->m_iConstructionPoint += (m_pClientList[iClientH]->m_iLevel+ m_pClientList[iClientH]->m_iMajesticLevel) / 2;
-
-				//testcode
-				wsprintf(G_cTxt, "Enemy Player Killed by Player! Construction: +%d WarContribution +%d", (m_pClientList[iClientH]->m_iLevel+ m_pClientList[iClientH]->m_iMajesticLevel) / 2, (iRewardExp - (iRewardExp/3))*6);
-				PutLogList(G_cTxt);
 
 				// ¾Ë·ÁÁØ´Ù.
 				SendNotifyMsg(NULL, iAttackerH, DEF_NOTIFY_CONSTRUCTIONPOINT, m_pClientList[iAttackerH]->m_iConstructionPoint, m_pClientList[iAttackerH]->m_iWarContribution, NULL, NULL);
@@ -16489,9 +16468,6 @@ void CGame::CheckConnectionHandler(int iClientH, char *pData)
 	}
 }
 
-
-
-
 BOOL CGame::bStockMsgToGateServer(char *pData, DWORD dwSize)
 {
  char * cp;
@@ -17066,8 +17042,6 @@ void CGame::GSM_RequestFindCharacter(WORD wReqServerID, WORD wReqClientH, char *
 		break;	
 	}
 }
-
-
 
 BOOL CGame::bAddClientShortCut(int iClientH)
 {
@@ -18094,8 +18068,6 @@ void CGame::OnStartGameSignal()
 
 	PutLogList("");
 	PutLogList("(!) Game Server Activated.");
-
-	
 }
 
 void CGame::CheckForceRecallTime(int iClientH)
@@ -19136,7 +19108,7 @@ void CGame::ShowClientMsg(int iClientH, char* pMsg)
 	*sp = NULL;
 	cp += 2;
 
-	memcpy(cp, "Server", 6); // Player name :P
+	memcpy(cp, "[BOT]", 5); // Player name :P
 	cp += 10;
 
 	*cp = 10; // chat type
@@ -19532,15 +19504,14 @@ int CGame::iCalculateAttackEffect(short sTargetH, char cTargetType, short sAttac
 
 			switch (m_pClientList[sAttackerH]->m_sUsingWeaponSkill) {
 				case 6:  iAP_SM += (iAP_SM/10); iAP_L += (iAP_L/10); iAttackerHitRatio  += 30 ; break;
-				case 7:  iAP_SM *= 1; iAP_L *= 1; break;				
+				case 7:  iAP_SM *= 1.5f; iAP_L *= 1.5f; break;				
 				case 8:  iAP_SM += (iAP_SM/10); iAP_L += (iAP_L/10); iAttackerHitRatio += 30 ; break;
 				case 10:  iAP_SM += (iAP_SM/5); iAP_L += (iAP_L/5) ;                           break;
 				case 14:  iAP_SM += (iAP_SM/5); iAP_L += (iAP_L/5) ; iAttackerHitRatio += 20 ; break;
 				case 21:  iAP_SM += (iAP_SM/5); iAP_L += (iAP_L/5); iAttackerHitRatio +=  50 ; break;
 				default: break;
 			}
-			iAttackerHitRatio += 100;
-			iAttackerHitRatio += m_pClientList[sAttackerH]->m_iCustomItemValue_Attack;
+			iAttackerHitRatio += 100 + m_pClientList[sAttackerH]->m_iCustomItemValue_Attack;
 		}
 		if (bIsDash == TRUE) {
 			iAttackerHitRatio += 20;
@@ -19764,7 +19735,7 @@ int CGame::iCalculateAttackEffect(short sTargetH, char cTargetType, short sAttac
 					if (cFarmingSkill <= (cCropSkill + 10)) 
 					{	iFarmingSSN = 1;
 					}else 
-					{	iFarmingSSN = 0;					
+					{	iFarmingSSN = 0;
 					}
 					switch(m_pNpcList[sTargetH]->m_iBuildCount) {
 					case 1:	
@@ -19927,8 +19898,8 @@ int CGame::iCalculateAttackEffect(short sTargetH, char cTargetType, short sAttac
 
 
 	if ((bIsAttackerBerserk == TRUE) && (iAttackMode < 20)) {
-		iAP_SM = iAP_SM * 2;
-		iAP_L  = iAP_L  * 2;
+		iAP_SM *= 2;
+		iAP_L  *= 2;
 	}
 
 	if (cAttackerType == DEF_OWNERTYPE_PLAYER) {
@@ -20535,8 +20506,7 @@ CAE_SKIPDAMAGEMOVE:;
 									m_pNpcList[sTargetH]->m_iV1 = 0;
 									m_pNpcList[sTargetH]->m_iManaStock--;
 									if (m_pNpcList[sTargetH]->m_iManaStock <= 0) m_pNpcList[sTargetH]->m_iManaStock = 0;
-									wsprintf(G_cTxt, "ManaStock down: %d", m_pNpcList[sTargetH]->m_iManaStock);
-									PutLogList(G_cTxt);
+									
 								}
 							}
 							break;
@@ -20996,8 +20966,8 @@ BOOL CGame::_bCheckCharacterData(int iClientH)
  int i;
  int iTotalPoints;
 
-	if (((m_pClientList[iClientH]->m_iStr+m_pClientList[iClientH]->m_iAngelicStr) > m_sCharStatLimit) || (m_pClientList[iClientH]->m_iVit > m_sCharStatLimit-21) || ((m_pClientList[iClientH]->m_iDex+m_pClientList[iClientH]->m_iAngelicDex) > m_sCharStatLimit) ||
-        ((m_pClientList[iClientH]->m_iMag+m_pClientList[iClientH]->m_iAngelicMag) > m_sCharStatLimit) || ((m_pClientList[iClientH]->m_iInt+m_pClientList[iClientH]->m_iAngelicInt) > m_sCharStatLimit) || (m_pClientList[iClientH]->m_iCharisma > m_sCharStatLimit-21)) {
+	if (((m_pClientList[iClientH]->m_iStr+m_pClientList[iClientH]->m_iAngelicStr) > m_sCharStatLimit) || (m_pClientList[iClientH]->m_iVit > m_sCharStatLimit-11) || ((m_pClientList[iClientH]->m_iDex+m_pClientList[iClientH]->m_iAngelicDex) > m_sCharStatLimit) ||
+        ((m_pClientList[iClientH]->m_iMag+m_pClientList[iClientH]->m_iAngelicMag) > m_sCharStatLimit) || ((m_pClientList[iClientH]->m_iInt+m_pClientList[iClientH]->m_iAngelicInt) > m_sCharStatLimit) || (m_pClientList[iClientH]->m_iCharisma > m_sCharStatLimit-11)) {
 		wsprintf(G_cTxt, "Packet Editing: (%s) Player: (%s) stat points are greater then server accepts.", m_pClientList[iClientH]->m_cIPaddress, m_pClientList[iClientH]->m_cCharName);
 		PutHackLogFileList(G_cTxt);
 		return FALSE;
@@ -21350,7 +21320,7 @@ BOOL CGame::bReadSettingsConfigFile(char * cFn)
                break;
 
 			case 16: 
-               m_sCharStatLimit = 21 + atoi(token); 
+               m_sCharStatLimit = 11 + atoi(token); 
                if (m_sCharStatLimit == 0) m_sCharStatLimit = 200; 
                cReadMode = 0;
                break;
