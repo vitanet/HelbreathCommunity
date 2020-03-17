@@ -1044,20 +1044,17 @@ BOOL CGame::_bDepleteDestTypeItemUseEffect(int iClientH, int dX, int dY, short s
 		return bRet;
 
 	case DEF_ITEMEFFECTTYPE_DYE:
-		// ¾ÆÀÌÅÛ ¿°»ö: ¾ÆÀÌÅÛ °ªÀÌ À¯È¿ÇÑ°¡ Ã¼Å©.
 		if ((sDestItemID >= 0) && (sDestItemID < DEF_MAXITEMS)) {
 			if (m_pClientList[iClientH]->m_pItemList[sDestItemID] != NULL) {
 				if ((m_pClientList[iClientH]->m_pItemList[sDestItemID]->m_cCategory == 11) ||
 					(m_pClientList[iClientH]->m_pItemList[sDestItemID]->m_cCategory == 12))
 				{
-					// ¿°»öÀÌ °¡´ÉÇÑ ¾ÆÀÌÅÛÀÌ´Ù.
 					m_pClientList[iClientH]->m_pItemList[sDestItemID]->m_cItemColor = m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sItemEffectValue1;
-					// »ö ¼Ó¼ºÀÌ ¹Ù²î¾úÀ½À» ¾Ë·ÁÁØ´Ù. 
 					SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_ITEMCOLORCHANGE, sDestItemID, m_pClientList[iClientH]->m_pItemList[sDestItemID]->m_cItemColor, NULL, NULL);
 					return TRUE;
 				}
-				else {
-					// ¿°»öÀÌ ºÒ°¡´ÉÇÑ ¾ÆÀÌÅÛÀÌ´Ù. 
+				else 
+				{
 					SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_ITEMCOLORCHANGE, sDestItemID, -1, NULL, NULL);
 					return FALSE;
 				}
@@ -4048,6 +4045,36 @@ void CGame::UseItemHandler(int iClientH, short sItemIndex, short dX, short dY, s
 							RequestTeleportHandler(iClientH, "2   ", "bisle", -1, -1);
 						}
 					}
+					break;
+
+				//LifeX Added Reset Stat Scroll
+				case 9:
+					m_pClientList[iClientH]->m_iMag;
+					m_pClientList[iClientH]->m_iMag = 10;
+					m_pClientList[iClientH]->m_iStr;
+					m_pClientList[iClientH]->m_iStr = 10;
+					m_pClientList[iClientH]->m_iDex;
+					m_pClientList[iClientH]->m_iDex = 10;
+					m_pClientList[iClientH]->m_iCharisma;
+					m_pClientList[iClientH]->m_iCharisma = 10;
+					m_pClientList[iClientH]->m_iInt;
+					m_pClientList[iClientH]->m_iInt = 10;
+					m_pClientList[iClientH]->m_iVit;
+					m_pClientList[iClientH]->m_iVit = 10;
+
+					m_pClientList[iClientH]->m_iLU_Pool = 1432;
+					ReleaseItemHandler(iClientH, m_pClientList[iClientH]->m_sItemEquipmentStatus[DEF_EQUIPPOS_HEAD], FALSE);
+					ReleaseItemHandler(iClientH, m_pClientList[iClientH]->m_sItemEquipmentStatus[DEF_EQUIPPOS_BODY], FALSE);
+					ReleaseItemHandler(iClientH, m_pClientList[iClientH]->m_sItemEquipmentStatus[DEF_EQUIPPOS_ARMS], FALSE);
+					ReleaseItemHandler(iClientH, m_pClientList[iClientH]->m_sItemEquipmentStatus[DEF_EQUIPPOS_LEGGINGS], FALSE);
+					ReleaseItemHandler(iClientH, m_pClientList[iClientH]->m_sItemEquipmentStatus[DEF_EQUIPPOS_PANTS], FALSE);
+					ReleaseItemHandler(iClientH, m_pClientList[iClientH]->m_sItemEquipmentStatus[DEF_EQUIPPOS_BACK], FALSE);
+					ReleaseItemHandler(iClientH, m_pClientList[iClientH]->m_sItemEquipmentStatus[DEF_EQUIPPOS_TWOHAND], FALSE);
+					ReleaseItemHandler(iClientH, m_pClientList[iClientH]->m_sItemEquipmentStatus[DEF_EQUIPPOS_RHAND], FALSE);
+					ReleaseItemHandler(iClientH, m_pClientList[iClientH]->m_sItemEquipmentStatus[DEF_EQUIPPOS_LHAND], FALSE);
+					ItemDepleteHandler(iClientH, sItemIndex, TRUE, TRUE);
+					bCheckMagicInt(iClientH);
+					DeleteClient(iClientH, TRUE, TRUE);
 					break;
 
 				case 11:
