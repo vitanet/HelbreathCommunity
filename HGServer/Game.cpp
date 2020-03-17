@@ -2055,10 +2055,10 @@ void CGame::DeleteClient(int iClientH, BOOL bSave, BOOL bNotify, BOOL bCountLogo
 
 					if (strcmp(cTmpMap, "elvine") == 0){
 						strcpy(m_pClientList[iClientH]->m_cLockedMapName, "elvjail");
-						m_pClientList[iClientH]->m_iLockedMapTime = 60*3 ;
+						m_pClientList[iClientH]->m_iLockedMapTime = 60 ;
 						memcpy(m_pClientList[iClientH]->m_cMapName, "elvjail", 7);
 					}else if (m_pClientList[iClientH]->m_iLevel > 80)
-						memcpy(m_pClientList[iClientH]->m_cMapName, "resurr1", 7);
+						memcpy(m_pClientList[iClientH]->m_cMapName, "cityhall_1", 10);
 					else memcpy(m_pClientList[iClientH]->m_cMapName, "arefarm", 7);
 				}
 				else {
@@ -2075,11 +2075,11 @@ void CGame::DeleteClient(int iClientH, BOOL bSave, BOOL bNotify, BOOL bCountLogo
 					}
 					if (strcmp(cTmpMap, "aresden") == 0){
 						strcpy(m_pClientList[iClientH]->m_cLockedMapName, "arejail");
-						m_pClientList[iClientH]->m_iLockedMapTime = 60*3 ;
+						m_pClientList[iClientH]->m_iLockedMapTime = 60 ;
 						memcpy(m_pClientList[iClientH]->m_cMapName, "arejail", 7);
 
 					}else if (m_pClientList[iClientH]->m_iLevel > 80)
-						memcpy(m_pClientList[iClientH]->m_cMapName, "resurr2", 7);
+						memcpy(m_pClientList[iClientH]->m_cMapName, "cityhall_2", 10);
 					else memcpy(m_pClientList[iClientH]->m_cMapName, "elvfarm", 7);
 				}
 			}
@@ -23379,7 +23379,7 @@ void CGame::RequestRestartHandler(int iClientH)
 						m_pClientList[iClientH]->m_iDeadPenaltyTime = 600;
 					}
 					else {
-						memcpy(m_pClientList[iClientH]->m_cMapName, "resurr1", 7);
+						memcpy(m_pClientList[iClientH]->m_cMapName, "cityhall_1", 10);
 						m_pClientList[iClientH]->m_iDeadPenaltyTime = 600;
 					}
 				}
@@ -23389,7 +23389,7 @@ void CGame::RequestRestartHandler(int iClientH)
 					m_pClientList[iClientH]->m_iLockedMapTime = 180 ;	
 				}
 				else if (m_pClientList[iClientH]->m_iLevel > 80) {
-					memcpy(m_pClientList[iClientH]->m_cMapName, "resurr1", 7);
+					memcpy(m_pClientList[iClientH]->m_cMapName, "cityhall_1", 10);
 				}
 				else {
 					memcpy(m_pClientList[iClientH]->m_cMapName, "arefarm", 7);
@@ -23404,7 +23404,7 @@ void CGame::RequestRestartHandler(int iClientH)
 						m_pClientList[iClientH]->m_iDeadPenaltyTime = 600;
 					}
 					else {
-						memcpy(m_pClientList[iClientH]->m_cMapName, "resurr2", 7);
+						memcpy(m_pClientList[iClientH]->m_cMapName, "cityhall_2", 10);
 						m_pClientList[iClientH]->m_iDeadPenaltyTime = 600;
 					}
 				}
@@ -23599,8 +23599,8 @@ void CGame::InitPlayerData(int iClientH, char * pData, DWORD dwSize)
 			case 2: 
 				switch (m_pClientList[iClientH]->m_cSide) {
 					case 0: RequestTeleportHandler(iClientH, "2   ", "default", -1, -1); break;
-					case 1: RequestTeleportHandler(iClientH, "2   ", "resurr1", -1, -1); break;
-					case 2: RequestTeleportHandler(iClientH, "2   ", "resurr2", -1, -1); break;
+					case 1: RequestTeleportHandler(iClientH, "2   ", "cityhall_1", -1, -1); break;
+					case 2: RequestTeleportHandler(iClientH, "2   ", "cityhall_2", -1, -1); break;
 				}
 				break;
 		}
