@@ -461,7 +461,7 @@ int CGame::__iSearchForQuest(int iClientH, int iWho, int* pQuestType, int* pMode
 // New 14/05/2004
 void CGame::QuestAcceptedHandler(int iClientH)
 {
-	int iIndex;
+	int iIndex, cQuestRemain;
 
 	if (m_pClientList[iClientH] == NULL) return;
 
@@ -488,6 +488,13 @@ void CGame::QuestAcceptedHandler(int iClientH)
 
 	_CheckQuestEnvironment(iClientH);
 	_SendQuestContents(iClientH);
+
+	if (m_pClientList[iClientH]->m_iQuest != NULL)
+	{
+		cQuestRemain = (m_pQuestConfigList[m_pClientList[iClientH]->m_iQuest]->m_iMaxCount - m_pClientList[iClientH]->m_iCurQuestCount);
+		SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_QUESTCOUNTER, cQuestRemain, NULL, NULL, NULL);
+		_bCheckIsQuestCompleted(iClientH);
+	}
 }
 
 

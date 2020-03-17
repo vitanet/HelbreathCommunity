@@ -1026,7 +1026,12 @@
 #define	DRAW_DIALOGBOX_GUILDMENU20	"A new guild was made."
 #define	DRAW_DIALOGBOX_GUILDMENU21	"You are a GuildMaster."
 #define	DRAW_DIALOGBOX_GUILDMENU22	"Failed on making a new guild."
-#define	DRAW_DIALOGBOX_GUILDMENU23	"Guild name already exists."
+#define	DRAW_DIALOGBOX_GUILDMENU23	"There are various reasons."
+#define	DRAW_DIALOGBOX_GUILDMENU23a	"1. Guild name already exists."
+#define	DRAW_DIALOGBOX_GUILDMENU23b "2. Charisma is not 20."
+#define	DRAW_DIALOGBOX_GUILDMENU23c	"3. Level not yet 100."
+#define	DRAW_DIALOGBOX_GUILDMENU23d	"4. You are a TRAVELLER."
+
 #define	DRAW_DIALOGBOX_GUILDMENU24	"Guild dismission:"
 #define	DRAW_DIALOGBOX_GUILDMENU25	"Break up your guild. Your auth- "
 #define	DRAW_DIALOGBOX_GUILDMENU26	"orization as a GuildMaster will"

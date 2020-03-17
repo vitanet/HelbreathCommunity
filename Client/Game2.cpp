@@ -10841,8 +10841,12 @@ void CGame::DrawDialogBox_GuildMenu(short msX, short msY)
 		else DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_BUTTON, sX + DEF_RBTNPOSX, sY + DEF_BTNPOSY, 0);
 		break;
 	case 4:
-		PutAlignedString(sX, sX + szX, sY + 135, DRAW_DIALOGBOX_GUILDMENU22, 55, 25, 25);//"
-		PutAlignedString(sX, sX + szX, sY + 150, DRAW_DIALOGBOX_GUILDMENU23, 55, 25, 25);//"
+		PutAlignedString(sX, sX + szX, sY + 50, DRAW_DIALOGBOX_GUILDMENU22, 55, 25, 25);//"
+		PutAlignedString(sX, sX + szX, sY + 65, DRAW_DIALOGBOX_GUILDMENU23, 55, 25, 25);//"
+		PutAlignedString(sX, sX + szX, sY + 80, DRAW_DIALOGBOX_GUILDMENU23a, 55, 25, 25);//"
+		PutAlignedString(sX, sX + szX, sY + 95, DRAW_DIALOGBOX_GUILDMENU23b, 55, 25, 25);//"
+		PutAlignedString(sX, sX + szX, sY + 110, DRAW_DIALOGBOX_GUILDMENU23c, 55, 25, 25);//"
+		PutAlignedString(sX, sX + szX, sY + 125, DRAW_DIALOGBOX_GUILDMENU23d, 55, 25, 25);//"
 
 		if ((msX >= sX + DEF_RBTNPOSX) && (msX <= sX + DEF_RBTNPOSX + DEF_BTNSZX) && (msY > sY + DEF_BTNPOSY) && (msY < sY + DEF_BTNPOSY + DEF_BTNSZY))
 			DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_BUTTON, sX + DEF_RBTNPOSX, sY + DEF_BTNPOSY, 1);

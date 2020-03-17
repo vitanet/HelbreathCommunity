@@ -464,7 +464,8 @@ void CGame::NpcKilledHandler(short sAttackerH, char cAttackerType, int iNpcH, sh
 				switch (m_pQuestConfigList[iQuestIndex]->m_iType) {
 				case DEF_QUESTTYPE_MONSTERHUNT:
 					if ((m_pClientList[sAttackerH]->m_bQuestMatchFlag_Loc == TRUE) &&
-						(m_pQuestConfigList[iQuestIndex]->m_iTargetType == m_pNpcList[iNpcH]->m_sType)) {
+						(m_pQuestConfigList[iQuestIndex]->m_iTargetType == m_pNpcList[iNpcH]->m_sType)) 
+					{
 						// Á¶°Ç¿¡ ÇÕ´çÇÏ´Ù. Ä«¿îÆ® Áõ°¡ÈÄ ÆÇ´Ü.
 						m_pClientList[sAttackerH]->m_iCurQuestCount++;
 						cQuestRemain = (m_pQuestConfigList[m_pClientList[sAttackerH]->m_iQuest]->m_iMaxCount - m_pClientList[sAttackerH]->m_iCurQuestCount);

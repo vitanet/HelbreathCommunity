@@ -10364,7 +10364,6 @@ long CGame::iGetLevelExp(int iLevel)
 void CGame::StateChangeHandler(int iClientH, char * pData, DWORD dwMsgSize)
 {char * cp, cStateChange1, cStateChange2, cStateChange3;
  char cStr, cVit, cDex, cInt, cMag, cChar;
- char cStateTxt[512];
  int iOldStr, iOldVit, iOldDex, iOldInt, iOldMag, iOldChar;	
 	if (m_pClientList[iClientH] == NULL) return;
 	if (m_pClientList[iClientH]->m_bIsInitComplete == FALSE) return;
@@ -23305,10 +23304,12 @@ RTH_NEXTSTEP:;
 	SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_SUPERATTACKLEFT, NULL, NULL, NULL, NULL);
 	
 	iQuestNumber = m_pClientList[iClientH]->m_iQuest;
-	if ((iQuestNumber != 0) && (m_pQuestConfigList[iQuestNumber] != 0)) {
+	if ((iQuestNumber != 0) && (m_pQuestConfigList[iQuestNumber] != 0)) 
+	{
 		iQuestType = m_pQuestConfigList[iQuestNumber]->m_iType;
 		if (iQuestType == 1) {
-			if (_bCheckIsQuestCompleted(iClientH) == TRUE) {
+			if (_bCheckIsQuestCompleted(iClientH) == TRUE) 
+			{
 				sV1 = m_pQuestConfigList[iQuestNumber]->m_iMaxCount - m_pClientList[iClientH]->m_iCurQuestCount;
 				if (sV1 < 0) sV1 = 0;
 				SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_QUESTCOUNTER, sV1, NULL, NULL, NULL);
@@ -23509,12 +23510,16 @@ void CGame::InitPlayerData(int iClientH, char * pData, DWORD dwSize)
 	}
 	// new
 	iQuestNumber = m_pClientList[iClientH]->m_iQuest;
-	if ((iQuestNumber != 0) && (m_pQuestConfigList[iQuestNumber] != 0)) {
+	if ((iQuestNumber != 0) && (m_pQuestConfigList[iQuestNumber] != 0)) 
+	{
 		iQuestType = m_pQuestConfigList[iQuestNumber]->m_iType;
-		if (iQuestType == 1) {
-			if (_bCheckIsQuestCompleted(iClientH) == TRUE) {
+		if (iQuestType == 1) 
+		{
+			if (_bCheckIsQuestCompleted(iClientH) == TRUE)
+			{
 				sV1 = m_pQuestConfigList[iQuestNumber]->m_iMaxCount - m_pClientList[iClientH]->m_iCurQuestCount;
-				if (sV1 > 0) {
+				if (sV1 > 0)
+				{
 					SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_QUESTCOUNTER, sV1, NULL, NULL, NULL);
 				}
 			}

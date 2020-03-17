@@ -257,61 +257,58 @@ void CGame::RequestCreateNewGuildHandler(int iClientH, char* pData, DWORD dwMsgS
 	memcpy(cGuildName, cp, 20);
 	cp += 20;
 
-	DWORD dwGoldCount = dwGetItemCount(iClientH, "Gold"); // centu - dwGoldCount = player gold
+	DWORD dwGoldCount = dwGetItemCount(iClientH, "Gold");
 
-	if (m_pClientList[iClientH]->m_iGuildRank != -1) {
-		// ÀÌ Ä³¸¯ÅÍ´Â ÀÌ¹Ì ±æµå¿¡ °¡ÀÔÇÏ¿© ÀÖÀ¸¹Ç·Î ±æµå¸¦ ¸¸µé ¼ö ¾ø´Ù.
+	if (m_pClientList[iClientH]->m_iGuildRank != -1) 
+	{
 		wsprintf(cTxt, "(!)Cannot create guild! Already guild member.: CharName(%s)", m_pClientList[iClientH]->m_cCharName);
 		PutLogList(cTxt);
 	}
-	else {
+	else 
+	{
 		if ((m_pClientList[iClientH]->m_iLevel < 100) || (m_pClientList[iClientH]->m_iCharisma < 20) ||
 			(memcmp(m_pClientList[iClientH]->m_cLocation, "NONE", 4) == 0) ||
-			(memcmp(m_pClientList[iClientH]->m_cLocation, m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_cLocationName, 10) != 0)) { // v1.4
-		   // ÀÚ°Ý¿ä°ÇÀÌ ¸ÂÁö ¾Ê´Â´Ù. Æ¯¼ºÄ¡°¡ ³·°Å³ª ¸¶À»ÀÇ À§Ä¡°¡ ´Ù¸£°Å³ª ½Ã¹ÎÀÌ ¾Æ´Ñ °æ¿ì  
-			ZeroMemory(cData, sizeof(cData));
+			(memcmp(m_pClientList[iClientH]->m_cLocation, m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_cLocationName, 10) != 0))
+		{ // v1.4
+		   ZeroMemory(cData, sizeof(cData));
 
 			dwp = (DWORD*)(cData + DEF_INDEX4_MSGID);
 			*dwp = MSGID_RESPONSE_CREATENEWGUILD;
 			wp = (WORD*)(cData + DEF_INDEX2_MSGTYPE);
 			*wp = DEF_MSGTYPE_REJECT;
 
-			// ±æµå »ý¼º ¿ä±¸ ÀÀ´ä ¸Þ½ÃÁö¸¦ Å¬¶óÀÌ¾ðÆ®¿¡°Ô Àü¼Û
 			iRet = m_pClientList[iClientH]->m_pXSock->iSendMsg(cData, 6);
-			switch (iRet) {
+			switch (iRet) 
+			{
 			case DEF_XSOCKEVENT_QUENEFULL:
 			case DEF_XSOCKEVENT_SOCKETERROR:
 			case DEF_XSOCKEVENT_CRITICALERROR:
 			case DEF_XSOCKEVENT_SOCKETCLOSED:
-				// ¸Þ½ÃÁö¸¦ º¸³¾¶§ ¿¡·¯°¡ ¹ß»ýÇß´Ù¸é Á¦°ÅÇÑ´Ù.
 				DeleteClient(iClientH, TRUE, TRUE);
 				break;
 			}
 		}
-		else {
-			// centu - guild cost gold
-			if (dwGoldCount >= m_iGuildCost) {
-				// ±æµå ÀÌ¸§À» ÀÓ½Ã·Î ÀúÀåÇÑ´Ù. -> ¾îÂ÷ÇÇ ±æµå ÀÌ¸§Àº Rank°¡ -1ÀÏ¶§ ¹«ÀÇ¹ÌÇÏ¹Ç·Î .
+		else 
+		{
+			if (dwGoldCount >= m_iGuildCost) 
+			{
 				ZeroMemory(m_pClientList[iClientH]->m_cGuildName, sizeof(m_pClientList[iClientH]->m_cGuildName));
 				strcpy(m_pClientList[iClientH]->m_cGuildName, cGuildName);
-				// ±æµåÀÇ ¼Ò¼Ó ¸¶À» ÀÌ¸§À» ÀúÀåÇÑ´Ù.
 				ZeroMemory(m_pClientList[iClientH]->m_cLocation, sizeof(m_pClientList[iClientH]->m_cLocation));
 				strcpy(m_pClientList[iClientH]->m_cLocation, m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_cLocationName);
-				// ±æµåÀÇ GUID¸¦ »ý¼ºÇÏ¿© ÀÔ·ÂÇÑ´Ù. 
-
+				
 				SetItemCount(iClientH, "Gold", dwGoldCount - m_iGuildCost); // reduce gold by guildcost
 
 				GetLocalTime(&SysTime);
 				m_pClientList[iClientH]->m_iGuildGUID = (int)(SysTime.wYear + SysTime.wMonth + SysTime.wDay + SysTime.wHour + SysTime.wMinute + timeGetTime());
 
-				// ±æµå »ý¼º¿äÃ» ¸Þ½ÃÁö¸¦ ·Î±×¼­¹ö·Î Àü¼ÛÇÑ´Ù.
 				bSendMsgToLS(MSGID_REQUEST_CREATENEWGUILD, iClientH);
 			}
-			else {
+			else 
+			{
 				wsprintf(cTxt, " Not enough gold. You need %d gold.", m_iGuildCost);
 				SendNotifyMsg(iClientH, iClientH, DEF_NOTIFY_NOTICEMSG, NULL, NULL, NULL, cTxt);
 
-				// ÀÚ°Ý¿ä°ÇÀÌ ¸ÂÁö ¾Ê´Â´Ù. Æ¯¼ºÄ¡°¡ ³·°Å³ª ¸¶À»ÀÇ À§Ä¡°¡ ´Ù¸£°Å³ª ½Ã¹ÎÀÌ ¾Æ´Ñ °æ¿ì  
 				ZeroMemory(cData, sizeof(cData));
 
 				dwp = (DWORD*)(cData + DEF_INDEX4_MSGID);
@@ -319,14 +316,12 @@ void CGame::RequestCreateNewGuildHandler(int iClientH, char* pData, DWORD dwMsgS
 				wp = (WORD*)(cData + DEF_INDEX2_MSGTYPE);
 				*wp = DEF_MSGTYPE_REJECT;
 
-				// ±æµå »ý¼º ¿ä±¸ ÀÀ´ä ¸Þ½ÃÁö¸¦ Å¬¶óÀÌ¾ðÆ®¿¡°Ô Àü¼Û
 				iRet = m_pClientList[iClientH]->m_pXSock->iSendMsg(cData, 6);
 				switch (iRet) {
 				case DEF_XSOCKEVENT_QUENEFULL:
 				case DEF_XSOCKEVENT_SOCKETERROR:
 				case DEF_XSOCKEVENT_CRITICALERROR:
 				case DEF_XSOCKEVENT_SOCKETCLOSED:
-					// ¸Þ½ÃÁö¸¦ º¸³¾¶§ ¿¡·¯°¡ ¹ß»ýÇß´Ù¸é Á¦°ÅÇÑ´Ù.
 					DeleteClient(iClientH, TRUE, TRUE);
 					break;
 				}

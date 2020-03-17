@@ -2228,7 +2228,8 @@ void CGame::RequestItemUpgradeHandler(int iClientH, int iItemIndex)
 	}
 
 	iValue = (m_pClientList[iClientH]->m_pItemList[iItemIndex]->m_dwAttribute & 0xF0000000) >> 28;
-	switch (m_pClientList[iClientH]->m_pItemList[iItemIndex]->m_cCategory) {
+	switch (m_pClientList[iClientH]->m_pItemList[iItemIndex]->m_cCategory)
+	{
 	
 		case 46: // Pendants are category 46
 			if (m_pClientList[iClientH]->m_pItemList[iItemIndex]->m_cItemType != 1) 
@@ -2243,10 +2244,12 @@ void CGame::RequestItemUpgradeHandler(int iClientH, int iItemIndex)
 			{	SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_ITEMUPGRADEFAIL, 2, NULL, NULL, NULL);			
 				return; // Pendants are EffectType 14
 			}
-			switch (m_pClientList[iClientH]->m_pItemList[iItemIndex]->m_sItemEffectValue1) {
+			switch (m_pClientList[iClientH]->m_pItemList[iItemIndex]->m_sItemEffectValue1) 
+			{
 			default: // Other items are not upgradable
 				SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_ITEMUPGRADEFAIL, 2, NULL, NULL, NULL);			
 				return; // Pendants are EffectType 14
+
 			case 16: // AngelicPandent(STR)
 			case 17: // AngelicPandent(DEX)
 			case 18: // AngelicPandent(INT)
