@@ -15325,10 +15325,12 @@ void CGame::NotifyMsg_ItemColorChange(char *pData)
 	sItemColor = (short)*sp;
 	cp += 2;
 
-	if (m_pItemList[sItemIndex] != NULL) {
+	if (m_pItemList[sItemIndex] != NULL) 
+	{
 		char cStr1[64], cStr2[64], cStr3[64];
 		GetItemName(m_pItemList[sItemIndex], cStr1, cStr2, cStr3);
-		if (sItemColor != -1) {
+		if (sItemColor != -1) 
+		{
 			m_pItemList[sItemIndex]->m_cItemColor = (char)sItemColor;
 			wsprintf(cTxt, NOTIFYMSG_ITEMCOLOR_CHANGE1, cStr1);
 			AddEventList(cTxt, 10);
