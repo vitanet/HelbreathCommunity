@@ -9381,7 +9381,6 @@ void CGame::DlgBoxClick_GuildMenu(short msX, short msY)
 		if ((msX > sX + iAdjX + 80) && (msX < sX + iAdjX + 210) && (msY > sY + iAdjY + 63) && (msY < sY + iAdjY + 78))
 		{
 			if (m_iGuildRank != -1) return;
-			if (m_iCharisma < 20) return;
 			if (m_iLevel < 20) return;
 			if (m_bIsCrusadeMode) return;
 			if (m_bIsHeldenian) return;
@@ -10765,7 +10764,8 @@ void CGame::DrawDialogBox_GuildMenu(short msX, short msY)
 
 	switch (m_stDialogBoxInfo[7].cMode) {
 	case 0:
-		if ((m_iGuildRank == -1) && (m_iCharisma >= 20) && (m_iLevel >= 20)) {
+		if ((m_iGuildRank == -1) && (m_iLevel >= 20)) 
+		{
 			if ((msX > sX + iAdjX + 80) && (msX < sX + iAdjX + 210) && (msY > sY + iAdjY + 63) && (msY < sY + iAdjY + 78))
 				PutAlignedString(sX, sX + szX, sY + iAdjY + 65, DRAW_DIALOGBOX_GUILDMENU1, 255, 255, 255);//"
 			else PutAlignedString(sX, sX + szX, sY + iAdjY + 65, DRAW_DIALOGBOX_GUILDMENU1, 4, 0, 50);//"
@@ -10841,12 +10841,15 @@ void CGame::DrawDialogBox_GuildMenu(short msX, short msY)
 		else DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_BUTTON, sX + DEF_RBTNPOSX, sY + DEF_BTNPOSY, 0);
 		break;
 	case 4:
-		PutAlignedString(sX, sX + szX, sY + 50, DRAW_DIALOGBOX_GUILDMENU22, 55, 25, 25);//"
+		PutAlignedString(sX, sX + szX, sY + 40, DRAW_DIALOGBOX_GUILDMENU22, 55, 25, 25);//"
 		PutAlignedString(sX, sX + szX, sY + 65, DRAW_DIALOGBOX_GUILDMENU23, 55, 25, 25);//"
-		PutAlignedString(sX, sX + szX, sY + 80, DRAW_DIALOGBOX_GUILDMENU23a, 55, 25, 25);//"
-		PutAlignedString(sX, sX + szX, sY + 95, DRAW_DIALOGBOX_GUILDMENU23b, 55, 25, 25);//"
-		PutAlignedString(sX, sX + szX, sY + 110, DRAW_DIALOGBOX_GUILDMENU23c, 55, 25, 25);//"
-		PutAlignedString(sX, sX + szX, sY + 125, DRAW_DIALOGBOX_GUILDMENU23d, 55, 25, 25);//"
+		//PutString(sX + 90, sY + 45, DRAW_DIALOGBOX_GUILDMENU22, RGB(55, 25, 25));
+		//PutString(sX + 60, sY + 70, DRAW_DIALOGBOX_GUILDMENU23, RGB(55, 25, 25));
+
+		PutString(sX + 50, sY + 95, DRAW_DIALOGBOX_GUILDMENU23a, RGB(255, 255, 255));
+		PutString(sX + 50, sY + 110, DRAW_DIALOGBOX_GUILDMENU23b, RGB(255, 255, 255));
+		PutString(sX + 50, sY + 125, DRAW_DIALOGBOX_GUILDMENU23c, RGB(255, 255, 255));
+		PutString(sX + 50, sY + 140, DRAW_DIALOGBOX_GUILDMENU23d, RGB(255, 255, 255));
 
 		if ((msX >= sX + DEF_RBTNPOSX) && (msX <= sX + DEF_RBTNPOSX + DEF_BTNSZX) && (msY > sY + DEF_BTNPOSY) && (msY < sY + DEF_BTNPOSY + DEF_BTNSZY))
 			DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_BUTTON, sX + DEF_RBTNPOSX, sY + DEF_BTNPOSY, 1);
