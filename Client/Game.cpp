@@ -16359,7 +16359,7 @@ resi = 0;
         }
     }
 	if ((msX > 128 + resx) && (msX < 136 + resx) && (msY > 432 + resy)) { // Hunger Status Bar
-		wsprintf(G_cTxt, "Hunger Status (%d%%)", iHungerStatus);
+		wsprintf(G_cTxt, "Hunger (%d%%)", 100 - iHungerStatus);
 		PutString(msX-20, msY-20, G_cTxt, RGB(250,250,220));
     }
 	// Experience Gauge - MORLA - Fixed
@@ -31531,10 +31531,7 @@ void CGame::UpdateScreen_OnGame()
 	{
 		if (m_bShowFPS)
 		{
-			if (m_sFPS >= 60)
-				wsprintf(G_cTxt, "FPS:(60) PING:(%.3d)", m_iPing);
-			else
-				wsprintf(G_cTxt, "FPS:(%.3d) PING:(%.3d)", m_sFPS, m_iPing);
+			wsprintf(G_cTxt, "FPS:(%.3d) PING:(%.3d)", m_sFPS, m_iPing);
 			PutAlignedString(103 + 25 + 80, 245 + 25 + 80, 446 - 11 + resi, G_cTxt, 255, 102, 69);
 			ZeroMemory(G_cTxt, sizeof(G_cTxt));
 		}
