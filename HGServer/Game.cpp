@@ -2161,7 +2161,7 @@ void CGame::DeleteClient(int iClientH, BOOL bSave, BOOL bNotify, BOOL bCountLogo
 			}
 			if (bSendMsgToLS(MSGID_REQUEST_SAVEPLAYERDATALOGOUT, iClientH, bCountLogout) == FALSE) LocalSavePlayerData(iClientH);
 		}
-		else bSendMsgToLS(MSGID_REQUEST_NOSAVELOGOUT, iClientH, bCountLogout);
+		else bSendMsgToLS(MSGID_REQUEST_SAVEPLAYERDATALOGOUT, iClientH, bCountLogout);
 	}
 	else {
 		if (m_pClientList[iClientH]->m_bIsOnServerChange == FALSE) {
@@ -2191,7 +2191,7 @@ void CGame::DeleteClient(int iClientH, BOOL bSave, BOOL bNotify, BOOL bCountLogo
 				SendMsgToGateServer(MSGID_PARTYOPERATION, iClientH, cData);
 			}
 
-			bSendMsgToLS(MSGID_REQUEST_NOSAVELOGOUT, iClientH, bCountLogout);
+			bSendMsgToLS(MSGID_REQUEST_SAVEPLAYERDATALOGOUT, iClientH, bCountLogout);
 		}
 		else {
 			if (m_pClientList[iClientH]->m_iPartyID != NULL) {
