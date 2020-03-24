@@ -1046,7 +1046,7 @@ void CGame::ShowEventList(DWORD dwTime)
 		if ((dwTime - m_stEventHistory[i].dwTime) < 5000)
 		{
 			switch (m_stEventHistory[i].cColor) {
-			case 0:
+			case 0: // centu2
 				PutString(10, 10 + i * 15, m_stEventHistory[i].cTxt, RGB(225, 225, 225), FALSE, 1, TRUE);
 				break;
 			case 1:
@@ -1110,9 +1110,6 @@ void CGame::ShowEventList(DWORD dwTime)
 
 void CGame::RequestTeleportAndWaitData()
 {	// Snoopy: removed that, Noob Dungeon is now at farm...
-
-	bSendCommand(MSGID_REQUEST_TELEPORT, NULL, NULL, NULL, NULL, NULL, NULL);
-	ChangeGameMode(DEF_GAMEMODE_ONWAITINGINITDATA);
 }
 
 void CGame::MotionEventHandler(char * pData)

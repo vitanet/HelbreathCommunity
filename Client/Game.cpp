@@ -28291,7 +28291,7 @@ void CGame::UpdateScreen_OnVersionNotMatch()
 	DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_GAME4, 162,125,2);
 	PutAlignedString(168, 474, 160, UPDATE_SCREEN_ON_VERSION_NO_MATCH1);
 	PutAlignedString(168, 474, 180, UPDATE_SCREEN_ON_VERSION_NO_MATCH2);
-	PutAlignedString(168, 474, 250, MSG_HOMEPAGE);
+	
 	DrawVersion();
 	m_DInput.UpdateMouseState(&msX, &msY, &msZ, &cLB, &cRB);
 	m_pSprite[DEF_SPRID_MOUSECURSOR]->PutSpriteFast(msX, msY, 0, dwTime);
@@ -29122,8 +29122,10 @@ CP_SKIPMOUSEBUTTONSTATUS:;
 		goto MOTION_COMMAND_PROCESS;
 	}
 
-	if ((m_pMapData->bIsTeleportLoc(m_sPlayerX, m_sPlayerY) == TRUE) && (m_cCommandCount == 0))
-		RequestTeleportAndWaitData();
+	if ((m_pMapData->bIsTeleportLoc(m_sPlayerX, m_sPlayerY) == TRUE) && (m_cCommandCount == 0)) {
+		bSendCommand(MSGID_REQUEST_TELEPORT, NULL, NULL, NULL, NULL, NULL, NULL);
+		ChangeGameMode(DEF_GAMEMODE_ONWAITINGINITDATA);
+	}
 
 	// indexX, indexY
 	if (cLB != 0) // Mouse Left button
@@ -30806,12 +30808,11 @@ void CGame::UpdateScreen_OnGame()
 	{
 		if (((m_bIsDialogEnabled[7] == TRUE) && (m_stDialogBoxInfo[7].cMode == 1)) ||
 			((m_bIsDialogEnabled[17] == TRUE) && (m_stDialogBoxInfo[17].cMode == 1)))
-#ifdef RES_HIGH
 		{
 		}
+#ifdef RES_HIGH
 		else m_DDraw.DrawShadowBox(0, 531, 799, 549);
 #else
-		{}
 		else m_DDraw.DrawShadowBox(0, 413, 639, 429);
 #endif
 		ShowReceivedString();
