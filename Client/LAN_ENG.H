@@ -458,8 +458,8 @@
 #define DEF_MSG_RANGOEK6  "Brigadier General"
 #define DEF_MSG_RANGOEK7  "Major General"
 #define DEF_MSG_RANGOEK8  "Lieutenant General"
-#define DEF_MSG_RANGOEK9 "General"
-#define DEF_MSG_RANGOEK10 "General of the Army"
+#define DEF_MSG_RANGOEK9  "General"
+#define DEF_MSG_RANGOEK10 "Legend"
 
 // Magic Weapons - Weapons Name Enhancement
 #define	GET_ITEM_NAME50	"Magic "

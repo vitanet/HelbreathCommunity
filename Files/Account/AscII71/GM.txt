@@ -29,5 +29,5 @@ account-Answer   = perro
 account-created-by = 
 
 [CHARACTERS]
-account-character-WS1  = GM1
+account-character  = GM1
 

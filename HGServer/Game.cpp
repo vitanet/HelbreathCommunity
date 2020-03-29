@@ -9290,7 +9290,7 @@ void CGame::ClientCommonHandler(int iClientH, char * pData)
 
 	//50Cent - HP Bar
 	case DEF_COMMONTYPE_REQ_GETNPCHP:
-		if ((iV1 - 10000 == 0) || (iV1 - 10000 >= DEF_MAXNPCS)) return;
+		if ((iV1 - 10000 <= 0) || (iV1 - 10000 >= DEF_MAXNPCS)) return;
         if (m_pNpcList[iV1 - 10000] == NULL) return;
 		if(m_pNpcList[iV1 - 10000]->m_iHP > m_pNpcList[iV1 - 10000]->m_iMaxHP) m_pNpcList[iV1 - 10000]->m_iMaxHP = m_pNpcList[iV1 - 10000]->m_iHP;
 		SendNotifyMsg(NULL, iClientH, DEF_SEND_NPCHP, m_pNpcList[iV1 - 10000]->m_iHP, m_pNpcList[iV1 - 10000]->m_iMaxHP, NULL, NULL);
@@ -10895,113 +10895,81 @@ void CGame::EnemyKillRewardHandler(int iAttackerH, int iClientH)
 	_bPKLog(DEF_PKLOG_BYENERMY,iAttackerH,iClientH,NULL) ;
 
 	// MORLA2.2 - EK y REP segun Rango
-	if((m_pClientList[iClientH]->m_iEnemyKillCount >= 100) && (m_pClientList[iClientH]->m_iRating >= 20 ))
-	{
-		if(((m_pClientList[iClientH]->m_iEnemyKillCount >= 100) && (m_pClientList[iClientH]->m_iRating < 30 )) || ((m_pClientList[iClientH]->m_iEnemyKillCount < 200) && (m_pClientList[iClientH]->m_iRating >= 20 )))
-		{	iRangoAttacker = 1;
-		}				
-		else if(((m_pClientList[iClientH]->m_iEnemyKillCount >= 200) && (m_pClientList[iClientH]->m_iRating < 40 )) || ((m_pClientList[iClientH]->m_iEnemyKillCount < 300) && (m_pClientList[iClientH]->m_iRating >= 30 )))
+	
+		if(((m_pClientList[iClientH]->m_iMaxEK >= 200) && (m_pClientList[iClientH]->m_iRating < 40 )) || ((m_pClientList[iClientH]->m_iMaxEK < 300) && (m_pClientList[iClientH]->m_iRating >= 30 )))
 		{	iRangoAttacker = 2;
 		}
-		else if(((m_pClientList[iClientH]->m_iEnemyKillCount >= 300) && (m_pClientList[iClientH]->m_iRating < 50 )) || ((m_pClientList[iClientH]->m_iEnemyKillCount < 400) && (m_pClientList[iClientH]->m_iRating >= 40 )))
+		else if(((m_pClientList[iClientH]->m_iMaxEK >= 300) && (m_pClientList[iClientH]->m_iRating < 50 )) || ((m_pClientList[iClientH]->m_iMaxEK < 400) && (m_pClientList[iClientH]->m_iRating >= 40 )))
 		{	iRangoAttacker = 3;
 		}
-		else if(((m_pClientList[iClientH]->m_iEnemyKillCount >= 400) && (m_pClientList[iClientH]->m_iRating < 60 )) || ((m_pClientList[iClientH]->m_iEnemyKillCount < 500) && (m_pClientList[iClientH]->m_iRating >= 50 )))
+		else if(((m_pClientList[iClientH]->m_iMaxEK >= 400) && (m_pClientList[iClientH]->m_iRating < 60 )) || ((m_pClientList[iClientH]->m_iMaxEK < 500) && (m_pClientList[iClientH]->m_iRating >= 50 )))
 		{	iRangoAttacker = 4;
 		}
-		else if(((m_pClientList[iClientH]->m_iEnemyKillCount >= 500) && (m_pClientList[iClientH]->m_iRating < 70 )) || ((m_pClientList[iClientH]->m_iEnemyKillCount < 600) && (m_pClientList[iClientH]->m_iRating >= 60 )))
+		else if(((m_pClientList[iClientH]->m_iMaxEK >= 500) && (m_pClientList[iClientH]->m_iRating < 70 )) || ((m_pClientList[iClientH]->m_iMaxEK < 600) && (m_pClientList[iClientH]->m_iRating >= 60 )))
 		{	iRangoAttacker = 5;
 		}
-		else if(((m_pClientList[iClientH]->m_iEnemyKillCount >= 600) && (m_pClientList[iClientH]->m_iRating < 80 )) || ((m_pClientList[iClientH]->m_iEnemyKillCount < 700) && (m_pClientList[iClientH]->m_iRating >= 70 )))
+		else if(((m_pClientList[iClientH]->m_iMaxEK >= 600) && (m_pClientList[iClientH]->m_iRating < 80 )) || ((m_pClientList[iClientH]->m_iMaxEK < 700) && (m_pClientList[iClientH]->m_iRating >= 70 )))
 		{	iRangoAttacker = 6;
 		}
-		else if(((m_pClientList[iClientH]->m_iEnemyKillCount >= 700) && (m_pClientList[iClientH]->m_iRating < 90 )) || ((m_pClientList[iClientH]->m_iEnemyKillCount < 800) && (m_pClientList[iClientH]->m_iRating >= 80 )))
+		else if(((m_pClientList[iClientH]->m_iMaxEK >= 700) && (m_pClientList[iClientH]->m_iRating < 90 )) || ((m_pClientList[iClientH]->m_iMaxEK < 800) && (m_pClientList[iClientH]->m_iRating >= 80 )))
 		{	iRangoAttacker = 7;
 		}
-		else if(((m_pClientList[iClientH]->m_iEnemyKillCount >= 800) && (m_pClientList[iClientH]->m_iRating < 100 )) || ((m_pClientList[iClientH]->m_iEnemyKillCount < 900) && (m_pClientList[iClientH]->m_iRating >= 90 )))
+		else if(((m_pClientList[iClientH]->m_iMaxEK >= 800) && (m_pClientList[iClientH]->m_iRating < 100 )) || ((m_pClientList[iClientH]->m_iMaxEK < 900) && (m_pClientList[iClientH]->m_iRating >= 90 )))
 		{	iRangoAttacker = 8;
 		}
-		else if(((m_pClientList[iClientH]->m_iEnemyKillCount >= 900) && (m_pClientList[iClientH]->m_iRating < 200 )) || ((m_pClientList[iClientH]->m_iEnemyKillCount < 1000) && (m_pClientList[iClientH]->m_iRating >= 100 )))
+		else if(((m_pClientList[iClientH]->m_iMaxEK >= 900) && (m_pClientList[iClientH]->m_iRating < 200 )) || ((m_pClientList[iClientH]->m_iMaxEK < 1000) && (m_pClientList[iClientH]->m_iRating >= 100 )))
 		{	iRangoAttacker = 9;
 		}
-		else if( (m_pClientList[iClientH]->m_iEnemyKillCount >= 1000) &&  (m_pClientList[iClientH]->m_iRating >= 200 ))
+		else if( (m_pClientList[iClientH]->m_iMaxEK >= 1000) &&  (m_pClientList[iClientH]->m_iRating >= 200 ))
 		{	iRangoAttacker = 10;
 		}
-	}
+	
 
 	if (m_pClientList[iAttackerH]->m_iPKCount == 0) {
 		// ÀûÀ» ÀâÀº »ç¶÷ÀÌ PK¸é ¾Æ¹«·± µæÀÌ ¾ø´Ù.
 	
 		// Èñ»ýÀÚÀÇ ½Ã¹Î, ±æµå¿ø ¿©ºÎ¿¡ µû¶ó Æ÷»óÀÌ ´Þ¶óÁø´Ù. 
 		
-			// ±æµå¿øÀÌ ¾Æ´Ï¹Ç·Î ½Ã¹Î. (¿©ÇàÀÚÀÇ °æ¿ì¿¡´Â ÀÌ ÇÔ¼ö°¡ È£ÃâµÇÁö ¾ÊÀ¸¹Ç·Î)
-			// v2.15 ÀûÀ» Á×¿´À»¶§ Æò±Õ°æÇèÄ¡¸¦ ¾ò±âÀ§ÇØ 
-			iRewardExp = (iDice(3, (3*iGetExpLevel(m_pClientList[iClientH]->m_iExp))) + iGetExpLevel(m_pClientList[iClientH]->m_iExp))/ 3 ;
+		// ±æµå¿øÀÌ ¾Æ´Ï¹Ç·Î ½Ã¹Î. (¿©ÇàÀÚÀÇ °æ¿ì¿¡´Â ÀÌ ÇÔ¼ö°¡ È£ÃâµÇÁö ¾ÊÀ¸¹Ç·Î)
+		// v2.15 ÀûÀ» Á×¿´À»¶§ Æò±Õ°æÇèÄ¡¸¦ ¾ò±âÀ§ÇØ 
+		iRewardExp = (iDice(3, (3*iGetExpLevel(m_pClientList[iClientH]->m_iExp))) + iGetExpLevel(m_pClientList[iClientH]->m_iExp))/ 3 ;
 
-			if (m_bIsCrusadeMode == TRUE || m_bIsHeldenianMode == TRUE) {
-				// Å©·ç¼¼ÀÌµå ¸ðµå¶ó¸é °æÇèÄ¡ÀÇ (1/3)*3À» ¸ÕÀú ÁÖ°í ³ª¸ÓÁö´Â 6¹è·Î ÀüÀï °øÇåµµ¿¡ ´©Àû 
-				m_pClientList[iAttackerH]->m_iExp += (iRewardExp/3)*4;
-				m_pClientList[iAttackerH]->m_iWarContribution += (iRewardExp - (iRewardExp/3))*12;
+		if (m_bIsCrusadeMode == TRUE || m_bIsHeldenianMode == TRUE) {
+			// Å©·ç¼¼ÀÌµå ¸ðµå¶ó¸é °æÇèÄ¡ÀÇ (1/3)*3À» ¸ÕÀú ÁÖ°í ³ª¸ÓÁö´Â 6¹è·Î ÀüÀï °øÇåµµ¿¡ ´©Àû 
+			m_pClientList[iAttackerH]->m_iExp += (iRewardExp/3)*4;
+			m_pClientList[iAttackerH]->m_iWarContribution += (iRewardExp - (iRewardExp/3))*12;
 
+			m_pClientList[iAttackerH]->m_iConstructionPoint += (m_pClientList[iClientH]->m_iLevel+ m_pClientList[iClientH]->m_iMajesticLevel) / 2;
 
-				m_pClientList[iAttackerH]->m_iConstructionPoint += (m_pClientList[iClientH]->m_iLevel+ m_pClientList[iClientH]->m_iMajesticLevel) / 2;
+			// ¾Ë·ÁÁØ´Ù.
+			SendNotifyMsg(NULL, iAttackerH, DEF_NOTIFY_CONSTRUCTIONPOINT, m_pClientList[iAttackerH]->m_iConstructionPoint, m_pClientList[iAttackerH]->m_iWarContribution, NULL, NULL);
 
-				// ¾Ë·ÁÁØ´Ù.
-				SendNotifyMsg(NULL, iAttackerH, DEF_NOTIFY_CONSTRUCTIONPOINT, m_pClientList[iAttackerH]->m_iConstructionPoint, m_pClientList[iAttackerH]->m_iWarContribution, NULL, NULL);
+		}
+		else {
+			// ÀÏ¹Ý ¸ðµå.
+			m_pClientList[iAttackerH]->m_iExp += iRewardExp;
+		}
 
-				// Èñ»ýÀÚÀÇ ·¹º§ÀÌ 80 ÀÌ»óÀÎ °æ¿ì Enemy Kill count¸¦ ¿Ã¸°´Ù.
-				
-					// Èñ»ýÀÚÀÇ ·¹º§ÀÌ 80ÀÌ»óÀÌ°í
-					if (memcmp(m_pClientList[iClientH]->m_cLocation, m_pClientList[iClientH]->m_cMapName, 10) != 0) {
-						// Èñ»ýÀÚ°¡ Á×Àº °÷ÀÌ ÀÚ½ÅÀÇ ¸¶À»ÀÌ ¾Æ´Ï¶ó¸é EK·Î ÀÎÁ¤ 
-						m_pClientList[iAttackerH]->m_iEnemyKillCount += (m_iEnemyKillAdjust * iRangoAttacker)*2; 
-						
+		// Èñ»ýÀÚÀÇ ·¹º§ÀÌ 80 ÀÌ»óÀÎ °æ¿ì Enemy Kill count¸¦ ¿Ã¸°´Ù.
 
-						m_pClientList[iClientH]->m_iDeaths++; // MORLA 2.2 - Le suma una muerte al pj
+		// Èñ»ýÀÚÀÇ ·¹º§ÀÌ 80ÀÌ»óÀÌ°í
+		if (memcmp(m_pClientList[iClientH]->m_cLocation, m_pClientList[iClientH]->m_cMapName, 10) != 0) {
+			// Èñ»ýÀÚ°¡ Á×Àº °÷ÀÌ ÀÚ½ÅÀÇ ¸¶À»ÀÌ ¾Æ´Ï¶ó¸é EK·Î ÀÎÁ¤ 
+			m_pClientList[iAttackerH]->m_iEnemyKillCount += m_iEnemyKillAdjust * iRangoAttacker;
 
-						if (m_pClientList[iAttackerH]->m_iEnemyKillCount > m_pClientList[iAttackerH]->m_iMaxEK)
-						{
-							m_pClientList[iAttackerH]->m_iMaxEK = m_pClientList[iAttackerH]->m_iEnemyKillCount;
-						}
-						
-						
-					}
-					
-				
-				// Æ÷»ó±Ý ´©Àû 
-				m_pClientList[iAttackerH]->m_iRewardGold += iDice(1, (iGetExpLevel(m_pClientList[iClientH]->m_iExp)));
-				
+			m_pClientList[iClientH]->m_iDeaths++; // MORLA 2.2 - Le suma una muerte al pj
 
-				if (m_pClientList[iAttackerH]->m_iRewardGold < 0) 
-					m_pClientList[iAttackerH]->m_iRewardGold = 0;
+			if (m_pClientList[iAttackerH]->m_iEnemyKillCount > m_pClientList[iAttackerH]->m_iMaxEK)
+			{
+				m_pClientList[iAttackerH]->m_iMaxEK = m_pClientList[iAttackerH]->m_iEnemyKillCount;
 			}
-			else {
-				// ÀÏ¹Ý ¸ðµå.
-				m_pClientList[iAttackerH]->m_iExp += iRewardExp;
-				// Èñ»ýÀÚÀÇ ·¹º§ÀÌ 80 ÀÌ»óÀÎ °æ¿ì Enemy Kill count¸¦ ¿Ã¸°´Ù.
-				
-					// Èñ»ýÀÚÀÇ ·¹º§ÀÌ 80ÀÌ»óÀÌ°í
-					if (memcmp(m_pClientList[iClientH]->m_cLocation, m_pClientList[iClientH]->m_cMapName, 10) != 0)  {
-						
-						// Èñ»ýÀÚ°¡ Á×Àº °÷ÀÌ ÀÚ½ÅÀÇ ¸¶À»ÀÌ ¾Æ´Ï¶ó¸é EK·Î ÀÎÁ¤ 
-						m_pClientList[iAttackerH]->m_iEnemyKillCount += m_iEnemyKillAdjust*iRangoAttacker;
+		}
 
-						m_pClientList[iClientH]->m_iDeaths++; // MORLA 2.2 - Le suma una muerte al pj
-						
-						 if (m_pClientList[iAttackerH]->m_iEnemyKillCount > m_pClientList[iAttackerH]->m_iMaxEK)
-						{
-							m_pClientList[iAttackerH]->m_iMaxEK = m_pClientList[iAttackerH]->m_iEnemyKillCount;
-						}
-						
-					}
-				
-				// Æ÷»ó±Ý ´©Àû 
-				m_pClientList[iAttackerH]->m_iRewardGold += iDice(1, (iGetExpLevel(m_pClientList[iClientH]->m_iExp)));
-				
-				if (m_pClientList[iAttackerH]->m_iRewardGold < 0) 
-					m_pClientList[iAttackerH]->m_iRewardGold = 0;
-			}
-		
+		// Æ÷»ó±Ý ´©Àû 
+		m_pClientList[iAttackerH]->m_iRewardGold += iDice(1, (iGetExpLevel(m_pClientList[iClientH]->m_iExp)));
+
+		if (m_pClientList[iAttackerH]->m_iRewardGold < 0)
+			m_pClientList[iAttackerH]->m_iRewardGold = 0;		
 
 		// ÀûÀ» Àâ¾Ò´Ù´Â ¸Þ½ÃÁö º¸³¿ 
 		SendNotifyMsg(NULL, iAttackerH, DEF_NOTIFY_ENEMYKILLREWARD, iClientH, NULL, NULL, NULL);
