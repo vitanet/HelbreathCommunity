@@ -28156,52 +28156,52 @@ void CGame::DrawObjectName(short sX, short sY, char * pName, int iStatus)
 			if(((m_iRango_EK >= 100) && (m_iRango_REP < 30 )) || ((m_iRango_EK < 200) && (m_iRango_REP >= 20 )))
 			{	
 				strcpy(cTxt, DEF_MSG_RANGOEK1);
-				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(sX+105, sY+32, 32, dwTime);
+				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(sX-50, sY, 32, dwTime); //105,32
 			}				
 			else if(((m_iRango_EK >= 200) && (m_iRango_REP < 40 )) || ((m_iRango_EK < 300) && (m_iRango_REP >= 30 )))
 			{	
 				strcpy(cTxt, DEF_MSG_RANGOEK2);
-				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(sX+105, sY+32, 33, dwTime);
+				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(sX-50, sY, 33, dwTime);
 			}
 			else if(((m_iRango_EK >= 300) && (m_iRango_REP < 50 )) || ((m_iRango_EK < 400) && (m_iRango_REP >= 40 )))
 			{	
 				strcpy(cTxt, DEF_MSG_RANGOEK3);
-				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(sX+105, sY+32, 34, dwTime);
+				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(sX-50, sY, 34, dwTime);
 			}
 			else if(((m_iRango_EK >= 400) && (m_iRango_REP < 60 )) || ((m_iRango_EK < 500) && (m_iRango_REP >= 50 )))
 			{	
 				strcpy(cTxt, DEF_MSG_RANGOEK4);
-				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(sX+105, sY+32, 36, dwTime);
+				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(sX-50, sY, 36, dwTime);
 			}
 			else if(((m_iRango_EK >= 500) && (m_iRango_REP < 70 )) || ((m_iRango_EK < 600) && (m_iRango_REP >= 60 )))
 			{	
 				strcpy(cTxt, DEF_MSG_RANGOEK5);
-				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(sX+105, sY+32, 35, dwTime);
+				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(sX-50, sY, 35, dwTime);
 			}
 			else if(((m_iRango_EK >= 600) && (m_iRango_REP < 80 )) || ((m_iRango_EK < 700) && (m_iRango_REP >= 70 )))
 			{	
 				strcpy(cTxt, DEF_MSG_RANGOEK6);
-				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(sX+105, sY+32, 29, dwTime);
+				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(sX-50, sY, 29, dwTime);
 			}
 			else if(((m_iRango_EK >= 700) && (m_iRango_REP < 90 )) || ((m_iRango_EK < 800) && (m_iRango_REP >= 80 )))
 			{	
 				strcpy(cTxt, DEF_MSG_RANGOEK7);
-				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(sX+105-34, sY+32+9, 30, dwTime);
+				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(sX-50, sY, 30, dwTime);
 			}
 			else if(((m_iRango_EK >= 800) && (m_iRango_REP < 100 )) || ((m_iRango_EK < 900) && (m_iRango_REP >= 90 )))
 			{	
 				strcpy(cTxt, DEF_MSG_RANGOEK8);
-				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(sX+105, sY+32, 31, dwTime);
+				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(sX-50, sY, 31, dwTime);
 			}
 			else if(((m_iRango_EK >= 900) && (m_iRango_REP < 200 )) || ((m_iRango_EK < 1000) && (m_iRango_REP >= 100 )))
 			{	
 				strcpy(cTxt, DEF_MSG_RANGOEK9);
-				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(sX+105, sY+32, 37, dwTime);
+				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(sX-50, sY, 37, dwTime);
 			}
 			else if( (m_iRango_EK >= 1000) &&  (m_iRango_REP >= 200 ))
 			{	
 				strcpy(cTxt, DEF_MSG_RANGOEK10);
-				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(sX+105, sY+32, 38, dwTime);
+				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(sX-50, sY, 38, dwTime);
 			}
 			PutString2(sX, sY+28 +iAddY, cTxt, 255, 255, 0);
 		}	
