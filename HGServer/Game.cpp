@@ -21553,6 +21553,7 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 28);
 		break;
 
+	case DEF_SEND_PARTYHP: //New Party Status - ZeroEoyPnk
 	case DEF_NOTIFY_HELDENIANCOUNT:
 		ip = (int*)cp;
 		*ip = (int)sV1;
@@ -22257,18 +22258,23 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 		*dwp = (DWORD)m_pClientList[iToH]->m_iHP;
 		cp += 4;
 
-		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 10);
-
 		if ((m_pClientList[iToH]->m_iPartyID != NULL) && (m_pClientList[iToH]->m_iPartyStatus == DEF_PARTYSTATUS_CONFIRM))
 		{
 			RefreshPartyStatus(iToH);
 		}
+
+		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 10);
 		break;
 
 	case DEF_NOTIFY_MP:
 		dwp = (DWORD*)cp;
 		*dwp = (DWORD)m_pClientList[iToH]->m_iMP;
 		cp += 4;
+
+		if ((m_pClientList[iToH]->m_iPartyID != NULL) && (m_pClientList[iToH]->m_iPartyStatus == DEF_PARTYSTATUS_CONFIRM))
+		{
+			RefreshPartyStatus(iToH);
+		}
 
 		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 10);
 		break;
@@ -22433,11 +22439,6 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 		*ip = (int)sV1;
 		cp += 4;
 
-		//LifeX Added sv2 25/07
-		/*dwp = (DWORD *)cp;
-		*dwp = sV2;
-		cp += 4;*/
-
 		ip = (int*)cp;
 		*ip = (int)sV2;
 		cp += 4;
@@ -22578,7 +22579,6 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 		break;
 
 	case DEF_NOTIFY_CRUSADE:
-	case DEF_SEND_PARTYHP: //New Party Status - ZeroEoyPnk
 		ip = (int*)cp;
 		*ip = (int)sV1;
 		cp += 4;

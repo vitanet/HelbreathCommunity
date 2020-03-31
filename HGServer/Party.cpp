@@ -853,13 +853,15 @@ void CGame::RequestAcceptJoinPartyHandler(int iClientH, int iResult)
 //New Party Status - ZeroEoyPnk - 06/09/2010
 void CGame::RefreshPartyStatus(int iClientH)
 {
-	int i, HPParty, NotifyClient, PartyId, x, MaxHpParty, TotalMembers, PartySex;
+	int i, HPParty, NotifyClient, PartyId, x, MaxHpParty, TotalMembers, PartySex, MPParty, MaxMpParty;
 
 	NotifyClient = 0;
 	HPParty = 0;
 	PartySex = 0;
 	MaxHpParty = 0;
 	TotalMembers = 0;
+	MPParty = 0;
+	MaxMpParty = 0;
 	x = 0;
 
 	if (m_pClientList[iClientH] == NULL) return;
@@ -868,6 +870,8 @@ void CGame::RefreshPartyStatus(int iClientH)
 	{
 		HPParty = m_pClientList[iClientH]->m_iHP;
 		MaxHpParty = iGetMaxHP(iClientH, FALSE);
+		MPParty = m_pClientList[iClientH]->m_iMP;
+		MaxMpParty = iGetMaxMP(iClientH);
 		PartySex = m_pClientList[iClientH]->m_cSex;
 		TotalMembers = m_stPartyInfo[m_pClientList[iClientH]->m_iPartyID].iTotalMembers;
 		for (i = 0; i < m_stPartyInfo[m_pClientList[iClientH]->m_iPartyID].iTotalMembers; i++)
@@ -883,7 +887,7 @@ void CGame::RefreshPartyStatus(int iClientH)
 			NotifyClient = m_stPartyInfo[m_pClientList[iClientH]->m_iPartyID].iIndex[i];
 			if (m_pClientList[NotifyClient] != NULL)
 			{
-				SendNotifyMsg(NULL, NotifyClient, DEF_SEND_PARTYHP, PartyId, HPParty, MaxHpParty, NULL, PartySex);
+				SendNotifyMsg(NULL, NotifyClient, DEF_SEND_PARTYHP, PartyId, HPParty, MaxHpParty, NULL, PartySex, MPParty, MaxMpParty);
 			}
 		}
 	}
