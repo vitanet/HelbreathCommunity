@@ -16525,18 +16525,20 @@ resi = 0;
 				if (strlen(m_stPartyMemberNameList[i].cName) != 0) {
 					if (iPartySex[i] == 1)
 					{
-						m_pSprite[DEF_SPRID_INTERFACE_ND_PARTYSTATUS]->PutSpriteFast(16 + 64*i, 8, i, dwTime);
-						m_pSprite[DEF_SPRID_INTERFACE_ND_PARTYSTATUS]->PutSpriteFast(3 + 64*i, 47, 17, dwTime);
-						wsprintf(G_cTxt, "%s", m_stPartyMemberNameList[i].cName);
-						PutAlignedString(64*i, 64*(i+1), 54, G_cTxt, 220,130,45); 
+						m_pSprite[DEF_SPRID_INTERFACE_ND_PARTYSTATUS]->PutSpriteFast(16 + 71*i, 8, i, dwTime);
+						//m_pSprite[DEF_SPRID_INTERFACE_ND_PARTYSTATUS]->PutSpriteFast(3 + 71*i, 54, 17, dwTime);
+						
 					}
 					else
 					{
-						m_pSprite[DEF_SPRID_INTERFACE_ND_PARTYSTATUS]->PutSpriteFast(16 + 64*i, 8, 8 + i, dwTime);
-						m_pSprite[DEF_SPRID_INTERFACE_ND_PARTYSTATUS]->PutSpriteFast(3 + 64*i, 47, 17, dwTime);
-						wsprintf(G_cTxt, "%s", m_stPartyMemberNameList[i].cName);
-						PutAlignedString(64*i, 64*(i+1), 54, G_cTxt, 220,130,45); 
+						m_pSprite[DEF_SPRID_INTERFACE_ND_PARTYSTATUS]->PutSpriteFast(16 + 71*i, 8, 8 + i, dwTime);
+						//m_pSprite[DEF_SPRID_INTERFACE_ND_PARTYSTATUS]->PutSpriteFast(3 + 71*i, 54, 17, dwTime);
+						 
 					}
+					wsprintf(G_cTxt, "%s", m_stPartyMemberNameList[i].cName);
+					PutAlignedString(71 * i, 71 * (i + 1), 47, G_cTxt, 220, 130, 45);
+					m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(3 + 71 * i, 54, 26, dwTime);
+					m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(3 + 71 * i, 61, 26, dwTime);
 				}
 			}
 		}
@@ -16785,18 +16787,28 @@ void CGame::DrawDialogBox_GaugePannel()
 				if (strlen(m_stPartyMemberNameList[i].cName) != 0) 
 				{
 					if (iPartyHp[i] > iMaxPoint2[i]) iPartyHp[i] = iMaxPoint2[i];
-					if (iPartyHp[i] != NULL)
+					if (iPartyHp[i] > 0)
 					{	
-						iBarWidth2[i] = (iPartyHp[i]*59)/iMaxPoint2[i];
+						iBarWidth2[i] = (iPartyHp[i]*66)/iMaxPoint2[i];
 						if( iBarWidth2[i] < 0 ) iBarWidth2[i] = 0;
-						if( iBarWidth2[i] > 59 ) iBarWidth2[i] = 59;
-						m_pSprite[DEF_SPRID_INTERFACE_ND_PARTYSTATUS]->PutSpriteFastWidth(3 +(64*i), 47,  16, iBarWidth2[i], m_dwCurTime, false);
+						if( iBarWidth2[i] > 66 ) iBarWidth2[i] = 66;
+						//m_pSprite[DEF_SPRID_INTERFACE_ND_PARTYSTATUS]->PutSpriteFastWidth(3 +(64*i), 47,  16, iBarWidth2[i], m_dwCurTime, false); 
+						m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFastWidth(3 + (71 * i), 54, 26, iBarWidth2[i], m_dwCurTime, false);
+					}
+
+					if (iPartyMp[i] > iMaxPoint0[i]) iPartyMp[i] = iMaxPoint0[i];
+					if (iPartyMp[i] >= 0)
+					{
+						iBarWidth0[i] = (iPartyMp[i] * 66) / iMaxPoint0[i];
+						if (iBarWidth0[i] < 0) iBarWidth0[i] = 0;
+						if (iBarWidth0[i] > 66) iBarWidth0[i] = 66;
+						//m_pSprite[DEF_SPRID_INTERFACE_ND_PARTYSTATUS]->PutSpriteFastWidth(3 +(64*i), 47,  16, iBarWidth2[i], m_dwCurTime, false); 
+						m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFastWidth(3 + (71 * i), 61, 27, iBarWidth0[i], m_dwCurTime, false);
 					}
 				}
 			}
 		}
 	}
-	
 }
 
 void CGame::DrawDialogBox_Text(short msX, short msY, short msZ, char cLB)
@@ -24504,9 +24516,9 @@ void CGame::NotifyMsgHandler(char * pData)
 		NotifyMsg_UserJoin(pData);
 		break;
 
-		//News Addons - ZeroEoyPnk
+	//News Addons - ZeroEoyPnk
 	case DEF_SEND_PARTYHP:
-		cp = (char *)(pData     + DEF_INDEX2_MSGTYPE + 2);
+		cp = (char *)(pData + DEF_INDEX2_MSGTYPE + 2);
 		ip = (int *)cp;
 		PartyId = *ip;
 		cp +=4;
@@ -24521,11 +24533,19 @@ void CGame::NotifyMsgHandler(char * pData)
 
 		ip = (int *)cp;
 		iPartySex[PartyId-1] = *ip;
-		cp +=4;		
+		cp +=4;
+
+		ip = (int*)cp;
+		iPartyMp[PartyId - 1] = *ip;
+		cp += 4;
+
+		ip = (int*)cp;
+		iMaxPoint0[PartyId - 1] = *ip;
+		cp += 4;
 		break;
 
 	case DEF_SEND_PARTYCOORDS:
-		cp = (char *)(pData     + DEF_INDEX2_MSGTYPE + 2);
+		cp = (char *)(pData + DEF_INDEX2_MSGTYPE + 2);
 		ip = (int *)cp;
 		PartyId = *ip;
 		cp +=4;
@@ -24539,20 +24559,9 @@ void CGame::NotifyMsgHandler(char * pData)
 		cp +=4;
 
 		ZeroMemory(PartyMapName[PartyId-1], sizeof(PartyMapName[PartyId-1]));
-		memcpy(PartyMapName[PartyId-1], cp, 12);
-		cp += 12;
+		memcpy(PartyMapName[PartyId-1], cp, 10);
+		cp += 10;
 		break;
-
-	// Centuu : EVENT CODE
-    case DEF_NOTIFY_EVENTTPOFF: // 0x0AF3 by Centuu.-
-        SetTopMsg("TP to event deactivated.", 10);
-        break;
-    case DEF_NOTIFY_EVENTSTART: // 0x0AF6 by Centuu.-
-        SetTopMsg("A new event has begun! Use the /tpevent to participate", 10);
-        break;
-    case DEF_NOTIFY_EVENTEND: // 0x0AF9 by Centuu.-
-        SetTopMsg("The event has finished.", 10);
-        break;
 
 	case DEF_NOTIFY_ITEMTRADE: // MORLA 2.4 - cuando realiza el trade items por eks o dgs
 		NotifyMsg_ItemTrade(pData);
@@ -27991,6 +28000,7 @@ void CGame::DrawNpcName(short sX, short sY, short sOwnerType, int iStatus)
 		bSendCommand(MSGID_COMMAND_COMMON, DEF_COMMONTYPE_REQ_GETNPCHP, NULL, _tmp_wObjectID, NULL, NULL, NULL);
 		if(iNpcHP > 0)
 		{
+			m_pSprite[DEF_SPRID_INTERFACE_ND_PARTYSTATUS]->PutSpriteFastWidth(sX, sY + 15, 18, 75, m_dwCurTime, false);
 			int iBarWidth2 = (iNpcHP*75)/iNpcMaxHP;
 			if( iBarWidth2 < 0 ) iBarWidth2 = 0;
 			if( iBarWidth2 > 75 ) iBarWidth2 = 75;

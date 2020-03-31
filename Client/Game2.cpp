@@ -1047,25 +1047,25 @@ void CGame::ShowEventList(DWORD dwTime)
 		{
 			switch (m_stEventHistory[i].cColor) {
 			case 0: // centu2
-				PutString(10, 10 + i * 15, m_stEventHistory[i].cTxt, RGB(225, 225, 225), FALSE, 1, TRUE);
+				PutString(10, 50 + i * 15, m_stEventHistory[i].cTxt, RGB(225, 225, 225), FALSE, 1, TRUE);
 				break;
 			case 1:
-				PutString(10, 10 + i * 15, m_stEventHistory[i].cTxt, RGB(130, 255, 130), FALSE, 1, TRUE);
+				PutString(10, 50 + i * 15, m_stEventHistory[i].cTxt, RGB(130, 255, 130), FALSE, 1, TRUE);
 				break;
 			case 2:
-				PutString(10, 10 + i * 15, m_stEventHistory[i].cTxt, RGB(255, 130, 130), FALSE, 1, TRUE);
+				PutString(10, 50 + i * 15, m_stEventHistory[i].cTxt, RGB(255, 130, 130), FALSE, 1, TRUE);
 				break;
 			case 3:
-				PutString(10, 10 + i * 15, m_stEventHistory[i].cTxt, RGB(130, 130, 255), FALSE, 1, TRUE);
+				PutString(10, 50 + i * 15, m_stEventHistory[i].cTxt, RGB(130, 130, 255), FALSE, 1, TRUE);
 				break;
 			case 4:
-				PutString(10, 10 + i * 15, m_stEventHistory[i].cTxt, RGB(230, 230, 130), FALSE, 1, TRUE);
+				PutString(10, 50 + i * 15, m_stEventHistory[i].cTxt, RGB(230, 230, 130), FALSE, 1, TRUE);
 				break;
 			case 10:
-				PutString(10, 10 + i * 15, m_stEventHistory[i].cTxt, RGB(180, 255, 180), FALSE, 1, TRUE);
+				PutString(10, 50 + i * 15, m_stEventHistory[i].cTxt, RGB(180, 255, 180), FALSE, 1, TRUE);
 				break;
 			case 20:
-				PutString(10, 10 + i * 15, m_stEventHistory[i].cTxt, RGB(150, 150, 170), FALSE, 1, TRUE);
+				PutString(10, 50 + i * 15, m_stEventHistory[i].cTxt, RGB(150, 150, 170), FALSE, 1, TRUE);
 				break;
 			}
 		}
@@ -9313,6 +9313,9 @@ void CGame::InitGameSettings()
 		iBarWidth2[i] = NULL;
 		iParty_sX[i] = NULL;
 		iParty_sY[i] = NULL;
+		iPartyMp[i] = NULL;
+		iMaxPoint0[i] = NULL;
+		iBarWidth0[i] = NULL;
 
 
 	}

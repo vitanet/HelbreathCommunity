@@ -863,7 +863,7 @@ public:
 	//New Party Status - ZeroEoyPnk
 
 	int PartyId;
-	int iPartyHp[9], iMaxPoint2[9], iBarWidth2[9], iPartySex[9], iParty_sX[9], iParty_sY[9], iPartyMp[9], iMaxPoint0[9];
+	int iPartyHp[9], iMaxPoint2[9], iPartySex[9], iParty_sX[9], iParty_sY[9], iPartyMp[9], iMaxPoint0[9], iBarWidth2[9], iBarWidth0[9];
 	char PartyMapName[9][12];
 	BOOL ActualizarParty, m_bShowParty;
 
