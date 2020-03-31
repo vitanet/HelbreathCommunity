@@ -27,6 +27,8 @@ DXC_ddraw::DXC_ddraw()
 	m_lpBackB4flip	= NULL;
 	m_cPixelFormat	= 0;
 
+	m_init = false;
+
 #ifdef DEF_WINDOWED_MODE	
 	m_bFullMode		= FALSE;
 #else
@@ -190,6 +192,8 @@ BOOL DXC_ddraw::bInit(HWND hWnd)
 	m_hFontInUse = NULL;	
 	m_hFontInUse = CreateFont(16,0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, NONANTIALIASED_QUALITY, VARIABLE_PITCH, "Comic Sans MS") ;
 	m_hDC = NULL;
+
+	m_init = true;
 		
 	return TRUE;
 }
@@ -227,10 +231,13 @@ HRESULT DXC_ddraw::iFlip()
 	return DD_OK;
 }
 
-void DXC_ddraw::ChangeDisplayMode(HWND hWnd)
+BOOL DXC_ddraw::ChangeDisplayMode(HWND hWnd)
 {
 	HRESULT        ddVal;
 	DDSURFACEDESC2 ddsd;
+
+	if (!m_init)
+		return FALSE;
 
 	if (m_lpBackB4flip != NULL)
 	{
@@ -244,13 +251,16 @@ void DXC_ddraw::ChangeDisplayMode(HWND hWnd)
 		if (m_bFullMode == TRUE) m_lpDD4->RestoreDisplayMode();
 	}
 
-	if( m_bFullMode == TRUE )
+	//centu2
+	SetRect(&m_rcClipArea, 0, 0, 800, 600);
+
+	if( m_bFullMode == FALSE ) // TRUE
 	{
 		int cx = GetSystemMetrics(SM_CXFULLSCREEN);
 		int cy = GetSystemMetrics(SM_CYFULLSCREEN);
 
 		ddVal = m_lpDD4->SetCooperativeLevel(hWnd, DDSCL_NORMAL);
-		if (ddVal != DD_OK) return;
+		if (ddVal != DD_OK) return FALSE;
 
 		cx = cx/2;
 		cy = cy/2;
@@ -269,7 +279,7 @@ void DXC_ddraw::ChangeDisplayMode(HWND hWnd)
 		ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE;
 		
 		ddVal = m_lpDD4->CreateSurface(&ddsd, &m_lpFrontB4, NULL);
-		if (ddVal != DD_OK) return;
+		if (ddVal != DD_OK) return FALSE;
 #ifdef RES_HIGH
 		SetRect(&m_rcFlipping, cx-400, cy-300, cx+400, cy+300);
 #else
@@ -281,13 +291,13 @@ void DXC_ddraw::ChangeDisplayMode(HWND hWnd)
 	{
 		DDSCAPS2       ddscaps;
 		ddVal = m_lpDD4->SetCooperativeLevel(hWnd, DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN);
-		if (ddVal != DD_OK) return;
+		if (ddVal != DD_OK) return FALSE;
 #ifdef RES_HIGH
 		ddVal = m_lpDD4->SetDisplayMode(800, 600, 16,0,0);
 #else
 		ddVal = m_lpDD4->SetDisplayMode(640, 480, 16,0,0);
 #endif
-		if (ddVal != DD_OK) return;
+		if (ddVal != DD_OK) return FALSE;
 		memset( (VOID *)&ddsd, 0, sizeof(ddsd) );
 		ddsd.dwSize = sizeof( ddsd );
 		ddsd.dwFlags = DDSD_CAPS | DDSD_BACKBUFFERCOUNT;
@@ -295,12 +305,12 @@ void DXC_ddraw::ChangeDisplayMode(HWND hWnd)
 		ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE | DDSCAPS_FLIP | DDSCAPS_COMPLEX;
 		
 		ddVal = m_lpDD4->CreateSurface(&ddsd, &m_lpFrontB4, NULL);
-		if (ddVal != DD_OK) return;
+		if (ddVal != DD_OK) return FALSE;
 
 		ZeroMemory(&ddscaps, sizeof(ddscaps));
 		ddscaps.dwCaps = DDSCAPS_BACKBUFFER;
 		ddVal = m_lpFrontB4->GetAttachedSurface(&ddscaps, &m_lpBackB4flip);
-		if (ddVal != DD_OK) return;
+		if (ddVal != DD_OK) return FALSE;
 #ifdef RES_HIGH
 		SetRect(&m_rcFlipping, 0, 0, 800, 600);
 #else
@@ -311,11 +321,11 @@ void DXC_ddraw::ChangeDisplayMode(HWND hWnd)
 	InitFlipToGDI(hWnd);
 #ifdef RES_HIGH
 	m_lpBackB4 = pCreateOffScreenSurface(800, 600);
-	if (m_lpBackB4 == NULL) return;
+	if (m_lpBackB4 == NULL) return FALSE;
 
 	// Pre-draw background surface
 	m_lpPDBGS = pCreateOffScreenSurface(800+32, 600+32);
-	if (m_lpPDBGS == NULL) return;
+	if (m_lpPDBGS == NULL) return FALSE;
 #else
 	m_lpBackB4 = pCreateOffScreenSurface(640, 480);
 	if (m_lpBackB4 == NULL) return;
@@ -325,10 +335,11 @@ void DXC_ddraw::ChangeDisplayMode(HWND hWnd)
 	if (m_lpPDBGS == NULL) return;
 #endif
 	ddsd.dwSize = sizeof(ddsd);
-	if (m_lpBackB4->Lock(NULL, &ddsd, DDLOCK_WAIT, NULL) != DD_OK) return;
+	if (m_lpBackB4->Lock(NULL, &ddsd, DDLOCK_WAIT, NULL) != DD_OK) return FALSE;
 	m_pBackB4Addr        = (WORD *)ddsd.lpSurface;
 	m_sBackB4Pitch       = (short)ddsd.lPitch >> 1;
 	m_lpBackB4->Unlock(NULL);
+	return TRUE;
 }
 
 IDirectDrawSurface7 * DXC_ddraw::pCreateOffScreenSurface(WORD wSzX, WORD wSzY)

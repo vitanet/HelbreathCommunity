@@ -35,7 +35,7 @@ public:
 	BOOL bInit(HWND hWnd);
 	void ColorTransferRGB(COLORREF fcolor, int * iR, int * iG, int * iB);
 	HRESULT InitFlipToGDI(HWND hWnd);
-	void ChangeDisplayMode(HWND hWnd);
+	BOOL ChangeDisplayMode(HWND hWnd);
 	void DrawText(LPRECT pRect, char * pString, COLORREF rgb);
 	void _ReleaseBackBufferDC();
 	void _GetBackBufferDC();
@@ -62,6 +62,8 @@ public:
 	long    m_lFadeG[64][64],  m_lFadeRB[64][64];
 
 	BOOL m_bFullMode;
+
+	bool m_init;
 
 	LPDIRECTDRAW7		 m_lpDD4;
 	LPDIRECTDRAWSURFACE7 m_lpFrontB4, m_lpBackB4, m_lpBackB4flip;

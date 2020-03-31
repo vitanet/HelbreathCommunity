@@ -16526,19 +16526,17 @@ resi = 0;
 					if (iPartySex[i] == 1)
 					{
 						m_pSprite[DEF_SPRID_INTERFACE_ND_PARTYSTATUS]->PutSpriteFast(16 + 71*i, 8, i, dwTime);
-						//m_pSprite[DEF_SPRID_INTERFACE_ND_PARTYSTATUS]->PutSpriteFast(3 + 71*i, 54, 17, dwTime);
 						
 					}
 					else
 					{
 						m_pSprite[DEF_SPRID_INTERFACE_ND_PARTYSTATUS]->PutSpriteFast(16 + 71*i, 8, 8 + i, dwTime);
-						//m_pSprite[DEF_SPRID_INTERFACE_ND_PARTYSTATUS]->PutSpriteFast(3 + 71*i, 54, 17, dwTime);
 						 
 					}
 					wsprintf(G_cTxt, "%s", m_stPartyMemberNameList[i].cName);
-					PutAlignedString(71 * i, 71 * (i + 1), 47, G_cTxt, 220, 130, 45);
-					m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(3 + 71 * i, 54, 26, dwTime);
-					m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(3 + 71 * i, 61, 26, dwTime);
+					PutAlignedString(71 * i, 71 * (i + 1), 45, G_cTxt, 220, 130, 45);
+					m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(3 + 71 * i, 60, 28, dwTime);
+					m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(3 + 71 * i, 65, 28, dwTime);
 				}
 			}
 		}
@@ -16792,18 +16790,14 @@ void CGame::DrawDialogBox_GaugePannel()
 						iBarWidth2[i] = (iPartyHp[i]*66)/iMaxPoint2[i];
 						if( iBarWidth2[i] < 0 ) iBarWidth2[i] = 0;
 						if( iBarWidth2[i] > 66 ) iBarWidth2[i] = 66;
-						//m_pSprite[DEF_SPRID_INTERFACE_ND_PARTYSTATUS]->PutSpriteFastWidth(3 +(64*i), 47,  16, iBarWidth2[i], m_dwCurTime, false); 
-						m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFastWidth(3 + (71 * i), 54, 26, iBarWidth2[i], m_dwCurTime, false);
-					}
+						m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFastWidth(3 + (71 * i), 60, 26, iBarWidth2[i], m_dwCurTime, false);
+					
 
-					if (iPartyMp[i] > iMaxPoint0[i]) iPartyMp[i] = iMaxPoint0[i];
-					if (iPartyMp[i] >= 0)
-					{
+						if (iPartyMp[i] > iMaxPoint0[i]) iPartyMp[i] = iMaxPoint0[i];
 						iBarWidth0[i] = (iPartyMp[i] * 66) / iMaxPoint0[i];
 						if (iBarWidth0[i] < 0) iBarWidth0[i] = 0;
 						if (iBarWidth0[i] > 66) iBarWidth0[i] = 66;
-						//m_pSprite[DEF_SPRID_INTERFACE_ND_PARTYSTATUS]->PutSpriteFastWidth(3 +(64*i), 47,  16, iBarWidth2[i], m_dwCurTime, false); 
-						m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFastWidth(3 + (71 * i), 61, 27, iBarWidth0[i], m_dwCurTime, false);
+						m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFastWidth(3 + (71 * i), 65, 27, iBarWidth0[i], m_dwCurTime, false);
 					}
 				}
 			}
@@ -24519,6 +24513,7 @@ void CGame::NotifyMsgHandler(char * pData)
 	//News Addons - ZeroEoyPnk
 	case DEF_SEND_PARTYHP:
 		cp = (char *)(pData + DEF_INDEX2_MSGTYPE + 2);
+
 		ip = (int *)cp;
 		PartyId = *ip;
 		cp +=4;
