@@ -27989,13 +27989,12 @@ void CGame::DrawNpcName(short sX, short sY, short sOwnerType, int iStatus)
 		//50Cent - HP Bar 
 		//Centuu - fixed
 		bSendCommand(MSGID_COMMAND_COMMON, DEF_COMMONTYPE_REQ_GETNPCHP, NULL, _tmp_wObjectID, NULL, NULL, NULL);
-
 		if(iNpcHP > 0)
 		{
-			int iBarWidth2 = (iNpcHP*59)/iNpcMaxHP;
+			int iBarWidth2 = (iNpcHP*75)/iNpcMaxHP;
 			if( iBarWidth2 < 0 ) iBarWidth2 = 0;
-			if( iBarWidth2 > 59 ) iBarWidth2 = 59;
-			m_pSprite[DEF_SPRID_INTERFACE_ND_PARTYSTATUS]->PutSpriteFastWidth(sX, sY + 15,  16, iBarWidth2, m_dwCurTime, false);
+			if( iBarWidth2 > 75 ) iBarWidth2 = 75;
+			m_pSprite[DEF_SPRID_INTERFACE_ND_PARTYSTATUS]->PutSpriteFastWidth(sX, sY + 15,  19, iBarWidth2, m_dwCurTime, false); // 16
 		}
 		break;
 	}

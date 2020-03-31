@@ -24,7 +24,7 @@
 #define DEF_UPPERVERSION		3
 #define DEF_LOWERVERSION		51
 
-#define DEF_SERVER_DNS			"25.104.221.92"							// hbtest.ddns.net
+#define DEF_SERVER_DNS			"192.168.0.28"							// hbtest.ddns.net
 #define DEF_SERVER_PORT			2848											// WorldLServer Port
 
 #define RES_HIGH																// Change Resolution from 640x480 to 800x600	
