@@ -241,7 +241,7 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	// Snoopy: MP3 support
 	Mp3Init();
 
-#ifdef _DEBUG
+#ifndef _DEBUG
 	if (OpenMutex(MUTEX_ALL_ACCESS, FALSE, "0543kjg3j31%") != NULL) {
 		MessageBox(NULL, "Only one Helbreath client program allowed!", "ERROR!", MB_OK);
 		return 0;
@@ -251,7 +251,7 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	
 	EventLoop();
 
-#ifdef _DEBUG
+#ifndef _DEBUG
 	ReleaseMutex(hMutex);
 	CloseHandle(hMutex);
 #endif
