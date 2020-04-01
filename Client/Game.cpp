@@ -2108,8 +2108,6 @@ void CGame::DrawObjects(short sPivotX, short sPivotY, short sDivX, short sDivY, 
 					{	m_pTileSpr[sObjSpr]->PutSpriteFast(ix - 16, iy - 16, sObjSprFrame, dwTime);
 					}
 
-					
-
 					switch (sObjSpr) {
 					case 223:
 						if (sObjSprFrame == 4)
@@ -2366,9 +2364,7 @@ void CGame::DrawObjects(short sPivotX, short sPivotY, short sDivX, short sDivY, 
 			case 87: // CT
 			case 88: // Barbarian
 			case 89: // AGC
-			case 91: // Gate
-
-		
+			case 91: // Gate		
 				break;
 
 			default: // 10..27
@@ -17721,7 +17717,7 @@ void CGame::DrawDialogBox_Inventory(int msX, int msY)
 	}
 	// WaReS
 	wsprintf(G_cTxt, " %d/%d ", uTotalItem, DEF_MAXITEMS);
-    PutString2(sX + 90+3, sY - 3, G_cTxt, 200,200,200);
+    PutString2(sX + 90+5, sY - 3, G_cTxt, 200,200,200);
 }
 
 
@@ -27402,6 +27398,18 @@ void CGame::DlbBoxDoubleClick_Inventory(short msX, short msY)
                 bItemDrop_Bank(msX, msY);
                 return;
             }
+			else if (m_bIsDialogEnabled[31])
+			{
+				//centu3 - sell item
+				bItemDrop_SellList(msX, msY);
+				return;
+			}
+			else if (m_bIsDialogEnabled[34])
+			{
+				//centu3 - upgrade item
+				bItemDrop_ItemUpgrade();
+				return;
+			}
 
 			if (   (m_pItemList[cItemID]->m_cItemType == DEF_ITEMTYPE_USE_DEPLETE)
 				|| (m_pItemList[cItemID]->m_cItemType == DEF_ITEMTYPE_USE_PERM)
@@ -30174,19 +30182,16 @@ MOTION_COMMAND_PROCESS:;
 				}
 			}
 
-			for (i = 1; i < DEF_MAXCHATMSGS; i++)
+			for (i = 1; i < DEF_MAXCHATMSGS; i++) {
 				if (m_pChatMsgList[i] == NULL)
 				{
 					ZeroMemory(cTxt, sizeof(cTxt));
-					// damage Criticals a 200+
-					short sV1 = m_sDamageMoveAmount;
-					if (sV1 < 0) sV1 = 256 + sV1;
-					if (sV1 >= 0) wsprintf(cTxt, "-%dPts", sV1); //pts
+					wsprintf(cTxt, "-%dHP", m_sDamageMoveAmount);
 
 					int iFontType;
-					if ((sV1 >= 0) && (sV1 < 20))      iFontType = 21;
-					else if ((sV1 >= 20) && (sV1 < 50)) iFontType = 22;
-					else if ((sV1 >= 50) || (sV1 < 0))   iFontType = 23;
+					if ((m_sDamageMoveAmount >= 0) && (m_sDamageMoveAmount < 300))        iFontType = 21;
+					else if ((m_sDamageMoveAmount >= 300) && (m_sDamageMoveAmount < 1000)) iFontType = 22;
+					else if ((m_sDamageMoveAmount >= 1000) || (m_sDamageMoveAmount < 0))    iFontType = 23;
 
 					m_pChatMsgList[i] = new class CMsg(iFontType, cTxt, m_dwCurTime);
 					m_pChatMsgList[i]->m_iObjectID = m_sPlayerObjectID;
@@ -30197,6 +30202,7 @@ MOTION_COMMAND_PROCESS:;
 					}
 					break;
 				}
+			}
 			m_sDamageMove = 0;
 		}
 

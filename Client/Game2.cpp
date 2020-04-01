@@ -1297,17 +1297,16 @@ void CGame::MotionEventHandler(char * pData)
 
 	case DEF_OBJECTDYING:
 		_RemoveChatMsgListByObjectID(wObjectID - 30000);
-		for (i = 1; i < DEF_MAXCHATMSGS; i++)
+		for (i = 1; i < DEF_MAXCHATMSGS; i++) {
 			if (m_pChatMsgList[i] == NULL)
-			{
+			{	/* Showing real damage done to NPCs instead of Critical!
+				Credit goes to: 50Cent, SleeQ, Matt */
 				ZeroMemory(cTxt, sizeof(cTxt));
-				// damage Criticals a 200+
-				if (sV1 < 0) sV1 = 256 + sV1;
-				if (sV1 >= 0) wsprintf(cTxt, "-%dPts!", sV1); //pts         
+				wsprintf(cTxt, "-%dHP!", sV1);
 				int iFontType;
-				if ((sV1 >= 0) && (sV1 < 20))      iFontType = 21;
-				else if ((sV1 >= 20) && (sV1 < 50)) iFontType = 22;
-				else if (sV1 >= 50)   iFontType = 23;
+				if ((sV1 >= 0) && (sV1 < 300))        iFontType = 21;
+				else if ((sV1 >= 300) && (sV1 < 1000)) iFontType = 22;
+				else if ((sV1 >= 1000) || (sV1 < 0))    iFontType = 23;
 				m_pChatMsgList[i] = new class CMsg(iFontType, cTxt, m_dwCurTime);
 				m_pChatMsgList[i]->m_iObjectID = wObjectID - 30000;
 				if (m_pMapData->bSetChatMsgOwner(wObjectID - 30000, -10, -10, i) == FALSE)
@@ -1317,6 +1316,7 @@ void CGame::MotionEventHandler(char * pData)
 				}
 				return;
 			}
+		}
 		break;
 
 	case DEF_OBJECTDAMAGEMOVE:
@@ -1332,27 +1332,15 @@ void CGame::MotionEventHandler(char * pData)
 
 		for (i = 1; i < DEF_MAXCHATMSGS; i++)
 			if (m_pChatMsgList[i] == NULL)
-			{
+			{	/* Showing real damage done to NPCs instead of Critical!
+				Credit goes to: 50Cent, SleeQ, Matt */
 				ZeroMemory(cTxt, sizeof(cTxt));
-				if (sV1 != 0)
-				{
-					if (sV1 < 0) sV1 = 256 + sV1;
-
-					if (sV1 >= 0)  wsprintf(cTxt, "-%dPts", sV1); //pts
-
-					int iFontType;
-					if ((sV1 >= 0) && (sV1 < 20))      iFontType = 21;
-					else if ((sV1 >= 20) && (sV1 < 50)) iFontType = 22;
-					else if (sV1 >= 50)   iFontType = 23;
-
-					m_pChatMsgList[i] = new class CMsg(iFontType, cTxt, m_dwCurTime);
-				}
-				else
-				{
-					strcpy(cTxt, " * Failed! *");
-					m_pChatMsgList[i] = new class CMsg(22, cTxt, m_dwCurTime);
-					PlaySound('C', 17, 0);
-				}
+				wsprintf(cTxt, "-%dHP", sV1);
+				int iFontType;
+				if ((sV1 >= 0) && (sV1 < 300))        iFontType = 21;
+				else if ((sV1 >= 300) && (sV1 < 1000)) iFontType = 22;
+				else if ((sV1 >= 1000) || (sV1 < 0))    iFontType = 23;
+				m_pChatMsgList[i] = new class CMsg(iFontType, cTxt, m_dwCurTime);
 				m_pChatMsgList[i]->m_iObjectID = wObjectID - 30000;
 				if (m_pMapData->bSetChatMsgOwner(wObjectID - 30000, -10, -10, i) == FALSE)
 				{
@@ -1367,6 +1355,7 @@ void CGame::MotionEventHandler(char * pData)
 
 void CGame::DrawDialogBox_Commander(int msX, int msY) // Snoopy: Fixed for 351
 {
+
 	short sX, sY, szX, szY, MapSzX, MapSzY;
 	DWORD dwTime = G_dwGlobalTime;
 	double dV1, dV2, dV3;
@@ -11730,7 +11719,7 @@ void CGame::DrawDialogBox_Party(short msX, short msY)
 			}
 
 		//Show Party Bonus! - ZeroEoyPnk
-		switch (m_iTotalPartyMember)
+		/*switch (m_iTotalPartyMember)
 		{
 		case 1:
 			PutAlignedString(sX, sX + szX, sY + 250, "Party Exp 100% | Party Ek x 10");
@@ -11756,7 +11745,7 @@ void CGame::DrawDialogBox_Party(short msX, short msY)
 		case 8:
 			PutAlignedString(sX, sX + szX, sY + 250, "Party Exp 100% | Party Ek x 5");
 			break;
-		}
+		}*/
 
 		if ((msX >= sX + DEF_RBTNPOSX) && (msX <= sX + DEF_RBTNPOSX + DEF_BTNSZX) && (msY > sY + DEF_BTNPOSY) && (msY < sY + DEF_BTNPOSY + DEF_BTNSZY))
 			DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_BUTTON, sX + DEF_RBTNPOSX, sY + DEF_BTNPOSY, 1);
@@ -12742,7 +12731,7 @@ void CGame::DrawDialogBox_Skill(short msX, short msY, short msZ, char cLB)
 
 	switch (m_stDialogBoxInfo[15].cMode) {
 	case 0:
-		for (i = 0; i < 17; i++)
+		for (i = 0; i < 17; i++) {
 			if ((i < DEF_MAXSKILLTYPE) && (m_pSkillCfgList[i + m_stDialogBoxInfo[15].sView] != NULL))
 			{
 				ZeroMemory(cTemp, sizeof(cTemp));
@@ -12779,11 +12768,13 @@ void CGame::DrawDialogBox_Skill(short msX, short msY, short msZ, char cLB)
 					}
 				}
 
+				//PutString(sX + 30, sY + 45 + i * 15 + 1, "__________________________", RGB(255, 69, 0));
+
 				if (m_iDownSkillIndex == (i + m_stDialogBoxInfo[15].sView))
 					m_pSprite[DEF_SPRID_INTERFACE_ADDINTERFACE]->PutTransSpriteRGB(sX + 215, sY + 47 + i * 15, 21, 50, 50, 50, m_dwTime);
 				else m_pSprite[DEF_SPRID_INTERFACE_ADDINTERFACE]->PutSpriteFast(sX + 215, sY + 47 + i * 15, 20, m_dwTime);
 			}
-
+		}
 		iTotalLines = 0;
 		for (i = 0; i < DEF_MAXSKILLTYPE; i++)
 			if (m_pSkillCfgList[i] != NULL) iTotalLines++;
@@ -15848,7 +15839,6 @@ void CGame::NotifyMsg_ItemToBank(char *pData)
 
 	char cStr1[64], cStr2[64], cStr3[64];
 	GetItemName(cName, dwAttribute, cStr1, cStr2, cStr3);
-
 
 	if (m_pBankList[cIndex] == NULL) {
 		m_pBankList[cIndex] = new class CItem;
