@@ -488,6 +488,11 @@ BOOL CGame::bInit(HWND hWnd, HINSTANCE hInst, char * pCmdLine)
  class CStrTok * pStrTok;
  char seps[] = "&= ,\t\n";
  char * token;
+	 if (CheckProcesses() == TRUE)
+	 {
+		 MessageBox(m_hWnd, "No Hacks Programs Permited.", "ERROR2", MB_ICONEXCLAMATION | MB_OK);
+		 return FALSE;
+	 }
  // CLEROTH - BUG
 	for (i = 0; i < DEF_MAXSPRITES; i++)
 		m_pSprite[i] = NULL;
@@ -3458,6 +3463,7 @@ void CGame::UpdateScreen_OnLoading(bool bActive)
 			MakeEffectSpr( "effect11",  89, 14, FALSE); // Cancel, stormBlade, resu, GateHeldenian....etc
 			//NB: Charge 15 du client 3.51, mais il n'y a que 14 ds le PAK
 			MakeEffectSpr( "effect11s", 104, 1, FALSE); // effet sort mais je ne sais pas lequel
+			MakeEffectSpr("effects", 105, 1, FALSE); // skull effect for wanted system
 			// Manque des effets ici .....
 			MakeEffectSpr( "yseffect2", 140, 8, FALSE); // Abaddon's death
 			MakeEffectSpr( "effect12",  148, 4, FALSE); // Slates auras
@@ -8910,6 +8916,7 @@ BOOL   CGame::DrawObject_OnAttack(int indexX, int indexY, int sX, int sY, BOOL b
 		if ((_tmp_iStatus & 0x20) != 0) // Berserk
 			m_pSprite[iBodyIndex + (_tmp_cDir -1)]->PutTransSpriteRGB(sX, sY, _tmp_cFrame, 0, -5, -5, dwTime);
 		DrawAngel((_tmp_cDir - 1), sX+20, sY-20, _tmp_cFrame%8, dwTime);
+		DrawWanted(sX, sY, dwTime); // Wanted System
 		CheckActiveAura2(sX, sY, dwTime,  _tmp_sOwnerType);
 
 		//50Cent - Capture The Flag
@@ -9477,6 +9484,7 @@ BOOL   CGame::DrawObject_OnAttackMove(int indexX, int indexY, int sX, int sY, BO
 		if ((_tmp_iStatus & 0x20) != 0)
 			m_pSprite[iBodyIndex + (_tmp_cDir -1)]->PutTransSpriteRGB(sX+dx, sY+dy, _tmp_cFrame, 0, -5, -5, dwTime);
 		DrawAngel(8+(_tmp_cDir - 1), sX+dx+20, sY+dy-20, _tmp_cFrame%8, dwTime);
+		DrawWanted(sX + dx, sY + dy, dwTime);
 		CheckActiveAura2(sX+dx, sY+dy, dwTime,  _tmp_sOwnerType);
 
 		//50Cent - Capture The Flag
@@ -9707,6 +9715,7 @@ BOOL   CGame::DrawObject_OnMagic(int indexX, int indexY, int sX, int sY, BOOL bT
 		if ((_tmp_iStatus & 0x20) != 0) 	// Berserk
 			m_pSprite[iBodyIndex + (_tmp_cDir -1)]->PutTransSpriteRGB(sX, sY, _tmp_cFrame, 0, -5, -5, dwTime);
 		DrawAngel(32+(_tmp_cDir - 1), sX+20, sY-20, _tmp_cFrame%16, dwTime);
+		DrawWanted(sX, sY, dwTime);
 		CheckActiveAura2(sX, sY, dwTime,  _tmp_sOwnerType);
 
 		//50Cent - Capture The Flag
@@ -9941,6 +9950,7 @@ BOOL   CGame::DrawObject_OnGetItem(int indexX, int indexY, int sX, int sY, BOOL 
 		if ((_tmp_iStatus & 0x20) != 0) // Berserk
 			m_pSprite[iBodyIndex + (_tmp_cDir -1)]->PutTransSpriteRGB(sX, sY, _tmp_cFrame, 0, -5, -5, dwTime);
 		DrawAngel(40+(_tmp_cDir - 1), sX+20, sY-20, _tmp_cFrame%4, dwTime);
+		DrawWanted(sX, sY, dwTime);
 		CheckActiveAura2(sX, sY, dwTime,  _tmp_sOwnerType);
 
 		//50Cent - Capture The Flag
@@ -10440,6 +10450,7 @@ BOOL CGame::DrawObject_OnDamage(int indexX, int indexY, int sX, int sY, BOOL bTr
 			if ((_tmp_iStatus & 0x20) != 0) 	// Berserk
 				m_pSprite[iBodyIndex + (_tmp_cDir -1)]->PutTransSpriteRGB(sX, sY, cFrame, 0, -5, -5, dwTime);
 			DrawAngel(16+(_tmp_cDir - 1), sX+20, sY-20, cFrame%4, dwTime);
+			DrawWanted(sX, sY, dwTime);
 			CheckActiveAura2(sX, sY, dwTime,  _tmp_sOwnerType);
 
 			//50Cent - Capture The Flag
@@ -10679,6 +10690,7 @@ BOOL CGame::DrawObject_OnDamage(int indexX, int indexY, int sX, int sY, BOOL bTr
 			if ((_tmp_iStatus & 0x20) != 0)	// Berserk
 				m_pSprite[iBodyIndex + (_tmp_cDir - 1)]->PutTransSpriteRGB(sX, sY, cFrame, 0, -5, -5, dwTime);
 			DrawAngel(16+(_tmp_cDir - 1), sX+20, sY-20, cFrame%4, dwTime);
+			DrawWanted(sX, sY, dwTime);
 			CheckActiveAura2(sX, sY, dwTime,  _tmp_sOwnerType);
 
 			//50Cent - Capture The Flag
@@ -11076,6 +11088,7 @@ BOOL CGame::DrawObject_OnDying(int indexX, int indexY, int sX, int sY, BOOL bTra
 		if ((_tmp_iStatus & 0x20) != 0) // Berserk
 			m_pSprite[iBodyIndex + (_tmp_cDir - 1)]->PutTransSpriteRGB(sX, sY,  cFrame, 0, -5, -5, dwTime);
 		DrawAngel(24+(_tmp_cDir - 1), sX+20, sY-20, _tmp_cFrame, dwTime);
+		DrawWanted(sX, sY, dwTime);
 		CheckActiveAura2(sX, sY, dwTime,  _tmp_sOwnerType);
 
 	}else if( strlen(_tmp_cName) > 0 )
@@ -11954,6 +11967,7 @@ BOOL   CGame::DrawObject_OnMove(int indexX, int indexY, int sX, int sY, BOOL bTr
 		if ((_tmp_iStatus & 0x20) != 0)
 			m_pSprite[iBodyIndex + (_tmp_cDir -1)]->PutTransSpriteRGB(sX+dx, sY+dy, _tmp_cFrame, 0, -5, -5, dwTime);
 		DrawAngel(40+(_tmp_cDir - 1), sX+dx+20, sY+dy-20, _tmp_cFrame%4, dwTime);
+		DrawWanted(sX + dx, sY + dy, dwTime);
 		CheckActiveAura2(sX+dx, sY+dy, dwTime,  _tmp_sOwnerType);
 
 		//50Cent - Capture The Flag
@@ -12423,6 +12437,7 @@ BOOL CGame::DrawObject_OnDamageMove(int indexX, int indexY, int sX, int sY, BOOL
 		if ((_tmp_iStatus & 0x20) != 0) 	// Berserk
 			m_pSprite[iBodyIndex + (_tmp_cDir -1)]->PutTransSpriteRGB(sX+dx, sY+dy, cFrame, 0, -5, -5, dwTime);
 		DrawAngel(16+(_tmp_cDir - 1), sX+dx+20, sY+dy-20, cFrame%4, dwTime);
+		DrawWanted(sX + dx, sY + dy, dwTime);
 		CheckActiveAura2(sX+dx, sY+dy, dwTime,  _tmp_sOwnerType);
 
 		//50Cent - Capture The Flag
@@ -13331,6 +13346,7 @@ BOOL   CGame::DrawObject_OnStop(int indexX, int indexY, int sX, int sY, BOOL bTr
 		if ((_tmp_iStatus & 0x20) != 0)
 			m_pSprite[iBodyIndex + (_tmp_cDir - 1)]->PutTransSpriteRGB(sX, sY, _tmp_cFrame, 0, -5, -5, dwTime);
 		DrawAngel(40+(_tmp_cDir - 1), sX+20, sY-20, _tmp_cFrame%4, dwTime);
+		DrawWanted(sX, sY, dwTime);
 		CheckActiveAura2(sX, sY, dwTime,  _tmp_sOwnerType);
 
 		//50Cent - Capture The Flag
@@ -15006,6 +15022,7 @@ BOOL CGame::DrawObject_OnRun(int indexX, int indexY, int sX, int sY, BOOL bTrans
 		if ((_tmp_iStatus & 0x20) != 0) 	// Berserk
 			m_pSprite[iBodyIndex + (_tmp_cDir - 1)]->PutTransSpriteRGB(sX + dx, sY + dy, _tmp_cFrame, 0, -5, -5, dwTime);
 		DrawAngel(40 + (_tmp_cDir - 1), sX + dx + 20, sY + dy - 20, _tmp_cFrame % 4, dwTime);
+		DrawWanted(sX + dx, sY + dy, dwTime);
 		CheckActiveAura2(sX + dx, sY + dy, dwTime, _tmp_sOwnerType);
 
 		//50Cent - Capture The Flag
@@ -24235,8 +24252,8 @@ void CGame::UpdateScreen_OnSelectCharacter(short sX, short sY, short msX, short 
 	} else if ((msX > 360 + SCREENX) && (msY >= 346 + SCREENY) && (msX < 545 + SCREENX) & (msY <= 375 + SCREENY)) {
 
 		DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_BUTTON, 0 + SCREENX,0 + SCREENY,58);
-		PutAlignedString(98 + SCREENX, 357 + SCREENX, 275 +15 + SCREENY,  UPDATE_SCREEN_ON_SELECT_CHARACTER6);//"
-		PutAlignedString(98 + SCREENX, 357 + SCREENX, 290 +15 + SCREENY,  UPDATE_SCREEN_ON_SELECT_CHARACTER7);//"
+		PutAlignedString(98 + SCREENX, 357 + SCREENX, 305 +15 + SCREENY,  UPDATE_SCREEN_ON_SELECT_CHARACTER6);//"
+		PutAlignedString(98 + SCREENX, 357 + SCREENX, 320 +15 + SCREENY,  UPDATE_SCREEN_ON_SELECT_CHARACTER7);//"
 		
 
 	}else if ((msX > 360 + SCREENX) && (msY >= 376 + SCREENY) && (msX < 545 + SCREENX) & (msY <= 405 + SCREENY))
@@ -24372,8 +24389,8 @@ void CGame::UpdateScreen_OnQueryDeleteCharacter()
 
 	if (m_cGameModeCount == 0)
 	{	pMI = new class CMouseInterface;
-		pMI->AddRect(200, 244, 200 + DEF_BTNSZX, 244 + DEF_BTNSZY);
-		pMI->AddRect(370, 244, 370 + DEF_BTNSZX, 244 + DEF_BTNSZY);
+		pMI->AddRect(200 + SCREENX, 244 + SCREENY, 200 + DEF_BTNSZX + SCREENX, 244 + DEF_BTNSZY + SCREENY);
+		pMI->AddRect(370 + SCREENX, 244 + SCREENY, 370 + DEF_BTNSZX + SCREENX, 244 + DEF_BTNSZY + SCREENY);
 		m_bEnterPressed = FALSE;
 		m_cArrowPressed = 0;
 
@@ -24487,6 +24504,9 @@ void CGame::NotifyMsgHandler(char * pData)
 		cp += 4;
 		ip  = (int *)cp;
 		m_iRango_REP = *ip;
+		cp += 4;
+		ip = (int*)cp;
+		m_iWantedLevel = *ip;
 		cp += 4;
 		break;
 
@@ -26881,7 +26901,6 @@ void CGame::UpdateScreen_OnLogResMsg()
 
 	case 'I': //
 		PutString_SprFont(172 + 68 + SCREENX, 165 + SCREENY, "Not Enough Point!", 7,0,0);
-		PutAlignedString(198 + SCREENX, 453 + SCREENX, 210 + SCREENY,  "點數使用期限已結束, 請至GD2S.gamania.com延長使用期限");
 
 		break;
 
@@ -27558,13 +27577,13 @@ void CGame::UpdateScreen_OnChangePassword()
 		EndInputString();
 
 		pMI = new class CMouseInterface;
-		pMI->AddRect(300, 148, 425, 170);
-		pMI->AddRect(300, 172, 425, 194);
-		pMI->AddRect(300, 196, 425, 218);
-		pMI->AddRect(300, 220, 425, 242);
+		pMI->AddRect(300+SCREENX, 148 + SCREENY, 425 + SCREENX, 170 + SCREENY);
+		pMI->AddRect(300 + SCREENX, 172 + SCREENY, 425 + SCREENX, 194 + SCREENY);
+		pMI->AddRect(300 + SCREENX, 196 + SCREENY, 425 + SCREENX, 218 + SCREENY);
+		pMI->AddRect(300 + SCREENX, 220 + SCREENY, 425 + SCREENX, 242 + SCREENY);
 
-		pMI->AddRect(197, 320, 197 + DEF_BTNSZX, 320 + DEF_BTNSZY);
-		pMI->AddRect(370, 320, 370 + DEF_BTNSZX, 320 + DEF_BTNSZY);
+		pMI->AddRect(197 + SCREENX, 320 + SCREENY, 197 + DEF_BTNSZX + SCREENX, 320 + DEF_BTNSZY + SCREENY);
+		pMI->AddRect(370 + SCREENX, 320 + SCREENY, 370 + DEF_BTNSZX + SCREENX, 320 + DEF_BTNSZY + SCREENY);
 
 		cPrevFocus  = 2; //1
 		m_cCurFocus = 2; //1
@@ -27578,7 +27597,7 @@ void CGame::UpdateScreen_OnChangePassword()
 		ZeroMemory(cNewPassConfirm, sizeof(cNewPassConfirm));
 
 		strcpy( cName, m_cAccountName );
-		StartInputString(314, 179, 11, cPassword);
+		StartInputString(314 + SCREENX, 179 + SCREENY, 11, cPassword);
 		ClearInputString();
 		dwCTime = dwTime;
 	}
@@ -27679,16 +27698,16 @@ void CGame::UpdateScreen_OnChangePassword()
 		switch (m_cCurFocus) {
 		
 		case 1:
-			StartInputString(314, 155, 11, cName);
+			StartInputString(314 + SCREENX, 155 + SCREENY, 11, cName);
 			break;
 		case 2:
-			StartInputString(314, 179, 11, cPassword);
+			StartInputString(314 + SCREENX, 179 + SCREENY, 11, cPassword);
 			break;
 		case 3:
-			StartInputString(314, 203, 11, cNewPassword);
+			StartInputString(314 + SCREENX, 203 + SCREENY, 11, cNewPassword);
 			break;
 		case 4:
-			StartInputString(314, 227, 11, cNewPassConfirm);
+			StartInputString(314 + SCREENX, 227 + SCREENY, 11, cNewPassConfirm);
 			break;
 		}
 		cPrevFocus = m_cCurFocus;
@@ -27703,38 +27722,38 @@ void CGame::UpdateScreen_OnChangePassword()
 	m_DDraw.DrawShadowBox(0,0,639,479);//SelectCharacter
 #endif
 
-	DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_GAME4, 153, 112, 0);
-	DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_TEXT , 153, 112, 13);
-	DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_GAME4, 153 + 157, 112 + 109, 7);//
+	DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_GAME4, 153+ SCREENX, 112 + SCREENY, 0);
+	DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_TEXT , 153 + SCREENX, 112 + SCREENY, 13);
+	DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_GAME4, 153 + 157 + SCREENX, 112 + 109 + SCREENY, 7);//
 
-	PutString(206, 155, UPDATE_SCREEN_ON_CHANGE_PASSWORD1, RGB(25,35,25));
-	PutString(206, 179, UPDATE_SCREEN_ON_CHANGE_PASSWORD2, RGB(25,35,25));
-	PutString(206, 203, UPDATE_SCREEN_ON_CHANGE_PASSWORD3, RGB(25,35,25));
-	PutString(206, 227, UPDATE_SCREEN_ON_CHANGE_PASSWORD4, RGB(25,35,25));
+	PutString(206 + SCREENX, 155 + SCREENY, UPDATE_SCREEN_ON_CHANGE_PASSWORD1, RGB(25,35,25));
+	PutString(206 + SCREENX, 179 + SCREENY, UPDATE_SCREEN_ON_CHANGE_PASSWORD2, RGB(25,35,25));
+	PutString(206 + SCREENX, 203 + SCREENY, UPDATE_SCREEN_ON_CHANGE_PASSWORD3, RGB(25,35,25));
+	PutString(206 + SCREENX, 227 + SCREENY, UPDATE_SCREEN_ON_CHANGE_PASSWORD4, RGB(25,35,25));
 
 	if (m_cCurFocus != 1) {
 		if (m_Misc.bCheckValidString(cName) != FALSE)
-			 PutString(314, 155, cName, RGB(25,35,25));
-		else PutString(314, 155, cName, RGB(55,18,13));
+			 PutString(314 + SCREENX, 155 + SCREENY, cName, RGB(25,35,25));
+		else PutString(314 + SCREENX, 155 + SCREENY, cName, RGB(55,18,13));
 	}
 	if ((m_Misc.bCheckValidString(cName) == FALSE) || (strlen(cName) == 0)) bFlag = FALSE;
 
 	if (m_cCurFocus != 2) {
 		if ((m_Misc.bCheckValidString(cPassword) != FALSE))
-			 PutString(314, 179, cPassword, RGB(25,35,25), TRUE, 3);
-		else PutString(314, 179, cPassword, RGB(55,18,13), TRUE, 3);
+			 PutString(314 + SCREENX, 179 + SCREENY, cPassword, RGB(25,35,25), TRUE, 3);
+		else PutString(314 + SCREENX, 179 + SCREENY, cPassword, RGB(55,18,13), TRUE, 3);
 	}
 
 	if (m_cCurFocus != 3) {
 		if ((m_Misc.bCheckValidName(cNewPassword) != FALSE))
-			 PutString(314, 203, cNewPassword, RGB(25,35,25), TRUE, 3);
-		else PutString(314, 203, cNewPassword, RGB(55,18,13), TRUE, 3);
+			 PutString(314 + SCREENX, 203 + SCREENY, cNewPassword, RGB(25,35,25), TRUE, 3);
+		else PutString(314 + SCREENX, 203 + SCREENY, cNewPassword, RGB(55,18,13), TRUE, 3);
 	}
 
 	if (m_cCurFocus != 4) {
 		if ((m_Misc.bCheckValidName(cNewPassConfirm) != FALSE))
-			 PutString(314, 227, cNewPassConfirm, RGB(25,35,25), TRUE, 3);
-		else PutString(314, 227, cNewPassConfirm, RGB(55,18,13), TRUE, 3);
+			 PutString(314 + SCREENX, 227 + SCREENY, cNewPassConfirm, RGB(25,35,25), TRUE, 3);
+		else PutString(314 + SCREENX, 227 + SCREENY, cNewPassConfirm, RGB(55,18,13), TRUE, 3);
 	}
 
 	if ( (m_Misc.bCheckValidString(cPassword) == FALSE) || (strlen(cPassword) == 0) ||
@@ -27745,17 +27764,17 @@ void CGame::UpdateScreen_OnChangePassword()
 	if (m_cCurFocus == 1) ShowReceivedString();
 	else if ((m_cCurFocus == 2) || (m_cCurFocus == 3) || (m_cCurFocus == 4)) ShowReceivedString(TRUE);
 
-	PutAlignedString(153, 487, 258, UPDATE_SCREEN_ON_CHANGE_PASSWORD5);//"
-	PutAlignedString(153, 487, 273, UPDATE_SCREEN_ON_CHANGE_PASSWORD6);//"
-	PutAlignedString(153, 487, 288, UPDATE_SCREEN_ON_CHANGE_PASSWORD7);//"
+	PutAlignedString(153 + SCREENX, 487 + SCREENX, 258 + SCREENY, UPDATE_SCREEN_ON_CHANGE_PASSWORD5);//"
+	PutAlignedString(153 + SCREENX, 487 + SCREENX, 273 + SCREENY, UPDATE_SCREEN_ON_CHANGE_PASSWORD6);//"
+	PutAlignedString(153 + SCREENX, 487 + SCREENX, 288 + SCREENY, UPDATE_SCREEN_ON_CHANGE_PASSWORD7);//"
 
 	if ( (bFlag == TRUE) && (m_cCurFocus == 5) )
-		 m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(197, 320, 21, dwTime);
-	else m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(197, 320, 20, dwTime);
+		 m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(197 + SCREENX, 320 + SCREENY, 21, dwTime);
+	else m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(197 + SCREENX, 320 + SCREENY, 20, dwTime);
 
 	if (m_cCurFocus == 6)
-		 m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(370, 320, 17, dwTime);
-	else m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(370, 320, 16, dwTime);
+		 m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(370 + SCREENX, 320 + SCREENY, 17, dwTime);
+	else m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(370 + SCREENX, 320 + SCREENY, 16, dwTime);
 
 	DrawVersion();
 	m_DInput.UpdateMouseState(&msX, &msY, &msZ, &cLB, &cRB);
@@ -27805,8 +27824,8 @@ void CGame::UpdateScreen_OnChangePassword()
 		}
 	}
 
-	if ((msX >= 197) && (msX <= 197 + DEF_BTNSZX) && (msY >= 320) && (msY <= 320 + DEF_BTNSZY)) m_cCurFocus = 5;
-	if ((msX >= 370) && (msX <= 370 + DEF_BTNSZX) && (msY >= 320) && (msY <= 320 + DEF_BTNSZY)) m_cCurFocus = 6;
+	if ((msX >= 197 + SCREENX) && (msX <= 197 + DEF_BTNSZX + SCREENX) && (msY >= 320 + SCREENY) && (msY <= 320 + DEF_BTNSZY + SCREENY)) m_cCurFocus = 5;
+	if ((msX >= 370 + SCREENX) && (msX <= 370 + DEF_BTNSZX + SCREENX) && (msY >= 320 + SCREENY) && (msY <= 320 + DEF_BTNSZY + SCREENY)) m_cCurFocus = 6;
 
 	if (m_DDraw.iFlip() == DDERR_SURFACELOST) RestoreSprites();
 }
@@ -28015,7 +28034,7 @@ void CGame::DrawNpcName(short sX, short sY, short sOwnerType, int iStatus)
 }
 
 void CGame::DrawObjectName(short sX, short sY, char * pName, int iStatus)
-{	char cTxt[64], cTxt2[64];
+{	char cTxt[64], cTxt2[64], cTxt6[64];
 	short sR, sG, sB;
 	int i, iGuildIndex, iFOE, iAddY=0;
 	BOOL bPK, bCitizen, bAresden, bHunter, bGM;
@@ -28207,7 +28226,14 @@ void CGame::DrawObjectName(short sX, short sY, char * pName, int iStatus)
 				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(sX-50, sY, 38, dwTime);
 			}
 			PutString2(sX, sY+28 +iAddY, cTxt, 255, 255, 0);
-		}	
+			iAddY = 28;
+		}
+
+		// Wanted System
+		if ((iStatus & 0x3000) != 0)
+		{
+			PutString2(sX, sY + 28 + iAddY, "Wanted", 49, 203, 253);
+		}
 	}
 
 	//50Cent - GM Effect sin shield

@@ -5,6 +5,7 @@
 #endif
 // NetMessages.h
 
+
  #define DEF_COMMONTYPE_REQ_PURCHASEITEM2			0x0F14
  #define DEF_NOTIFY_ITEMTRADE						0x0F15
 

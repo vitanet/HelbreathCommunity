@@ -4330,39 +4330,35 @@ bool CGame::CheckProcesses()
 	do
 	{
 		Ufoundprocess = _strupr(uProcess.szExeFile);
-		if (strcmp(Ufoundprocess, "SPEEDERXP.EXE") == 0)	 bFound = TRUE;
-		if (strcmp(Ufoundprocess, "WpeSpy.dll") == 0)	 bFound = TRUE;
-		if (strcmp(Ufoundprocess, "WpeSpy.DLL") == 0)	 bFound = TRUE;
-		if (strcmp(Ufoundprocess, "SetPriv.DLL") == 0)	 bFound = TRUE;
-		if (strcmp(Ufoundprocess, "TSpeech.DLL") == 0)	 bFound = TRUE;
-		if (strcmp(Ufoundprocess, "THotkeys.DLL") == 0)	 bFound = TRUE;
-		if (strcmp(Ufoundprocess, "imagehlp.DLL") == 0)	 bFound = TRUE;
-		if (strcmp(Ufoundprocess, "DBGHELP.DLL") == 0)	 bFound = TRUE;
-		if (strcmp(Ufoundprocess, "TSearch.exe") == 0)			 bFound = TRUE;
-		if (strcmp(Ufoundprocess, "TSearch.EXE") == 0)			 bFound = TRUE;
-		if (strcmp(Ufoundprocess, "WPE PRO.EXE") == 0)	 bFound = TRUE;
-		if (strcmp(Ufoundprocess, "TEHELGAME.EXE") == 0)	 bFound = TRUE;
-		if (strcmp(Ufoundprocess, "CMD.EXE") == 0)		 bFound = TRUE;
-		if (strcmp(Ufoundprocess, "WPE PRO - modified.exe") == 0)		 bFound = TRUE;
-		if (strcmp(Ufoundprocess, "SPEED HACK.EXE") == 0)  bFound = TRUE;
-		if (strcmp(Ufoundprocess, "SPEEDHACKNT.EXE") == 0)  bFound = TRUE;
-		if (strcmp(Ufoundprocess, "ASPEEDER.EXE") == 0)	 bFound = TRUE;
-		if (strcmp(Ufoundprocess, "WPEPRO.EXE") == 0)		 bFound = TRUE;
+		if (strcmp(Ufoundprocess, "SPEEDERXP.EXE") == 0)	bFound = TRUE;
+		if (strcmp(Ufoundprocess, "MM.EXE") == 0)			bFound = TRUE;
+		if (strcmp(Ufoundprocess, "WPE PRO.EXE") == 0)	bFound = TRUE;
+		if (strcmp(Ufoundprocess, "TEHELGAME.EXE") == 0)	bFound = TRUE;
+		if (strcmp(Ufoundprocess, "HELGAME.EXE") == 0)	bFound = TRUE;
+		if (strcmp(Ufoundprocess, "SPEED HACK.EXE") == 0) bFound = TRUE;
+		if (strcmp(Ufoundprocess, "SPEEDHACKNT.EXE") == 0) bFound = TRUE;
+		if (strcmp(Ufoundprocess, "ASPEEDER.EXE") == 0)	bFound = TRUE;
+		if (strcmp(Ufoundprocess, "WPEPRO.EXE") == 0)		bFound = TRUE;
+		if (strcmp(Ufoundprocess, "SOFTSNOOP.EXE") == 0)	bFound = TRUE;
+		if (strcmp(Ufoundprocess, "TS.EXE") == 0)			bFound = TRUE;
+		if (strcmp(Ufoundprocess, "IP_TOOLS.EXE") == 0)	bFound = TRUE;
+		if (strcmp(Ufoundprocess, "TS.EXE") == 0)			bFound = TRUE;
+		if (strcmp(Ufoundprocess, "HBMAGIC190.EXE") == 0)	bFound = TRUE;
+		if (strcmp(Ufoundprocess, "FRHED.EXE") == 0)		bFound = TRUE;
+		if (strcmp(Ufoundprocess, "HWORKS32.EXE") == 0)	bFound = TRUE;
+		if (strcmp(Ufoundprocess, "MSCHED.EXE") == 0)		bFound = TRUE;
+		if (strcmp(Ufoundprocess, "HBSERVERKILLER-0.2.EXE") == 0)		bFound = TRUE;
+		if (strcmp(Ufoundprocess, "EIDTZBIIEIDTZEIEX_v1-1.EXE") == 0)	bFound = TRUE;
+		if (strcmp(Ufoundprocess, "EIDTZBIIEIDTZEIEX_v2-2.EXE") == 0)	bFound = TRUE;
+		if (strcmp(Ufoundprocess, "PSNIFF.EXE") == 0)		bFound = TRUE;
+		if (strcmp(Ufoundprocess, "SPEEDGEAR.EXE") == 0)	bFound = TRUE;
 		if (strcmp(Ufoundprocess, "351HAX.EXE") == 0)		 bFound = TRUE;
 		if (strcmp(Ufoundprocess, "CATASTROPHE.EXE") == 0) bFound = TRUE;
-		if (memcmp(Ufoundprocess, "WPE.EXE", 3) == 0) bFound = TRUE;
-		if (memcmp(Ufoundprocess, "TSearchDll.DLL", 10) == 0) bFound = TRUE;
-		if (memcmp(Ufoundprocess, "TSearchDll.DLL", 3) == 0) bFound = TRUE;
-		if (memcmp(Ufoundprocess, "TSe.exe", 3) == 0) bFound = TRUE;
-		if (memcmp(Ufoundprocess, "TSearch.EXE", 7) == 0) bFound = TRUE;
-		if (memcmp(Ufoundprocess, "TSearch.exe", 7) == 0) bFound = TRUE;
-
 		if (strcmp(Ufoundprocess, "Catastrophe v0.1.EXE") == 0) bFound = TRUE;
 		if (strcmp(Ufoundprocess, "Catastrophe v1.2.EXE") == 0) bFound = TRUE;
 		if (strcmp(Ufoundprocess, "WPePro.EXE") == 0)      bFound = TRUE;
 		if (strcmp(Ufoundprocess, "WPePro 0.9x.EXE") == 0)      bFound = TRUE;
 		if (strcmp(Ufoundprocess, "WPePro 1.3.EXE") == 0)      bFound = TRUE;
-		if (strcmp(Ufoundprocess, "WPe.EXE") == 0)      bFound = TRUE;
 		if (strcmp(Ufoundprocess, "Speed Gear.EXE") == 0)      bFound = TRUE;
 		if (strcmp(Ufoundprocess, "Speed Gear 5.EXE") == 0)      bFound = TRUE;
 		if (strcmp(Ufoundprocess, "UoPilot.EXE") == 0)      bFound = TRUE;
@@ -4420,13 +4416,8 @@ bool CGame::CheckProcesses()
 		if (strcmp(Ufoundprocess, "WPePro.EXE") == 0)      bFound = TRUE;
 		if (strcmp(Ufoundprocess, "WPePro 0.9a.EXE") == 0)      bFound = TRUE;
 		if (strcmp(Ufoundprocess, "WPePro 1.3.EXE") == 0)      bFound = TRUE;
-		if (strcmp(Ufoundprocess, "WPE PRO - modified.EXE") == 0)      bFound = TRUE;
-		if (strcmp(Ufoundprocess, "WPE PRO.EXE") == 0)      bFound = TRUE;
-		if (strcmp(Ufoundprocess, "asd.EXE") == 0)      bFound = TRUE;
-		if (strcmp(Ufoundprocess, "hack.EXE") == 0)      bFound = TRUE;
 		if (strcmp(Ufoundprocess, "Permit.EXE") == 0)      bFound = TRUE;
-		if (strcmp(Ufoundprocess, "T Search.EXE") == 0)      bFound = TRUE;
-		if (strcmp(Ufoundprocess, "TSearch.EXE") == 0)      bFound = TRUE;
+		if (strcmp(Ufoundprocess, "TSEARCH.EXE") == 0)      bFound = TRUE;
 		if (strcmp(Ufoundprocess, "Speed Gear.EXE") == 0)      bFound = TRUE;
 		if (strcmp(Ufoundprocess, "Speed Gear 5.EXE") == 0)      bFound = TRUE;
 		if (strcmp(Ufoundprocess, "Speed Gear 6.EXE") == 0)      bFound = TRUE;
@@ -4450,10 +4441,13 @@ bool CGame::CheckProcesses()
 		if (strcmp(Ufoundprocess, "Super Bot.EXE") == 0)      bFound = TRUE;
 		if (strcmp(Ufoundprocess, "!xSpeed 6.0.EXE") == 0)      bFound = TRUE;
 		if (strcmp(Ufoundprocess, "Nsauditor 1.9.1.EXE") == 0)      bFound = TRUE;
+		if (strcmp(Ufoundprocess, "CHEATENGINE-X86_64.EXE") == 0)	bFound = TRUE;
+		if (strcmp(Ufoundprocess, "WPE PRO - MODIFIED.EXE") == 0)	bFound = TRUE;
+		if (strcmp(Ufoundprocess, "CMD.EXE") == 0)	bFound = TRUE;
 		r = Process32Next(hSnapShot, &uProcess);
 	} while (r);
 	CloseHandle(hSnapShot);
-	if (bFound == TRUE)
+	/*if (bFound == TRUE)
 	{
 		if (m_cGameMode == 4)
 		{
@@ -4461,7 +4455,7 @@ bool CGame::CheckProcesses()
 			ChangeGameMode(DEF_GAMEMODE_ONQUIT);
 		}
 	}
-	m_bHackMoveBlocked = bFound;
+	m_bHackMoveBlocked = bFound;*/
 	return bFound;
 }
 #endif
@@ -18718,6 +18712,13 @@ void CGame::DrawAngel(int iSprite, short sX, short sY, char cFrame, DWORD dwTime
 		else if ((_tmp_iStatus & 0x8000) != 0)
 			m_pSprite[DEF_SPRID_TUTELARYANGELS_PIVOTPOINT + (50 * 3) + iSprite]->PutSpriteFast(sX, sY - 15, cFrame, dwTime);//AngelicPendant(MAG)
 	}
+}
+
+void CGame::DrawWanted(short sX, short sY, DWORD dwTime)
+{
+	if ((_tmp_iStatus & 0x3000) != 0)
+			m_pEffectSpr[105]->PutTransSprite70(sX, sY - 80, 5, dwTime); // Wanted Skull
+	
 }
 
 void CGame::EnableDialogBox(int iBoxID, int cType, int sV1, int sV2, char * pString)

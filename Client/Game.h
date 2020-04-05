@@ -155,6 +155,7 @@ public:
 
 	int m_iRango_EK = 0;
 	int m_iRango_REP = 0;
+	int m_iWantedLevel = 0;
 	char m_cRango[10];
 
 	//MORLA2.2 - Deathmach Game
@@ -548,6 +549,8 @@ public:
 	void PointCommandHandler(int indexX, int indexY, char cItemID = -1);
 	void DrawEffects();
 	void bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cStartFrame, int iV1 = 1);
+
+		void DrawWanted(short sX, short sY, DWORD dwTime);
 
 	void AddEventList(char * pTxt, char cColor = 0, BOOL bDupAllow = TRUE);
 	void AddEnergyList(char * pTxt, char cColor);
