@@ -179,7 +179,7 @@ void CGame::SetWantedFlag(short sOwnerH, char cOwnerType, int iStatus)
 
 	switch (iStatus) {
 	case 1: // Set
-		m_pClientList[sOwnerH]->m_iStatus = m_pClientList[sOwnerH]->m_iStatus | 0x00003000;
+		m_pClientList[sOwnerH]->m_iStatus = (m_pClientList[sOwnerH]->m_iStatus & 0xFFFF0FFF) | (m_pClientList[sOwnerH]->m_iWantedLevel << 12);
 		break;
 	default: // Remove
 		m_pClientList[sOwnerH]->m_iStatus = m_pClientList[sOwnerH]->m_iStatus & 0xFFFF3FFF;

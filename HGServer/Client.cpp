@@ -75,6 +75,7 @@ CClient::CClient(HWND hWnd)
 	m_sAppr4 = 0;
 	m_iApprColor = 0;
 	m_iStatus = 0;
+	m_iStatus2 = 0;
 	m_cSex = 0;
 	m_cSkin = 0;
 	m_cHairStyle = 0;

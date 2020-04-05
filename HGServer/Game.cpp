@@ -7097,6 +7097,10 @@ int CGame::_iComposePlayerDataFileContents(int iClientH, char * pData)
 	strcat(pData, cTxt);
 	strcat(pData,"\n");
 
+	wsprintf(cTxt, "character-wanted-level = %d", m_pClientList[iClientH]->m_iWantedLevel);
+	strcat(pData, cTxt);
+	strcat(pData, "\n");
+
 	strcat(pData,"\n\n");
 
 	// Ä³¸¯ÅÍÀÇ ¿ÜÇüÇ¥Çö Appr4°³¸¦ ÀúÀåÇÑ´Ù. ÀÌ°ÍÀº °ÔÀÓ¼­¹ö¿¡¼­´Â »ç¿ëÇÏÁö ¾ÊÀ¸¸ç ·Î±×¼­¹ö->Å¬¶óÀÌ¾ðÆ®°£¿¡ »ç¿ëµÈ´Ù.
@@ -23179,49 +23183,50 @@ RTH_NEXTSTEP:;
 	sp  = (short *)cp;
 	*sp = iClientH;
 	cp += 2;
-
+//8
 	sp  = (short *)cp;
 	*sp = m_pClientList[iClientH]->m_sX - 14 - 5;
 	cp += 2;
-
+//10
 	sp  = (short *)cp;
 	*sp = m_pClientList[iClientH]->m_sY - 12 - 5;
 	cp += 2;
-
+//12
 	sp  = (short *)cp;
 	*sp = m_pClientList[iClientH]->m_sType;
 	cp += 2;
-
+//14
 	sp  = (short *)cp;
 	*sp = m_pClientList[iClientH]->m_sAppr1;
 	cp += 2;
-
+//16
 	sp  = (short *)cp;
 	*sp = m_pClientList[iClientH]->m_sAppr2;
 	cp += 2;
-
+//18
 	sp  = (short *)cp;
 	*sp = m_pClientList[iClientH]->m_sAppr3;
 	cp += 2;
-
+//20
 	sp  = (short *)cp;
 	*sp = m_pClientList[iClientH]->m_sAppr4;
 	cp += 2;
-
+//22
 	ip  = (int *)cp;
 	*ip = m_pClientList[iClientH]->m_iApprColor;
 	cp += 4;
-
+//26
 	ip  = (int *)cp;
 	*ip = m_pClientList[iClientH]->m_iStatus;
 	cp += 4;
-
+//30
+	
 	memcpy(cp, m_pClientList[iClientH]->m_cMapName, 10);
 	cp += 10;
-
+//44
 	memcpy(cp, m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_cLocationName, 10);
 	cp += 10;
-
+//54
 	if (m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_bIsFixedDayMode == TRUE) {
 		*cp = 1;
 	}
@@ -23229,7 +23234,7 @@ RTH_NEXTSTEP:;
 		*cp = m_cDayOrNight;
 	}
 	cp++;
-
+//55
 	if (m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_bIsFixedDayMode == TRUE) {
 		*cp = NULL;
 	}
@@ -23237,29 +23242,29 @@ RTH_NEXTSTEP:;
 		*cp = m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_cWhetherStatus;
 	}
 	cp++;
-
+//56
 	ip = (int *)cp;
 	*ip = m_pClientList[iClientH]->m_iContribution;
 	cp += 4;
-
+//60
 	if (m_pClientList[iClientH]->m_bIsObserverMode == FALSE) {
 		m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->SetOwner(iClientH, DEF_OWNERTYPE_PLAYER, m_pClientList[iClientH]->m_sX, m_pClientList[iClientH]->m_sY);
 	}
 
 	*cp = (char)m_pClientList[iClientH]->m_bIsObserverMode;
 	cp++;
-
+//61
 	ip = (int *)cp;
 	*ip = m_pClientList[iClientH]->m_iRating;
 	cp += 4;
-
+//65
 	ip = (int *)cp;
 	*ip = m_pClientList[iClientH]->m_iHP;
 	cp += 4;
-	
+//69
 	*cp = cPoints;
 	cp++;
-
+//70
 	iSize = iComposeInitMapData(m_pClientList[iClientH]->m_sX - 13, m_pClientList[iClientH]->m_sY - 10, iClientH, cp);
 	cp += iSize;
 

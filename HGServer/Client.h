@@ -75,6 +75,7 @@ public:
 	short m_sAppr4;
 	int   m_iApprColor;			// v1.4 외형 컬러테이블
 	int   m_iStatus;
+	int   m_iStatus2;
 
 	DWORD m_dwTime, m_dwHPTime, m_dwMPTime, m_dwSPTime, m_dwAutoSaveTime, m_dwHungerTime, m_dwWarmEffectTime;
 	// Player 특성치 
