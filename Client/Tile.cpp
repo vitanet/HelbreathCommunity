@@ -69,6 +69,9 @@ void CTile::Clear()
 	m_iStatus      = NULL;
 	m_iDeadStatus  = NULL;
 
+	m_iStatus2 = NULL;
+	m_iDeadStatus2 = NULL;
+
 	m_sV1 = NULL;
 	m_sV2 = NULL;
 	m_sV3 = NULL;

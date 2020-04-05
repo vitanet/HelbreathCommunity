@@ -1116,7 +1116,7 @@ void CGame::MotionEventHandler(char * pData)
 {
 	WORD  * wp, wEventType, wObjectID;
 	short * sp, sX, sY, sType, sAppr1, sAppr2, sAppr3, sAppr4, sV1, sV2, sV3, sPrevAppr2;
-	int iStatus;
+	int iStatus, iStatus2;
 	char  * cp, cDir, cName[12];
 	int   * ip, iApprColor, iLoc;
 	char    cTxt[120];
@@ -1187,6 +1187,7 @@ void CGame::MotionEventHandler(char * pData)
 			memcpy(cName, cp, 5);
 			cp += 5;
 			sAppr1 = sAppr3 = sAppr4 = 0;
+			iStatus2 = 0;
 			sp = (short *)cp;
 			sAppr2 = *sp;
 			cp += 2;
@@ -18716,9 +18717,8 @@ void CGame::DrawAngel(int iSprite, short sX, short sY, char cFrame, DWORD dwTime
 
 void CGame::DrawWanted(short sX, short sY, DWORD dwTime)
 {
-	if ((_tmp_iStatus & 0x3000) != 0)
-			m_pEffectSpr[105]->PutTransSprite70(sX, sY - 80, 5, dwTime); // Wanted Skull
-	
+	if ((_tmp_iStatus & 0xF000) != 0)
+		m_pEffectSpr[105]->PutTransSprite70(sX, sY - 80, 5, dwTime); // Wanted Skull
 }
 
 void CGame::EnableDialogBox(int iBoxID, int cType, int sV1, int sV2, char * pString)

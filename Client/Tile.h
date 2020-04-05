@@ -41,6 +41,7 @@ public:
 	short m_sAppr3;								// +B32
 	short m_sAppr4;								// +B34
 	int m_iStatus;								// +B38
+	int m_iStatus2;
 	
 	short m_sDeadOwnerType;						// +B3C
 	short m_sDeadAppr1;
@@ -49,6 +50,7 @@ public:
 	short m_sDeadAppr4;
 	
 	int m_iDeadStatus;
+	int m_iDeadStatus2;
 	short m_sV1;
 	short m_sV2;					
 	short m_sV3;								// +B50

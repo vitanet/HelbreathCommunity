@@ -171,7 +171,7 @@ public:
 
 	short _tmp_sOwnerType, _tmp_sAppr1, _tmp_sAppr2, _tmp_sAppr3, _tmp_sAppr4;
 
-	int _tmp_iStatus;
+	int _tmp_iStatus, _tmp_iStatus2;
 	char  _tmp_cAction, _tmp_cDir, _tmp_cFrame, _tmp_cName[12];
 	int   _tmp_iChatIndex, _tmp_dx, _tmp_dy, _tmp_iApprColor, _tmp_iEffectType, _tmp_iEffectFrame, _tmp_dX, _tmp_dY; // 21.171 2002-6-14
 	WORD  _tmp_wObjectID;
@@ -180,7 +180,7 @@ public:
 	short sFocus_dX, sFocus_dY;
 	char  cFocusAction, cFocusFrame, cFocusDir, cFocusName[12];
 	short sFocusX, sFocusY, sFocusOwnerType, sFocusAppr1, sFocusAppr2, sFocusAppr3, sFocusAppr4;
-	int iFocuiStatus;
+	int iFocuiStatus, iFocuiStatus2;
 	int   iFocusApprColor;
 
 	//50Cent - Capture The Flag
@@ -990,7 +990,7 @@ public:
 	short m_sPlayerObjectID;
 	short m_sPlayerType;
 	short m_sPlayerAppr1, m_sPlayerAppr2, m_sPlayerAppr3, m_sPlayerAppr4;
-	int m_iPlayerStatus;
+	int m_iPlayerStatus, m_iPlayerStatus2;
 	short m_sMCX, m_sMCY;
 	short m_sCommX, m_sCommY;
 	int   m_iCastingMagicType;

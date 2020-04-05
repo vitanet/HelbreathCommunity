@@ -1853,7 +1853,7 @@ void CGame::DrawObjects(short sPivotX, short sPivotY, short sDivX, short sDivY, 
 			bRet = FALSE;
 			if ((ix >= -sModX) && (ix <= 640+16) && (iy >= -sModY) && (iy <= 427+32+16))
 #endif			
-			{	_tmp_wObjectID = _tmp_sOwnerType = _tmp_sAppr1 = _tmp_sAppr2 = _tmp_sAppr3 = _tmp_sAppr4 = _tmp_iStatus = NULL;
+			{	_tmp_wObjectID = _tmp_sOwnerType = _tmp_sAppr1 = _tmp_sAppr2 = _tmp_sAppr3 = _tmp_sAppr4 = _tmp_iStatus = _tmp_iStatus2 = NULL;
 				_tmp_cDir = _tmp_cFrame = 0;
 				_tmp_iEffectType = _tmp_iEffectFrame = _tmp_iChatIndex = 0;
 				ZeroMemory(_tmp_cName, sizeof(_tmp_cName));
@@ -1951,7 +1951,7 @@ void CGame::DrawObjects(short sPivotX, short sPivotY, short sDivX, short sDivY, 
 					bContact = FALSE;
 				}
 
-				_tmp_wObjectID = _tmp_sOwnerType = _tmp_sAppr1 = _tmp_sAppr2 = _tmp_sAppr3 = _tmp_sAppr4 = _tmp_iStatus = NULL;
+				_tmp_wObjectID = _tmp_sOwnerType = _tmp_sAppr1 = _tmp_sAppr2 = _tmp_sAppr3 = _tmp_sAppr4 = _tmp_iStatus = _tmp_iStatus2 = NULL;
 				_tmp_cFrame = _tmp_cDir = 0;
 				_tmp_iEffectType = _tmp_iEffectFrame = _tmp_iApprColor = _tmp_iChatIndex = 0;
 				ZeroMemory(_tmp_cName, sizeof(_tmp_cName));
@@ -1985,6 +1985,7 @@ void CGame::DrawObjects(short sPivotX, short sPivotY, short sDivX, short sDivY, 
 					{	if ((strcmp(_tmp_cName, m_cPlayerName) != 0) && (_tmp_sOwnerType < 10))
 						{	_tmp_sOwnerType = m_cIlusionOwnerType;
 							_tmp_iStatus    = _tmp_iStatus&0xf00000f0 | m_iStatus_IE&0x0fffff0f;
+							
 							_tmp_sAppr1     = m_sAppr1_IE;
 							_tmp_sAppr2     = m_sAppr2_IE;
 							_tmp_sAppr3     = m_sAppr3_IE;
@@ -13422,7 +13423,7 @@ void CGame::_ReadMapData(short sPivotX, short sPivotY, char * pData)
 {int i;
  char  * cp, ucHeader, cDir, cName[12], cItemColor;
  short * sp, sTotal, sX, sY, sType, sAppr1, sAppr2, sAppr3, sAppr4, sItemSpr, sItemSprFrame, sDynamicObjectType;
- int iStatus;
+ int iStatus, iStatus2;
  int   * ip, iApprColor;
  WORD    wObjectID;
  WORD  * wp, wDynamicObjectID;
@@ -13477,7 +13478,9 @@ void CGame::_ReadMapData(short sPivotX, short sPivotY, char * pData)
 				memcpy(cName, cp, 10);
 				cp    += 10;
 			}else // NPC
-			{	sAppr1 = sAppr3 = sAppr4 = 0;
+			{
+				iStatus2 = 0;
+				sAppr1 = sAppr3 = sAppr4 = 0;
 				sp  = (short *)cp;
 				sAppr2 = *sp;// Appearance2
 				cp += 2;
@@ -13529,6 +13532,7 @@ void CGame::_ReadMapData(short sPivotX, short sPivotY, char * pData)
 				cp    += 10;
 			}else 	// NPC
 			{	sAppr1 = sAppr3 = sAppr4 = 0;
+				iStatus2 = 0;
 				sp  = (short *)cp;
 				sAppr2 = *sp;// Appearance2
 				cp += 2;
@@ -13566,7 +13570,7 @@ void CGame::_ReadMapData(short sPivotX, short sPivotY, char * pData)
 void CGame::LogEventHandler(char * pData)
 {WORD * wp, wEventType, wObjectID;
  short * sp, sX, sY, sType, sAppr1, sAppr2, sAppr3, sAppr4;
- int iStatus;
+ int iStatus, iStatus2;
  char  * cp, cDir, cName[12];
  int   * ip, iApprColor;
 	wp   = (WORD *)(pData + DEF_INDEX2_MSGTYPE);
@@ -28225,14 +28229,15 @@ void CGame::DrawObjectName(short sX, short sY, char * pName, int iStatus)
 				strcpy(cTxt, DEF_MSG_RANGOEK10);
 				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(sX-50, sY, 38, dwTime);
 			}
-			PutString2(sX, sY+28 +iAddY, cTxt, 255, 255, 0);
+			PutString2(sX, sY+28 +iAddY, cTxt, 253, 231, 141);
 			iAddY = 28;
 		}
 
 		// Wanted System
-		if ((iStatus & 0x3000) != 0)
+		if (m_iWantedLevel > 0)
 		{
-			PutString2(sX, sY + 28 + iAddY, "Wanted", 49, 203, 253);
+			wsprintf(cTxt6, "Wanted (Lv. %d)", m_iWantedLevel);
+			PutString2(sX, sY + 28 + iAddY, cTxt6, 49, 203, 253);
 		}
 	}
 
