@@ -119,18 +119,15 @@ private:
 
 	void AdminOrder_BanPj(int iClientH, char* pData, DWORD dwMsgSize);
 
-
 	void HeldenianStartWarNow();
 	void HeldenianEndWarNow();
 	void HeldenianVictoryNow(int iSide);
 
-
+	//wanted system
+	void SetWantedFlag(short sOwnerH, char cOwnerType, int iStatus);
 
 	BOOL  iUpgradeHeroCapeRequirements(int iClientH, int iItemIndex);
 	int  HeroItemChecker(int iItemID, short sEnemyKill, char cContribution, char cSide);
-
-
-
 
 	// KLKS clean tiles
 

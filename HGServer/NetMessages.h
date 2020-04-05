@@ -26,6 +26,7 @@
 #define DEF_NOTIFY_ARESDENWINCTF               0x1F28
 #define DEF_NOTIFY_TIECTF                     0x1F29
 
+
 //News Addons - ZeroEoyPnk
 #define DEF_SEND_PARTYCOORDS				0x1F07
 #define DEF_SEND_PARTYHP					0x1F08

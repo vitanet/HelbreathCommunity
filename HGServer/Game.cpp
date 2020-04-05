@@ -1369,112 +1369,120 @@ void CGame::RequestInitDataHandler(int iClientH, char * pData, char cKey, BOOL b
 	*wp  = DEF_MSGTYPE_CONFIRM;
 
 	cp = (char *)(pBuffer + DEF_INDEX2_MSGTYPE + 2);
-
+//6
 	ip   = (int *)cp;
 	*ip  = m_pClientList[iClientH]->m_iHP;
 	cp  += 4;
-
+//10
 	ip   = (int *)cp;
 	*ip  = m_pClientList[iClientH]->m_iMP;
 	cp  += 4;
-
+//14
 	ip   = (int *)cp;
 	*ip  = m_pClientList[iClientH]->m_iSP;
 	cp  += 4;
-
+//18
 	ip   = (int *)cp;
 	*ip  = m_pClientList[iClientH]->m_iDefenseRatio;
 	cp  += 4;
-
+//22
 	ip   = (int *)cp;
 	*ip  = m_pClientList[iClientH]->m_iHitRatio;
 	cp  += 4;
-
+//26
 	ip   = (int *)cp;
 	*ip  = m_pClientList[iClientH]->m_iLevel;
 	cp  += 4;
-
+//30
 	ip   = (int *)cp;
 	*ip  = m_pClientList[iClientH]->m_iStr;		
 	cp  += 4;
-
+//34
 	ip   = (int *)cp;
 	*ip  = m_pClientList[iClientH]->m_iInt;					
 	cp  += 4;
-
+//38
 	ip   = (int *)cp;
 	*ip  = m_pClientList[iClientH]->m_iVit;								
 	cp  += 4;
-
+//42
 	ip   = (int *)cp;
 	*ip  = m_pClientList[iClientH]->m_iDex;			
 	cp  += 4;
-
+//46
 	ip   = (int *)cp;
 	*ip  = m_pClientList[iClientH]->m_iMag;						
 	cp  += 4;
-
+//50
 	ip   = (int *)cp;
 	*ip  = m_pClientList[iClientH]->m_iCharisma;
 	cp  += 4;
-
+//54
 	wp = (WORD *)cp; 
 	*wp = m_pClientList[iClientH]->m_iLU_Pool;
 	cp += 2;
-
+//56
 	*cp = m_pClientList[iClientH]->m_cWarType; // new
 	cp++;
-
+//57
 	*cp = 0; // missing data
 	cp++;
-
+//58
 	*cp = 0; // missing data
 	cp++;
-
+//59
 	*cp = 0; // missing data
 	cp++;
-
+//60
 	*cp = 0; // missing data
 	cp++;
-
+//61
 	ip   = (int *)cp;
 	*ip  = m_pClientList[iClientH]->m_iExp;
 	cp  += 4;
-
+//65
 	ip = (int *)cp;
 	*ip  = m_pClientList[iClientH]->m_iEnemyKillCount;
 	cp  += 4;
-
+//69
 	ip = (int *)cp;
 	*ip  = m_pClientList[iClientH]->m_iMaxEK;
 	cp  += 4;
-
+//73
 	ip = (int *)cp;
 	*ip  = m_pClientList[iClientH]->m_iPKCount;
 	cp  += 4;
-
+//77
 	ip = (int *)cp;
 	*ip  = m_pClientList[iClientH]->m_iRewardGold;
 	cp  += 4;
-
+//81
 	memcpy(cp, m_pClientList[iClientH]->m_cLocation, 10);
 	cp  += 10;
-
+//91
 	memcpy(cp, m_pClientList[iClientH]->m_cGuildName, 20);
 	cp  += 20;
-
+//111
 	ip   = (int *)cp;
 	*ip  = m_pClientList[iClientH]->m_iGuildRank;
 	cp  += 4;
-
+//115
 	*cp = (char)m_pClientList[iClientH]->m_iSuperAttackLeft;
 	cp++;
-
+//116
 	ip   = (int *)cp;
 	*ip  = m_pClientList[iClientH]->m_iFightzoneNumber;
 	cp  += 4;
- 
-	iRet = m_pClientList[iClientH]->m_pXSock->iSendMsg(pBuffer, 116);
+//120
+	ip = (int*)cp;
+	*ip = m_pClientList[iClientH]->m_iDeaths;
+	cp += 4;
+//124
+	ip = (int*)cp;
+	*ip = m_pClientList[iClientH]->m_iWantedLevel; // Wanted System
+	cp += 4;
+ //128
+	iRet = m_pClientList[iClientH]->m_pXSock->iSendMsg(pBuffer, 128);
 	switch (iRet) {
 	case DEF_XSOCKEVENT_QUENEFULL:
 	case DEF_XSOCKEVENT_SOCKETERROR:
@@ -6497,6 +6505,19 @@ BOOL CGame::_bDecodePlayerDatafileContents(int iClientH, char * pData, DWORD dwS
 				cReadModeA = 0;
 				break;
 
+			case 90:
+				// Wanted System
+				if (_bGetIsStringIsNumber(token) == FALSE) {
+					wsprintf(cTxt, "(!!!) Player(%s) data file error! wrong Data format - Connection closed. ", m_pClientList[iClientH]->m_cCharName);
+					PutLogList(cTxt);
+					delete[] pContents;
+					delete pStrTok;
+					return FALSE;
+				}
+				m_pClientList[iClientH]->m_iWantedLevel   = atoi(token);
+				cReadModeA = 0;
+				break;
+
 			}
 		}
 		else {
@@ -6611,6 +6632,7 @@ BOOL CGame::_bDecodePlayerDatafileContents(int iClientH, char * pData, DWORD dwS
 			if (memcmp(token, "character-DGKills", 17) == 0)    cReadModeA = 87;
 			if (memcmp(token, "character-TotalDGDeaths", 23) == 0)    cReadModeA = 88;
 			if (memcmp(token, "character-TotalDGKills", 22) == 0)    cReadModeA = 89;
+			if (memcmp(token, "character-wanted-level", 22) == 0)    cReadModeA = 90; // // Wanted System
 
 			if (memcmp(token, "[EOF]", 5) == 0) goto DPDC_STOP_DECODING;
 		}
@@ -10876,7 +10898,6 @@ void CGame::EnemyKillRewardHandler(int iAttackerH, int iClientH)
 	// Elvine kills Aresden in Aresden and doesnt get an EK 
 	// Elvine kills Aresden in Elvine and gets an EK
 	// Aresden kills Elvine in Elvine and doesnt get an EK
-
 	
 	unsigned long iRewardExp;
 
@@ -10950,14 +10971,152 @@ void CGame::EnemyKillRewardHandler(int iAttackerH, int iClientH)
 			m_pClientList[iAttackerH]->m_iExp += iRewardExp;
 		}
 
-		// Èñ»ýÀÚÀÇ ·¹º§ÀÌ 80 ÀÌ»óÀÎ °æ¿ì Enemy Kill count¸¦ ¿Ã¸°´Ù.
-
 		// Èñ»ýÀÚÀÇ ·¹º§ÀÌ 80ÀÌ»óÀÌ°í
 		if (memcmp(m_pClientList[iClientH]->m_cLocation, m_pClientList[iClientH]->m_cMapName, 10) != 0) {
 			// Èñ»ýÀÚ°¡ Á×Àº °÷ÀÌ ÀÚ½ÅÀÇ ¸¶À»ÀÌ ¾Æ´Ï¶ó¸é EK·Î ÀÎÁ¤ 
 			m_pClientList[iAttackerH]->m_iEnemyKillCount += m_iEnemyKillAdjust * iRangoAttacker;
 
-			m_pClientList[iClientH]->m_iDeaths++; // MORLA 2.2 - Le suma una muerte al pj
+			m_pClientList[iAttackerH]->m_iDeaths++; // MORLA 2.2 - Le suma una muerte al pj
+
+			// Wanted System
+			switch (m_pClientList[iAttackerH]->m_iWantedLevel) {
+			case 0:
+				if (m_pClientList[iAttackerH]->m_iDeaths >= 5) {
+					m_pClientList[iAttackerH]->m_iWantedLevel++;
+					SendNotifyMsg(NULL, iAttackerH, DEF_NOTIFY_NOTICEMSG, NULL, NULL, NULL, "You are now Wanted! (Level 1).");
+					SetWantedFlag(iAttackerH, DEF_OWNERTYPE_PLAYER, 1);
+				}
+				break;
+			case 1:
+				if (m_pClientList[iAttackerH]->m_iDeaths >= 10) {
+					m_pClientList[iAttackerH]->m_iWantedLevel++;
+					SendNotifyMsg(NULL, iAttackerH, DEF_NOTIFY_NOTICEMSG, NULL, NULL, NULL, "You are now Wanted! (Level 2).");
+				}
+				break;
+			case 2:
+				if (m_pClientList[iAttackerH]->m_iDeaths >= 15) {
+					m_pClientList[iAttackerH]->m_iWantedLevel++;
+					SendNotifyMsg(NULL, iAttackerH, DEF_NOTIFY_NOTICEMSG, NULL, NULL, NULL, "You are now Wanted! (Level 3).");
+				}
+				break;
+			case 3:
+				if (m_pClientList[iAttackerH]->m_iDeaths >= 20) {
+					m_pClientList[iAttackerH]->m_iWantedLevel++;
+					SendNotifyMsg(NULL, iAttackerH, DEF_NOTIFY_NOTICEMSG, NULL, NULL, NULL, "You are now Wanted! (Level 4).");
+				}
+				break;
+			case 4:
+				if (m_pClientList[iAttackerH]->m_iDeaths >= 25) {
+					m_pClientList[iAttackerH]->m_iWantedLevel++;
+					SendNotifyMsg(NULL, iAttackerH, DEF_NOTIFY_NOTICEMSG, NULL, NULL, NULL, "You are now Wanted! (Level 5).");
+				}
+				break;
+			}
+			class CItem* pItem;
+			int iItemID = -1, iEraseReq;
+			char cData[256], *cp;
+			DWORD* dwp;
+			short* sp;
+			WORD* wp;
+			if (m_pClientList[iClientH]->m_iWantedLevel > 0) {
+				switch (m_pClientList[iClientH]->m_iWantedLevel) {
+				case 1:
+					m_pClientList[iAttackerH]->m_iEnemyKillCount += 2;
+					SetItemCount(iAttackerH, "Gold", dwGetItemCount(iAttackerH, "Gold") + 1000);
+					SendNotifyMsg(NULL, iAttackerH, DEF_NOTIFY_NOTICEMSG, NULL, NULL, NULL, "You received (2) EKs and 1000g for killing a Wanted Lv. 1.");
+					break;
+				case 2:
+					m_pClientList[iAttackerH]->m_iEnemyKillCount += 4;
+					SetItemCount(iAttackerH, "Gold", dwGetItemCount(iAttackerH, "Gold") + 2500);
+					SendNotifyMsg(NULL, iAttackerH, DEF_NOTIFY_NOTICEMSG, NULL, NULL, NULL, "You received (4) EKs and 2500g for killing a Wanted Lv. 2.");
+					break;
+				case 3:
+					m_pClientList[iAttackerH]->m_iEnemyKillCount += 6;
+					SetItemCount(iAttackerH, "Gold", dwGetItemCount(iAttackerH, "Gold") + 5000);
+					SendNotifyMsg(NULL, iAttackerH, DEF_NOTIFY_NOTICEMSG, NULL, NULL, NULL, "You received (6) EKs and 5000g for killing a Wanted Lv. 3.");
+					break;
+				case 4:
+					m_pClientList[iAttackerH]->m_iEnemyKillCount += 8;
+					SetItemCount(iAttackerH, "Gold", dwGetItemCount(iAttackerH, "Gold") + 7500);
+					iItemID = 650;
+					SendNotifyMsg(NULL, iAttackerH, DEF_NOTIFY_NOTICEMSG, NULL, NULL, NULL, "You received (8) EKs, 1 Zem and 7500g for killing a Wanted Lv. 4.");
+					break;
+				case 5:
+					m_pClientList[iAttackerH]->m_iEnemyKillCount += 10;
+					SetItemCount(iAttackerH, "Gold", dwGetItemCount(iAttackerH, "Gold") + 10000);
+					iItemID = 650;
+					SendNotifyMsg(NULL, iAttackerH, DEF_NOTIFY_NOTICEMSG, NULL, NULL, NULL, "You received (10) EKs, 1 Zem and 10000g for killing a Wanted Lv. 5.");
+					break;
+				}
+				SetWantedFlag(iClientH, DEF_OWNERTYPE_PLAYER, 0);
+				m_pClientList[iClientH]->m_iDeaths = 0;
+				m_pClientList[iClientH]->m_iWantedLevel = 0;
+				m_pClientList[iClientH]->m_iEnemyKillCount -= 15;
+				SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_NOTICEMSG, NULL, NULL, NULL, "You are no longer Wanted and were punished with -15 EK.");
+				if (iItemID != -1) {
+					pItem = new class CItem;
+					if (_bInitItemAttr(pItem, iItemID) == FALSE) {
+						delete pItem;
+						return;
+					}
+					ZeroMemory(cData, sizeof(cData));
+					if (_bAddClientItemList(iAttackerH, pItem, &iEraseReq) == TRUE) {
+						dwp = (DWORD*)(cData + DEF_INDEX4_MSGID);
+						*dwp = MSGID_NOTIFY;
+						wp = (WORD*)(cData + DEF_INDEX2_MSGTYPE);
+						*wp = DEF_NOTIFY_ITEMOBTAINED;
+						cp = (char*)(cData + DEF_INDEX2_MSGTYPE + 2);
+						*cp = 1;
+						cp++;
+						memcpy(cp, pItem->m_cName, 20);
+						cp += 20;
+						dwp = (DWORD*)cp;
+						*dwp = pItem->m_dwCount;
+						cp += 4;
+						*cp = pItem->m_cItemType;
+						cp++;
+						*cp = pItem->m_cEquipPos;
+						cp++;
+						*cp = (char)0;
+						cp++;
+						sp = (short*)cp;
+						*sp = pItem->m_sLevelLimit;
+						cp += 2;
+						*cp = pItem->m_cGenderLimit;
+						cp++;
+						wp = (WORD*)cp;
+						*wp = pItem->m_wCurLifeSpan;
+						cp += 2;
+						wp = (WORD*)cp;
+						*wp = pItem->m_wWeight;
+						cp += 2;
+						sp = (short*)cp;
+						*sp = pItem->m_sSprite;
+						cp += 2;
+						sp = (short*)cp;
+						*sp = pItem->m_sSpriteFrame;
+						cp += 2;
+						*cp = pItem->m_cItemColor;
+						cp++;
+						*cp = (char)pItem->m_sItemSpecEffectValue2;
+						cp++;
+						dwp = (DWORD*)cp;
+						*dwp = pItem->m_dwAttribute;
+						cp += 4;
+						*cp = (char)pItem->m_sItemSpecEffectValue3;
+						cp++;
+						iCalcTotalWeight(iAttackerH);
+						if (iEraseReq == 1) {
+							delete pItem;
+							pItem = NULL;
+						}
+						m_pClientList[iAttackerH]->m_pXSock->iSendMsg(cData, 54);
+					}
+					else delete pItem;
+				}
+			}
+			SendNotifyMsg(NULL, iAttackerH, DEF_NOTIFY_ENEMYKILLS, m_pClientList[iAttackerH]->m_iEnemyKillCount, NULL, NULL, NULL);
+			SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_ENEMYKILLS, m_pClientList[iClientH]->m_iEnemyKillCount, NULL, NULL, NULL);
 
 			if (m_pClientList[iAttackerH]->m_iEnemyKillCount > m_pClientList[iAttackerH]->m_iMaxEK)
 			{
@@ -17079,7 +17238,7 @@ void CGame::RequestRango(int iClientH, int iObjectID)
 		// ¿äÃ» ¹ÞÀº Object°¡ ¾ø´Ù.
 
 		// centu - que cuente m_iMaxEK
-		SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_REQRANGO, m_pClientList[iObjectID]->m_iMaxEK, m_pClientList[iObjectID]->m_iRating, NULL, NULL);
+		SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_REQRANGO, m_pClientList[iObjectID]->m_iMaxEK, m_pClientList[iObjectID]->m_iRating, m_pClientList[iObjectID]->m_iWantedLevel, NULL);
 	}
 }
 
@@ -22305,7 +22464,6 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 		break;
 
 	/* Centuu: msgs agrupados */
-
 	case DEF_NOTIFY_HELDENIANSTART:
 	case DEF_NOTIFY_ANGEL_RECEIVED:
 	case DEF_NOTIFY_DEATHMATCHSTART: // MORLA 2.3 - DEATHMACH ON
@@ -22434,7 +22592,7 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 12);
 		break;
 
-	case DEF_NOTIFY_GIZONITEMUPGRADELEFT:
+	case DEF_NOTIFY_REQRANGO: // Morla2.2 - Notify Rango
 		ip = (int*)cp;
 		*ip = (int)sV1;
 		cp += 4;
@@ -22443,11 +22601,15 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 		*ip = (int)sV2;
 		cp += 4;
 
-		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 14);
+		ip = (int*)cp;
+		*ip = (int)sV3;
+		cp += 4;
+
+		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 18);
 		break;
 
-	case DEF_SEND_NPCHP: //50Cent - HP Bar
-	case DEF_NOTIFY_REQRANGO: // Morla2.2 - Notify Rango
+	case DEF_NOTIFY_GIZONITEMUPGRADELEFT:
+	case DEF_SEND_NPCHP: //50Cent - HP Ba
 	case DEF_NOTIFY_ENERGYSPHERECREATED:
 	case DEF_NOTIFY_ITEMSOLD:
 	case DEF_NOTIFY_ITEMREPAIRED:

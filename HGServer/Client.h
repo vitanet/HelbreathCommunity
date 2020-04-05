@@ -26,7 +26,8 @@ public:
 	int  m_iAngelicInt; // By Snoopy81
 	int  m_iAngelicDex; // By Snoopy81
 	int  m_iAngelicMag; // By Snoopy81
-		
+	int m_iWantedLevel; // Wanted System
+
 	BOOL m_bIsInsideEnemyBuilding;
 	char m_cWarType;
 	int m_iRecentWalkTime;

@@ -133,6 +133,8 @@ CClient::CClient(HWND hWnd)
 	m_iTotalDGDeaths = 0;
 	m_iTotalDGKills = 0;
 
+	m_iWantedLevel = 0; // Wanted System
+
 	m_bIsPolymorph = FALSE;
 
 	m_dwDSLAT = m_dwDSLATOld = m_dwDSLATS = 0;

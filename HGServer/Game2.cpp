@@ -170,3 +170,21 @@ void CGame::bCalculateEnduranceDecrement(short sTargetH, short sAttackerH, char 
 		}
 	}
 }
+
+// Wanted System
+void CGame::SetWantedFlag(short sOwnerH, char cOwnerType, int iStatus)
+{
+	if (cOwnerType != DEF_OWNERTYPE_PLAYER) return;
+	if (m_pClientList[sOwnerH] == NULL) return;
+
+	switch (iStatus) {
+	case 1: // Set
+		m_pClientList[sOwnerH]->m_iStatus = m_pClientList[sOwnerH]->m_iStatus | 0x00003000;
+		break;
+	default: // Remove
+		m_pClientList[sOwnerH]->m_iStatus = m_pClientList[sOwnerH]->m_iStatus & 0xFFFF3FFF;
+		break;
+	}
+
+	SendEventToNearClient_TypeA(sOwnerH, DEF_OWNERTYPE_PLAYER, MSGID_EVENT_MOTION, DEF_OBJECTNULLACTION, NULL, NULL, NULL);
+}

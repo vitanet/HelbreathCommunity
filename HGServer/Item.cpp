@@ -130,6 +130,8 @@ void CGame::CalcTotalItemEffect(int iClientH, int iEquipItemID, BOOL bNotify)
 	m_pClientList[iClientH]->m_iAngelicMag = 0; // By Snoopy81 
 	SetAngelFlag(iClientH, DEF_OWNERTYPE_PLAYER, 0, 0);
 
+	if (m_pClientList[iClientH]->m_iWantedLevel > 0) SetWantedFlag(iClientH, DEF_OWNERTYPE_PLAYER, 1); // Wanted System
+
 	m_pClientList[iClientH]->m_cAttackDiceThrow_SM = 0;
 	m_pClientList[iClientH]->m_cAttackDiceRange_SM = 0;
 	m_pClientList[iClientH]->m_cAttackBonus_SM = 0;
