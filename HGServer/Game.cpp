@@ -10985,32 +10985,32 @@ void CGame::EnemyKillRewardHandler(int iAttackerH, int iClientH)
 			// Wanted System
 			switch (m_pClientList[iAttackerH]->m_iWantedLevel) {
 			case 0:
-				if (m_pClientList[iAttackerH]->m_iDeaths >= 5) {
+				if (m_pClientList[iAttackerH]->m_iDeaths == 5) {
 					m_pClientList[iAttackerH]->m_iWantedLevel++;
 					SendNotifyMsg(NULL, iAttackerH, DEF_NOTIFY_NOTICEMSG, NULL, NULL, NULL, "You are now Wanted! (Level 1).");
 					SetWantedFlag(iAttackerH, DEF_OWNERTYPE_PLAYER, 1);
 				}
 				break;
 			case 1:
-				if (m_pClientList[iAttackerH]->m_iDeaths >= 10) {
+				if (m_pClientList[iAttackerH]->m_iDeaths == 10) {
 					m_pClientList[iAttackerH]->m_iWantedLevel++;
 					SendNotifyMsg(NULL, iAttackerH, DEF_NOTIFY_NOTICEMSG, NULL, NULL, NULL, "You are now Wanted! (Level 2).");
 				}
 				break;
 			case 2:
-				if (m_pClientList[iAttackerH]->m_iDeaths >= 15) {
+				if (m_pClientList[iAttackerH]->m_iDeaths == 15) {
 					m_pClientList[iAttackerH]->m_iWantedLevel++;
 					SendNotifyMsg(NULL, iAttackerH, DEF_NOTIFY_NOTICEMSG, NULL, NULL, NULL, "You are now Wanted! (Level 3).");
 				}
 				break;
 			case 3:
-				if (m_pClientList[iAttackerH]->m_iDeaths >= 20) {
+				if (m_pClientList[iAttackerH]->m_iDeaths == 20) {
 					m_pClientList[iAttackerH]->m_iWantedLevel++;
 					SendNotifyMsg(NULL, iAttackerH, DEF_NOTIFY_NOTICEMSG, NULL, NULL, NULL, "You are now Wanted! (Level 4).");
 				}
 				break;
 			case 4:
-				if (m_pClientList[iAttackerH]->m_iDeaths >= 25) {
+				if (m_pClientList[iAttackerH]->m_iDeaths == 25) {
 					m_pClientList[iAttackerH]->m_iWantedLevel++;
 					SendNotifyMsg(NULL, iAttackerH, DEF_NOTIFY_NOTICEMSG, NULL, NULL, NULL, "You are now Wanted! (Level 5).");
 				}
