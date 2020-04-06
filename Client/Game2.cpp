@@ -18717,7 +18717,7 @@ void CGame::DrawAngel(int iSprite, short sX, short sY, char cFrame, DWORD dwTime
 
 void CGame::DrawWanted(short sX, short sY, DWORD dwTime)
 {
-	if ((_tmp_iStatus & 0xF000) != 0)
+	if ((_tmp_iStatus & 0x40000) != 0)
 		m_pEffectSpr[105]->PutTransSprite70(sX, sY - 80, 5, dwTime); // Wanted Skull
 }
 

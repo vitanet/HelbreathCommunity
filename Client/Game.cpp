@@ -28080,7 +28080,7 @@ void CGame::DrawObjectName(short sX, short sY, char * pName, int iStatus)
 	if ((strcmp(m_cMapName, "fightzone1") == 0) && (bDeathmatch) && ( memcmp(pName, m_cPlayerName, 12) != 0 ))
 	{
 		strcpy(cTxt, DRAW_OBJECT_NAME90);
-		PutString2(sX, sY+14 +iAddY, cTxt, 255, 0, 0);
+		PutString2(sX, sY+14, cTxt, 255, 0, 0);
 	}
 	else {
 		if( memcmp(m_cPlayerName, pName, 10) == 0 )
@@ -28122,15 +28122,14 @@ void CGame::DrawObjectName(short sX, short sY, char * pName, int iStatus)
 					{	if( strcmp(m_stGuildName[iGuildIndex].cGuildName, "NONE" )!=0 )
 						{	if( m_stGuildName[iGuildIndex].iGuildRank == 0 )
 							{	wsprintf( G_cTxt, DEF_MSG_GUILDMASTER, m_stGuildName[iGuildIndex].cGuildName );//
-								PutString2(sX, sY+14, G_cTxt, 180,180,180);
-								m_stGuildName[iGuildIndex].dwRefTime = m_dwCurTime;
-								iAddY = 14;
+								
 							}else if( m_stGuildName[iGuildIndex].iGuildRank > 0 )
 							{	wsprintf( G_cTxt, DEF_MSG_GUILDSMAN, m_stGuildName[iGuildIndex].cGuildName );//"
-								PutString2(sX, sY+14, G_cTxt, 180,180,180);
-								m_stGuildName[iGuildIndex].dwRefTime = m_dwCurTime;
-								iAddY = 14;
+								
 							}
+							PutString2(sX, sY + 14, G_cTxt, 180, 180, 180);
+							m_stGuildName[iGuildIndex].dwRefTime = m_dwCurTime;
+							iAddY += 14;
 						}else
 						{	m_stGuildName[iGuildIndex].dwRefTime = 0;
 					}	}
@@ -28229,8 +28228,8 @@ void CGame::DrawObjectName(short sX, short sY, char * pName, int iStatus)
 				strcpy(cTxt, DEF_MSG_RANGOEK10);
 				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(sX-50, sY, 38, dwTime);
 			}
-			PutString2(sX, sY+28 +iAddY, cTxt, 253, 231, 141);
-			iAddY = 28;
+			PutString2(sX, sY+28 +iAddY, cTxt, 255, 255, 0);
+			iAddY += 14;
 		}
 
 		// Wanted System
@@ -28855,8 +28854,11 @@ void CGame::GetNpcName(short sType, char *pName)
 //50Cent - Capture The Flag
 void CGame::DrawFlagCarrier(short sX, short sY, char cFrame, DWORD dwTime)
 {
-	if ((_tmp_iStatus & 0x80000) != 0) m_pSprite[DEF_SPRID_ITEMGROUND_PIVOTPOINT + 6]->PutSpriteFast(sX, sY - 80, 57, dwTime); //elvine flag
-	else if ((_tmp_iStatus & 0x40000) != 0) m_pSprite[DEF_SPRID_ITEMGROUND_PIVOTPOINT + 6]->PutSpriteFast(sX, sY - 80, 56, dwTime); //aresden flag
+	if ((_tmp_iStatus & 0x80000) != 0) {
+		if (m_bAresden)
+			m_pSprite[DEF_SPRID_ITEMGROUND_PIVOTPOINT + 6]->PutSpriteFast(sX, sY - 80, 56, dwTime); //aresden flag
+		else m_pSprite[DEF_SPRID_ITEMGROUND_PIVOTPOINT + 6]->PutSpriteFast(sX, sY - 80, 57, dwTime); //elvine flag
+	}
 }
 
 void CGame::CommandProcessor(short msX, short msY, short indexX, short indexY, char cLB, char cRB)
