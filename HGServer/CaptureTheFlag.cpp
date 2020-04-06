@@ -52,7 +52,6 @@ void CGame::SetFlagCarrierFlag(int iClientH, BOOL bFlagMode)
 
     if (bFlagMode)
     {
-        PutLogList("Capture The Flag: New Flag Carrier!");
         m_iFlagCarrierIndex = iClientH;
         if (m_pClientList[iClientH]->m_cSide == 1)
         {
@@ -66,12 +65,10 @@ void CGame::SetFlagCarrierFlag(int iClientH, BOOL bFlagMode)
         }
         m_pClientList[iClientH]->m_iEnemyKillCount += 20;
         SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_ENEMYKILLREWARD, iClientH, NULL, NULL, NULL);
-        if (m_pClientList[iClientH]->m_cSide == 1) m_pClientList[iClientH]->m_iStatus = m_pClientList[iClientH]->m_iStatus | 0x80000; //Aresden Flag
-        else if (m_pClientList[iClientH]->m_cSide == 2) m_pClientList[iClientH]->m_iStatus = m_pClientList[iClientH]->m_iStatus | 0x40000; //Elvine Flag
+        m_pClientList[iClientH]->m_iStatus = m_pClientList[iClientH]->m_iStatus | 0x00080000; // Flag
     }
     else
     {
-        PutLogList("Capture The Flag: Flag Carrier Reset.");
         m_iFlagCarrierIndex = -1;
         if (m_pClientList[iClientH]->m_cSide == 1)
         {
@@ -83,7 +80,7 @@ void CGame::SetFlagCarrierFlag(int iClientH, BOOL bFlagMode)
             m_bIsAresdenFlagCaptured = false;
             for (int i = 0; i < DEF_MAXCLIENTS; i++) if (m_pClientList[i] != NULL) SendNotifyMsg(NULL, i, DEF_NOTIFY_ARESDENFLAGBACKTOCH, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         }
-        m_pClientList[iClientH]->m_iStatus = m_pClientList[iClientH]->m_iStatus | 0x00001000;
+        m_pClientList[iClientH]->m_iStatus = m_pClientList[iClientH]->m_iStatus | 0xFFF7FFFF;
     }
 }
 void CGame::EndCaptureTheFlag(int iOption)

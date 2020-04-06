@@ -124,7 +124,7 @@ private:
 	void HeldenianVictoryNow(int iSide);
 
 	//wanted system
-	void SetWantedFlag(short sOwnerH, char cOwnerType, int iStatus);
+	void SetWantedFlag(short sOwnerH, char cOwnerType, bool iStatus);
 
 	BOOL  iUpgradeHeroCapeRequirements(int iClientH, int iItemIndex);
 	int  HeroItemChecker(int iItemID, short sEnemyKill, char cContribution, char cSide);
