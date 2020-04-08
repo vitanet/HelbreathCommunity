@@ -62,7 +62,8 @@ BOOL DXC_ddraw::bInit(HWND hWnd)
 	SetRect(&m_rcClipArea, 0,0, 640, 480);
 #endif
 
-	ddVal = DirectDrawCreateEx(NULL, (VOID**)&m_lpDD4, IID_IDirectDraw7, NULL);
+	//ddVal = DirectDrawCreateEx(NULL, (VOID**)&m_lpDD4, IID_IDirectDraw7, NULL);
+	ddVal = DirectDrawCreateEx((GUID*)DDCREATE_EMULATIONONLY, (VOID**)&m_lpDD4, IID_IDirectDraw7, NULL); // sleeq
     if (ddVal != DD_OK) return FALSE;
 
 	if( m_bFullMode == TRUE )
