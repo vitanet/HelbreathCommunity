@@ -5,15 +5,6 @@
 //
 // --------------------------------------------------------------
 
-
-
-
-
-
-
-// --------------------------------------------------------------
-
-
 #include <windows.h>
 #include <windowsx.h>
 #include <stdio.h>
@@ -82,14 +73,11 @@ int ItemCount=0;
 // 2020
 unsigned __stdcall ThreadProc(void* ch)
 {
-	char cTemp[256];
-	int i = 0;
 	class CTile* pTile;
 	while (G_bIsThread)
 	{
 		Sleep(100); // centu - 10000 -> 100
-		ZeroMemory(cTemp, 256);
-
+		
 		for (int a = 0; a < DEF_MAXMAPS; a++)
 		{
 			if (G_pGame->m_pMapList[a] != NULL)

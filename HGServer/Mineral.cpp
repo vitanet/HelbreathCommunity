@@ -620,7 +620,6 @@ void CGame::BuildItemHandler(int iClientH, char* pData)
 
 					//Custom-ItemÀº »ö»óÀÌ 2¹ø OGEID.
 
-
 					if (pItem->m_sItemEffectType == DEF_ITEMEFFECTTYPE_ATTACK) {
 						// Â°Ã¸Â°Ã? Â¹Â«Â±Ã¢Â·Ã¹Â¿Â¡ ÂºÃ™Ã€Â» Â¼Ã¶ Ã€Ã–Â´Ã‚ Ã?Â¢ÂµÃŽÂ»Ã§Â¸Â¦ Â¼Â±Ã…Ãƒ
 						// Â°Â¡ÂºÂ*Â¿Ã®(3%) Â°Â*ÃˆÂ*ÂµÃˆ(7%) Ã‡ÃŠÂ»Ã¬Ã€Ã‡(15%) Â¹ÃŽÃƒÂ¸Ã€Ã‡(20%) Ã?Â¤Ã€Ã‡Ã€Ã‡(20%) Ã?ÃŸÂµÂ¶Ã€Ã‡(16%) Â¿Â¹Â¸Â®Ã‡Ã‘(16%) Â°Ã*Â´Ã«Â¹Â®Â¸Ã*Ã€Ã‡(3%)
@@ -910,8 +909,6 @@ void CGame::BuildItemHandler(int iClientH, char* pData)
 				break;
 			}
 		}
-
-
 }
 
 void CGame::MineralGenerator()

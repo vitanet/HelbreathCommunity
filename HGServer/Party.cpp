@@ -906,27 +906,32 @@ void CGame::RefreshPartyCoords(int iClientH)
 	Party_sY = 0;
 	x = 0;
 
-	Party_sX = m_pClientList[iClientH]->m_sX;
-	Party_sY = m_pClientList[iClientH]->m_sY;
-	ZeroMemory(MapName, sizeof(MapName));
-	strcpy(MapName, m_pClientList[iClientH]->m_cMapName);
+	if (m_pClientList[iClientH] == NULL) return;
 
-	for (i = 0; i < m_stPartyInfo[m_pClientList[iClientH]->m_iPartyID].iTotalMembers; i++)
+	if ((m_pClientList[iClientH]->m_iPartyID != NULL) && (m_pClientList[iClientH]->m_iPartyStatus == DEF_PARTYSTATUS_CONFIRM))
 	{
-		x++;
-		if (m_stPartyInfo[m_pClientList[iClientH]->m_iPartyID].iIndex[i] == iClientH)
+		Party_sX = m_pClientList[iClientH]->m_sX;
+		Party_sY = m_pClientList[iClientH]->m_sY;
+		ZeroMemory(MapName, sizeof(MapName));
+		strcpy(MapName, m_pClientList[iClientH]->m_cMapName);
+
+		for (i = 0; i < m_stPartyInfo[m_pClientList[iClientH]->m_iPartyID].iTotalMembers; i++)
 		{
-			PartyId = x;
+			x++;
+			if (m_stPartyInfo[m_pClientList[iClientH]->m_iPartyID].iIndex[i] == iClientH)
+			{
+				PartyId = x;
+			}
 		}
-	}
 
-	for (i = 0; i < m_stPartyInfo[m_pClientList[iClientH]->m_iPartyID].iTotalMembers; i++)
-	{
-		iH = m_stPartyInfo[m_pClientList[iClientH]->m_iPartyID].iIndex[i];
-
-		if (m_pClientList[iH] != NULL)
+		for (i = 0; i < m_stPartyInfo[m_pClientList[iClientH]->m_iPartyID].iTotalMembers; i++)
 		{
-			SendNotifyMsg(NULL, iH, DEF_SEND_PARTYCOORDS, PartyId, Party_sX, Party_sY, MapName, NULL, NULL);
+			iH = m_stPartyInfo[m_pClientList[iClientH]->m_iPartyID].iIndex[i];
+
+			if (m_pClientList[iH] != NULL)
+			{
+				SendNotifyMsg(NULL, iH, DEF_SEND_PARTYCOORDS, PartyId, Party_sX, Party_sY, MapName, NULL, NULL);
+			}
 		}
 	}
 }

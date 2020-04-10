@@ -2335,7 +2335,7 @@ void CGame::OnTimer(char cType)
 		DynamicObjectEffectProcessor();
 		NoticeHandler();
 		SpecialEventHandler();
-		EnergySphereProcessor(NULL, NULL);
+		
 		//SNOOPY:Check if Apocalypse Gate nedd to be closed
 		OpenCloseApocalypseGate();
 		m_dwGameTime3 = dwTime;
@@ -7726,12 +7726,6 @@ void CGame::ChatMsgHandler(int iClientH, char * pData, DWORD dwMsgSize)
 			
 		}
 
-		else if (memcmp(cp, "/energysphere ", 14) == 0) {
-			if (m_pClientList[iClientH]->m_iAdminUserLevel >= m_iAdminLevelEnergySphere) EnergySphereProcessor(TRUE, iClientH);
-			wsprintf(G_cTxt, "(%s) GM Order(%s): energysphere", m_pClientList[iClientH]->m_cIPaddress, m_pClientList[iClientH]->m_cCharName);
-			bSendMsgToLS(MSGID_GAMEMASTERLOG, iClientH, FALSE, cTemp);
-			
-		}
 
 		else if (memcmp(cp, "/begincrusade", 13) == 0) {
 			if (m_pClientList[iClientH]->m_iAdminUserLevel > 3) {
@@ -8313,91 +8307,112 @@ int CGame::iClientMotion_Attack_Handler(int iClientH, short sX, short sY, short 
 				short sType, sManaCost;
 				DWORD dwType1, dwType2, dwValue1, dwValue2;
 
-				if(m_pClientList[iClientH]->m_sItemEquipmentStatus[DEF_EQUIPPOS_RHAND] != -1){
+				if (m_pClientList[iClientH]->m_sItemEquipmentStatus[DEF_EQUIPPOS_RHAND] != -1) {
 					sItemIndex = m_pClientList[iClientH]->m_sItemEquipmentStatus[DEF_EQUIPPOS_RHAND];
 				}
-				else if(m_pClientList[iClientH]->m_sItemEquipmentStatus[DEF_EQUIPPOS_TWOHAND] != -1){
+				else if (m_pClientList[iClientH]->m_sItemEquipmentStatus[DEF_EQUIPPOS_TWOHAND] != -1) {
 					sItemIndex = m_pClientList[iClientH]->m_sItemEquipmentStatus[DEF_EQUIPPOS_TWOHAND];
 				}
 				else sItemIndex = -1;
 
-				if(sItemIndex != -1){
+				if (sItemIndex != -1) {
 					if ((m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_dwAttribute & 0x00F00000) != NULL) {
-						dwType1  = (m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_dwAttribute & 0x00F00000) >> 20;  
+						dwType1 = (m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_dwAttribute & 0x00F00000) >> 20;
 						dwValue1 = (m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_dwAttribute & 0x000F0000) >> 16;
-						dwType2  = (m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_dwAttribute & 0x0000F000) >> 12;  
+						dwType2 = (m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_dwAttribute & 0x0000F000) >> 12;
 						dwValue2 = (m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_dwAttribute & 0x00000F00) >> 8;
 					}
-					if(dwType1 == 15){
-						sManaCost = dwValue2*2;
-						if (m_pClientList[iClientH]->m_iMP >= sManaCost){
-							switch(dwValue1){
+					if (dwType1 == 15) {
+						sManaCost = dwValue2 * 2;
+						if (m_pClientList[iClientH]->m_iMP >= sManaCost) {
+							switch (dwValue1) {
 								// Fire-Strike
-								case 1:
-									sType = 30; 
-									break;
+							case 1:
+								sType = 30;
+								SendEventToNearClient_TypeB(MSGID_EVENT_COMMON, DEF_COMMONTYPE_MAGIC, m_pClientList[iClientH]->m_cMapIndex, sX, sY, dX, dY, (sType + 100), m_pClientList[iClientH]->m_sType);
+								break;
 								// Lightning
-								case 2:
-									sType = 43; 
-									break;
+							case 2:
+								sType = 43;
+								SendEventToNearClient_TypeB(MSGID_EVENT_COMMON, DEF_COMMONTYPE_MAGIC, m_pClientList[iClientH]->m_cMapIndex, sX, sY, dX, dY, (sType + 100), m_pClientList[iClientH]->m_sType);
+								break;
 								// Chill-Wind
-								case 3:
-									sType = 45; 
-									break;
+							case 3:
+								sType = 45;
+								SendEventToNearClient_TypeB(MSGID_EVENT_COMMON, DEF_COMMONTYPE_MAGIC, m_pClientList[iClientH]->m_cMapIndex, sX, sY, dX, dY, (sType + 100), m_pClientList[iClientH]->m_sType);
+								break;
 								// Ice-Strike
-								case 4:
-									sType = 57; 
-									break;
+							case 4:
+								sType = 57;
+								SendEventToNearClient_TypeB(MSGID_EVENT_COMMON, DEF_COMMONTYPE_MAGIC, m_pClientList[iClientH]->m_cMapIndex, sX, sY, dX, dY, (sType + 100), m_pClientList[iClientH]->m_sType);
+								break;
 								// Energy-Strike
-								case 5:
-									sType = 60; 
-									break;
+							case 5:
+								sType = 60;
+								SendEventToNearClient_TypeB(MSGID_EVENT_COMMON, DEF_COMMONTYPE_MAGIC, m_pClientList[iClientH]->m_cMapIndex, sX, sY, dX, dY, (sType + 100), m_pClientList[iClientH]->m_sType);
+								break;
 								// Mass-Fire-Strike
-								case 6:
-									sType = 61; 
-									break;
+							case 6:
+								sType = 61;
+								SendEventToNearClient_TypeB(MSGID_EVENT_COMMON, DEF_COMMONTYPE_MAGIC, m_pClientList[iClientH]->m_cMapIndex, sX, sY, dX, dY, (sType + 100), m_pClientList[iClientH]->m_sType);
+								break;
 								// Mass-Chill-Wind
-								case 7:
-									sType = 63; 
-									break;
+							case 7:
+								sType = 63;
+								SendEventToNearClient_TypeB(MSGID_EVENT_COMMON, DEF_COMMONTYPE_MAGIC, m_pClientList[iClientH]->m_cMapIndex, sX, sY, dX, dY, (sType + 100), m_pClientList[iClientH]->m_sType);
+								break;
 								// Earthworm-Strike
-								case 8:
-									sType = 64; 
-									break;
+							case 8:
+								sType = 64;
+								SendEventToNearClient_TypeB(MSGID_EVENT_COMMON, DEF_COMMONTYPE_MAGIC, m_pClientList[iClientH]->m_cMapIndex, sX, sY, dX, dY, (sType + 100), m_pClientList[iClientH]->m_sType);
+								break;
 								// Bloody-Shock-Wave
-								case 9:
-									sType = 70; 
-									break;
+							case 9:
+								sType = 70;
+								SendEventToNearClient_TypeB(MSGID_EVENT_COMMON, DEF_COMMONTYPE_MAGIC, m_pClientList[iClientH]->m_cMapIndex, sX, sY, dX, dY, (sType + 100), m_pClientList[iClientH]->m_sType);
+								break;
 								// Mass-Ice-Strike
-								case 10:
-									sType = 72; 
-									break;
+							case 10:
+								sType = 72;
+								SendEventToNearClient_TypeB(MSGID_EVENT_COMMON, DEF_COMMONTYPE_MAGIC, m_pClientList[iClientH]->m_cMapIndex, sX, sY, dX, dY, (sType + 100), m_pClientList[iClientH]->m_sType);
+								break;
 								// Lightning-Strike
-								case 11:
-									sType = 74; 
-									break;
+							case 11:
+								sType = 74;
+								SendEventToNearClient_TypeB(MSGID_EVENT_COMMON, DEF_COMMONTYPE_MAGIC, m_pClientList[iClientH]->m_cMapIndex, sX, sY, dX, dY, (sType + 100), m_pClientList[iClientH]->m_sType);
+								break;
 								// Ice-Whirlwind
-								case 12:
-									sType = 75; 
-									break;
+							case 12:
+								sType = 75;
+								SendEventToNearClient_TypeB(MSGID_EVENT_COMMON, DEF_COMMONTYPE_MAGIC, m_pClientList[iClientH]->m_cMapIndex, sX, sY, dX, dY, (sType + 100), m_pClientList[iClientH]->m_sType);
+								break;
 								// Meteor-Strike
-								case 13:
-									sType = 81; 
-									break;
+							case 13:
+								sType = 81;
+								SendEventToNearClient_TypeB(MSGID_EVENT_COMMON, DEF_COMMONTYPE_MAGIC, m_pClientList[iClientH]->m_cMapIndex, sX, sY, dX, dY, (sType + 100), m_pClientList[iClientH]->m_sType);
+								break;
 								// Mass-Magic-Missile
-								case 14:
-									sType = 82; 
-									break;
+							case 14:
+								sType = 82;
+								SendEventToNearClient_TypeB(MSGID_EVENT_COMMON, DEF_COMMONTYPE_MAGIC, m_pClientList[iClientH]->m_cMapIndex, sX, sY, dX, dY, (sType + 100), m_pClientList[iClientH]->m_sType);
+								break;
 								// Blizzard
-								case 15:
-									sType = 91; 
-									break;
+							case 15:
+								sType = 91;
+								SendEventToNearClient_TypeB(MSGID_EVENT_COMMON, DEF_COMMONTYPE_MAGIC, m_pClientList[iClientH]->m_cMapIndex, sX, sY, dX, dY, (sType + 100), m_pClientList[iClientH]->m_sType);
+								break;
 								// Earth-Shock-Wave
-								case 16:
-									sType = 96; 
-									break;
+							case 16:
+								sType = 96;
+								SendEventToNearClient_TypeB(MSGID_EVENT_COMMON, DEF_COMMONTYPE_MAGIC, m_pClientList[iClientH]->m_cMapIndex, sX, sY, dX, dY, (sType + 100), m_pClientList[iClientH]->m_sType);
+								break;
 							}
-							SendEventToNearClient_TypeB(MSGID_EVENT_COMMON, DEF_COMMONTYPE_MAGIC, m_pClientList[iClientH]->m_cMapIndex, sX, sY, dX, dY, (sType+100), m_pClientList[iClientH]->m_sType);
+							// Critical Attack - Mass-Magic-Missile Aura
+							if (wType >= 20)
+							{
+								sType = 84;
+								SendEventToNearClient_TypeB(MSGID_EVENT_COMMON, DEF_COMMONTYPE_MAGIC, m_pClientList[iClientH]->m_cMapIndex, sX, sY, sX, sY, (sType + 100), m_pClientList[iClientH]->m_sType);
+							}
 						}
 					}
 				}
@@ -11863,9 +11878,6 @@ void CGame::Effect_Damage_Spot(short sAttackerH, char cAttackerType, short sTarg
 					
 			SendEventToNearClient_TypeA(sTargetH, DEF_OWNERTYPE_NPC, MSGID_EVENT_MOTION, DEF_OBJECTMOVE, NULL, NULL, NULL);
 
-			if (bCheckEnergySphereDestination(sTargetH, sAttackerH, cAttackerType) == TRUE) {
-				DeleteNpc(sTargetH);
-			}
 			return;
 		}
 
@@ -17401,27 +17413,6 @@ void CGame::MultiplicadorExp(int Client, unsigned long Exp)
 
 	if (m_iExpSetting == 0) 
 	{
-		if		(m_pClientList[Client]->m_iLevel < 20)		Exp *= 0.2f;
-
-		else if	(m_pClientList[Client]->m_iLevel >= 20 && 
-				 m_pClientList[Client]->m_iLevel < 60)		Exp *= 0.175f;
-
-		else if	(m_pClientList[Client]->m_iLevel >= 60 && 
-				 m_pClientList[Client]->m_iLevel < 100)		Exp *= 0.15f;
-
-		else if	(m_pClientList[Client]->m_iLevel >= 100 &&
-				 m_pClientList[Client]->m_iLevel < 140)		Exp *= 0.125f;
-
-		else if	(m_pClientList[Client]->m_iLevel >= 140 &&
-				 m_pClientList[Client]->m_iLevel < 160)		Exp *= 0.075f;
-
-		else if	(m_pClientList[Client]->m_iLevel >= 160 &&
-				 m_pClientList[Client]->m_iLevel < 180)		Exp *= 0.05f;
-
-		else if	(m_pClientList[Client]->m_iLevel >= 180)	Exp *= 0.025f;
-	}
-	else if (m_iExpSetting == 1) 
-	{
 		if		(m_pClientList[Client]->m_iLevel < 20)		Exp *= 2.0f;
 
 		else if	(m_pClientList[Client]->m_iLevel >= 20 && 
@@ -17441,9 +17432,30 @@ void CGame::MultiplicadorExp(int Client, unsigned long Exp)
 
 		else if	(m_pClientList[Client]->m_iLevel >= 180)	Exp *= 0.25f;
 	}
+	else if (m_iExpSetting == 1) 
+	{
+		if		(m_pClientList[Client]->m_iLevel < 20)		Exp *= 20;
+
+		else if	(m_pClientList[Client]->m_iLevel >= 20 && 
+				 m_pClientList[Client]->m_iLevel < 60)		Exp *= 17.5f;
+
+		else if	(m_pClientList[Client]->m_iLevel >= 60 && 
+				 m_pClientList[Client]->m_iLevel < 100)		Exp *= 15;
+
+		else if	(m_pClientList[Client]->m_iLevel >= 100 &&
+				 m_pClientList[Client]->m_iLevel < 140)		Exp *= 12.5f;
+
+		else if	(m_pClientList[Client]->m_iLevel >= 140 &&
+				 m_pClientList[Client]->m_iLevel < 160)		Exp *= 10;
+
+		else if	(m_pClientList[Client]->m_iLevel >= 160 &&
+				 m_pClientList[Client]->m_iLevel < 180)		Exp *= 7.5f;
+
+		else if	(m_pClientList[Client]->m_iLevel >= 180)	Exp *= 5;
+	}
 	else if (m_iExpSetting == 2) 
 	{
-		Exp *= 60;
+		Exp *= 400;
 	}
 	
 	m_pClientList[Client]->m_iExp += Exp;
@@ -17747,19 +17759,19 @@ void CGame::SetPlayingStatus(int iClientH)
 		memcmp(m_pClientList[iClientH]->m_cMapName, "gshop", 5) == 0)
 		m_pClientList[iClientH]->m_pIsProcessingAllowed = TRUE;
 	else
-		m_pClientList[iClientH]->m_pIsProcessingAllowed = FALSE;
+		m_pClientList[iClientH]->m_pIsProcessingAllowed = TRUE;
 
 	if (memcmp(m_pClientList[iClientH]->m_cMapName, "wrhus", 5) == 0 ||
 		memcmp(m_pClientList[iClientH]->m_cMapName, "arewrhus", 8) == 0 ||
 		memcmp(m_pClientList[iClientH]->m_cMapName, "elvwrhus", 8) == 0)
 		m_pClientList[iClientH]->m_bIsInsideWarehouse = TRUE;
 	else
-		m_pClientList[iClientH]->m_bIsInsideWarehouse = FALSE;
+		m_pClientList[iClientH]->m_bIsInsideWarehouse = TRUE;
 
 	if (memcmp(m_pClientList[iClientH]->m_cMapName, "wzdtwr", 6) == 0)
 		m_pClientList[iClientH]->m_bIsInsideWizardTower = TRUE;
 	else
-		m_pClientList[iClientH]->m_bIsInsideWizardTower = FALSE;
+		m_pClientList[iClientH]->m_bIsInsideWizardTower = TRUE;
 }
 
 void CGame::ForceChangePlayMode(int iClientH, bool bNotify)
@@ -20936,27 +20948,6 @@ CAE_SKIPCOUNTERATTACK:;
 
 					SendEventToNearClient_TypeA(sTargetH, DEF_OWNERTYPE_NPC, MSGID_EVENT_MOTION, DEF_OBJECTMOVE, NULL, NULL, NULL);
 
- 					if (bCheckEnergySphereDestination(sTargetH, sAttackerH, cAttackerType) == TRUE) {
-						if (cAttackerType == DEF_OWNERTYPE_PLAYER) {
-							iExp = (m_pNpcList[sTargetH]->m_iExp/3);
-							if (m_pNpcList[sTargetH]->m_iNoDieRemainExp > 0)
-								iExp += m_pNpcList[sTargetH]->m_iNoDieRemainExp;
-
-							if (m_pClientList[sAttackerH]->m_iAddExp != NULL) {
-								dTmp1 = (double)m_pClientList[sAttackerH]->m_iAddExp;
-								dTmp2 = (double)iExp;
-								dTmp3 = (dTmp1/100.0f)*dTmp2;
-								iExp += (int)dTmp3;
-							}
-
-							if ((m_bIsCrusadeMode == TRUE) && (iExp > 10)) iExp = 10;
-
-							GetExp(sAttackerH, iExp);
-
-							DeleteNpc(sTargetH);
-							return FALSE;
-						}
-					}
 				}
 				else {
 					SendEventToNearClient_TypeA(sTargetH, DEF_OWNERTYPE_NPC, MSGID_EVENT_MOTION, DEF_OBJECTDAMAGE, iDamage, sAttackerWeapon, NULL);
@@ -23426,10 +23417,6 @@ RTH_NEXTSTEP:;
 		m_pClientList[iClientH]->m_dwCrusadeGUID		= 0;
 		m_pClientList[iClientH]->m_iWarContribution		= 0;
 		m_pClientList[iClientH]->m_iConstructionPoint	= 0;
-	}		
-	if (memcmp(m_pClientList[iClientH]->m_cMapName, "fight", 5) == 0) {
-		wsprintf(G_cTxt, "Char(%s)-Enter(%s) Observer(%d)", m_pClientList[iClientH]->m_cCharName, m_pClientList[iClientH]->m_cMapName, m_pClientList[iClientH]->m_bIsObserverMode);
-		PutLogEventFileList(G_cTxt);
 	}
 	SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_CONSTRUCTIONPOINT, m_pClientList[iClientH]->m_iConstructionPoint, m_pClientList[iClientH]->m_iWarContribution, 1, NULL);
 	SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_GIZONITEMUPGRADELEFT, m_pClientList[iClientH]->m_iGizonItemUpgradeLeft, NULL, NULL, NULL);
@@ -23459,18 +23446,19 @@ RTH_NEXTSTEP:;
 
 	// SNOOPY: Send gate positions if applicable.
 	Notify_ApocalypseGateState(iClientH);
+
 	RefreshPartyCoords(iClientH);
 
 	//50Cent - Capture The Flag
 	if (m_bIsCTFMode)
 	{
-		RequestCheckFlag(i);
-		if (bCheckIfIsFlagCarrier(i))
+		RequestCheckFlag(iClientH);
+		if (bCheckIfIsFlagCarrier(iClientH))
 		{
-			if (m_pClientList[i]->m_iHP >= 1)
+			if (m_pClientList[iClientH]->m_iHP >= 1)
 			{
-				SetInvisibilityFlag(i, DEF_OWNERTYPE_PLAYER, false);
-				SetIceFlag(i, DEF_OWNERTYPE_PLAYER, true);
+				SetInvisibilityFlag(iClientH, DEF_OWNERTYPE_PLAYER, false);
+				SetIceFlag(iClientH, DEF_OWNERTYPE_PLAYER, true);
 			}
 		}
 	}
