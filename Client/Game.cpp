@@ -310,10 +310,9 @@ CGame::CGame()
 	m_stDialogBoxInfo[29].sSizeY = 53;
 
 	//Icon Pannel
-	
 #ifdef RES_HIGH
 	m_stDialogBoxInfo[30].sX = 80;
-	m_stDialogBoxInfo[30].sY = 547;
+	m_stDialogBoxInfo[30].sY = 548; // 547
 #else
 	m_stDialogBoxInfo[30].sX = 0;
 	m_stDialogBoxInfo[30].sY = 427;
@@ -412,6 +411,12 @@ CGame::CGame()
 	m_stDialogBoxInfo[43].sSizeX = 258;
 	m_stDialogBoxInfo[43].sSizeY = 339;
 
+	//Item Enchant Dialog
+	m_stDialogBoxInfo[44].sX = 60;
+	m_stDialogBoxInfo[44].sY = 50;
+	m_stDialogBoxInfo[44].sSizeX = 258;
+	m_stDialogBoxInfo[44].sSizeY = 339;
+
 	//50Cent - Repair All
     m_stDialogBoxInfo[52].sX = 337;
     m_stDialogBoxInfo[52].sY = 57;
@@ -488,11 +493,15 @@ BOOL CGame::bInit(HWND hWnd, HINSTANCE hInst, char * pCmdLine)
  class CStrTok * pStrTok;
  char seps[] = "&= ,\t\n";
  char * token;
+
+#ifdef DEF_ANTI_HACK
 	 if (CheckProcesses() == TRUE)
 	 {
 		 MessageBox(m_hWnd, "No Hacks Programs Permited.", "ERROR2", MB_ICONEXCLAMATION | MB_OK);
 		 return FALSE;
 	 }
+#endif
+
  // CLEROTH - BUG
 	for (i = 0; i < DEF_MAXSPRITES; i++)
 		m_pSprite[i] = NULL;
@@ -550,11 +559,7 @@ BOOL CGame::bInit(HWND hWnd, HINSTANCE hInst, char * pCmdLine)
 		return FALSE;
 	}
 
-	if(bReadIp() == FALSE)
-	{	
-		MessageBox(m_hWnd, "UNKNOWN ADDRESS.","ERROR",MB_ICONEXCLAMATION | MB_OK);
-		return FALSE;
-	}
+	bReadIp();
 	
 	if(bReadItemNameConfigFile() == FALSE)
 	{	MessageBox(m_hWnd, "ItemName.cfg file contains wrong infomation.","ERROR",MB_ICONEXCLAMATION | MB_OK);
@@ -739,7 +744,6 @@ void CGame::Quit()
 	for (i = 0; i < DEF_MAXBUILDITEMS; i++)
 		if (m_pDispCraftItemList[i] != NULL) delete m_pDispCraftItemList[i];
 
-
 	for (i = 0; i < DEF_MAXGAMEMSGS; i++)
 		if (m_pGameMsgList[i] != NULL) delete m_pGameMsgList[i];
 
@@ -759,8 +763,6 @@ void CGame::UpdateScreen()
 { 	G_dwGlobalTime = timeGetTime();
 if (m_cGameMode != DEF_GAMEMODE_ONMAINGAME)	StopBGM(); // MP3
 	switch (m_cGameMode) {
-
-
 	case DEF_GAMEMODE_ONAGREEMENT:
 		break;
 
@@ -896,11 +898,6 @@ void CGame::OnGameSocketEvent(WPARAM wParam, LPARAM lParam)
 		break;
 
 	case DEF_XSOCKEVENT_SOCKETCLOSED:
-		ChangeGameMode(DEF_GAMEMODE_ONCONNECTIONLOST);
-		delete m_pGSock;
-		m_pGSock = NULL;
-		break;
-
 	case DEF_XSOCKEVENT_SOCKETERROR:
 		ChangeGameMode(DEF_GAMEMODE_ONCONNECTIONLOST);
 		delete m_pGSock;
@@ -917,8 +914,6 @@ void CGame::OnGameSocketEvent(WPARAM wParam, LPARAM lParam)
 		break;
 	}
 }
-
-
 
 void CGame::RestoreSprites()
 {
@@ -1393,7 +1388,7 @@ BOOL CGame::bSendCommand(DWORD dwMsgID, WORD wCommand, char cDir, int iV1, int i
 
 #ifdef DEF_ANTI_HACK
 		*dwp = (DWORD) iV1;
-		CheckProcesses(); // Bloque simplement les mouvements.
+		//CheckProcesses(); // Bloque simplement les mouvements.
 		// Mais la detection de la fenêtre correspondante, blocquera le CCM et -> lag / deco par serveur.
 #else
 		*dwp = dwTime;
@@ -2841,6 +2836,7 @@ void CGame::UpdateScreen_OnLoading(bool bActive)
 				m_pSprite[DEF_SPRID_INTERFACE_ND_SELECTCHAR] = new class CSprite(m_hPakFile, &m_DDraw, "GameDialog", 8, FALSE);
 				m_pSprite[DEF_SPRID_INTERFACE_ND_NEWCHAR] =    new class CSprite(m_hPakFile, &m_DDraw, "GameDialog", 9, FALSE);
 				m_pSprite[DEF_SPRID_INTERFACE_ND_NEWEXCHANGE] = new class CSprite(m_hPakFile, &m_DDraw, "GameDialog", 10, FALSE);
+				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2] = new class CSprite(m_hPakFile, &m_DDraw, "GameDialog", 11, FALSE);
 				CloseHandle(m_hPakFile);
 			}
 
@@ -3742,18 +3738,15 @@ BOOL CGame::_bCheckDlgBoxClick(short msX, short msY, int cRB)
 			case 54://50Cent - GMPanel - Summon
 				DlgBoxClick_GMPanel_Summon(msX, msY);
 				break;
-
 			case 56://50Cent - GMPanel
 				DlgBoxClick_GMPanel(msX, msY);
 				break;
 			case 57:
 				DlgBoxClick_Shop2(msX, msY); // MORLA 2.4 - Click shop2 paralelo
 				break;
-			
 			case 58: // Centuu : Guild Warehouse
 				DlgBoxClick_GuildBank(msX, msY);
 				break;
-
 			case 60: // VAMP - online users list
 				DlgBoxClick_OnlineUsers(msX, msY);
 				break;
@@ -14250,12 +14243,11 @@ void CGame::ChangeGameMode(char cMode)
 	}
 }
 
-BOOL CGame::bReadIp()
+void CGame::bReadIp()
 {	
 	ZeroMemory(m_cLogServerAddr, sizeof(m_cLogServerAddr));
     strcpy(m_cLogServerAddrBuffer, DEF_SERVER_DNS);
 	m_iLogServerPort = DEF_SERVER_PORT;
-	return TRUE;
 }
 
 void CGame::ReleaseUnusedSprites()
@@ -16276,7 +16268,7 @@ resi = 0;
     sX = m_stDialogBoxInfo[30].sX;
     sY = m_stDialogBoxInfo[30].sY;
 
-    m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(sX, sY, 14, dwTime); // Icon Pannel Background
+    m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFast(sX-80, sY, 0, dwTime); // Icon Pannel Background
 
 	if((m_iLU_Point > 0) && (m_bIsDialogEnabled[12] == FALSE)) // Level-Up button
 		PutString_SprFont2(720 + 5, 525 + 25 + 10, "Level Up!", (timeGetTime() / 3) % 255, (timeGetTime() / 3) % 255, 0);
@@ -16767,21 +16759,22 @@ void CGame::DrawDialogBox_GaugePannel()
 
     // Experience Gauge - MORLA - arreglada para que vaya de izquierda a derecha
 	// centu - agregado majestic level
-    if (m_iMajesticLevel == 0) 
+	unsigned long iMaxPoint3;
+	if (m_iMajesticLevel == 0) 
 	{
-		iMaxPoint = iGetLevelExp(m_iLevel+1) - iGetLevelExp(m_iLevel);
+		iMaxPoint3 = iGetLevelExp(m_iLevel+1) - iGetLevelExp(m_iLevel);
 	}
 	else
 	{
-		iMaxPoint = iGetLevelExp(m_iLevel+m_iMajesticLevel+1) - iGetLevelExp(m_iLevel);
+		iMaxPoint3 = iGetLevelExp(m_iLevel+m_iMajesticLevel+1) - iGetLevelExp(m_iLevel + m_iMajesticLevel);
 	}
 
-    iTemp = m_iExp - iGetLevelExp(m_iLevel);
-    iBarWidth = (iTemp*640)/(iMaxPoint);
+    unsigned long uTemp = m_iExp - iGetLevelExp(m_iLevel + m_iMajesticLevel);
+    iBarWidth = (uTemp *800) / iMaxPoint3;
     if( iBarWidth < 0 ) iBarWidth = 0;
-    if( iBarWidth > 640 ) iBarWidth = 640;
-    m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFastWidth(0 + resx, 427 + resy, 17, iBarWidth, m_dwCurTime, false);
-    iTemp = iTemp - iMaxPoint;
+    if( iBarWidth > 800 ) iBarWidth = 800;
+    m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFastWidth(0, 427 + resy, 1, iBarWidth, m_dwCurTime, false);
+	uTemp = uTemp - iMaxPoint3;
 
 	// MORLA2 - Hunger Status
     iMaxPoint = 100;
@@ -17293,9 +17286,22 @@ void CGame::DlgBoxClick_ItemUpgrade(int msX, int msY)
 			DisableDialogBox(34);
 		}
 		break;
+	case 11:
+		if ((m_stDialogBoxInfo[34].sV1 != -1) && (msX >= sX + DEF_LBTNPOSX) && (msX <= sX + DEF_LBTNPOSX + DEF_BTNSZX) && (msY >= sY + DEF_BTNPOSY) && (msY <= sY + DEF_BTNPOSY + DEF_BTNSZY))
+		{	// Upgrade
+			PlaySound('E', 14, 5);
+			PlaySound('E', 44, 0);
+			m_stDialogBoxInfo[34].cMode = 2;
+			m_stDialogBoxInfo[34].dwV1 = timeGetTime();
+		}
+		if ((msX >= sX + DEF_RBTNPOSX) && (msX <= sX + DEF_RBTNPOSX + DEF_BTNSZX) && (msY >= sY + DEF_BTNPOSY) && (msY <= sY + DEF_BTNPOSY + DEF_BTNSZY))
+		{	// Cancel
+			PlaySound('E', 14, 5);
+			DisableDialogBox(34);
+		}
+		break;
 	}
 }
-
 
 void CGame::DlgBoxClick_SellList(short msX, short msY)
 {int i, x;
@@ -19329,7 +19335,7 @@ void CGame::DlgBoxClick_ItemSellorRepair(short msX, short msY)
 }
 
 
-long CGame::iGetLevelExp(int iLevel)
+unsigned long CGame::iGetLevelExp(int iLevel)
 {unsigned long iRet;
 	if (iLevel == 0) return 0;
 	iRet = iGetLevelExp(iLevel - 1) + iLevel * ( 50 + (iLevel * (iLevel / 17) * (iLevel / 17) ) );
@@ -30219,7 +30225,7 @@ MOTION_COMMAND_PROCESS:;
 				if (m_pChatMsgList[i] == NULL)
 				{
 					ZeroMemory(cTxt, sizeof(cTxt));
-					wsprintf(cTxt, "-%dHP", m_sDamageMoveAmount);
+					wsprintf(cTxt, "-%dHP!", m_sDamageMoveAmount);
 
 					int iFontType;
 					if ((m_sDamageMoveAmount >= 0) && (m_sDamageMoveAmount < 300))        iFontType = 21;

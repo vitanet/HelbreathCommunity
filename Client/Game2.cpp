@@ -1336,7 +1336,7 @@ void CGame::MotionEventHandler(char * pData)
 			{	/* Showing real damage done to NPCs instead of Critical!
 				Credit goes to: 50Cent, SleeQ, Matt */
 				ZeroMemory(cTxt, sizeof(cTxt));
-				wsprintf(cTxt, "-%dHP", sV1);
+				wsprintf(cTxt, "-%dHP!", sV1);
 				int iFontType;
 				if ((sV1 >= 0) && (sV1 < 300))        iFontType = 21;
 				else if ((sV1 >= 300) && (sV1 < 1000)) iFontType = 22;
@@ -4313,7 +4313,6 @@ void CGame::SaveFriendList()
 }
 
 
-#ifdef DEF_ANTI_HACK
 /*********************************************************************************************************************
 **  void CGame::CheckProcesses()	( Snoopy )																		**
 **  description			: 	Check if forbiden precesses running (1st, evident function)								**
@@ -4441,7 +4440,6 @@ bool CGame::CheckProcesses()
 		if (strcmp(Ufoundprocess, "Nsauditor 1.9.1.EXE") == 0)      bFound = TRUE;
 		if (strcmp(Ufoundprocess, "Super Bot.EXE") == 0)      bFound = TRUE;
 		if (strcmp(Ufoundprocess, "!xSpeed 6.0.EXE") == 0)      bFound = TRUE;
-		if (strcmp(Ufoundprocess, "Nsauditor 1.9.1.EXE") == 0)      bFound = TRUE;
 		if (strcmp(Ufoundprocess, "CHEATENGINE-X86_64.EXE") == 0)	bFound = TRUE;
 		if (strcmp(Ufoundprocess, "WPE PRO - MODIFIED.EXE") == 0)	bFound = TRUE;
 		if (strcmp(Ufoundprocess, "CMD.EXE") == 0)	bFound = TRUE;
@@ -4459,8 +4457,6 @@ bool CGame::CheckProcesses()
 	m_bHackMoveBlocked = bFound;*/
 	return bFound;
 }
-#endif
-
 
 bool CGame::bCheckItemEquiped(char itemName[])
 {
@@ -7853,6 +7849,24 @@ void CGame::DrawDialogBox_OnlineUsers(short msX, short msY, short msZ, char cLB)
 			PutString2(sX + 180, sY + 45 + (14 * 18), "Refresh", 65, 65, 65);
 		}
 
+		if ((msX > sX + 30) && (msX < sX + 30 + 10) && (msY > sY + 45 + 14 * 18) && (msY < sY + 45 + 15 * 18)) {
+			PutString2(sX + 30, sY + 45 + (14 * 18), "All", 255, 255, 255);
+		}
+		else {
+			PutString2(sX + 30, sY + 45 + (14 * 18), "All", 128, 128, 128);
+		}
+		if ((msX > sX + 55) && (msX < sX + 55 + 30) && (msY > sY + 45 + 14 * 18) && (msY < sY + 45 + 15 * 18)) {
+			PutString2(sX + 55, sY + 45 + (14 * 18), "Guild", 255, 255, 255);
+		}
+		else {
+			PutString2(sX + 55, sY + 45 + (14 * 18), "Guild", 128, 128, 128);
+		}
+		if ((msX > sX + 90) && (msX < sX + 90 + 40) && (msY > sY + 45 + 14 * 18) && (msY < sY + 45 + 15 * 18)) {
+			PutString2(sX + 90, sY + 45 + (14 * 18), "Wanted", 255, 255, 255);
+		}
+		else {
+			PutString2(sX + 90, sY + 45 + (14 * 18), "Wanted", 128, 128, 128);
+		}
 		break;
 
 	default:
@@ -11360,6 +11374,14 @@ void CGame::DrawDialogBox_NpcActionQuery(short msX, short msY)
 			else {
 				PutString(sX + 28, sY + 55, DRAW_DIALOGBOX_NPCACTION_QUERY19, RGB(4, 0, 50));
 				PutString(sX + 29, sY + 55, DRAW_DIALOGBOX_NPCACTION_QUERY19, RGB(4, 0, 50));
+			}
+			if ((msX > sX + 132) && (msX < sX + 180) && (msY > sY + 23) && (msY < sY + 38)) {
+				PutString(sX + 125, sY + 23, "Enchant", RGB(255, 255, 255)); // "Learn"
+				PutString(sX + 126, sY + 23, "Enchant", RGB(255, 255, 255));
+			}
+			else {
+				PutString(sX + 125, sY + 23, "Enchant", RGB(4, 0, 50));
+				PutString(sX + 126, sY + 23, "Enchant", RGB(4, 0, 50));
 			}
 		}
 		else
@@ -17949,7 +17971,6 @@ int CGame::_iCheckDlgBoxFocus(short msX, short msY, char cButtonSide)
 					case 7:
 					case 8:
 					case 9:
-
 					case 12:
 					case 13:
 					case 16:
@@ -17976,6 +17997,12 @@ int CGame::_iCheckDlgBoxFocus(short msX, short msY, char cButtonSide)
 					case 67:
 					case 68:
 					case 69:
+					case 27:
+					case 41: //Snoopy: Drag exchange confirmation dialog
+					case 60: // online user list
+					case 42: // Snoopy: Drag majestic stats
+					case 43: // Drajwer - friendlist s
+					case 51: // Snoopy: Drag Gail menu
 						m_stMCursor.cSelectedObjectType = DEF_SELECTEDOBJTYPE_DLGBOX;
 						m_stMCursor.sSelectedObjectID = cDlgID;
 						break;
@@ -18104,31 +18131,6 @@ int CGame::_iCheckDlgBoxFocus(short msX, short msY, char cButtonSide)
 							m_stMCursor.cSelectedObjectType = DEF_SELECTEDOBJTYPE_DLGBOX;
 							m_stMCursor.sSelectedObjectID = cDlgID;
 						}
-						break;
-
-					case 27:
-						m_stMCursor.cSelectedObjectType = DEF_SELECTEDOBJTYPE_DLGBOX;
-						m_stMCursor.sSelectedObjectID = cDlgID;
-						break;
-
-					case 41: //Snoopy: Drag exchange confirmation dialog
-						m_stMCursor.cSelectedObjectType = DEF_SELECTEDOBJTYPE_DLGBOX;
-						m_stMCursor.sSelectedObjectID = cDlgID;
-						break;
-
-					case 42:  // Snoopy: Drag majestic stats
-						m_stMCursor.cSelectedObjectType = DEF_SELECTEDOBJTYPE_DLGBOX;
-						m_stMCursor.sSelectedObjectID = cDlgID;
-						break;
-
-					case 43: // Drajwer - friendlist s
-						m_stMCursor.cSelectedObjectType = DEF_SELECTEDOBJTYPE_DLGBOX;
-						m_stMCursor.sSelectedObjectID = cDlgID;
-						break;
-
-					case 51:  // Snoopy: Drag Gail menu
-						m_stMCursor.cSelectedObjectType = DEF_SELECTEDOBJTYPE_DLGBOX;
-						m_stMCursor.sSelectedObjectID = cDlgID;
 						break;
 
 					case 57: // MORLA 2.4 - shop 2

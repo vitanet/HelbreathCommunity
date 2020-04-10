@@ -510,7 +510,7 @@ public:
 	BOOL bCheckExID(char * pName);
 	BOOL bCheckLocalChatCommand(char * pMsg);
 	char GetOfficialMapName(char * pMapName, char * pName);
-	long iGetLevelExp(int iLevel);
+	unsigned long iGetLevelExp(int iLevel);
 	int _iCalcTotalWeight();
 	void DrawVersion(BOOL bAuthor = FALSE);
 	BOOL _bIsItemOnHand();
@@ -592,7 +592,7 @@ public:
 	void ReleaseTimeoverChatMsg();
 	void ChatMsgHandler(char * pData);
 	void ReleaseUnusedSprites();
-	BOOL bReadIp();
+	void bReadIp();
 	void OnKeyUp(WPARAM wParam);
 	void OnSysKeyDown(WPARAM wParam);
 	void OnSysKeyUp(WPARAM wParam);
