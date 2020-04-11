@@ -15,6 +15,8 @@ CEffect::CEffect()
 	m_cMaxFrame   = NULL;
 	m_dwTime      = NULL;
 	m_dwFrameTime = NULL;
+
+	m_dwLoopEndTime = 0;
 }
 
 CEffect::~CEffect()

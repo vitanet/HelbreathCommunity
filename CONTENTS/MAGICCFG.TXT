@@ -65,9 +65,11 @@ magic = 83   Inhibition-Casting              160    172    -1        4 5 6      
 magic = 84   Mass-Berkserk                   90     70     5000      4 5 6      1
 magic = 90   Mass-Illusion                   200    180    35000     4 5 6      1
 magic = 91   Blizzard                        170    195    43000     4 5 6      1
+magic = 93   Hellfire                        80     195    -1        4 5 6      0
 magic = 94   Resurrection                    200    0      -1        4 5 6      0
 magic = 95   Mass-Illusion-Movement          200    200    38000     4 5 6      1
 magic = 96   Earth-Shock-Wave                180    200    -1        4 5 6      0
+magic = 97   Fury-Of-Thor                    180    195    -1        4 5 6      0
 magic = 98   Strike-of-the-Ghosts            320    200    10        4 5 6      1
 
 //-----Num-Name-----------------ManaCost--ReqInt--Cost-----------OnMenu

@@ -1,0 +1,9 @@
+<HelbreathPath>E:/Helbreath USA</HelbreathPath>
+<!-- Add Your custom Pak Files below. 
+	<PakFile index="?" nbSprites="?">Name of your pak File</PakFile>
+		never put index<546
+		nbSprites = number of sprites inside the pak file (from 0 to 13 = 14 sprites for Tile462-475old)
+		When u add another sprite, index=index+nbSprites of the previous pakFile.
+here are 2 example -->
+<PakFile index="546" nbSprites="14">Tile462-475old</PakFile>
+<PakFile index="560" nbSprites="14">Tile462-475_nocrack</PakFile>

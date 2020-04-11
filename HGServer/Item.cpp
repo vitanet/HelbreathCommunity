@@ -2229,7 +2229,6 @@ void CGame::RequestItemUpgradeHandler(int iClientH, int iItemIndex)
 	iValue = (m_pClientList[iClientH]->m_pItemList[iItemIndex]->m_dwAttribute & 0xF0000000) >> 28;
 	switch (m_pClientList[iClientH]->m_pItemList[iItemIndex]->m_cCategory)
 	{
-	
 		case 46: // Pendants are category 46
 			if (m_pClientList[iClientH]->m_pItemList[iItemIndex]->m_cItemType != 1) 
 			{	SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_ITEMUPGRADEFAIL, 2, NULL, NULL, NULL);			
@@ -3133,7 +3132,7 @@ BOOL CGame::iUpgradeHeroCapeRequirements(int iClientH, int iItemIndex)
 	for (i = 0; i < DEF_MAXITEMS; i++)
 		if ((m_pClientList[iClientH]->m_pItemList[i] != NULL) && (m_pClientList[iClientH]->m_pItemList[i]->m_sIDnum == iStoneNumber)) break;
 
-	if ((i == 50) || (iStoneNumber == 0)) return FALSE;
+	if ((i == DEF_MAXITEMS) || (iStoneNumber == 0)) return FALSE;
 	if (_bInitItemAttr(m_pClientList[iClientH]->m_pItemList[iItemIndex], iAfterItemID) == FALSE) return FALSE;
 	m_pClientList[iClientH]->m_iEnemyKillCount -= iRequiredEnemyKills;
 	m_pClientList[iClientH]->m_iContribution -= iRequiredContribution;

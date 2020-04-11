@@ -6107,6 +6107,39 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			SetCameraShakingEffect(sDist);
 			break;
 
+		case 197: // Fury-Of-Thor
+			m_pEffectList[i]->m_rX = 5 - (rand() % 10);
+			m_pEffectList[i]->m_rY = 5 - (rand() % 10);
+			m_pEffectList[i]->m_mX = sX * 32;
+			m_pEffectList[i]->m_mY = sY * 32;
+			m_pEffectList[i]->m_iErr = 0;
+			m_pEffectList[i]->m_cMaxFrame = 35;
+			m_pEffectList[i]->m_dwFrameTime = 20;
+			sAbsX = abs(320 - (sX - m_sViewPointX));
+			sAbsY = abs(240 - (sY - m_sViewPointY));
+			if (sAbsX > sAbsY) sDist = sAbsX;
+			else sDist = sAbsY;
+			sDist = sDist / 32;
+			SetCameraShakingEffect(sDist);
+			break;
+
+		//HellFire Rain
+		case 85:
+		case 86:
+		case 87:
+			m_pEffectList[i]->m_mX = sX;
+			m_pEffectList[i]->m_mY = sY;
+			m_pEffectList[i]->m_cMaxFrame = 14;
+			m_pEffectList[i]->m_dwFrameTime = 35;
+			lPan = -(((m_sViewPointX / 32) + 10) - dX) * 1000;
+			PlaySound('E', 4, sDist, lPan);
+			SetCameraShakingEffect(sDist + 1, 2);
+			break;
+		case 193: //HELLFIRE!
+			m_pEffectList[i]->m_cMaxFrame = 30;
+			m_pEffectList[i]->m_dwFrameTime = 35;
+			break;
+
 		case 32: //
 			m_pEffectList[i]->m_mX     = sX;
 			m_pEffectList[i]->m_mY     = sY;
@@ -7322,6 +7355,167 @@ void CGame::DrawEffects()
 			{	if ((cTempFrame - 5) >= 8) cTempFrame = ((cTempFrame - 5) - 8) + 5;
 				m_pEffectSpr[21]->PutSpriteFast(dX, dY, 8*(m_pEffectList[i]->m_sType-41) + (cTempFrame - 5), dwTime);
 			}
+			break;
+
+		//HELLFIRE
+		case 85:
+			cTempFrame = m_pEffectList[i]->m_cFrame;
+			if (cTempFrame < 0) break;
+			dX = m_pEffectList[i]->m_mX;
+			dY = m_pEffectList[i]->m_mY;
+			m_pEffectSpr[135]->PutTransSprite_NoColorKey(dX + 30, dY - 155, m_pEffectList[i]->m_cFrame, dwTime);
+			m_pEffectSpr[135]->PutTransSprite_NoColorKey(dX + 20, dY - 105, m_pEffectList[i]->m_cFrame, dwTime);
+			m_pEffectSpr[135]->PutTransSprite_NoColorKey(dX + 10, dY - 55, m_pEffectList[i]->m_cFrame, dwTime);
+			m_pEffectSpr[135]->PutTransSprite_NoColorKey(dX, dY - 5, m_pEffectList[i]->m_cFrame, dwTime);
+			m_pEffectSpr[136]->PutTransSprite_NoColorKey(dX + 80, dY + 100, m_pEffectList[i]->m_cFrame, dwTime);
+			m_pEffectSpr[136]->PutTransSprite_NoColorKey(dX + 80, dY + 120, m_pEffectList[i]->m_cFrame, dwTime);
+			m_pEffectSpr[136]->PutTransSprite_NoColorKey(dX + 60, dY + 100, m_pEffectList[i]->m_cFrame, dwTime);
+			m_pEffectSpr[136]->PutTransSprite_NoColorKey(dX + 60, dY + 120, m_pEffectList[i]->m_cFrame, dwTime);
+			m_pEffectSpr[3]->PutTransSprite_NoColorKey(dX, dY, cTempFrame, dwTime);
+			bAddNewEffect(10, dX, dY, NULL, NULL, 0, 0);
+			break;
+		case 86:
+			cTempFrame = m_pEffectList[i]->m_cFrame;
+			if (cTempFrame < 0) break;
+			dX = m_pEffectList[i]->m_mX;
+			dY = m_pEffectList[i]->m_mY;
+			m_pEffectSpr[134]->PutTransSprite_NoColorKey(dX - 140, dY - 150, m_pEffectList[i]->m_cFrame, dwTime);
+			m_pEffectSpr[134]->PutTransSprite_NoColorKey(dX - 110, dY - 100, m_pEffectList[i]->m_cFrame, dwTime);
+			m_pEffectSpr[134]->PutTransSprite_NoColorKey(dX - 80, dY - 502, m_pEffectList[i]->m_cFrame, dwTime);
+			m_pEffectSpr[134]->PutTransSprite_NoColorKey(dX - 50, dY, m_pEffectList[i]->m_cFrame, dwTime);
+			m_pEffectSpr[136]->PutTransSprite_NoColorKey(dX + 60, dY + 100, m_pEffectList[i]->m_cFrame, dwTime);
+			m_pEffectSpr[136]->PutTransSprite_NoColorKey(dX + 60, dY + 120, m_pEffectList[i]->m_cFrame, dwTime);
+			m_pEffectSpr[136]->PutTransSprite_NoColorKey(dX + 50, dY + 100, m_pEffectList[i]->m_cFrame, dwTime);
+			m_pEffectSpr[136]->PutTransSprite_NoColorKey(dX + 50, dY + 120, m_pEffectList[i]->m_cFrame, dwTime);
+			m_pEffectSpr[3]->PutTransSprite_NoColorKey(dX, dY, cTempFrame, dwTime);
+			bAddNewEffect(10, dX, dY, NULL, NULL, 0, 0);
+			break;
+		case 87:
+			cTempFrame = m_pEffectList[i]->m_cFrame;
+			if (cTempFrame < 0) break;
+			dX = m_pEffectList[i]->m_mX;
+			dY = m_pEffectList[i]->m_mY;
+			m_pEffectSpr[133]->PutTransSprite_NoColorKey(dX + 115, dY - 150, m_pEffectList[i]->m_cFrame, dwTime);
+			m_pEffectSpr[133]->PutTransSprite_NoColorKey(dX + 85, dY - 100, m_pEffectList[i]->m_cFrame, dwTime);
+			m_pEffectSpr[133]->PutTransSprite_NoColorKey(dX + 55, dY - 50, m_pEffectList[i]->m_cFrame, dwTime);
+			m_pEffectSpr[133]->PutTransSprite_NoColorKey(dX + 20, dY, m_pEffectList[i]->m_cFrame, dwTime);
+			m_pEffectSpr[136]->PutTransSprite_NoColorKey(dX + 80, dY + 110, m_pEffectList[i]->m_cFrame, dwTime);
+			m_pEffectSpr[136]->PutTransSprite_NoColorKey(dX + 80, dY + 110, m_pEffectList[i]->m_cFrame, dwTime);
+			m_pEffectSpr[136]->PutTransSprite_NoColorKey(dX + 60, dY + 120, m_pEffectList[i]->m_cFrame, dwTime);
+			m_pEffectSpr[136]->PutTransSprite_NoColorKey(dX + 60, dY + 120, m_pEffectList[i]->m_cFrame, dwTime);
+			bAddNewEffect(10, dX, dY, NULL, NULL, 0, 0);
+			break;
+		case 193://HELLFIRE	
+			cTempFrame = m_pEffectList[i]->m_cFrame;
+			if (cTempFrame < 0) break;
+			dX = (m_pEffectList[i]->m_dX * 32) - m_sViewPointX;
+			dY = (m_pEffectList[i]->m_dY * 32) - m_sViewPointY;
+			//Timed Logic
+			if ((timeGetTime() - m_pEffectList[i]->m_dwLoopEndTime) > 20)
+			{
+				int dwOffsetX, dwOffsetY;
+				m_pEffectList[i]->m_dwLoopEndTime = timeGetTime();
+
+				//Randomize the offsets of the X and Y
+				dwOffsetX = iDice(1, 100);
+				dwOffsetY = iDice(1, 80);
+				switch (iDice(1, 3)) {
+				case 1:
+					switch (iDice(1, 4)) {
+					case 1:
+						bAddNewEffect(85, dX + dwOffsetX, dY + dwOffsetY, NULL, NULL, 0, 0);
+						break;
+					case 2:
+						bAddNewEffect(85, dX - dwOffsetX, dY - dwOffsetY, NULL, NULL, 0, 0);
+						break;
+					case 3:
+						bAddNewEffect(85, dX + dwOffsetX, dY - dwOffsetY, NULL, NULL, 0, 0);
+						break;
+					case 4:
+						bAddNewEffect(85, dX - dwOffsetX, dY + dwOffsetY, NULL, NULL, 0, 0);
+						break;
+					}
+					break;
+				case 2:
+					switch (iDice(1, 4)) {
+					case 1:
+						bAddNewEffect(86, dX + dwOffsetX, dY + dwOffsetY, NULL, NULL, 0, 0);
+						break;
+					case 2:
+						bAddNewEffect(86, dX - dwOffsetX, dY - dwOffsetY, NULL, NULL, 0, 0);
+						break;
+					case 3:
+						bAddNewEffect(86, dX + dwOffsetX, dY - dwOffsetY, NULL, NULL, 0, 0);
+						break;
+					case 4:
+						bAddNewEffect(86, dX - dwOffsetX, dY + dwOffsetY, NULL, NULL, 0, 0);
+						break;
+					}
+					break;
+				case 3:
+					switch (iDice(1, 4)) {
+					case 1:
+						bAddNewEffect(87, dX + dwOffsetX, dY + dwOffsetY, NULL, NULL, 0, 0);
+						break;
+					case 2:
+						bAddNewEffect(87, dX - dwOffsetX, dY - dwOffsetY, NULL, NULL, 0, 0);
+						break;
+					case 3:
+						bAddNewEffect(87, dX + dwOffsetX, dY - dwOffsetY, NULL, NULL, 0, 0);
+						break;
+					case 4:
+						bAddNewEffect(87, dX - dwOffsetX, dY + dwOffsetY, NULL, NULL, 0, 0);
+						break;
+					}
+					break;
+				}
+			}
+			break;
+		case 197:  // Fury-Of-Thor
+			dX = (m_pEffectList[i]->m_mX) - m_sViewPointX;
+			dY = (m_pEffectList[i]->m_mY) - m_sViewPointY;
+			//Lineal
+			_DrawThunderEffect(dX, dY - 800,
+				m_pEffectList[i]->m_mX, m_pEffectList[i]->m_mY,
+				m_pEffectList[i]->m_rX - 20, m_pEffectList[i]->m_rY, 3);
+			_DrawThunderEffect(dX, dY - 800,
+				dX, dY,
+				m_pEffectList[i]->m_rX, m_pEffectList[i]->m_rY, 1);
+			_DrawThunderEffect(dX, dY - 800,
+				dX, dY,
+				m_pEffectList[i]->m_rX + 18, m_pEffectList[i]->m_rY + 7, 2);
+			_DrawThunderEffect(dX, dY - 800,
+				dX, dY,
+				m_pEffectList[i]->m_rX - 14, m_pEffectList[i]->m_rY - 7, 2);
+
+			//Diagonal
+			_DrawThunderEffect(dX - 500, dY - 800,
+				m_pEffectList[i]->m_mX + 15, m_pEffectList[i]->m_mY + 10,
+				m_pEffectList[i]->m_rX - 20, m_pEffectList[i]->m_rY, 3);
+			_DrawThunderEffect(dX - 500, dY - 800,
+				dX + 15, dY + 10,
+				m_pEffectList[i]->m_rX, m_pEffectList[i]->m_rY, 1);
+			_DrawThunderEffect(dX - 500, dY - 800,
+				dX + 15, dY + 10,
+				m_pEffectList[i]->m_rX + 18, m_pEffectList[i]->m_rY + 7, 2);
+			_DrawThunderEffect(dX - 500, dY - 800,
+				dX + 15, dY + 10,
+				m_pEffectList[i]->m_rX - 14, m_pEffectList[i]->m_rY - 7, 2);
+
+			//Diagonal
+			_DrawThunderEffect(dX + 800, dY - 800,
+				m_pEffectList[i]->m_mX + 15, m_pEffectList[i]->m_mY - 10,
+				m_pEffectList[i]->m_rX - 20, m_pEffectList[i]->m_rY, 3);
+			_DrawThunderEffect(dX + 800, dY - 800,
+				dX + 15, dY - 10,
+				m_pEffectList[i]->m_rX, m_pEffectList[i]->m_rY, 1);
+			_DrawThunderEffect(dX + 800, dY - 800,
+				dX + 15, dY - 10,
+				m_pEffectList[i]->m_rX + 18, m_pEffectList[i]->m_rY + 7, 2);
+			_DrawThunderEffect(dX + 800, dY - 800,
+				dX + 15, dY - 10,
+				m_pEffectList[i]->m_rX - 14, m_pEffectList[i]->m_rY - 7, 2);
+
 			break;
 
 		case 47:

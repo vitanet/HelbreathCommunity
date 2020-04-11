@@ -22,6 +22,11 @@
 #include <process.h>
 #include <direct.h>
 #include <tlhelp32.h>
+#include <vector>
+#include <functional>
+#include <fstream>
+#include <set>
+#include <wincon.h>
 
 #include "GlobalDef.h"
 #include "DXC_ddraw.h"
@@ -202,6 +207,7 @@ public:
 	void DrawDialogBox_Shop2(short msX, short msY, short msZ, char cLB);
 	void DlgBoxClick_Shop2(short msX, short msY);
 
+	int iDice(int iThrow, int iRange);
 	
 	void DlgBoxClick_GMPanel(short msX, short msY);
 	void DrawDialogBox_GMPanel(short msX, short msY);

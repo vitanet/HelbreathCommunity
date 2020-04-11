@@ -1,0 +1,33 @@
+Account-generated:  Time(2020/4/8/13/25)  IP(148.0.135.216)
+
+[NAME]
+
+account-name     = 3
+
+[PASSWORD]
+
+account-password = 3
+
+[ACCOUNT-STATUS]
+
+account-valid-time = 0
+account-valid-date = 2020 4 15
+
+account-change-password = 2020 4 8
+[ETC]
+
+account-Gender   =  
+account-Age      = 
+account-Birth-Year =  
+account-Birth-Month =  
+account-Birth-Day   =  
+account-RealName = 
+account-SSN      = -
+account-Email    = 3@hotmail.com
+account-Quiz     = hola
+account-Answer   = quetal
+account-created-by = 
+
+[CHARACTERS]
+account-character  = K1Ller2GM
+

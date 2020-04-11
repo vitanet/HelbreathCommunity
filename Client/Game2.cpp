@@ -16890,6 +16890,45 @@ BOOL CGame::bEffectFrameCounter()
 					m_pEffectList[i] = NULL;
 					break;
 
+				case 197: // Fury-Of-Thor
+					if (m_pEffectList[i]->m_cFrame >= m_pEffectList[i]->m_cMaxFrame)
+					{
+						bAddNewEffect(10, m_pEffectList[i]->m_dX * 32, m_pEffectList[i]->m_dY * 32, NULL, NULL, 0);
+						delete m_pEffectList[i];
+						m_pEffectList[i] = NULL;
+					}
+					else
+					{
+						m_pEffectList[i]->m_rX = 5 - (rand() % 10);
+						m_pEffectList[i]->m_rY = 5 - (rand() % 10);
+						m_Misc.GetPoint(m_pEffectList[i]->m_mX
+							, m_pEffectList[i]->m_mY
+							, m_pEffectList[i]->m_dX * 32
+							, m_pEffectList[i]->m_dY * 32
+							, &m_pEffectList[i]->m_mX
+							, &m_pEffectList[i]->m_mY
+							, &m_pEffectList[i]->m_iErr
+							, 8);
+
+						if (m_pEffectList[i]->m_cFrame == 0 || m_pEffectList[i]->m_cFrame == 10 || m_pEffectList[i]->m_cFrame == 20
+							|| m_pEffectList[i]->m_cFrame == 30) {
+							m_pEffectList[i]->m_rX = 5 - (rand() % 10);
+							m_pEffectList[i]->m_rY = 5 - (rand() % 10);
+							bAddNewEffect(83, m_pEffectList[i]->m_mX + 26, m_pEffectList[i]->m_mY + 16, NULL, NULL, 0, 0);
+							bAddNewEffect(83, m_pEffectList[i]->m_mX + 38, m_pEffectList[i]->m_mY + 18, NULL, NULL, 0, 0);
+							bAddNewEffect(83, m_pEffectList[i]->m_mX + 34, m_pEffectList[i]->m_mY + 34, NULL, NULL, 0, 0);
+							bAddNewEffect(83, m_pEffectList[i]->m_mX, m_pEffectList[i]->m_mY + 2, NULL, NULL, 0, 0);
+							bAddNewEffect(10, m_pEffectList[i]->m_mX, m_pEffectList[i]->m_mY, NULL, NULL, 0);
+							sAbsX = abs(((m_sViewPointX / 32) + 13) - m_pEffectList[i]->m_dX);
+							sAbsY = abs(((m_sViewPointY / 32) + 10) - m_pEffectList[i]->m_dY);
+							if (sAbsX > sAbsY) sDist = sAbsX - 10;
+							else sDist = sAbsY - 10;
+							lPan = -(((m_sViewPointX / 32) + 10) - m_pEffectList[i]->m_dX);
+							PlaySound('M', 152, sDist, lPan);
+						}
+					}
+					break;
+
 				case 156: // Mass-Lightning-Arrow
 					if (m_pEffectList[i]->m_cFrame > m_pEffectList[i]->m_cMaxFrame)
 					{
@@ -19611,4 +19650,16 @@ void CGame::DlgBoxClick_IconPannel(short msX, short msY, int cRB)
 			PlaySound('E', 29, 5);
 		}
 	}
+}
+
+int CGame::iDice(int iThrow, int iRange)
+{
+	int i, iRet;
+
+	if (iRange <= 0) return 0;
+	iRet = 0;
+	for (i = 1; i <= iThrow; i++) {
+		iRet += (rand() % iRange) + 1;
+	}
+	return iRet;
 }

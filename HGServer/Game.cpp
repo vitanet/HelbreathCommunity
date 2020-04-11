@@ -2383,12 +2383,12 @@ void CGame::OnTimer(char cType)
 			HeldenianEndWarNow();
 		}
 		AFKChecker();
-
 		m_dwFishTime = dwTime;
 	}
 	
 	if ((dwTime - m_dwWhetherTime) > 20000) {
 		WeatherProcessor();
+		SendThunders();
 		m_dwWhetherTime = dwTime;
 	}
 	
@@ -2418,6 +2418,15 @@ void CGame::OnTimer(char cType)
 		
 		m_dwMapSectorInfoTime = dwTime;
 	}
+}
+
+void CGame::SendThunders()
+{
+
+	for (int i = 0; i < DEF_MAXMAPS; i++)
+		if (m_pMapList[i] != NULL)
+			if (m_pMapList[i]->m_cWhetherStatus == 2 || m_pMapList[i]->m_cWhetherStatus == 3)
+				DoAbaddonThunderDamageHandler(i);
 }
 
 /*********************************************************************************************************************
@@ -3313,10 +3322,8 @@ BOOL CGame::bReadProgramConfigFile2(char* cFn)
 
 				case 3:
 					ZeroMemory(m_cLogServerAddr, sizeof(m_cLogServerAddr));
-
-
-					if (strlen(token) > 20) {
-						wsprintf(cTxt, "(!!!) Log server address(%s) must within 20 chars!", token);
+					if (strlen(token) > 15) {
+						wsprintf(cTxt, "(!!!) Log server address(%s) must within 15 chars!", token);
 						PutLogList(cTxt);
 						return FALSE;
 					}
@@ -3326,7 +3333,6 @@ BOOL CGame::bReadProgramConfigFile2(char* cFn)
 					cReadMode = 0;
 					break;
 
-
 				case 4:
 					m_iLogServerPort = atoi(token);
 					wsprintf(cTxt, "(*) Log server port : %d", m_iLogServerPort);
@@ -3334,13 +3340,11 @@ BOOL CGame::bReadProgramConfigFile2(char* cFn)
 					cReadMode = 0;
 					break;
 
-				
-
 				case 6:
 					ZeroMemory(m_cGateServerAddr, sizeof(m_cGateServerAddr));
 
-					if (strlen(token) > 20) {
-						wsprintf(cTxt, "(!!!) Gate server address(%s) must within 20 chars!", token);
+					if (strlen(token) > 15) {
+						wsprintf(cTxt, "(!!!) Gate server address(%s) must within 15 chars!", token);
 						PutLogList(cTxt);
 						return FALSE;
 					}
@@ -3402,7 +3406,7 @@ BOOL CGame::bReadProgramConfigFile2(char* cFn)
 						m_iGameServerMode = 1;
 						memcpy(cGSMode, "LAN", 3);
 					}
-					if ((memcmp(token, "internet", 3) == 0) || (memcmp(token, "INTERNET", 3) == 0))
+					if ((memcmp(token, "internet", 8) == 0) || (memcmp(token, "INTERNET", 8) == 0))
 					{
 						m_iGameServerMode = 2;
 						memcpy(cGSMode, "INTERNET", 8);
@@ -20247,8 +20251,6 @@ int CGame::iCalculateAttackEffect(short sTargetH, char cTargetType, short sAttac
 				}	}
 
 				switch (iHitPoint) {
-				
-
 				case 1: // torse
 					iAP_Abs_Armor = (double)m_pClientList[sTargetH]->m_iDamageAbsorption_Armor[DEF_EQUIPPOS_BODY];
 					break;
@@ -20504,6 +20506,7 @@ int CGame::iCalculateAttackEffect(short sTargetH, char cTargetType, short sAttac
 							if(m_pClientList[sAttackerH]->m_iMP >= sManaCost){
 								iWeaponDamage = (double)dwValue2*7;
 								iInitial_AP_SM = (double)iAP_SM;
+								//m_pClientList[sTargetH]->m_cMagicEffectStatus[DEF_MAGICTYPE_PROTECT]
 								iMagDamage = (double)(m_pClientList[sAttackerH]->m_iMag+m_pClientList[sAttackerH]->m_iAngelicMag)/20;
 								iTotalMagicDamage = ((iInitial_AP_SM/100.0f)*(iWeaponDamage+100))+iMagDamage;
 								iAP_SM = (int)iTotalMagicDamage;

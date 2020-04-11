@@ -291,6 +291,8 @@ private:
 
 	void RefreshDeathmatch(int iClientH);
 
+	void SendThunders();
+
 	void RequestChangePlayMode(int iClientH);
 	void GetHeroMantleHandler(int iClientH, int iItemID, char* pString);
 

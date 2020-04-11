@@ -22,7 +22,7 @@ public:
 	short	m_sStr, m_sVit, m_sDex, m_sInt, m_sMag, m_sChr;
 	CInt	m_sLevel;
 //	short m_sLevel;
-	int   m_iExp;
+	unsigned long   m_iExp;
 	int   m_iApprColor;
 	int   m_iYear, m_iMonth, m_iDay, m_iHour, m_iMinute;
 };
