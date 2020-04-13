@@ -16464,9 +16464,15 @@ resi = 0;
 
     m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFast(sX-80, sY, 0, dwTime); // Icon Pannel Background
 
-	if((m_iLU_Point > 0) && (m_bIsDialogEnabled[12] == FALSE)) // Level-Up button
-		PutString_SprFont2(720 + 5, 525 + 25 + 10, "Level Up!", (timeGetTime() / 3) % 255, (timeGetTime() / 3) % 255, 0);
-
+	if (m_iHP > 0) {
+		if ((m_iLU_Point > 0) && (m_bIsDialogEnabled[12] == FALSE)) // Level-Up button
+			PutString_SprFont2(720 + 5, 525 + 25 + 10 + 2, "Level Up!", (timeGetTime() / 3) % 255, (timeGetTime() / 3) % 255, 0);
+	}
+	else
+	{
+		if (m_cRestartCount == -1)
+			PutString_SprFont2(720 + 5, 525 + 25 + 10 + 2, "Restart", (timeGetTime() / 3) % 255, (timeGetTime() / 3) % 255, 0);
+	}
 	// MORLA - iconos de Ataque y Crusade
 	if (m_bIsSafeAttackMode) m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(506 + resx, 433+ resy, 4, dwTime); // Safe Attack Icon
     else if (m_bIsCombatMode) m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(506 + resx, 433+ resy, 5, dwTime); // Combat Mode Icon
@@ -29144,17 +29150,31 @@ void CGame::CommandProcessor(short msX, short msY, short indexX, short indexY, c
 				m_stMCursor.cPrevStatus = DEF_CURSORSTATUS_PRESSED;
 				// Snoopy: Added Golden LevelUp
 #ifdef RES_HIGH
-				if ((msX > 720 + 5) && (msX < 780 + 5) && (msY > 525 + 35) && (msY < 540 + 35)
+				if ((msX > 720 + 5) && (msX < 780 + 5) && (msY > 525 + 35 + 2) && (msY < 540 + 35 + 2))
 #else
 				if ((msX >560) && (msX <620) && (msY>380) && (msY<405)
 #endif
-					&& (m_iLU_Point >0))
+					
 				{
-					if (m_bIsDialogEnabled[12] != TRUE)
-					{
-						EnableDialogBox(12, NULL, NULL, NULL);
-						PlaySound('E', 14, 5);
+					if (m_iHP > 0) {
+						if ((m_bIsDialogEnabled[12] != TRUE) && (m_iLU_Point > 0))
+						{
+							EnableDialogBox(12, NULL, NULL, NULL);
+								PlaySound('E', 14, 5);
+						}
 					}
+					else
+					{
+						if (m_cRestartCount == -1)
+						{
+							m_cRestartCount = 5;
+							m_dwRestartCountTime = timeGetTime();
+							wsprintf(G_cTxt, DLGBOX_CLICK_SYSMENU1, m_cRestartCount); // "Restarting game....%d"
+							AddEventList(G_cTxt, 10);
+							PlaySound('E', 14, 5);
+						}
+					}
+					
 					m_stMCursor.cPrevStatus = DEF_CURSORSTATUS_NULL;
 					return;
 				}
@@ -31759,8 +31779,12 @@ void CGame::UpdateScreen_OnGame()
 	{
 		if (m_bShowFPS)
 		{
-			wsprintf(G_cTxt, "FPS:(%.3d) PING:(%.3d)", m_sFPS, m_iPing);
-			PutAlignedString(103 + 25 + 80, 245 + 25 + 80, 446 - 11 + resi, G_cTxt, 255, 102, 69);
+			wsprintf(G_cTxt, "FPS: %.3d", m_sFPS);
+			PutString(10, 560, G_cTxt, RGB(255, 255, 255));
+			wsprintf(G_cTxt, "PING: %.3d", m_iPing);
+			if (m_iPing < 150) PutString(10, 575, G_cTxt, RGB(0, 255, 0));
+			else if (m_iPing >= 150 && m_iPing < 500) PutString(10, 575, G_cTxt, RGB(255, 165, 0));
+			else if (m_iPing >= 500) PutString(10, 575, G_cTxt, RGB(255, 0, 0));
 			ZeroMemory(G_cTxt, sizeof(G_cTxt));
 		}
 		if (m_DDraw.iFlip() == DDERR_SURFACELOST) RestoreSprites();
