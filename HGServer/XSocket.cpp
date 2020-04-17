@@ -1133,10 +1133,6 @@ BOOL _InitWinsock()
 }
 
 
-void _TermWinsock()
-{
-	WSACleanup();
-}
 
 ///
 

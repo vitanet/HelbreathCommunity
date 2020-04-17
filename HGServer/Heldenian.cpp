@@ -211,7 +211,7 @@ void CGame::GetOccupyFlagHandler(int iClientH)
 	short* sp;
 	WORD* wp;
 	if (m_pClientList[iClientH] == NULL) return;
-	if (m_pClientList[iClientH]->m_iEnemyKillCount < 3) return;
+	if (m_pClientList[iClientH]->m_iEnemyKillCount < 10) return;
 	if (m_pClientList[iClientH]->m_cSide < 0) return;
 	if (m_pClientList[iClientH]->m_cSide > 2) return;
 
@@ -545,8 +545,8 @@ void CGame::_DeleteRandomOccupyFlag(int iMapIndex)
 				m_pDynamicObjectList[iDynamicObjectIndex] = NULL;
 
 				// ÀÌ ±ê¹ßÀ» »èÁ¦ÇÏ¹Ç·Î ¿µÇâ±Ç ³»ÀÇ °ªÀ» º¯°æ½ÃÄÑ¾ß ÇÑ´Ù. *** ¸Ç ¸¶Áö¸·¿¡ Ã³¸®ÇØ¾ß ÇÑ´Ù.
-				for (tx = fx - 13; tx <= fx + 13; tx++) // 10
-					for (ty = fy - 11; ty <= fy + 11; ty++) {	 // 8
+				for (tx = fx - 12; tx <= fx + 12; tx++) // 10
+					for (ty = fy - 9; ty <= fy + 9; ty++) {	 // 8
 						if ((tx < 0) || (tx >= m_pMapList[iMapIndex]->m_sSizeX) ||
 							(ty < 0) || (ty >= m_pMapList[iMapIndex]->m_sSizeY)) {
 							// ¹«½ÃÇØ¾ß ÇÏ´Â ÁÂÇ¥ 

@@ -465,8 +465,8 @@ void OnDestroy()
 	}
 
 	if (G_mmTimer != NULL) _StopTimer(G_mmTimer);
-	_TermWinsock();
-
+	//_TermWinsock();
+	WSACleanup();
 	if (pLogFile != NULL) fclose(pLogFile);
 
 	PostQuitMessage(0);
