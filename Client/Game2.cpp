@@ -16883,7 +16883,7 @@ BOOL CGame::bEffectFrameCounter()
 					bAddNewEffect(110, m_pEffectList[i]->m_sX, m_pEffectList[i]->m_sY,
 						m_pEffectList[i]->m_dX + 1, m_pEffectList[i]->m_dY + 1, 0);
 					bAddNewEffect(8, m_pEffectList[i]->m_mX + (rand() % 20) - 10, m_pEffectList[i]->m_mY + (rand() % 20) - 10, NULL, NULL, -1 * (rand() % 4));
-					lPan = -(((m_sViewPointX / 32) + 10) - m_pEffectList[i]->m_dX) * 1000;
+					lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX) * 1000;
 					PlaySound('E', 1, sDist, lPan);
 					bAddNewEffect(7, m_pEffectList[i]->m_dX * 32, m_pEffectList[i]->m_dY * 32, NULL, NULL, 0);
 					delete m_pEffectList[i];
@@ -16919,11 +16919,11 @@ BOOL CGame::bEffectFrameCounter()
 							bAddNewEffect(83, m_pEffectList[i]->m_mX + 34, m_pEffectList[i]->m_mY + 34, NULL, NULL, 0, 0);
 							bAddNewEffect(83, m_pEffectList[i]->m_mX, m_pEffectList[i]->m_mY + 2, NULL, NULL, 0, 0);
 							bAddNewEffect(10, m_pEffectList[i]->m_mX, m_pEffectList[i]->m_mY, NULL, NULL, 0);
-							sAbsX = abs(((m_sViewPointX / 32) + 13) - m_pEffectList[i]->m_dX);
-							sAbsY = abs(((m_sViewPointY / 32) + 10) - m_pEffectList[i]->m_dY);
+							sAbsX = abs(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX);
+							sAbsY = abs(((m_sViewPointY / 32) + 9) - m_pEffectList[i]->m_dY);
 							if (sAbsX > sAbsY) sDist = sAbsX - 10;
 							else sDist = sAbsY - 10;
-							lPan = -(((m_sViewPointX / 32) + 10) - m_pEffectList[i]->m_dX);
+							lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX);
 							PlaySound('M', 152, sDist, lPan);
 						}
 					}
@@ -16940,15 +16940,15 @@ BOOL CGame::bEffectFrameCounter()
 						bAddNewEffect(137, m_pEffectList[i]->m_sX, m_pEffectList[i]->m_sY,
 							m_pEffectList[i]->m_dX, m_pEffectList[i]->m_dY, 0);
 #ifdef RES_HIGH
-						sAbsX = abs(((m_sViewPointX / 32) + 13) - m_pEffectList[i]->m_dX);
-						sAbsY = abs(((m_sViewPointY / 32) + 10) - m_pEffectList[i]->m_dY);
+						sAbsX = abs(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX);
+						sAbsY = abs(((m_sViewPointY / 32) + 9) - m_pEffectList[i]->m_dY);
 #else
 						sAbsX = abs(((m_sViewPointX / 32) + 10) - m_pEffectList[i]->m_dX);
 						sAbsY = abs(((m_sViewPointY / 32) + 7) - m_pEffectList[i]->m_dY);
 #endif
 						if (sAbsX > sAbsY) sDist = sAbsX;
 						else sDist = sAbsY;
-						lPan = -(((m_sViewPointX / 32) + 10) - m_pEffectList[i]->m_dX) * 1000;
+						lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX) * 1000;
 						PlaySound('E', 1, sDist, lPan);
 					}
 					break;
@@ -16978,15 +16978,15 @@ BOOL CGame::bEffectFrameCounter()
 						bAddNewEffect(16, m_pEffectList[i]->m_sX, m_pEffectList[i]->m_sY,
 							m_pEffectList[i]->m_dX * 32 + 50 - (rand() % 100), m_pEffectList[i]->m_dY * 32 + 50 - (rand() % 100), 0);
 #ifdef RES_HIGH
-						sAbsX = abs(((m_sViewPointX / 32) + 13) - m_pEffectList[i]->m_dX);
-						sAbsY = abs(((m_sViewPointY / 32) + 10) - m_pEffectList[i]->m_dY);
+						sAbsX = abs(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX);
+						sAbsY = abs(((m_sViewPointY / 32) + 9) - m_pEffectList[i]->m_dY);
 #else
 						sAbsX = abs(((m_sViewPointX / 32) + 10) - m_pEffectList[i]->m_dX);
 						sAbsY = abs(((m_sViewPointY / 32) + 7) - m_pEffectList[i]->m_dY);
 #endif
 						if (sAbsX > sAbsY) sDist = sAbsX;
 						else sDist = sAbsY;
-						lPan = -(((m_sViewPointX / 32) + 10) - m_pEffectList[i]->m_dX);
+						lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX);
 						PlaySound('E', 1, sDist, lPan);
 					}
 					break;
@@ -17041,15 +17041,15 @@ BOOL CGame::bEffectFrameCounter()
 						bAddNewEffect(34, m_pEffectList[i]->m_sX, m_pEffectList[i]->m_sY,
 							m_pEffectList[i]->m_dX * 32 + 30 - (rand() % 60), m_pEffectList[i]->m_dY * 32 + 30 - (rand() % 60), 0);
 #ifdef RES_HIGH
-						sAbsX = abs(((m_sViewPointX / 32) + 13) - m_pEffectList[i]->m_dX);
-						sAbsY = abs(((m_sViewPointY / 32) + 10) - m_pEffectList[i]->m_dY);
+						sAbsX = abs(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX);
+						sAbsY = abs(((m_sViewPointY / 32) + 9) - m_pEffectList[i]->m_dY);
 #else
 						sAbsX = abs(((m_sViewPointX / 32) + 10) - m_pEffectList[i]->m_dX);
 						sAbsY = abs(((m_sViewPointY / 32) + 7) - m_pEffectList[i]->m_dY);
 #endif
 						if (sAbsX > sAbsY) sDist = sAbsX;
 						else sDist = sAbsY;
-						lPan = -(((m_sViewPointX / 32) + 10) - m_pEffectList[i]->m_dX);
+						lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX);
 						PlaySound('E', 1, sDist, lPan);
 					}
 					break;
@@ -17087,15 +17087,15 @@ BOOL CGame::bEffectFrameCounter()
 						bAddNewEffect(151, m_pEffectList[i]->m_sX, m_pEffectList[i]->m_sY,
 							m_pEffectList[i]->m_dX + (rand() % 3) - 1, m_pEffectList[i]->m_dY + (rand() % 3) - 1, 0);
 #ifdef RES_HIGH
-						sAbsX = abs(((m_sViewPointX / 32) + 13) - m_pEffectList[i]->m_dX);
-						sAbsY = abs(((m_sViewPointY / 32) + 10) - m_pEffectList[i]->m_dY);
+						sAbsX = abs(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX);
+						sAbsY = abs(((m_sViewPointY / 32) + 9) - m_pEffectList[i]->m_dY);
 #else
 						sAbsX = abs(((m_sViewPointX / 32) + 10) - m_pEffectList[i]->m_dX);
 						sAbsY = abs(((m_sViewPointY / 32) + 7) - m_pEffectList[i]->m_dY);
 #endif
 						if (sAbsX > sAbsY) sDist = sAbsX;
 						else sDist = sAbsY;
-						lPan = -(((m_sViewPointX / 32) + 10) - m_pEffectList[i]->m_dX);
+						lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX);
 						PlaySound('E', 1, sDist, lPan);
 					}
 					break;
@@ -17136,15 +17136,15 @@ BOOL CGame::bEffectFrameCounter()
 						bAddNewEffect(71, m_pEffectList[i]->m_sX, m_pEffectList[i]->m_sY,
 							m_pEffectList[i]->m_dX * 32 + (rand() % 120) - 60, m_pEffectList[i]->m_dY * 32 + (rand() % 120) - 60, 0);
 #ifdef RES_HIGH
-						sAbsX = abs(((m_sViewPointX / 32) + 13) - m_pEffectList[i]->m_dX);
-						sAbsY = abs(((m_sViewPointY / 32) + 10) - m_pEffectList[i]->m_dY);
+						sAbsX = abs(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX);
+						sAbsY = abs(((m_sViewPointY / 32) + 9) - m_pEffectList[i]->m_dY);
 #else
 						sAbsX = abs(((m_sViewPointX / 32) + 10) - m_pEffectList[i]->m_dX);
 						sAbsY = abs(((m_sViewPointY / 32) + 7) - m_pEffectList[i]->m_dY);
 #endif
 						if (sAbsX > sAbsY) sDist = sAbsX;
 						else sDist = sAbsY;
-						lPan = -(((m_sViewPointX / 32) + 10) - m_pEffectList[i]->m_dX);
+						lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX);
 						PlaySound('E', 1, sDist, lPan);
 					}
 					break;
@@ -17169,15 +17169,15 @@ BOOL CGame::bEffectFrameCounter()
 					else
 					{
 #ifdef RES_HIGH
-						sAbsX = abs(((m_sViewPointX / 32) + 13) - m_pEffectList[i]->m_dX);
-						sAbsY = abs(((m_sViewPointY / 32) + 10) - m_pEffectList[i]->m_dY);
+						sAbsX = abs(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX);
+						sAbsY = abs(((m_sViewPointY / 32) + 9) - m_pEffectList[i]->m_dY);
 #else
 						sAbsX = abs(((m_sViewPointX / 32) + 10) - m_pEffectList[i]->m_dX);
 						sAbsY = abs(((m_sViewPointY / 32) + 7) - m_pEffectList[i]->m_dY);
 #endif
 						if (sAbsX > sAbsY) sDist = sAbsX - 10;
 						else sDist = sAbsY - 10;
-						lPan = -(((m_sViewPointX / 32) + 10) - m_pEffectList[i]->m_dX);
+						lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX);
 						PlaySound('E', 1, sDist, lPan);
 					}
 
@@ -17202,15 +17202,15 @@ BOOL CGame::bEffectFrameCounter()
 					else
 					{
 #ifdef RES_HIGH
-						sAbsX = abs(((m_sViewPointX / 32) + 13) - m_pEffectList[i]->m_dX);
-						sAbsY = abs(((m_sViewPointY / 32) + 10) - m_pEffectList[i]->m_dY);
+						sAbsX = abs(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX);
+						sAbsY = abs(((m_sViewPointY / 32) + 9) - m_pEffectList[i]->m_dY);
 #else
 						sAbsX = abs(((m_sViewPointX / 32) + 10) - m_pEffectList[i]->m_dX);
 						sAbsY = abs(((m_sViewPointY / 32) + 7) - m_pEffectList[i]->m_dY);
 #endif
 						if (sAbsX > sAbsY) sDist = sAbsX - 10;
 						else sDist = sAbsY - 10;
-						lPan = -(((m_sViewPointX / 32) + 10) - m_pEffectList[i]->m_dX);
+						lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX);
 						PlaySound('E', 1, sDist, lPan);
 					}
 					break;
@@ -17400,9 +17400,9 @@ BOOL CGame::bEffectFrameCounter()
 						m_pEffectList[i] = NULL;
 					}
 					break;
-					}
-					}
-					}
+				}
+			}
+		}
 	return bRet;
 }
 
@@ -18531,8 +18531,10 @@ void CGame::MotionResponseHandler(char * pData)
 		m_cCommandCount = 0;
 		m_bIsGetPointingMode = FALSE;
 #ifdef RES_HIGH
-		m_sViewDstX = m_sViewPointX = (m_sPlayerX - 13) * 32;
-		m_sViewDstY = m_sViewPointY = (m_sPlayerY - 10) * 32;
+		//m_sViewDstX = m_sViewPointX = (m_sPlayerX - 13) * 32;
+		//m_sViewDstY = m_sViewPointY = (m_sPlayerY - 10) * 32;
+		m_sViewDstX = m_sViewPointX = (m_sPlayerX - 12) * 32-16;
+		m_sViewDstY = m_sViewPointY = (m_sPlayerY - 9) * 32-16;
 #else
 		m_sViewDstX = m_sViewPointX = (m_sPlayerX - 10) * 32;
 		m_sViewDstY = m_sViewPointY = (m_sPlayerY - 7) * 32;
@@ -18631,8 +18633,10 @@ void CGame::MotionResponseHandler(char * pData)
 		m_cCommandCount = 0;
 		m_bIsGetPointingMode = FALSE;
 #ifdef RES_HIGH
-		m_sViewDstX = m_sViewPointX = (m_sPlayerX - 13) * 32;
-		m_sViewDstY = m_sViewPointY = (m_sPlayerY - 10) * 32;
+		//m_sViewDstX = m_sViewPointX = (m_sPlayerX - 13) * 32;
+		//m_sViewDstY = m_sViewPointY = (m_sPlayerY - 10) * 32;
+		m_sViewDstX = m_sViewPointX = (m_sPlayerX - 12) * 32-16;
+		m_sViewDstY = m_sViewPointY = (m_sPlayerY - 9) * 32-16;
 #else
 		m_sViewDstX = m_sViewPointX = (m_sPlayerX - 10) * 32;
 		m_sViewDstY = m_sViewPointY = (m_sPlayerY - 7) * 32;

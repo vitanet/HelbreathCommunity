@@ -2066,8 +2066,10 @@ void CGame::DrawObjects(short sPivotX, short sPivotY, short sDivX, short sDivY, 
 					{	if (m_bIsObserverMode == FALSE)
 						{	
 #ifdef RES_HIGH
-							m_sViewDstX = (indexX * 32) - 288 - 32 - 32 - 32 - 32;
-							m_sViewDstY = (indexY * 32) - 224 - 32 - 32 - 32;
+							//m_sViewDstX = (indexX * 32) - 288 - 32 - 32 - 32 - 32;
+							//m_sViewDstY = (indexY * 32) - 224 - 32 - 32 - 32;
+							m_sViewDstX = (indexX * 32) - 288 - 32 - 32 - 32 - 16;
+							m_sViewDstY = (indexY * 32) - 224 - 32 - 32 - 16;
 #else
 							m_sViewDstX = (indexX*32) - 288 - 32;
 							m_sViewDstY = (indexY*32) - 224;
@@ -5818,8 +5820,8 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 	}	}
 	if( m_bIsProgramActive == FALSE ) return;
 #ifdef RES_HIGH
-	sAbsX = abs(((m_sViewPointX / 32) + 13) - dX);
-	sAbsY = abs(((m_sViewPointY / 32) + 10) - dY);
+	sAbsX = abs(((m_sViewPointX / 32) + 12) - dX);
+	sAbsY = abs(((m_sViewPointY / 32) + 9) - dY);
 #else
   	sAbsX = abs(((m_sViewPointX / 32) + 10) - dX);
 	sAbsY = abs(((m_sViewPointY / 32) + 7) - dY);
@@ -5864,15 +5866,15 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			m_pEffectList[i]->m_cMaxFrame   = 12;
 			m_pEffectList[i]->m_dwFrameTime = 100;
 #ifdef RES_HIGH
-			sAbsX = abs(((m_sViewPointX / 32) + 13) - sX);
-			sAbsY = abs(((m_sViewPointY / 32) + 10) - sY);
+			sAbsX = abs(((m_sViewPointX / 32) + 12) - sX);
+			sAbsY = abs(((m_sViewPointY / 32) + 9) - sY);
 #else
 			sAbsX = abs(((m_sViewPointX / 32) + 10) - sX);
 			sAbsY = abs(((m_sViewPointY / 32) + 7)  - sY);
 #endif
 			if (sAbsX > sAbsY) sDist = sAbsX;
 			else sDist = sAbsY;
-			lPan = -(((m_sViewPointX / 32) + 13) - sX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - sX)*1000;
 			PlaySound('E', 12, sDist, lPan);
 			break;
 
@@ -5891,7 +5893,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			if (sAbsX > sAbsY) sDist = sAbsX;
 			else sDist = sAbsY;
 			sDist = sDist / 32;
-			lPan = -(((m_sViewPointX / 32) + 13) - sX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - sX)*1000;
 			PlaySound('E', 4, sDist, lPan);
 			SetCameraShakingEffect(sDist);
 			break;
@@ -6131,7 +6133,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			m_pEffectList[i]->m_mY = sY;
 			m_pEffectList[i]->m_cMaxFrame = 14;
 			m_pEffectList[i]->m_dwFrameTime = 35;
-			lPan = -(((m_sViewPointX / 32) + 10) - dX) * 1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX) * 1000;
 			PlaySound('E', 4, sDist, lPan);
 			SetCameraShakingEffect(sDist + 1, 2);
 			break;
@@ -6437,7 +6439,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			if (sAbsX > sAbsY) sDist = sAbsX;
 			else sDist = sAbsY;
 			sDist = sDist / 32;
-			lPan = -(((m_sViewPointX / 32) + 10) - sX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - sX)*1000;
 			PlaySound('E', 4, sDist, lPan);
 			SetCameraShakingEffect(sDist, 2);
 			break;
@@ -6485,7 +6487,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			if (sAbsX > sAbsY) sDist = sAbsX;
 			else sDist = sAbsY;
 			sDist = sDist / 32;
-			lPan = -(((m_sViewPointX / 32) + 13) - sX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - sX)*1000;
 			PlaySound('E', 4, sDist, lPan);
 			SetCameraShakingEffect(sDist, 2);
 			break;
@@ -6512,7 +6514,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			if (sAbsX > sAbsY) sDist = sAbsX;
 			else sDist = sAbsY;
 			sDist = sDist / 32;
-			lPan = -(((m_sViewPointX / 32) + 13) - sX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - sX)*1000;
 			PlaySound('E', 4, sDist, lPan);
 			m_pEffectList[i]->m_iV1 = sDist;
 			break;
@@ -6532,7 +6534,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			if (sAbsX > sAbsY) sDist = sAbsX;
 			else sDist = sAbsY;
 			sDist = sDist / 32;
-			lPan = -(((m_sViewPointX / 32) + 13) - (sX/32))*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - (sX/32))*1000;
 			PlaySound('E', 42, sDist, lPan);
 			break;
 
@@ -6551,7 +6553,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			if (sAbsX > sAbsY) sDist = sAbsX;
 			else sDist = sAbsY;
 			sDist = sDist / 32;
-			lPan = -(((m_sViewPointX / 32) + 13) - (sX/32))*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - (sX/32))*1000;
 			PlaySound('E', 42, sDist, lPan);
 			break;
 
@@ -6661,7 +6663,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			m_pEffectList[i]->m_iErr   = 0;
 			m_pEffectList[i]->m_cMaxFrame   = NULL;
 			m_pEffectList[i]->m_dwFrameTime = 20;
-			lPan = -(((m_sViewPointX / 32) + 13) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
 			PlaySound('E', 1, sDist, lPan);
 			break;
 
@@ -6672,7 +6674,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 		case 128: // Great-Staminar-Recovery
 			m_pEffectList[i]->m_cMaxFrame   = 14;
 			m_pEffectList[i]->m_dwFrameTime = 80;
-			lPan = -(((m_sViewPointX / 32) + 13) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
 			PlaySound('E', 5, sDist, lPan);
 			break;
 
@@ -6690,7 +6692,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 		case 171: // Mass-Confusion
 			m_pEffectList[i]->m_cMaxFrame   = 13;
 			m_pEffectList[i]->m_dwFrameTime = 120;
-			lPan = -(((m_sViewPointX / 32) + 13) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
 			PlaySound('E', 5, sDist, lPan);
 			break;
 
@@ -6704,7 +6706,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			m_pEffectList[i]->m_iErr = 0;
 			m_pEffectList[i]->m_rX = 5 - (rand() % 10);
 			m_pEffectList[i]->m_rY = 5 - (rand() % 10);
-			lPan = -(((m_sViewPointX / 32) + 13) - dX) * 1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX) * 1000;
 			PlaySound('E', 39, sDist, lPan);
 			break;
 
@@ -6714,7 +6716,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			m_pEffectList[i]->m_iErr   = 0;
 			m_pEffectList[i]->m_cMaxFrame   = NULL;
 			m_pEffectList[i]->m_dwFrameTime = 20;
-			lPan = -(((m_sViewPointX / 32) + 10) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
 			PlaySound('E', 1, sDist, lPan);
 			break;
 
@@ -6723,7 +6725,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 		case 132: // Invi
 			m_pEffectList[i]->m_cMaxFrame   = 12;
 			m_pEffectList[i]->m_dwFrameTime = 80;
-			lPan = -(((m_sViewPointX / 32) + 10) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
 			PlaySound('E', 5, sDist, lPan);
 			break;
 
@@ -6731,7 +6733,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 		case 144: // Great-Defense-Shield
 			m_pEffectList[i]->m_cMaxFrame   = 12;
 			m_pEffectList[i]->m_dwFrameTime = 120;
-			lPan = -(((m_sViewPointX / 32) + 10) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
 			PlaySound('E', 5, sDist, lPan);
 			break;
 
@@ -6752,7 +6754,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			m_pEffectList[i]->m_cMaxFrame   = NULL;
 			m_pEffectList[i]->m_dwFrameTime = 20;
 			m_pEffectList[i]->m_cDir = m_Misc.cCalcDirection(sX, sY, dX, dY);
-			lPan = -(((m_sViewPointX / 32) + 10) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
 			PlaySound('E', 1, sDist, lPan);
 			break;
 
@@ -6778,12 +6780,12 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			m_pEffectList[i]->m_cMaxFrame   = NULL;
 			m_pEffectList[i]->m_dwFrameTime = 20;
 			m_pEffectList[i]->m_cDir = m_Misc.cCalcDirection(sX, sY, dX, dY);
-			lPan = -(((m_sViewPointX / 32) + 10) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
 			PlaySound('E', 1, sDist, lPan);
 			break;
 
 		case 138: // Tremor.
-			lPan = -(((m_sViewPointX / 32) + 10) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
 			PlaySound('E', 4, sDist, lPan);
 			SetCameraShakingEffect(sDist, 2);
 			bAddNewEffect(14, dX*32 + (rand() % 120) - 60, dY*32 + (rand() % 80) - 40, NULL, NULL, 0, 0);
@@ -6813,7 +6815,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			m_pEffectList[i]->m_rY	   = 5 - (rand() % 10);
 			m_pEffectList[i]->m_cMaxFrame   = 7;
 			m_pEffectList[i]->m_dwFrameTime = 10;
-			lPan = -(((m_sViewPointX / 32) + 10) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
 			PlaySound('E', 40, sDist, lPan);
 			break;
 
@@ -6835,7 +6837,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 		case 195: // Mass-Illusion-Movement
 			m_pEffectList[i]->m_cMaxFrame   = 11;
 			m_pEffectList[i]->m_dwFrameTime = 100;
-			lPan = -(((m_sViewPointX / 32) + 10) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
 			PlaySound('E', 5, sDist, lPan);
 			break;
 
@@ -6847,7 +6849,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			m_pEffectList[i]->m_rY	   = 5 - (rand() % 10);
 			m_pEffectList[i]->m_cMaxFrame   = 10;
 			m_pEffectList[i]->m_dwFrameTime = 10;
-			lPan = -(((m_sViewPointX / 32) + 10) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
 			PlaySound('E', 40, sDist, lPan);
 			break;
 
@@ -6874,7 +6876,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			m_pEffectList[i]->m_cMaxFrame   = NULL;
 			m_pEffectList[i]->m_dwFrameTime = 20;
 			m_pEffectList[i]->m_cDir = m_Misc.cCalcDirection(sX, sY, dX, dY);
-			lPan = -(((m_sViewPointX / 32) + 10) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
 			PlaySound('E', 1, sDist, lPan);
 			break;
 
@@ -6884,7 +6886,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			break;
 
 		case 164: // worm-bite
-			lPan = -(((m_sViewPointX / 32) + 10) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
 			PlaySound('E', 4, sDist, lPan);
 			bAddNewEffect(14, dX*32 + (rand() % 120) - 60, dY*32 + (rand() % 80) - 40, NULL, NULL, 0, 0);
 			bAddNewEffect(14, dX*32 + (rand() % 120) - 60, dY*32 + (rand() % 80) - 40, NULL, NULL, 0, 0);
@@ -6908,14 +6910,14 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 		case 165: // Absolute-Magic-Protection
 			m_pEffectList[i]->m_cMaxFrame   = 21;
 			m_pEffectList[i]->m_dwFrameTime = 70;
-			lPan = -(((m_sViewPointX / 32) + 10) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
 			PlaySound('E', 5, sDist, lPan);
 			break;
 
 		case 166: // Armor Break
 			m_pEffectList[i]->m_cMaxFrame   = 13;
 			m_pEffectList[i]->m_dwFrameTime = 80;
-			lPan = -(((m_sViewPointX / 32) + 10) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
 			PlaySound('E', 5, sDist, lPan);
 			break;
 
@@ -6938,7 +6940,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			m_pEffectList[i]->m_cMaxFrame   = 23;
 			m_pEffectList[i]->m_dwFrameTime = 60;
 			sDist = sDist / 32;
-			lPan = -(((m_sViewPointX / 32) + 10) - sX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - sX)*1000;
 			PlaySound('E', 5, sDist, lPan);
 			break;
 
@@ -6955,7 +6957,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			m_pEffectList[i]->m_iErr   = 0;
 			m_pEffectList[i]->m_cMaxFrame   = NULL;
 			m_pEffectList[i]->m_dwFrameTime = 20;
-			lPan = -(((m_sViewPointX / 32) + 10) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
 			PlaySound('E', 1, sDist, lPan);
 			break;
 
@@ -7020,7 +7022,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			if (sAbsX > sAbsY) sDist = sAbsX;
 			else sDist = sAbsY;
 			sDist = sDist / 32;
-			lPan = -(((m_sViewPointX / 32) + 13) - sX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - sX)*1000;
 			PlaySound('E', 4, sDist, lPan);
 			m_pEffectList[i]->m_iV1 = sDist;
 			break;
@@ -7080,7 +7082,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
             m_pEffectList[i]->m_cMaxFrame   = 17;
             m_pEffectList[i]->m_dwFrameTime = 200;
             m_pEffectList[i]->m_mX3    = sDist;
-            m_pEffectList[i]->m_mY3    = -(((m_sViewPointX / 32) + 10) - dX)*1000;
+            m_pEffectList[i]->m_mY3    = -(((m_sViewPointX / 32) + 12) - dX)*1000;
             m_pEffectList[i]->m_iV1    = rand()%35;
             m_pEffectList[i]->m_cFrame = - rand() %12;
             break;
@@ -9676,7 +9678,7 @@ BOOL   CGame::DrawObject_OnAttackMove(int indexX, int indexY, int sX, int sY, BO
 		CheckActiveAura2(sX+dx, sY+dy, dwTime,  _tmp_sOwnerType);
 
 		//50Cent - Capture The Flag
-		DrawFlagCarrier(sX, sY, _tmp_cFrame, dwTime);
+		DrawFlagCarrier(sX + dx, sY + dy, _tmp_cFrame, dwTime);
 
 		if (bDashDraw == TRUE) {
 			m_pSprite[iBodyIndex + (_tmp_cDir - 1)]->PutTransSpriteRGB(sX+dsx, sY+dsy, _tmp_cFrame, m_wR[10] -(m_wR[0]/3), m_wG[10] -(m_wG[0]/3), m_wB[10] -(m_wB[0]/3), dwTime);
@@ -9685,11 +9687,11 @@ BOOL   CGame::DrawObject_OnAttackMove(int indexX, int indexY, int sX, int sY, BO
 		}
 	
 	}else if( strlen(_tmp_cName) > 0 )
-	{	if( (_tmp_sOwnerType>=1) && (_tmp_sOwnerType<=6) ) DrawObjectName(sX, sY, _tmp_cName, _tmp_iStatus);
+	{	if( (_tmp_sOwnerType>=1) && (_tmp_sOwnerType<=6) ) DrawObjectName(sX + dx, sY + dy, _tmp_cName, _tmp_iStatus);
 		//50Cent - HP Bar
 		else
 		{
-			DrawNpcName(sX, sY, _tmp_sOwnerType, _tmp_iStatus);
+			DrawNpcName(sX + dx, sY + dy, _tmp_sOwnerType, _tmp_iStatus);
 	}   }
 
 	if (_tmp_iChatIndex != NULL)
@@ -12159,14 +12161,14 @@ BOOL   CGame::DrawObject_OnMove(int indexX, int indexY, int sX, int sY, BOOL bTr
 		CheckActiveAura2(sX+dx, sY+dy, dwTime,  _tmp_sOwnerType);
 
 		//50Cent - Capture The Flag
-		DrawFlagCarrier(sX, sY, _tmp_cFrame, dwTime);
+		DrawFlagCarrier(sX + dx, sY + dy, _tmp_cFrame, dwTime);
 
 	}else if( strlen(_tmp_cName) > 0 )
-	{	if( (_tmp_sOwnerType>=1) && (_tmp_sOwnerType<=6) ) DrawObjectName(sX, sY, _tmp_cName, _tmp_iStatus);
+	{	if( (_tmp_sOwnerType>=1) && (_tmp_sOwnerType<=6) ) DrawObjectName(sX + dx, sY + dy, _tmp_cName, _tmp_iStatus);
 		//50Cent - HP Bar
 		else
 		{
-			DrawNpcName(sX, sY, _tmp_sOwnerType, _tmp_iStatus);
+			DrawNpcName(sX + dx, sY + dy, _tmp_sOwnerType, _tmp_iStatus);
     }    }
 
 	if (_tmp_iChatIndex != NULL)
@@ -12629,14 +12631,14 @@ BOOL CGame::DrawObject_OnDamageMove(int indexX, int indexY, int sX, int sY, BOOL
 		CheckActiveAura2(sX+dx, sY+dy, dwTime,  _tmp_sOwnerType);
 
 		//50Cent - Capture The Flag
-		DrawFlagCarrier(sX, sY, _tmp_cFrame, dwTime);
+		DrawFlagCarrier(sX + dx, sY + dy, _tmp_cFrame, dwTime);
 
 	}else if( strlen(_tmp_cName) > 0 )
-	{	if( (_tmp_sOwnerType>=1) && (_tmp_sOwnerType<=6) ) DrawObjectName(sX, sY, _tmp_cName, _tmp_iStatus);
+	{	if( (_tmp_sOwnerType>=1) && (_tmp_sOwnerType<=6) ) DrawObjectName(sX + dx, sY + dy, _tmp_cName, _tmp_iStatus);
 		//50Cent - HP Bar
 		else
 		{
-			DrawNpcName(sX, sY, _tmp_sOwnerType, _tmp_iStatus);
+			DrawNpcName(sX + dx, sY + dy, _tmp_sOwnerType, _tmp_iStatus);
     }    }
 	if (_tmp_iChatIndex != NULL)
 	{	if ((m_pChatMsgList[_tmp_iChatIndex] != NULL) && (m_pChatMsgList[_tmp_iChatIndex]->m_iObjectID == _tmp_wObjectID))
@@ -15216,16 +15218,16 @@ BOOL CGame::DrawObject_OnRun(int indexX, int indexY, int sX, int sY, BOOL bTrans
 		CheckActiveAura2(sX + dx, sY + dy, dwTime, _tmp_sOwnerType);
 
 		//50Cent - Capture The Flag
-		DrawFlagCarrier(sX, sY, _tmp_cFrame, dwTime);
+		DrawFlagCarrier(sX + dx, sY + dy, _tmp_cFrame, dwTime);
 
 	}
 	else if (strlen(_tmp_cName) > 0)
 	{
-		if ((_tmp_sOwnerType >= 1) && (_tmp_sOwnerType <= 6)) DrawObjectName(sX, sY, _tmp_cName, _tmp_iStatus);
+		if ((_tmp_sOwnerType >= 1) && (_tmp_sOwnerType <= 6)) DrawObjectName(sX + dx, sY + dy, _tmp_cName, _tmp_iStatus);
 		//50Cent - HP Bar
 		else
 		{
-			DrawNpcName(sX, sY, _tmp_sOwnerType, _tmp_iStatus);
+			DrawNpcName(sX + dx, sY + dy, _tmp_sOwnerType, _tmp_iStatus);
 			
 		}
 	}
@@ -15467,9 +15469,12 @@ void CGame::InitDataResponseHandler(char * pData)
 			DEF_OBJECTSTOP, NULL, NULL, NULL);
 	}
 #ifdef RES_HIGH
-	m_sViewDstX = m_sViewPointX = (sX + 6) * 32;
-	m_sViewDstY = m_sViewPointY = (sY + 7) * 32;
-	_ReadMapData(sX + 6, sY + 7, cp);
+	//m_sViewDstX = m_sViewPointX = (sX + 6) * 32;
+	//m_sViewDstY = m_sViewPointY = (sY + 7) * 32;
+	m_sViewDstX = m_sViewPointX = (sX + 7) * 32-16;
+	m_sViewDstY = m_sViewPointY = (sY + 8) * 32-16;
+	//_ReadMapData(sX + 6, sY + 7, cp);
+	_ReadMapData(sX + 7, sY + 8, cp);
 #else
 	m_sViewDstX = m_sViewPointX = (sX + 4 + 5) * 32;
 	m_sViewDstY = m_sViewPointY = (sY + 5 + 5) * 32;
@@ -18361,16 +18366,16 @@ void CGame::UpdateScreen_OnSelectCharacter()
 	{	G_cSpriteAlphaDegree = 1;
 		InitGameSettings();
 		pMI = new class CMouseInterface;
-		pMI->AddRect(100 + SCREENX, 50 + SCREENX, 210 + SCREENY, 250 + SCREENY);
-		pMI->AddRect(211 + SCREENX, 50 + SCREENX, 321 + SCREENY, 250 + SCREENY);
-		pMI->AddRect(322 + SCREENX, 50 + SCREENX, 431 + SCREENY, 250 + SCREENY);
-		pMI->AddRect(432 + SCREENX, 50 + SCREENX, 542 + SCREENY, 250 + SCREENY);
+		pMI->AddRect(100 + SCREENX, 50 + SCREENY, 210 + SCREENX, 250 + SCREENY);
+		pMI->AddRect(211 + SCREENX, 50 + SCREENY, 321 + SCREENX, 250 + SCREENY);
+		pMI->AddRect(322 + SCREENX, 50 + SCREENY, 431 + SCREENX, 250 + SCREENY);
+		pMI->AddRect(432 + SCREENX, 50 + SCREENY, 542 + SCREENX, 250 + SCREENY);
 
-		pMI->AddRect(360 + SCREENX,283 + SCREENX,545 + SCREENY,315 + SCREENY);
-		pMI->AddRect(360 + SCREENX,316 + SCREENX,545 + SCREENY,345 + SCREENY);
-		pMI->AddRect(360 + SCREENX,346 + SCREENX,545 + SCREENY,375 + SCREENY);
-		pMI->AddRect(360 + SCREENX,376 + SCREENX,545 + SCREENY,405 + SCREENY);
-		pMI->AddRect(360 + SCREENX,406 + SCREENX,545 + SCREENY,435 + SCREENY);
+		pMI->AddRect(360 + SCREENX,283 + SCREENY,545 + SCREENX,315 + SCREENY);
+		pMI->AddRect(360 + SCREENX,316 + SCREENY,545 + SCREENX,345 + SCREENY);
+		pMI->AddRect(360 + SCREENX,346 + SCREENY,545 + SCREENX,375 + SCREENY);
+		pMI->AddRect(360 + SCREENX,376 + SCREENY,545 + SCREENX,405 + SCREENY);
+		pMI->AddRect(360 + SCREENX,406 + SCREENY,545 + SCREENX,435 + SCREENY);
 
 		m_cMaxFocus = 4;
 		if (m_cCurFocus > m_cMaxFocus) m_cCurFocus = 1;
@@ -22114,56 +22119,56 @@ BOOL CGame::_bDraw_OnCreateNewCharacter(char * pName, short msX, short msY, int 
 
 	m_DDraw.ClearBackB4();
 
-	DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_NEWCHAR, 0, 0, 0, TRUE);
-	DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_BUTTON, 0, 0, 69, TRUE);
-	PutAlignedString(64, 282, 90, _BDRAW_ON_CREATE_NEW_CHARACTER1, 5,5,5);//"
-	PutAlignedString(57, 191, 110, DEF_MSG_CHARACTERNAME, 5,5,5);//"Character Name"
-	if (m_cCurFocus != 1) PutString(197, 112, pName, RGB(25,35,25));
-	PutAlignedString(64, 282, 140, _BDRAW_ON_CREATE_NEW_CHARACTER2, 5,5,5);//"
-	PutString(100, 160, DEF_MSG_GENDER, RGB(5,5,5));//"Gender"
-	PutString(100, 175, DEF_MSG_SKINCOLOR, RGB(5,5,5));//"Skin Color"
-	PutString(100, 190, DEF_MSG_HAIRSTYLE, RGB(5,5,5));//"Hair Style"
-	PutString(100, 205, DEF_MSG_HAIRCOLOR, RGB(5,5,5));//"Hair Color"
-	PutString(100, 220, DEF_MSG_UNDERWEARCOLOR, RGB(5,5,5));//"Underwear Color"
+	DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_NEWCHAR, 0+SCREENX, 0 + SCREENY, 0, TRUE);
+	DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_BUTTON, 0 + SCREENX, 0 + SCREENY, 69, TRUE);
+	PutAlignedString(64 + SCREENX, 282 + SCREENX, 90 + SCREENY, _BDRAW_ON_CREATE_NEW_CHARACTER1, 5,5,5);//"
+	PutAlignedString(57 + SCREENX, 191 + SCREENX, 110 + SCREENY, DEF_MSG_CHARACTERNAME, 5,5,5);//"Character Name"
+	if (m_cCurFocus != 1) PutString(197 + SCREENX, 112 + SCREENY, pName, RGB(25,35,25));
+	PutAlignedString(64 + SCREENX, 282 + SCREENX, 140 + SCREENY, _BDRAW_ON_CREATE_NEW_CHARACTER2, 5,5,5);//"
+	PutString(100 + SCREENX, 160 + SCREENY, DEF_MSG_GENDER, RGB(5,5,5));//"Gender"
+	PutString(100 + SCREENX, 175 + SCREENY, DEF_MSG_SKINCOLOR, RGB(5,5,5));//"Skin Color"
+	PutString(100 + SCREENX, 190 + SCREENY, DEF_MSG_HAIRSTYLE, RGB(5,5,5));//"Hair Style"
+	PutString(100 + SCREENX, 205 + SCREENY, DEF_MSG_HAIRCOLOR, RGB(5,5,5));//"Hair Color"
+	PutString(100 + SCREENX, 220 + SCREENY, DEF_MSG_UNDERWEARCOLOR, RGB(5,5,5));//"Underwear Color"
 	
-	PutString(100, 275, DEF_MSG_STRENGTH, RGB(5,5,5));//"Strength"
-	PutString(100, 292, DEF_MSG_VITALITY, RGB(5,5,5));//"Vitality"
-	PutString(100, 309, DEF_MSG_DEXTERITY, RGB(5,5,5));//"Dexterity"
-	PutString(100, 326, DEF_MSG_INTELLIGENCE, RGB(5,5,5));//"Intelligence"
-	PutString(100, 343, DEF_MSG_MAGIC, RGB(5,5,5));//"Magic"
-	PutString(100, 360, DEF_MSG_CHARISMA, RGB(5,5,5));//"Charisma"
+	PutString(100 + SCREENX, 275 + SCREENY, DEF_MSG_STRENGTH, RGB(5,5,5));//"Strength"
+	PutString(100 + SCREENX, 292 + SCREENY, DEF_MSG_VITALITY, RGB(5,5,5));//"Vitality"
+	PutString(100 + SCREENX, 309 + SCREENY, DEF_MSG_DEXTERITY, RGB(5,5,5));//"Dexterity"
+	PutString(100 + SCREENX, 326 + SCREENY, DEF_MSG_INTELLIGENCE, RGB(5,5,5));//"Intelligence"
+	PutString(100 + SCREENX, 343 + SCREENY, DEF_MSG_MAGIC, RGB(5,5,5));//"Magic"
+	PutString(100 + SCREENX, 360 + SCREENY, DEF_MSG_CHARISMA, RGB(5,5,5));//"Charisma"
 
 	wsprintf(G_cTxt, "%d", m_ccStr);
-	PutString(204 , 277+ 16*i++ , G_cTxt, RGB(25,35,25));
+	PutString(204 + SCREENX, 277+ 16*i++ + SCREENY, G_cTxt, RGB(25,35,25));
 	wsprintf(G_cTxt, "%d", m_ccVit);
-	PutString(204 , 277+ 16*i++ , G_cTxt, RGB(25,35,25));
+	PutString(204 + SCREENX, 277+ 16*i++ + SCREENY, G_cTxt, RGB(25,35,25));
 	wsprintf(G_cTxt, "%d", m_ccDex);
-	PutString(204 , 277+ 16*i++ , G_cTxt, RGB(25,35,25));
+	PutString(204 + SCREENX, 277+ 16*i++ + SCREENY, G_cTxt, RGB(25,35,25));
 	wsprintf(G_cTxt, "%d", m_ccInt);
-	PutString(204 , 277+ 16*i++ , G_cTxt, RGB(25,35,25));
+	PutString(204 + SCREENX, 277+ 16*i++ + SCREENY, G_cTxt, RGB(25,35,25));
 	wsprintf(G_cTxt, "%d", m_ccMag);
-	PutString(204 , 277+ 16*i++ , G_cTxt, RGB(25,35,25));
+	PutString(204 + SCREENX, 277+ 16*i++ + SCREENY, G_cTxt, RGB(25,35,25));
 	wsprintf(G_cTxt, "%d", m_ccChr);
-	PutString(204 , 277+ 16*i++ , G_cTxt, RGB(25,35,25));
+	PutString(204 + SCREENX, 277+ 16*i++ + SCREENY, G_cTxt, RGB(25,35,25));
 
 	if (strlen(pName) <= 0) bFlag = FALSE;
 	if (iPoint > 0) bFlag = FALSE;
 	if (m_Misc.bCheckValidName(pName) == FALSE) bFlag = FALSE;
 
-	if ( (bFlag == TRUE) && (m_cCurFocus == 2) ) m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(384, 445, 25, dwTime);
-	else m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(384, 445, 24, dwTime);
+	if ( (bFlag == TRUE) && (m_cCurFocus == 2) ) m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(384 + SCREENX, 445 + SCREENY, 25, dwTime);
+	else m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(384 + SCREENX, 445 + SCREENY, 24, dwTime);
 	if (m_cCurFocus == 3)
-		 m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(500, 445, 17, dwTime);
-	else m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(500, 445, 16, dwTime);
+		 m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(500 + SCREENX, 445 + SCREENY, 17, dwTime);
+	else m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(500 + SCREENX, 445 + SCREENY, 16, dwTime);
 	if (m_cCurFocus == 4)
-		 m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(60, 445, 68, dwTime);
-	else m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(60, 445, 67, dwTime);
+		 m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(60 + SCREENX, 445 + SCREENY, 68, dwTime);
+	else m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(60 + SCREENX, 445 + SCREENY, 67, dwTime);
 	if (m_cCurFocus == 5)
-		 m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(145, 445, 66, dwTime);
-	else m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(145, 445, 65, dwTime);
+		 m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(145 + SCREENX, 445 + SCREENY, 66, dwTime);
+	else m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(145 + SCREENX, 445 + SCREENY, 65, dwTime);
 	if (m_cCurFocus == 6)
-		 m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(230, 445, 64, dwTime);
-	else m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(230, 445, 63, dwTime);
+		 m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(230 + SCREENX, 445 + SCREENY, 64, dwTime);
+	else m_pSprite[DEF_SPRID_INTERFACE_ND_BUTTON]->PutSpriteFast(230 + SCREENX, 445 + SCREENY, 63, dwTime);
 	
 
 	ShowReceivedString();
@@ -22186,23 +22191,23 @@ BOOL CGame::_bDraw_OnCreateNewCharacter(char * pName, short msX, short msY, int 
 	_tmp_cAction = DEF_OBJECTMOVE;
 	_tmp_cFrame = m_cMenuFrame;
 
-	_Draw_CharacterBody( 507 , 267, _tmp_sOwnerType);
+	_Draw_CharacterBody( 507 + SCREENX, 267 + SCREENY, _tmp_sOwnerType);
 
-	DrawObject_OnMove_ForMenu(0, 0, 500 , 174, FALSE, dwTime, msX, msY);
+	DrawObject_OnMove_ForMenu(0 + SCREENX, 0 + SCREENY, 500 + SCREENX, 174 + SCREENY, FALSE, dwTime, msX, msY);
 
     i = 0 ;
 
-	PutString(445, 192, DEF_MSG_HITPOINT, RGB(5,5,5));//"Hit Point"
+	PutString(445 + SCREENX, 192 + SCREENY, DEF_MSG_HITPOINT, RGB(5,5,5));//"Hit Point"
 	wsprintf(G_cTxt, "%d", m_ccVit*3 + 2 + m_ccStr/2);
-	PutString(550, 192 + 16*i++, G_cTxt, RGB(25,35,25));
+	PutString(550 + SCREENX, 192 + 16*i++ + SCREENY, G_cTxt, RGB(25,35,25));
 
-	PutString(445, 208, DEF_MSG_MANAPOINT, RGB(5,5,5));//"Mana Point"
+	PutString(445 + SCREENX, 208 + SCREENY, DEF_MSG_MANAPOINT, RGB(5,5,5));//"Mana Point"
 	wsprintf(G_cTxt, "%d", m_ccMag*2 + 2 + m_ccInt/2);
-	PutString(550, 192 + 16*i++, G_cTxt, RGB(25,35,25));
+	PutString(550 + SCREENX, 192 + 16*i++ + SCREENY, G_cTxt, RGB(25,35,25));
 
-	PutString(445, 224, DEF_MSG_STAMINARPOINT, RGB(5,5,5));//"Staminar Point"
+	PutString(445 + SCREENX, 224 + SCREENY, DEF_MSG_STAMINARPOINT, RGB(5,5,5));//"Staminar Point"
 	wsprintf(G_cTxt, "%d", m_ccStr*2 + 2);
-	PutString(550, 192 + 16*i++, G_cTxt, RGB(25,35,25));
+	PutString(550 + SCREENX, 192 + 16*i++ + SCREENY, G_cTxt, RGB(25,35,25));
 
 	return bFlag;
 }
@@ -22222,48 +22227,47 @@ void CGame::UpdateScreen_OnCreateNewCharacter()
 
 	if (m_cGameModeCount == 0)
 	{	pMI = new class CMouseInterface;
-		pMI->AddRect(65+4, 65+45, 275+4, 82+45);
+		pMI->AddRect(65+4+SCREENX, 65+45 + SCREENY, 275+4 + SCREENX, 82+45 + SCREENY);
 
-		pMI->AddRect(232+4, 111+45, 274+4 -21, 124+45);
-		pMI->AddRect(255+4, 111+45, 289+4 -13, 124+45);
+		pMI->AddRect(232+4 + SCREENX, 111+45 + SCREENY, 274+4 -21 + SCREENX, 124+45 + SCREENY);
+		pMI->AddRect(255+4 + SCREENX, 111+45 + SCREENY, 289+4 -13 + SCREENX, 124+45 + SCREENY);
 
-		pMI->AddRect(232+4, 126+45, 274+4 -21, 139+45);
-		pMI->AddRect(255+4, 126+45, 289+4 -13, 139+45);
+		pMI->AddRect(232+4 + SCREENX, 126+45 + SCREENY, 274+4 -21 + SCREENX, 139+45 + SCREENY);
+		pMI->AddRect(255+4 + SCREENX, 126+45 + SCREENY, 289+4 -13 + SCREENX, 139+45 + SCREENY);
 
-		pMI->AddRect(232+4, 141+45, 274+4 -21, 154+45);
-		pMI->AddRect(255+4, 141+45, 289+4 -13, 154+45);
+		pMI->AddRect(232+4 + SCREENX, 141+45 + SCREENY, 274+4 -21 + SCREENX, 154+45 + SCREENY);
+		pMI->AddRect(255+4 + SCREENX, 141+45 + SCREENY, 289+4 -13 + SCREENX, 154+45 + SCREENY);
 
-		pMI->AddRect(232+4, 156+45, 274+4 -21, 169+45);
-		pMI->AddRect(255+4, 156+45, 289+4 -13, 169+45);
+		pMI->AddRect(232+4 + SCREENX, 156+45 + SCREENY, 274+4 -21 + SCREENX, 169+45 + SCREENY);
+		pMI->AddRect(255+4 + SCREENX, 156+45 + SCREENY, 289+4 -13 + SCREENX, 169+45 + SCREENY);
 
-		pMI->AddRect(232+4, 171+45, 274+4 -21, 184+45);
-		pMI->AddRect(255+4, 171+45, 289+4 -13, 184+45);
+		pMI->AddRect(232+4 + SCREENX, 171+45 + SCREENY, 274+4 -21 + SCREENX, 184+45 + SCREENY);
+		pMI->AddRect(255+4 + SCREENX, 171+45 + SCREENY, 289+4 -13 + SCREENX, 184+45 + SCREENY);
 
+		pMI->AddRect(232+4 + SCREENX, 231+45 + SCREENY, 253+4 + SCREENX, 244+45 + SCREENY);
+		pMI->AddRect(255+4 + SCREENX, 231+45 + SCREENY, 276+4 + SCREENX, 244+45 + SCREENY);
 
-		pMI->AddRect(232+4, 231+45, 253+4, 244+45);
-		pMI->AddRect(255+4, 231+45, 276+4, 244+45);
+		pMI->AddRect(232+4 + SCREENX, 246+45 + SCREENY, 253+4 + SCREENX, 259+45 + SCREENY);
+		pMI->AddRect(255+4 + SCREENX, 246+45 + SCREENY, 276+4 + SCREENX, 259+45 + SCREENY);
 
-		pMI->AddRect(232+4, 246+45, 253+4, 259+45);
-		pMI->AddRect(255+4, 246+45, 276+4, 259+45);
+		pMI->AddRect(232+4 + SCREENX, 261+45 + SCREENY, 253+4 + SCREENX, 274+45 + SCREENY);
+		pMI->AddRect(255+4 + SCREENX, 261+45 + SCREENY, 276+4 + SCREENX, 274+45 + SCREENY);
 
-		pMI->AddRect(232+4, 261+45, 253+4, 274+45);
-		pMI->AddRect(255+4, 261+45, 276+4, 274+45);
+		pMI->AddRect(232+4 + SCREENX, 276+45 + SCREENY, 253+4 + SCREENX, 289+45 + SCREENY);
+		pMI->AddRect(255+4 + SCREENX, 276+45 + SCREENY, 276+4 + SCREENX, 289+45 + SCREENY);
 
-		pMI->AddRect(232+4, 276+45, 253+4, 289+45);
-		pMI->AddRect(255+4, 276+45, 276+4, 289+45);
+		pMI->AddRect(232+4 + SCREENX, 291+45 + SCREENY, 253+4 + SCREENX, 304+45 + SCREENY);
+		pMI->AddRect(255+4 + SCREENX, 291+45 + SCREENY, 276+4 + SCREENX, 304+45 + SCREENY);
 
-		pMI->AddRect(232+4, 291+45, 253+4, 304+45);
-		pMI->AddRect(255+4, 291+45, 276+4, 304+45);
+		pMI->AddRect(232+4 + SCREENX, 306+45 + SCREENY, 253+4 + SCREENX, 319+45 + SCREENY);
+		pMI->AddRect(255+4 + SCREENX, 306+45 + SCREENY, 276+4 + SCREENX, 319+45 + SCREENY);
 
-		pMI->AddRect(232+4, 306+45, 253+4, 319+45);
-		pMI->AddRect(255+4, 306+45, 276+4, 319+45);
+		pMI->AddRect(384 + SCREENX, 445 + SCREENY, 384+72 + SCREENX, 445+15 + SCREENY);
+		pMI->AddRect(500 + SCREENX, 445 + SCREENY, 500+72 + SCREENX, 445+15 + SCREENY);
 
-		pMI->AddRect(384, 445, 384+72, 445+15);
-		pMI->AddRect(500, 445, 500+72, 445+15);
-
-		pMI->AddRect(60, 445, 60+72, 445+15);
-		pMI->AddRect(145, 445, 145+72, 445+15);
-		pMI->AddRect(230, 445, 230+72, 445+15);
+		pMI->AddRect(60 + SCREENX, 445 + SCREENY, 60+72 + SCREENX, 445+15 + SCREENY);
+		pMI->AddRect(145 + SCREENX, 445 + SCREENY, 145+72 + SCREENX, 445+15 + SCREENY);
+		pMI->AddRect(230 + SCREENX, 445 + SCREENY, 230+72 + SCREENX, 445+15 + SCREENY);
 
 		iPoint = m_ccStr + m_ccVit + m_ccDex + m_ccInt + m_ccMag + m_ccChr;
 		iPoint  = 70 - iPoint;
@@ -22273,7 +22277,7 @@ void CGame::UpdateScreen_OnCreateNewCharacter()
 		m_bEnterPressed = FALSE;
 		m_cArrowPressed = 0;
 		dwMTime = timeGetTime();
-		StartInputString(193+4, 65+45, 11, cName);
+		StartInputString(193+4 + SCREENX, 65+45 + SCREENY, 11, cName);
 		ClearInputString();
 	}
 	m_cGameModeCount++;
@@ -22298,7 +22302,7 @@ void CGame::UpdateScreen_OnCreateNewCharacter()
 		EndInputString();
 		switch (m_cCurFocus) {
 		case 1:
-			StartInputString(193+4, 65+45, 11, cName);
+			StartInputString(193+4 + SCREENX, 65+45 + SCREENY, 11, cName);
 			break;
 		}
 		cPrevFocus = m_cCurFocus;
@@ -22541,130 +22545,126 @@ void CGame::UpdateScreen_OnCreateNewCharacter()
 			iPoint  = 70 - iPoint;
 			break;
 		}
-
-
 	}
-
-	if ((msX >= 65+4-127) && (msX <= 275+4) && (msY >= 65+45) && (msY <= 82+45)) {
-		PutAlignedString(370, 580, 345, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER1);
+	//fuck sake :(
+	if ((msX >= 65+4-127 + SCREENX) && (msX <= 275+4 + SCREENX) && (msY >= 65+45 + SCREENY) && (msY <= 82+45 + SCREENY)) {
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER1);
 	}
 	else
-	if ((msX >= 261+4-212) && (msX <= 289+4) && (msY >= 111+45) && (msY <= 124+45)) {
-		PutAlignedString(370, 580, 345, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER2);
+	if ((msX >= 261+4-212 + SCREENX) && (msX <= 289+4 + SCREENX) && (msY >= 111+45 + SCREENY) && (msY <= 124+45 + SCREENY)) {
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER2);
 	}
 	else
-	if ((msX >= 261+4-212) && (msX <= 289+4) && (msY >= 126+45) && (msY <= 139+45)) {
-		PutAlignedString(370, 580, 345, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER3);
+	if ((msX >= 261+4-212 + SCREENX) && (msX <= 289+4 + SCREENX) && (msY >= 126+45 + SCREENY) && (msY <= 139+45 + SCREENY)) {
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER3);
 	}
 	else
-	if ((msX >= 261+4-212) && (msX <= 289+4) && (msY >= 141+45) && (msY <= 154+45)) {
-		PutAlignedString(370, 580, 345, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER4);
+	if ((msX >= 261+4-212 + SCREENX) && (msX <= 289+4 + SCREENX) && (msY >= 141+45 + SCREENY) && (msY <= 154+45 + SCREENY)) {
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER4);
 	}
 	else
-	if ((msX >= 261+4-212) && (msX <= 289+4) && (msY >= 156+45) && (msY <= 169+45)) {
-		PutAlignedString(370, 580, 345, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER5);
+	if ((msX >= 261+4-212 + SCREENX) && (msX <= 289+4 + SCREENX) && (msY >= 156+45 + SCREENY) && (msY <= 169+45 + SCREENY)) {
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER5);
 	}
 	else
-	if ((msX >= 261+4-212) && (msX <= 289+4) && (msY >= 171+45) && (msY <= 184+45)) {
-		PutAlignedString(370, 580, 345, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER6);
+	if ((msX >= 261+4-212 + SCREENX) && (msX <= 289+4 + SCREENX) && (msY >= 171+45 + SCREENY) && (msY <= 184+45 + SCREENY)) {
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER6);
 	}
 	else
-	if ((msX >= 240+4-175) && (msX <= 268+4) && (msY >= 231+45) && (msY <= 244+45)) {
+	if ((msX >= 240+4-175 + SCREENX) && (msX <= 268+4 + SCREENX) && (msY >= 231+45 + SCREENY) && (msY <= 244+45 + SCREENY)) {
 		// Str
 		i= 0 ;
-		PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER7);
-		PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER8);
-		PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER9);
-		PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER10);
-		PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER11);
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER7);
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER8);
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER9);
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER10);
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER11);
 	}
-	else if ((msX >= 240+4-175) && (msX <= 268+4) && (msY >= 246+45) && (msY <= 259+45)) {
-			// Vit
+	else if ((msX >= 240+4-175 + SCREENX) && (msX <= 268+4 + SCREENX) && (msY >= 246+45 + SCREENY) && (msY <= 259+45 + SCREENY)) {
+		// Vit
 		i= 0 ;
-		PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER12);//"
-		PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER13);//"
-		PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER14);//"
-		PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER15);//"
-		PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER16);//"
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER12);//"
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER13);//"
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER14);//"
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER15);//"
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER16);//"
 	}
-	else if ((msX >= 240+4-175) && (msX <= 268+4) && (msY >= 261+45) && (msY <= 274+45)) {
+	else if ((msX >= 240+4-175 + SCREENX) && (msX <= 268+4 + SCREENX) && (msY >= 261+45 + SCREENY) && (msY <= 274+45 + SCREENY)) {
 		// Dex
 		i= 0 ;
-		PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER17);//"
-		PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER18);//"
-		PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER19);//"
-		PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER20);//"
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER17);//"
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER18);//"
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER19);//"
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER20);//"
 	}
-	else if ((msX >= 240+4-175) && (msX <= 268+4) && (msY >= 276+45) && (msY <= 289+45)) {
+	else if ((msX >= 240+4-175 + SCREENX) && (msX <= 268+4 + SCREENX) && (msY >= 276+45 + SCREENY) && (msY <= 289+45 + SCREENY)) {
 		// Int
 		i= 0 ;
-		PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER21);//"
-		PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER22);//"
-		PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER23);//"
-		PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER24);
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER21);//"
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER22);//"
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER23);//"
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER24);
 	}
-	else if ((msX >= 240+4-175) && (msX <= 268+4) && (msY >= 291+45) && (msY <= 304+45)) {
+	else if ((msX >= 240+4-175 + SCREENX) && (msX <= 268+4 + SCREENX) && (msY >= 291+45 + SCREENY) && (msY <= 304+45 + SCREENY)) {
 		// Mag
 		i= 0 ;
-		PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER25);
-		PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER26);
-		PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER27);
-		PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER28);
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER25);
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER26);
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER27);
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER28);
 	}
-	else if ((msX >= 240+4-175) && (msX <= 268+4) && (msY >= 306+45) && (msY <= 319+45)) {
+	else if ((msX >= 240+4-175 + SCREENX) && (msX <= 268+4 + SCREENX) && (msY >= 306+45 + SCREENY) && (msY <= 319+45 + SCREENY)) {
 		// Charisma
 		i= 0 ;
-		PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER29);
-		PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER30);
-		PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER31);
-		PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER32);
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER29);
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER30);
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER31);
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER32);
 	}
-	else if ((msX >= 384) && (msX <= 384+72) && (msY >= 445) && (msY <= 445+15))  {
+	else if ((msX >= 384 + SCREENX) && (msX <= 384+72 + SCREENX) && (msY >= 445 + SCREENY) && (msY <= 445+15 + SCREENY))  {
 		m_cCurFocus = 2;
 		if (strlen(cName) <= 0)
 		{	i= 0 ;
-			PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER35);//"Please enter a character name."
+			PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER35);//"Please enter a character name."
 		}
 		else if (iPoint > 0)
 		{	i= 0 ;
-			PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER36);//"You need to select your character class."
+			PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER36);//"You need to select your character class."
 		}else if (m_Misc.bCheckValidName(cName) == FALSE)
 		{	i= 0 ;
-			PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER39);//"Cannot use special characters "
-			PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER40);//"in your character's name. Please"
-			PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER41);//"type another name."
+			PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER39);//"Cannot use special characters "
+			PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER40);//"in your character's name. Please"
+			PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER41);//"type another name."
 		}else
 		{	i= 0 ;
-			PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER44);//"
-			PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER45);//"
-			PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER46);//"
-			PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER47);//"
-			PutAlignedString(370, 580, 345 + 16*i++, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER48);//"
+			PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER44);//"
+			PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER45);//"
+			PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER46);//"
+			PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER47);//"
+			PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + 16*i++ + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER48);//"
 		}
-	}else if ((msX >= 500) && (msX <= 500+72) && (msY >= 445) && (msY <= 445+15))
+	}else if ((msX >= 500 + SCREENX) && (msX <= 500+72 + SCREENX) && (msY >= 445 + SCREENY) && (msY <= 445+15 + SCREENY))
 	{	m_cCurFocus = 3;
-		PutAlignedString(370, 580, 345 , UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER49);
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER49);
 	}
 
-	if ((msX >= 60) && (msX <= 60+72) && (msY >= 445) && (msY <= 445+15)) {
+	if ((msX >= 60 + SCREENX) && (msX <= 60+72 + SCREENX) && (msY >= 445 + SCREENY) && (msY <= 445+15 + SCREENY)) {
 		m_cCurFocus = 4;
-		PutAlignedString(370, 580, 345 , UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER50);
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER50);
 	}
 
-	if ((msX >= 145) && (msX <= 145+72) && (msY >= 445) && (msY <= 445+15)) {
+	if ((msX >= 145 + SCREENX) && (msX <= 145+72 + SCREENX) && (msY >= 445 + SCREENY) && (msY <= 445+15 + SCREENY)) {
 		m_cCurFocus = 5;
-		PutAlignedString(370, 580, 345 , UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER51);
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER51);
 	}
 
-	if ((msX >= 230) && (msX <= 230+72) && (msY >= 445) && (msY <= 445+15)) {
+	if ((msX >= 230 + SCREENX) && (msX <= 230+72 + SCREENX) && (msY >= 445 + SCREENY) && (msY <= 445+15 + SCREENY)) {
 		m_cCurFocus = 6;
-		PutAlignedString(370, 580, 345 , UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER52);
+		PutAlignedString(370 + SCREENX, 580 + SCREENX, 345 + SCREENY, UPDATE_SCREEN_ON_CREATE_NEW_CHARACTER52);
 	}
 
 	if (m_DDraw.iFlip() == DDERR_SURFACELOST) RestoreSprites();
 }
-
-
 
 void CGame::_LoadAgreementTextContents(char cType)
 {
@@ -22837,16 +22837,16 @@ void CGame::UpdateScreen_OnCreateNewAccount()
 
 	if (m_cGameModeCount == 0)
 	{	pMI = new class CMouseInterface;
-		pMI->AddRect(310+ SCREENX, 80 + SCREENX,560 + SCREENY,100 + SCREENY);
-		pMI->AddRect(310 + SCREENX,101 + SCREENX,558 + SCREENY,122 + SCREENY);
-		pMI->AddRect(310 + SCREENX,123 + SCREENX,558 + SCREENY,145 + SCREENY);
+		pMI->AddRect(310+ SCREENX, 80 + SCREENY,560 + SCREENX,100 + SCREENY);
+		pMI->AddRect(310 + SCREENX,101 + SCREENY,558 + SCREENX,122 + SCREENY);
+		pMI->AddRect(310 + SCREENX,123 + SCREENY,558 + SCREENX,145 + SCREENY);
 		
-		pMI->AddRect(300 + SCREENX,192 + SCREENX,560 + SCREENY,231 + SCREENY);
-		pMI->AddRect(300 + SCREENX,232 + SCREENX,560 + SCREENY,268 + SCREENY);   // Quiz 8  // +41
-		pMI->AddRect(300 + SCREENX,269 + SCREENX,560 + SCREENY,306 + SCREENY);   // Answer 9
-		pMI->AddRect(297 + SCREENX, 399 + SCREENX, 367 + SCREENY, 417 + SCREENY);  // Create 10
-		pMI->AddRect(392 + SCREENX, 399 + SCREENX, 462 + SCREENY, 417 + SCREENY);  // Clear  11
-		pMI->AddRect(488 + SCREENX, 399 + SCREENX, 558 + SCREENY, 417 + SCREENY);  // Cancel  12   Size 73 x 15
+		pMI->AddRect(300 + SCREENX,192 + SCREENY,560 + SCREENX,231 + SCREENY);
+		pMI->AddRect(300 + SCREENX,232 + SCREENY,560 + SCREENX,268 + SCREENY);   // Quiz 8  // +41
+		pMI->AddRect(300 + SCREENX,269 + SCREENY,560 + SCREENX,306 + SCREENY);   // Answer 9
+		pMI->AddRect(297 + SCREENX, 399 + SCREENY, 367 + SCREENX, 417 + SCREENY);  // Create 10
+		pMI->AddRect(392 + SCREENX, 399 + SCREENY, 462 + SCREENX, 417 + SCREENY);  // Clear  11
+		pMI->AddRect(488 + SCREENX, 399 + SCREENY, 558 + SCREENX, 417 + SCREENY);  // Cancel  12   Size 73 x 15
 		cPrevFocus  = 1;
 		m_cCurFocus = 1;
 		m_cMaxFocus = 9; //12
@@ -29062,8 +29062,8 @@ void CGame::DrawFlagCarrier(short sX, short sY, char cFrame, DWORD dwTime)
 {
 	if ((_tmp_iStatus & 0x80000) != 0) {
 		if (m_bAresden)
-			m_pSprite[DEF_SPRID_ITEMGROUND_PIVOTPOINT + 6]->PutSpriteFast(sX, sY - 80, 56, dwTime); //aresden flag
-		else m_pSprite[DEF_SPRID_ITEMGROUND_PIVOTPOINT + 6]->PutSpriteFast(sX, sY - 80, 57, dwTime); //elvine flag
+			m_pSprite[DEF_SPRID_ITEMGROUND_PIVOTPOINT + 6]->PutSpriteFast(sX, sY - 80, 57, dwTime); // flag
+		else m_pSprite[DEF_SPRID_ITEMGROUND_PIVOTPOINT + 6]->PutSpriteFast(sX, sY - 80, 56, dwTime); // flag
 	}
 }
 
@@ -31481,21 +31481,23 @@ void CGame::UpdateScreen_OnGame()
 	//50Cent - Capture The Flag
 	if (iUpdateRet != 0 && m_bIsCTFMode)
 	{
-		wsprintf(G_cTxt, "Elvine flags: %d", m_sElvineFlagCount);
-		PutString(10, 140, G_cTxt, RGB(255, 255, 255));
-		if (m_bIsElvineFlagStatus) PutString(10, 160, "Elvine flag protected", RGB(0, 255, 0));
-		else PutString(10, 160, "Elvine flag captured!", RGB(255, 0, 0));
+		m_pSprite[DEF_SPRID_ITEMGROUND_PIVOTPOINT + 6]->PutSpriteFast(10, 200, 57, dwTime);
+		wsprintf(G_cTxt, "%d", m_sElvineFlagCount);
+		PutString(20, 200, G_cTxt, RGB(255, 255, 255));
+		if (m_bIsElvineFlagStatus) PutString(30, 200, "(protected)", RGB(0, 255, 0));
+		else PutString(30, 200, "(captured!)", RGB(255, 0, 0));
 
-		wsprintf(G_cTxt, "Aresden flags: %d", m_sAresdenFlagCount);
-		PutString(10, 180, G_cTxt, RGB(255, 255, 255));
-		if (m_bIsAresdenFlagStatus) PutString(10, 200, "Aresden flag protected", RGB(0, 255, 0));
-		else PutString(10, 200, "Aresden flag captured!", RGB(255, 0, 0));
+		m_pSprite[DEF_SPRID_ITEMGROUND_PIVOTPOINT + 6]->PutSpriteFast(10, 160, 56, dwTime);
+		wsprintf(G_cTxt, "%d", m_sAresdenFlagCount);
+		PutString(20, 160, G_cTxt, RGB(255, 255, 255));
+		if (m_bIsAresdenFlagStatus) PutString(30, 160, "(protected)", RGB(0, 255, 0));
+		else PutString(30, 160, "(captured!)", RGB(255, 0, 0));
 
-		if (m_bIsElvineFlagStatus) if (memcmp(m_cCurLocation, "elvine", 6) == 0) m_pSprite[DEF_SPRID_ITEMDYNAMIC_PIVOTPOINT + 2]->PutSpriteFast(151 * 32 - m_sViewPointX - 96, 132 * 32 - m_sViewPointY - 69, 5, dwTime); //elvine flag
-		else if (memcmp(m_cCurLocation, "elvine", 6) == 0) m_pSprite[DEF_SPRID_ITEMDYNAMIC_PIVOTPOINT + 2]->PutTransSprite2(151 * 32 - m_sViewPointX - 96, 132 * 32 - m_sViewPointY - 69, 5, dwTime); //elvine flag
+		if (m_bIsElvineFlagStatus) if (memcmp(m_cCurLocation, "elvine", 6) == 0) m_pSprite[DEF_SPRID_ITEMDYNAMIC_PIVOTPOINT + 2]->PutSpriteFast(148 * 32 - m_sViewPointX, 130 * 32 - m_sViewPointY, 5, dwTime); //elvine flag
+		else if (memcmp(m_cCurLocation, "elvine", 6) == 0) m_pSprite[DEF_SPRID_ITEMDYNAMIC_PIVOTPOINT + 2]->PutTransSprite2(148 * 32 - m_sViewPointX, 130 * 32 - m_sViewPointY, 5, dwTime); //elvine flag
 
-		if (m_bIsAresdenFlagStatus) if (memcmp(m_cCurLocation, "aresden", 7) == 0) m_pSprite[DEF_SPRID_ITEMDYNAMIC_PIVOTPOINT + 2]->PutSpriteFast(151 * 32 - m_sViewPointX - 96, 132 * 32 - m_sViewPointY - 69, 1, dwTime); //aresden flag
-		else if (memcmp(m_cCurLocation, "aresden", 7) == 0) m_pSprite[DEF_SPRID_ITEMDYNAMIC_PIVOTPOINT + 2]->PutTransSprite2(151 * 32 - m_sViewPointX - 96, 132 * 32 - m_sViewPointY - 69, 1, dwTime); //aresden flag
+		if (m_bIsAresdenFlagStatus) if (memcmp(m_cCurLocation, "aresden", 7) == 0) m_pSprite[DEF_SPRID_ITEMDYNAMIC_PIVOTPOINT + 2]->PutSpriteFast(148 * 32 - m_sViewPointX, 126 * 32 - m_sViewPointY, 1, dwTime); //aresden flag
+		else if (memcmp(m_cCurLocation, "aresden", 7) == 0) m_pSprite[DEF_SPRID_ITEMDYNAMIC_PIVOTPOINT + 2]->PutTransSprite2(148 * 32 - m_sViewPointX, 126 * 32 - m_sViewPointY, 1, dwTime); //aresden flag
 	}
 
 	DrawTopMsg();

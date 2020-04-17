@@ -1069,20 +1069,20 @@ void CMapData::ShiftMapData(char cDir)
 			break;
 		case 2://arriba derecha
 			for (iy = 0; iy < 20; iy++)
-				for (ix = 0; ix < 25; ix++)
+				for (ix = 0; ix < 26; ix++)
 					memcpy(&m_pTmpData[6 + ix][8 + iy], &m_pData[7 + ix][7 + iy], sizeof(class CTile));
 			m_sPivotX++;
 			m_sPivotY--;
 			break;
 		case 3://derecha
-			for (iy = 0; iy < 21; iy++)
-				for (ix = 0; ix < 25; ix++)
+			for (iy = 0; iy < 20; iy++)
+				for (ix = 0; ix < 26; ix++)
 					memcpy(&m_pTmpData[6 + ix][7 + iy], &m_pData[7 + ix][7 + iy], sizeof(class CTile));
 			m_sPivotX++;
 			break;
 		case 4://abajo derecha
 			for (iy = 0; iy < 20; iy++)
-				for (ix = 0; ix < 25; ix++)
+				for (ix = 0; ix < 26; ix++)
 					memcpy(&m_pTmpData[6 + ix][7 + iy], &m_pData[7 + ix][8 + iy], sizeof(class CTile));
 			m_sPivotX++;
 			m_sPivotY++;
@@ -1095,20 +1095,20 @@ void CMapData::ShiftMapData(char cDir)
 			break;
 		case 6://abajo izquierda
 			for (iy = 0; iy < 20; iy++)
-				for (ix = 0; ix < 25; ix++)
+				for (ix = 0; ix < 26; ix++)
 					memcpy(&m_pTmpData[7 + ix][7 + iy], &m_pData[6 + ix][8 + iy], sizeof(class CTile));
 			m_sPivotX--;
 			m_sPivotY++;
 			break;
 		case 7://izquierda
-			for (iy = 0; iy < 21; iy++)
-				for (ix = 0; ix < 25; ix++)
+			for (iy = 0; iy < 20; iy++)
+				for (ix = 0; ix < 26; ix++)
 					memcpy(&m_pTmpData[7 + ix][7 + iy], &m_pData[6 + ix][7 + iy], sizeof(class CTile));
 			m_sPivotX--;
 			break;
 		case 8://arriba izquierda
 			for (iy = 0; iy < 20; iy++)
-				for (ix = 0; ix < 25; ix++)
+				for (ix = 0; ix < 26; ix++)
 					memcpy(&m_pTmpData[7 + ix][8 + iy], &m_pData[6 + ix][7 + iy], sizeof(class CTile));
 			m_sPivotX--;
 			m_sPivotY--;
@@ -1848,9 +1848,9 @@ int CMapData::iObjectFrameCounter(char * cPlayerName, short sViewPointX, short s
 
 #ifdef RES_HIGH
 	sVal = sViewPointX - (m_sPivotX * 32);
-	sCenterX = (sVal / 32) + 13;
+	sCenterX = (sVal / 32) + 12;
 	sVal = sViewPointY - (m_sPivotY * 32);
-	sCenterY = (sVal / 32) + 11;
+	sCenterY = (sVal / 32) + 9;
 #else
 	sVal = sViewPointX - (m_sPivotX*32);
 	sCenterX = (sVal / 32) + 10;
@@ -3904,8 +3904,8 @@ BOOL CMapData::bSetItem(short sX, short sY, short sItemSpr, short sItemSprFrame,
 	m_pData[dX][dY].m_cItemColor       = cItemColor;
 
 #ifdef RES_HIGH
-	sAbsX = abs(((m_pGame->m_sViewPointX / 32) + 13) - sX);
-	sAbsY = abs(((m_pGame->m_sViewPointY / 32) + 10) - sY);
+	sAbsX = abs(((m_pGame->m_sViewPointX / 32) + 12) - sX);
+	sAbsY = abs(((m_pGame->m_sViewPointY / 32) + 9) - sY);
 #else
 	sAbsX = abs(((m_pGame->m_sViewPointX / 32) + 10) - sX);
 	sAbsY = abs(((m_pGame->m_sViewPointY / 32) + 7)  - sY);
