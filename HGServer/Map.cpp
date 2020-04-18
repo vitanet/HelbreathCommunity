@@ -2909,6 +2909,7 @@ int CGame::iRequestPanningMapDataRequest(int iClientH, char* pData)
 
 	cp = (char*)(cData + DEF_INDEX2_MSGTYPE + 2);
 
+	// centu - 800x600
 	sp = (short*)cp;
 	*sp = (short)(dX - 12);
 	cp += 2;
@@ -2922,6 +2923,7 @@ int CGame::iRequestPanningMapDataRequest(int iClientH, char* pData)
 
 	RefreshPartyCoords(iClientH);
 
+	// centu - 800x600
 	iSize = iComposeMoveMapData((short)(dX - 12), (short)(dY - 9), iClientH, cDir, cp);
 	iRet = m_pClientList[iClientH]->m_pXSock->iSendMsg(cData, iSize + 12 + 1 + 4);
 	switch (iRet) {
@@ -3006,7 +3008,8 @@ int CGame::iComposeInitMapData(short sX, short sY, int iClientH, char* pData)
 	iSize = 2;
 	iTileExists = 0;
 	pTileSrc = (class CTile*)(m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_pTile + (sX)+(sY)*m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_sSizeY);
-	for (iy = 0; iy < 21; iy++) // 16
+	// centu - 800x600
+	for (iy = 0; iy < 20; iy++) // 16
 		for (ix = 0; ix < 26; ix++) { // 21
 			if (((sX + ix) == 100) && ((sY + iy) == 100)) sX = sX;
 			pTile = (class CTile*)(pTileSrc + ix + iy * m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_sSizeY);
@@ -3444,14 +3447,12 @@ void CGame::SendEventToNearClient_TypeA(short sOwnerH, char cOwnerType, DWORD dw
 
 			iShortCutIndex++;
 			if ((m_pClientList[i] != NULL) && (m_pClientList[i]->m_bIsInitComplete == TRUE)) {
-
+				// centu - 800x600
 				if ((m_pClientList[i]->m_cMapIndex == m_pClientList[sOwnerH]->m_cMapIndex) &&
 					(m_pClientList[i]->m_sX >= m_pClientList[sOwnerH]->m_sX - 12 - sRange) && // 10
 					(m_pClientList[i]->m_sX <= m_pClientList[sOwnerH]->m_sX + 12 + sRange) && // 10
 					(m_pClientList[i]->m_sY >= m_pClientList[sOwnerH]->m_sY - 9 - sRange) && // 8
 					(m_pClientList[i]->m_sY <= m_pClientList[sOwnerH]->m_sY + 9 + sRange)) { // 8
-
-
 
 					if (m_pClientList[sOwnerH]->m_cSide != m_pClientList[i]->m_cSide) {
 						if (m_pClientList[i]->m_iAdminUserLevel > 0) {
@@ -3473,6 +3474,7 @@ void CGame::SendEventToNearClient_TypeA(short sOwnerH, char cOwnerType, DWORD dw
 					iTemp = (iTemp | (iTemp2 << 28));
 					*ipStatus = iTemp;
 
+					// centu - 800x600
 					if ((m_pClientList[i]->m_sX >= m_pClientList[sOwnerH]->m_sX - 12) && // 9
 						(m_pClientList[i]->m_sX <= m_pClientList[sOwnerH]->m_sX + 12) && // 9
 						(m_pClientList[i]->m_sY >= m_pClientList[sOwnerH]->m_sY - 9) && // 7
@@ -3662,6 +3664,7 @@ void CGame::SendEventToNearClient_TypeA(short sOwnerH, char cOwnerType, DWORD dw
 
 			iShortCutIndex++;
 			if (m_pClientList[i] != NULL) {
+				// centu - 800x600
 				if ((m_pClientList[i]->m_cMapIndex == m_pNpcList[sOwnerH]->m_cMapIndex) &&
 					(m_pClientList[i]->m_sX >= m_pNpcList[sOwnerH]->m_sX - 12 - sRange) && // 10
 					(m_pClientList[i]->m_sX <= m_pNpcList[sOwnerH]->m_sX + 12 + sRange) && // 10
@@ -3674,6 +3677,7 @@ void CGame::SendEventToNearClient_TypeA(short sOwnerH, char cOwnerType, DWORD dw
 					iTemp = (iTemp | (iTemp2 << 28));
 					*ipStatus = iTemp;
 
+					// centu - 800x600
 					if ((m_pClientList[i]->m_sX >= m_pNpcList[sOwnerH]->m_sX - 12) && // 9
 						(m_pClientList[i]->m_sX <= m_pNpcList[sOwnerH]->m_sX + 12) && // 9
 						(m_pClientList[i]->m_sY >= m_pNpcList[sOwnerH]->m_sY - 9) && // 7
@@ -3792,6 +3796,7 @@ void CGame::SendEventToNearClient_TypeB(DWORD dwMsgID, WORD wMsgType, char cMapI
 		iShortCutIndex++;
 
 		if (m_pClientList[i] != NULL) {
+			// centu - 800x600
 			if ((m_pClientList[i]->m_cMapIndex == cMapIndex) &&
 				(m_pClientList[i]->m_sX >= sX - 12) && // 10
 				(m_pClientList[i]->m_sX <= sX + 12) && // 10

@@ -544,7 +544,7 @@ void CGame::_DeleteRandomOccupyFlag(int iMapIndex)
 				delete m_pDynamicObjectList[iDynamicObjectIndex];
 				m_pDynamicObjectList[iDynamicObjectIndex] = NULL;
 
-				// ÀÌ ±ê¹ßÀ» »èÁ¦ÇÏ¹Ç·Î ¿µÇâ±Ç ³»ÀÇ °ªÀ» º¯°æ½ÃÄÑ¾ß ÇÑ´Ù. *** ¸Ç ¸¶Áö¸·¿¡ Ã³¸®ÇØ¾ß ÇÑ´Ù.
+				// centu - 800x600
 				for (tx = fx - 12; tx <= fx + 12; tx++) // 10
 					for (ty = fy - 9; ty <= fy + 9; ty++) {	 // 8
 						if ((tx < 0) || (tx >= m_pMapList[iMapIndex]->m_sSizeX) ||
