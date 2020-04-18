@@ -16883,7 +16883,7 @@ BOOL CGame::bEffectFrameCounter()
 					bAddNewEffect(110, m_pEffectList[i]->m_sX, m_pEffectList[i]->m_sY,
 						m_pEffectList[i]->m_dX + 1, m_pEffectList[i]->m_dY + 1, 0);
 					bAddNewEffect(8, m_pEffectList[i]->m_mX + (rand() % 20) - 10, m_pEffectList[i]->m_mY + (rand() % 20) - 10, NULL, NULL, -1 * (rand() % 4));
-					lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX) * 1000;
+					lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX) * 1000; // centu - 800x600
 					PlaySound('E', 1, sDist, lPan);
 					bAddNewEffect(7, m_pEffectList[i]->m_dX * 32, m_pEffectList[i]->m_dY * 32, NULL, NULL, 0);
 					delete m_pEffectList[i];
@@ -16919,11 +16919,11 @@ BOOL CGame::bEffectFrameCounter()
 							bAddNewEffect(83, m_pEffectList[i]->m_mX + 34, m_pEffectList[i]->m_mY + 34, NULL, NULL, 0, 0);
 							bAddNewEffect(83, m_pEffectList[i]->m_mX, m_pEffectList[i]->m_mY + 2, NULL, NULL, 0, 0);
 							bAddNewEffect(10, m_pEffectList[i]->m_mX, m_pEffectList[i]->m_mY, NULL, NULL, 0);
-							sAbsX = abs(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX);
-							sAbsY = abs(((m_sViewPointY / 32) + 9) - m_pEffectList[i]->m_dY);
+							sAbsX = abs(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX); // centu - 800x600
+							sAbsY = abs(((m_sViewPointY / 32) + 9) - m_pEffectList[i]->m_dY); // centu - 800x600
 							if (sAbsX > sAbsY) sDist = sAbsX - 10;
 							else sDist = sAbsY - 10;
-							lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX);
+							lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX); // centu - 800x600
 							PlaySound('M', 152, sDist, lPan);
 						}
 					}
@@ -16948,7 +16948,7 @@ BOOL CGame::bEffectFrameCounter()
 #endif
 						if (sAbsX > sAbsY) sDist = sAbsX;
 						else sDist = sAbsY;
-						lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX) * 1000;
+						lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX) * 1000; // centu - 800x600
 						PlaySound('E', 1, sDist, lPan);
 					}
 					break;
@@ -16986,7 +16986,7 @@ BOOL CGame::bEffectFrameCounter()
 #endif
 						if (sAbsX > sAbsY) sDist = sAbsX;
 						else sDist = sAbsY;
-						lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX);
+						lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX); // centu - 800x600
 						PlaySound('E', 1, sDist, lPan);
 					}
 					break;
@@ -17049,7 +17049,7 @@ BOOL CGame::bEffectFrameCounter()
 #endif
 						if (sAbsX > sAbsY) sDist = sAbsX;
 						else sDist = sAbsY;
-						lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX);
+						lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX); // centu - 800x600
 						PlaySound('E', 1, sDist, lPan);
 					}
 					break;
@@ -17095,7 +17095,7 @@ BOOL CGame::bEffectFrameCounter()
 #endif
 						if (sAbsX > sAbsY) sDist = sAbsX;
 						else sDist = sAbsY;
-						lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX);
+						lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX); // centu - 800x600
 						PlaySound('E', 1, sDist, lPan);
 					}
 					break;
@@ -17144,7 +17144,7 @@ BOOL CGame::bEffectFrameCounter()
 #endif
 						if (sAbsX > sAbsY) sDist = sAbsX;
 						else sDist = sAbsY;
-						lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX);
+						lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX); // centu - 800x600
 						PlaySound('E', 1, sDist, lPan);
 					}
 					break;
@@ -17177,7 +17177,7 @@ BOOL CGame::bEffectFrameCounter()
 #endif
 						if (sAbsX > sAbsY) sDist = sAbsX - 10;
 						else sDist = sAbsY - 10;
-						lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX);
+						lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX); // centu - 800x600
 						PlaySound('E', 1, sDist, lPan);
 					}
 
@@ -17210,7 +17210,7 @@ BOOL CGame::bEffectFrameCounter()
 #endif
 						if (sAbsX > sAbsY) sDist = sAbsX - 10;
 						else sDist = sAbsY - 10;
-						lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX);
+						lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX); // centu - 800x600
 						PlaySound('E', 1, sDist, lPan);
 					}
 					break;

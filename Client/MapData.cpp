@@ -2053,8 +2053,9 @@ int CMapData::iObjectFrameCounter(char * cPlayerName, short sViewPointX, short s
 					m_dwFrameCheckTime = dwRealTime;
 				}
 				if (m_pData[dX][dY].m_cOwnerFrame > m_stFrame[m_pData[dX][dY].m_sOwnerType][m_pData[dX][dY].m_cOwnerAction].m_sMaxFrame)
-				{	if (   (m_sRectX <= dX) && ((m_sRectX + 25) >= dX)
-						&& (m_sRectY <= dY) && ((m_sRectY + 20) >= dY))
+				{	// centu - 800x600 limit screen
+					if (   (m_sRectX <= dX) && ((m_sRectX + 25) >= dX)
+						&& (m_sRectY <= dY) && ((m_sRectY + 19) >= dY))
 						// (!) Ower -> DeadOwner 004971AB
 					{	if (m_pData[dX][dY].m_cOwnerAction == DEF_OBJECTDYING) //10
 						{	m_pData[dX][dY].m_wDeadObjectID        = m_pData[dX][dY].m_wObjectID;

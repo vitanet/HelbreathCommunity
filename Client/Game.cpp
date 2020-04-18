@@ -111,8 +111,6 @@ CGame::CGame()
 	for (i = 0; i < DEF_MAXBUILDITEMS; i++) m_pCraftItemList[i] = NULL;
 	for (i = 0; i < DEF_MAXBUILDITEMS; i++) m_pDispCraftItemList[i] = NULL;
 
-
-
 	for (i = 0; i < DEF_MAXGAMEMSGS; i++) m_pGameMsgList[i] = NULL;
 
 	m_pExID = NULL;
@@ -131,50 +129,50 @@ CGame::CGame()
 	// CLEROTh - INIT DIALOG BOXES
 
 	//Character-Info Dialog(F5)
-	m_stDialogBoxInfo[1].sX = 30;
-	m_stDialogBoxInfo[1].sY = 30;
+	m_stDialogBoxInfo[1].sX = 30+SCREENX;
+	m_stDialogBoxInfo[1].sY = 30 + SCREENY;
 	m_stDialogBoxInfo[1].sSizeX = 270;
 	m_stDialogBoxInfo[1].sSizeY = 376;
 
 	//Inventory Dialog(F6)
-	m_stDialogBoxInfo[2].sX = 380;
-	m_stDialogBoxInfo[2].sY = 210;
+	m_stDialogBoxInfo[2].sX = 380 + SCREENX;
+	m_stDialogBoxInfo[2].sY = 210 + SCREENY;
 	m_stDialogBoxInfo[2].sSizeX = 225;
 	m_stDialogBoxInfo[2].sSizeY = 185;
 
 	//Magic Circle Dialog(F7)
-	m_stDialogBoxInfo[3].sX = 337;
-	m_stDialogBoxInfo[3].sY = 57;
+	m_stDialogBoxInfo[3].sX = 337 + SCREENX;
+	m_stDialogBoxInfo[3].sY = 57 + SCREENY;
 	m_stDialogBoxInfo[3].sSizeX = 258;//280;
 	m_stDialogBoxInfo[3].sSizeY = 328;//346;
 
 	// Item drop confirmation
-	m_stDialogBoxInfo[4].sX = 0;
-	m_stDialogBoxInfo[4].sY = 0;
+	m_stDialogBoxInfo[4].sX = 0 + SCREENX;
+	m_stDialogBoxInfo[4].sY = 0 + SCREENY;
 	m_stDialogBoxInfo[4].sSizeX = 270;
 	m_stDialogBoxInfo[4].sSizeY = 105;
 
 	// Age <15 box !?!?!?
-	m_stDialogBoxInfo[5].sX = 0;
-	m_stDialogBoxInfo[5].sY = 0;
+	m_stDialogBoxInfo[5].sX = 0 + SCREENX;
+	m_stDialogBoxInfo[5].sY = 0 + SCREENY;
 	m_stDialogBoxInfo[5].sSizeX = 310;
 	m_stDialogBoxInfo[5].sSizeY = 170;
 
 	// ** This is a battle area **
-	m_stDialogBoxInfo[6].sX = 0;
-	m_stDialogBoxInfo[6].sY = 0;
+	m_stDialogBoxInfo[6].sX = 0 + SCREENX;
+	m_stDialogBoxInfo[6].sY = 0 + SCREENY;
 	m_stDialogBoxInfo[6].sSizeX = 310;
 	m_stDialogBoxInfo[6].sSizeY = 170;
 
 	//Guild Menu Dialog
-	m_stDialogBoxInfo[7].sX = 337;
-	m_stDialogBoxInfo[7].sY = 57;
+	m_stDialogBoxInfo[7].sX = 337 + SCREENX;
+	m_stDialogBoxInfo[7].sY = 57 + SCREENY;
 	m_stDialogBoxInfo[7].sSizeX = 258;
 	m_stDialogBoxInfo[7].sSizeY = 339;
 
 	//Guild Operation Dialog
-	m_stDialogBoxInfo[8].sX = 337;
-	m_stDialogBoxInfo[8].sY = 57;
+	m_stDialogBoxInfo[8].sX = 337 + SCREENX;
+	m_stDialogBoxInfo[8].sY = 57 + SCREENY;
 	m_stDialogBoxInfo[8].sSizeX = 295;
 	m_stDialogBoxInfo[8].sSizeY = 346;
 
@@ -189,122 +187,122 @@ CGame::CGame()
 	m_stDialogBoxInfo[9].sSizeY = 128;
 
 	//Chatting History Dialog(F9)
-	m_stDialogBoxInfo[10].sX = 135;
-	m_stDialogBoxInfo[10].sY = 273;
+	m_stDialogBoxInfo[10].sX = 135 + SCREENX;
+	m_stDialogBoxInfo[10].sY = 273 + SCREENY;
 	m_stDialogBoxInfo[10].sSizeX = 364;
 	m_stDialogBoxInfo[10].sSizeY = 162;
 
 	//Sale Menu Dialog
-	m_stDialogBoxInfo[11].sX = 70;
-	m_stDialogBoxInfo[11].sY = 50;
+	m_stDialogBoxInfo[11].sX = 70 + SCREENX;
+	m_stDialogBoxInfo[11].sY = 50 + SCREENY;
 	m_stDialogBoxInfo[11].sSizeX = 258;
 	m_stDialogBoxInfo[11].sSizeY = 339;
 
 	//Level-Up Setting Dialog
-	m_stDialogBoxInfo[12].sX = 0;
-	m_stDialogBoxInfo[12].sY = 0;
+	m_stDialogBoxInfo[12].sX = 0 + SCREENX;
+	m_stDialogBoxInfo[12].sY = 0 + SCREENY;
 	m_stDialogBoxInfo[12].sSizeX = 258;
 	m_stDialogBoxInfo[12].sSizeY = 339;
 
 	//City Hall Menu Dialog
-	m_stDialogBoxInfo[13].sX = 337;
-	m_stDialogBoxInfo[13].sY = 57;
+	m_stDialogBoxInfo[13].sX = 337 + SCREENX;
+	m_stDialogBoxInfo[13].sY = 57 + SCREENY;
 	m_stDialogBoxInfo[13].sSizeX = 258;
 	m_stDialogBoxInfo[13].sSizeY = 339;
 
 	//Bank Dialog
-	m_stDialogBoxInfo[14].sX = 60; //337
-	m_stDialogBoxInfo[14].sY = 50;
+	m_stDialogBoxInfo[14].sX = 60 + SCREENX; //337
+	m_stDialogBoxInfo[14].sY = 50 + SCREENY;
 	m_stDialogBoxInfo[14].sSizeX = 258;
 	m_stDialogBoxInfo[14].sSizeY = 339;
 	m_stDialogBoxInfo[14].sV1 = 13;
 
 	//Skill Menu(F8)
-	m_stDialogBoxInfo[15].sX = 337;
-	m_stDialogBoxInfo[15].sY = 57;
+	m_stDialogBoxInfo[15].sX = 337 + SCREENX;
+	m_stDialogBoxInfo[15].sY = 57 + SCREENY;
 	m_stDialogBoxInfo[15].sSizeX = 258;
 	m_stDialogBoxInfo[15].sSizeY = 339;
 
 	//Magic Shop Menu
-	m_stDialogBoxInfo[16].sX = 30;
-	m_stDialogBoxInfo[16].sY = 30;
+	m_stDialogBoxInfo[16].sX = 30 + SCREENX;
+	m_stDialogBoxInfo[16].sY = 30 + SCREENY;
 	m_stDialogBoxInfo[16].sSizeX = 304;
 	m_stDialogBoxInfo[16].sSizeY = 328;
 
 	//Dialog items drop external screen
-	m_stDialogBoxInfo[17].sX = 0;
-	m_stDialogBoxInfo[17].sY = 0;
+	m_stDialogBoxInfo[17].sX = 0 + SCREENX;
+	m_stDialogBoxInfo[17].sY = 0 + SCREENY;
 	m_stDialogBoxInfo[17].sSizeX = 215;
 	m_stDialogBoxInfo[17].sSizeY = 87;
 
 	//Text Dialog
-	m_stDialogBoxInfo[18].sX = 20;
-	m_stDialogBoxInfo[18].sY = 65;
+	m_stDialogBoxInfo[18].sX = 20 + SCREENX;
+	m_stDialogBoxInfo[18].sY = 65 + SCREENY;
 	m_stDialogBoxInfo[18].sSizeX = 258; // 238
 	m_stDialogBoxInfo[18].sSizeY = 339; // 274
 
 	//System Menu Dialog(F12)
-	m_stDialogBoxInfo[19].sX = 337;
-	m_stDialogBoxInfo[19].sY = 107;
+	m_stDialogBoxInfo[19].sX = 337 + SCREENX;
+	m_stDialogBoxInfo[19].sY = 107 + SCREENY;
 	m_stDialogBoxInfo[19].sSizeX = 258; //v2.18
 	m_stDialogBoxInfo[19].sSizeY = 268;
 
 	//NpcActionQuery Dialog
-	m_stDialogBoxInfo[20].sX = 237;
-	m_stDialogBoxInfo[20].sY = 57;
+	m_stDialogBoxInfo[20].sX = 237 + SCREENX;
+	m_stDialogBoxInfo[20].sY = 57 + SCREENY;
 	m_stDialogBoxInfo[20].sSizeX = 252;
 	m_stDialogBoxInfo[20].sSizeY = 87;
 
 	//NpcTalk Dialog
-	m_stDialogBoxInfo[21].sX = 337;
-	m_stDialogBoxInfo[21].sY = 57;
+	m_stDialogBoxInfo[21].sX = 337 + SCREENX;
+	m_stDialogBoxInfo[21].sY = 57 + SCREENY;
 	m_stDialogBoxInfo[21].sSizeX = 258;
 	m_stDialogBoxInfo[21].sSizeY = 339;
 
 	//Map
-	m_stDialogBoxInfo[22].sX = 336;
-	m_stDialogBoxInfo[22].sY = 88;
+	m_stDialogBoxInfo[22].sX = 336 + SCREENX;
+	m_stDialogBoxInfo[22].sY = 88 + SCREENY;
 	m_stDialogBoxInfo[22].sSizeX = 270;
 	m_stDialogBoxInfo[22].sSizeY = 346;
 
 	//ItemSellorRepair Dialog
-	m_stDialogBoxInfo[23].sX = 337;
-	m_stDialogBoxInfo[23].sY = 57;
+	m_stDialogBoxInfo[23].sX = 337 + SCREENX;
+	m_stDialogBoxInfo[23].sY = 57 + SCREENY;
 	m_stDialogBoxInfo[23].sSizeX = 258;
 	m_stDialogBoxInfo[23].sSizeY = 339;
 
 	//Fishing Dialog
-	m_stDialogBoxInfo[24].sX = 193;
-	m_stDialogBoxInfo[24].sY = 241;
+	m_stDialogBoxInfo[24].sX = 193 + SCREENX;
+	m_stDialogBoxInfo[24].sY = 241 + SCREENY;
 	m_stDialogBoxInfo[24].sSizeX = 263;
 	m_stDialogBoxInfo[24].sSizeY = 100;
 
 	//Noticement Dialog
-	m_stDialogBoxInfo[25].sX = 162;
-	m_stDialogBoxInfo[25].sY = 40;
+	m_stDialogBoxInfo[25].sX = 162 + SCREENX;
+	m_stDialogBoxInfo[25].sY = 40 + SCREENY;
 	m_stDialogBoxInfo[25].sSizeX = 315;
 	m_stDialogBoxInfo[25].sSizeY = 171;
 
 	//Manufacture Dialog
-	m_stDialogBoxInfo[26].sX = 100;
-	m_stDialogBoxInfo[26].sY = 60;
+	m_stDialogBoxInfo[26].sX = 100 + SCREENX;
+	m_stDialogBoxInfo[26].sY = 60 + SCREENY;
 	m_stDialogBoxInfo[26].sSizeX = 258;
 	m_stDialogBoxInfo[26].sSizeY = 339;
 
 	//Exchange Dialog
-	m_stDialogBoxInfo[27].sX = 100;
-	m_stDialogBoxInfo[27].sY = 30;
+	m_stDialogBoxInfo[27].sX = 100 + SCREENX;
+	m_stDialogBoxInfo[27].sY = 30 + SCREENY;
 	m_stDialogBoxInfo[27].sSizeX = 520;
 	m_stDialogBoxInfo[27].sSizeY = 357;
 
 	//Quest Dialog
-	m_stDialogBoxInfo[28].sX = 0;
-	m_stDialogBoxInfo[28].sY = 0;
+	m_stDialogBoxInfo[28].sX = 0 + SCREENX;
+	m_stDialogBoxInfo[28].sY = 0 + SCREENY;
 	m_stDialogBoxInfo[28].sSizeX = 258;
 	m_stDialogBoxInfo[28].sSizeY = 339;
 
 	//Gauge Pannel
-	m_stDialogBoxInfo[29].sX = 0;
+	m_stDialogBoxInfo[29].sX = 0; //80;
 	m_stDialogBoxInfo[29].sY = 434;
 	m_stDialogBoxInfo[29].sSizeX = 157;
 	m_stDialogBoxInfo[29].sSizeY = 53;
@@ -322,152 +320,152 @@ CGame::CGame()
 	m_stDialogBoxInfo[30].sSizeY = 53;
 
 	//Sell List Dialog
-	m_stDialogBoxInfo[31].sX = 170;
-	m_stDialogBoxInfo[31].sY = 70;
+	m_stDialogBoxInfo[31].sX = 170 + SCREENX;
+	m_stDialogBoxInfo[31].sY = 70 + SCREENY;
 	m_stDialogBoxInfo[31].sSizeX = 258;
 	m_stDialogBoxInfo[31].sSizeY = 339;
 
 	//Party Dialog
-	m_stDialogBoxInfo[32].sX = 0;
-	m_stDialogBoxInfo[32].sY = 0;
+	m_stDialogBoxInfo[32].sX = 0 + SCREENX;
+	m_stDialogBoxInfo[32].sY = 0 + SCREENY;
 	m_stDialogBoxInfo[32].sSizeX = 258;
 	m_stDialogBoxInfo[32].sSizeY = 339;
 
 	//Crusade Job Dialog
-	m_stDialogBoxInfo[33].sX = 360;
-	m_stDialogBoxInfo[33].sY = 65;
+	m_stDialogBoxInfo[33].sX = 360 + SCREENX;
+	m_stDialogBoxInfo[33].sY = 65 + SCREENY;
 	m_stDialogBoxInfo[33].sSizeX = 258;
 	m_stDialogBoxInfo[33].sSizeY = 339;
 
 	//Item Upgrade Dialog
-	m_stDialogBoxInfo[34].sX = 60;
-	m_stDialogBoxInfo[34].sY = 50;
+	m_stDialogBoxInfo[34].sX = 60 + SCREENX;
+	m_stDialogBoxInfo[34].sY = 50 + SCREENY;
 	m_stDialogBoxInfo[34].sSizeX = 258;
 	m_stDialogBoxInfo[34].sSizeY = 339;
 
 	//Help Menu Dialog(F1)
-	m_stDialogBoxInfo[35].sX = 358;
-	m_stDialogBoxInfo[35].sY = 65;
+	m_stDialogBoxInfo[35].sX = 358 + SCREENX;
+	m_stDialogBoxInfo[35].sY = 65 + SCREENY;
 	m_stDialogBoxInfo[35].sSizeX = 258;
 	m_stDialogBoxInfo[35].sSizeY = 339;
 
 	//Crusade Commander Dialog
-	m_stDialogBoxInfo[36].sX = 20;
-	m_stDialogBoxInfo[36].sY = 20;
+	m_stDialogBoxInfo[36].sX = 20 + SCREENX;
+	m_stDialogBoxInfo[36].sY = 20 + SCREENY;
 	m_stDialogBoxInfo[36].sSizeX = 310;
 	m_stDialogBoxInfo[36].sSizeY = 386;
 
 	//Crusade Constructor Dialog
-	m_stDialogBoxInfo[37].sX = 20;
-	m_stDialogBoxInfo[37].sY = 20;
+	m_stDialogBoxInfo[37].sX = 20 + SCREENX;
+	m_stDialogBoxInfo[37].sY = 20 + SCREENY;
 	m_stDialogBoxInfo[37].sSizeX = 310;
 	m_stDialogBoxInfo[37].sSizeY = 386;
 
 	//Crusade Soldier Dialog
-	m_stDialogBoxInfo[38].sX = 20;
-	m_stDialogBoxInfo[38].sY = 20;
+	m_stDialogBoxInfo[38].sX = 20 + SCREENX;
+	m_stDialogBoxInfo[38].sY = 20 + SCREENY;
 	m_stDialogBoxInfo[38].sSizeX = 310;
 	m_stDialogBoxInfo[38].sSizeY = 386;
 
 	// Give item ???
-	m_stDialogBoxInfo[39].sX = 0;
-	m_stDialogBoxInfo[39].sY = 0;
+	m_stDialogBoxInfo[39].sX = 0 + SCREENX;
+	m_stDialogBoxInfo[39].sY = 0 + SCREENY;
 	m_stDialogBoxInfo[39].sSizeX = 291;
 	m_stDialogBoxInfo[39].sSizeY = 413;
 
 	// 3.51 Slates Dialog - Diuuude
-	m_stDialogBoxInfo[40].sX = 100;
-	m_stDialogBoxInfo[40].sY = 60;
+	m_stDialogBoxInfo[40].sX = 100 + SCREENX;
+	m_stDialogBoxInfo[40].sY = 60 + SCREENY;
 	m_stDialogBoxInfo[40].sSizeX = 258;
 	m_stDialogBoxInfo[40].sSizeY = 339;
 
 	// Snoopy: Item exchange confirmation
-	m_stDialogBoxInfo[41].sX = 285;
-	m_stDialogBoxInfo[41].sY = 200;
+	m_stDialogBoxInfo[41].sX = 285 + SCREENX;
+	m_stDialogBoxInfo[41].sY = 200 + SCREENY;
 	m_stDialogBoxInfo[41].sSizeX = 270;
 	m_stDialogBoxInfo[41].sSizeY = 105;
 
 	// MJ Stats Change DialogBox - Diuuude
-	m_stDialogBoxInfo[42].sX = 0;
-	m_stDialogBoxInfo[42].sY = 0;
+	m_stDialogBoxInfo[42].sX = 0 + SCREENX;
+	m_stDialogBoxInfo[42].sY = 0 + SCREENY;
 	m_stDialogBoxInfo[42].sSizeX = 258;
 	m_stDialogBoxInfo[42].sSizeY = 339;
 
 	// Snoopy: Resurection
-	m_stDialogBoxInfo[50].sX = 185;
-	m_stDialogBoxInfo[50].sY = 100;
+	m_stDialogBoxInfo[50].sX = 185 + SCREENX;
+	m_stDialogBoxInfo[50].sY = 100 + SCREENY;
 	m_stDialogBoxInfo[50].sSizeX = 270;
 	m_stDialogBoxInfo[50].sSizeY = 105;
 
 	//Guild Hall Menu Dialog
-	m_stDialogBoxInfo[51].sX = 337;
-	m_stDialogBoxInfo[51].sY = 57;
+	m_stDialogBoxInfo[51].sX = 337 + SCREENX;
+	m_stDialogBoxInfo[51].sY = 57 + SCREENY;
 	m_stDialogBoxInfo[51].sSizeX = 258;
 	m_stDialogBoxInfo[51].sSizeY = 339;
 
 	//friend list
-	m_stDialogBoxInfo[43].sX = 337;
-	m_stDialogBoxInfo[43].sY = 57;
+	m_stDialogBoxInfo[43].sX = 337 + SCREENX;
+	m_stDialogBoxInfo[43].sY = 57 + SCREENY;
 	m_stDialogBoxInfo[43].sSizeX = 258;
 	m_stDialogBoxInfo[43].sSizeY = 339;
 
 	//Item Enchant Dialog
-	m_stDialogBoxInfo[44].sX = 60;
-	m_stDialogBoxInfo[44].sY = 50;
+	m_stDialogBoxInfo[44].sX = 60 + SCREENX;
+	m_stDialogBoxInfo[44].sY = 50 + SCREENY;
 	m_stDialogBoxInfo[44].sSizeX = 258;
 	m_stDialogBoxInfo[44].sSizeY = 339;
 
 	//50Cent - Repair All
-    m_stDialogBoxInfo[52].sX = 337;
-    m_stDialogBoxInfo[52].sY = 57;
+    m_stDialogBoxInfo[52].sX = 337 + SCREENX;
+    m_stDialogBoxInfo[52].sY = 57 + SCREENY;
     m_stDialogBoxInfo[52].sSizeX = 258;
     m_stDialogBoxInfo[52].sSizeY = 339;
 
 	//50Cent - Quest Helper
-    m_stDialogBoxInfo[55].sX = 530;
-    m_stDialogBoxInfo[55].sY = 130;
+    m_stDialogBoxInfo[55].sX = 530 + SCREENX;
+    m_stDialogBoxInfo[55].sY = 130 + SCREENY;
     m_stDialogBoxInfo[55].sSizeX = 110;
     m_stDialogBoxInfo[55].sSizeY = 36;
 
 	// VAMP - Online Users List
-	m_stDialogBoxInfo[60].sX = 70;
-	m_stDialogBoxInfo[60].sY = 50;
+	m_stDialogBoxInfo[60].sX = 70 + SCREENX;
+	m_stDialogBoxInfo[60].sY = 50 + SCREENY;
 	m_stDialogBoxInfo[60].sSizeX = 258;
 	m_stDialogBoxInfo[60].sSizeY = 339;
 
 	//50Cent - GMPanel - Teleport
-   	m_stDialogBoxInfo[53].sX = 358;
-   	m_stDialogBoxInfo[53].sY = 65;
+   	m_stDialogBoxInfo[53].sX = 358 + SCREENX;
+   	m_stDialogBoxInfo[53].sY = 65 + SCREENY;
    	m_stDialogBoxInfo[53].sSizeX = 258;
    	m_stDialogBoxInfo[53].sSizeY = 339;
 
 	//50Cent - GMPanel - Summon
-   	m_stDialogBoxInfo[54].sX = 358;
-   	m_stDialogBoxInfo[54].sY = 65;
+   	m_stDialogBoxInfo[54].sX = 358 + SCREENX;
+   	m_stDialogBoxInfo[54].sY = 65 + SCREENY;
    	m_stDialogBoxInfo[54].sSizeX = 258;
    	m_stDialogBoxInfo[54].sSizeY = 339;
 
 	//MORLA 2.3 - Sale Menu Dialog 2
-	m_stDialogBoxInfo[57].sX = 70;
-	m_stDialogBoxInfo[57].sY = 50;
+	m_stDialogBoxInfo[57].sX = 70 + SCREENX;
+	m_stDialogBoxInfo[57].sY = 50 + SCREENY;
 	m_stDialogBoxInfo[57].sSizeX = 258;
 	m_stDialogBoxInfo[57].sSizeY = 339;
 
 	//50Cent - GMPanel
-    m_stDialogBoxInfo[56].sX = 358;
-    m_stDialogBoxInfo[56].sY = 65;
+    m_stDialogBoxInfo[56].sX = 358 + SCREENX;
+    m_stDialogBoxInfo[56].sY = 65 + SCREENY;
     m_stDialogBoxInfo[56].sSizeX = 258;
     m_stDialogBoxInfo[56].sSizeY = 339;
 
 	//50Cent - GMPanel // MORLA 2.9 // Top Server
-    m_stDialogBoxInfo[59].sX = 358;
-    m_stDialogBoxInfo[59].sY = 65;
+    m_stDialogBoxInfo[59].sX = 358 + SCREENX;
+    m_stDialogBoxInfo[59].sY = 65 + SCREENY;
     m_stDialogBoxInfo[59].sSizeX = 258;
     m_stDialogBoxInfo[59].sSizeY = 339;
 
 	//Guild Bank Dialog
-	m_stDialogBoxInfo[58].sX = 60; //337
-	m_stDialogBoxInfo[58].sY = 50;
+	m_stDialogBoxInfo[58].sX = 60 + SCREENX; //337
+	m_stDialogBoxInfo[58].sY = 50 + SCREENY;
 	m_stDialogBoxInfo[58].sSizeX = 258;
 	m_stDialogBoxInfo[58].sSizeY = 339;
 	m_stDialogBoxInfo[58].sV1 = 13;
@@ -497,7 +495,7 @@ BOOL CGame::bInit(HWND hWnd, HINSTANCE hInst, char * pCmdLine)
 #ifdef DEF_ANTI_HACK
 	 if (CheckProcesses() == TRUE)
 	 {
-		 MessageBox(m_hWnd, "No Hacks Programs Permited.", "ERROR2", MB_ICONEXCLAMATION | MB_OK);
+		 MessageBox(m_hWnd, "No Hacks Programs Permitted.", "ERROR2", MB_ICONEXCLAMATION | MB_OK);
 		 return FALSE;
 	 }
 #endif
@@ -5874,7 +5872,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 #endif
 			if (sAbsX > sAbsY) sDist = sAbsX;
 			else sDist = sAbsY;
-			lPan = -(((m_sViewPointX / 32) + 12) - sX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - sX)*1000; // centu - 800x600
 			PlaySound('E', 12, sDist, lPan);
 			break;
 
@@ -5893,7 +5891,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			if (sAbsX > sAbsY) sDist = sAbsX;
 			else sDist = sAbsY;
 			sDist = sDist / 32;
-			lPan = -(((m_sViewPointX / 32) + 12) - sX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - sX)*1000; // centu - 800x600
 			PlaySound('E', 4, sDist, lPan);
 			SetCameraShakingEffect(sDist);
 			break;
@@ -6117,8 +6115,13 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			m_pEffectList[i]->m_iErr = 0;
 			m_pEffectList[i]->m_cMaxFrame = 35;
 			m_pEffectList[i]->m_dwFrameTime = 20;
+#ifdef RES_HIGH
+			sAbsX = abs(400 - (sX - m_sViewPointX));
+			sAbsY = abs(300 - (sY - m_sViewPointY));
+#else
 			sAbsX = abs(320 - (sX - m_sViewPointX));
 			sAbsY = abs(240 - (sY - m_sViewPointY));
+#endif
 			if (sAbsX > sAbsY) sDist = sAbsX;
 			else sDist = sAbsY;
 			sDist = sDist / 32;
@@ -6133,7 +6136,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			m_pEffectList[i]->m_mY = sY;
 			m_pEffectList[i]->m_cMaxFrame = 14;
 			m_pEffectList[i]->m_dwFrameTime = 35;
-			lPan = -(((m_sViewPointX / 32) + 12) - dX) * 1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX) * 1000; // centu - 800x600
 			PlaySound('E', 4, sDist, lPan);
 			SetCameraShakingEffect(sDist + 1, 2);
 			break;
@@ -6439,7 +6442,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			if (sAbsX > sAbsY) sDist = sAbsX;
 			else sDist = sAbsY;
 			sDist = sDist / 32;
-			lPan = -(((m_sViewPointX / 32) + 12) - sX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - sX)*1000;// centu - 800x600
 			PlaySound('E', 4, sDist, lPan);
 			SetCameraShakingEffect(sDist, 2);
 			break;
@@ -6487,7 +6490,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			if (sAbsX > sAbsY) sDist = sAbsX;
 			else sDist = sAbsY;
 			sDist = sDist / 32;
-			lPan = -(((m_sViewPointX / 32) + 12) - sX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - sX)*1000;// centu - 800x600
 			PlaySound('E', 4, sDist, lPan);
 			SetCameraShakingEffect(sDist, 2);
 			break;
@@ -6514,7 +6517,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			if (sAbsX > sAbsY) sDist = sAbsX;
 			else sDist = sAbsY;
 			sDist = sDist / 32;
-			lPan = -(((m_sViewPointX / 32) + 12) - sX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - sX)*1000;// centu - 800x600
 			PlaySound('E', 4, sDist, lPan);
 			m_pEffectList[i]->m_iV1 = sDist;
 			break;
@@ -6534,7 +6537,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			if (sAbsX > sAbsY) sDist = sAbsX;
 			else sDist = sAbsY;
 			sDist = sDist / 32;
-			lPan = -(((m_sViewPointX / 32) + 12) - (sX/32))*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - (sX/32))*1000;// centu - 800x600
 			PlaySound('E', 42, sDist, lPan);
 			break;
 
@@ -6553,7 +6556,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			if (sAbsX > sAbsY) sDist = sAbsX;
 			else sDist = sAbsY;
 			sDist = sDist / 32;
-			lPan = -(((m_sViewPointX / 32) + 12) - (sX/32))*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - (sX/32))*1000;// centu - 800x600
 			PlaySound('E', 42, sDist, lPan);
 			break;
 
@@ -6663,7 +6666,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			m_pEffectList[i]->m_iErr   = 0;
 			m_pEffectList[i]->m_cMaxFrame   = NULL;
 			m_pEffectList[i]->m_dwFrameTime = 20;
-			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;// centu - 800x600
 			PlaySound('E', 1, sDist, lPan);
 			break;
 
@@ -6674,7 +6677,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 		case 128: // Great-Staminar-Recovery
 			m_pEffectList[i]->m_cMaxFrame   = 14;
 			m_pEffectList[i]->m_dwFrameTime = 80;
-			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;// centu - 800x600
 			PlaySound('E', 5, sDist, lPan);
 			break;
 
@@ -6692,7 +6695,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 		case 171: // Mass-Confusion
 			m_pEffectList[i]->m_cMaxFrame   = 13;
 			m_pEffectList[i]->m_dwFrameTime = 120;
-			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;// centu - 800x600
 			PlaySound('E', 5, sDist, lPan);
 			break;
 
@@ -6706,7 +6709,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			m_pEffectList[i]->m_iErr = 0;
 			m_pEffectList[i]->m_rX = 5 - (rand() % 10);
 			m_pEffectList[i]->m_rY = 5 - (rand() % 10);
-			lPan = -(((m_sViewPointX / 32) + 12) - dX) * 1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX) * 1000;// centu - 800x600
 			PlaySound('E', 39, sDist, lPan);
 			break;
 
@@ -6716,7 +6719,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			m_pEffectList[i]->m_iErr   = 0;
 			m_pEffectList[i]->m_cMaxFrame   = NULL;
 			m_pEffectList[i]->m_dwFrameTime = 20;
-			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;// centu - 800x600
 			PlaySound('E', 1, sDist, lPan);
 			break;
 
@@ -6725,7 +6728,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 		case 132: // Invi
 			m_pEffectList[i]->m_cMaxFrame   = 12;
 			m_pEffectList[i]->m_dwFrameTime = 80;
-			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;// centu - 800x600
 			PlaySound('E', 5, sDist, lPan);
 			break;
 
@@ -6733,7 +6736,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 		case 144: // Great-Defense-Shield
 			m_pEffectList[i]->m_cMaxFrame   = 12;
 			m_pEffectList[i]->m_dwFrameTime = 120;
-			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;// centu - 800x600
 			PlaySound('E', 5, sDist, lPan);
 			break;
 
@@ -6754,7 +6757,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			m_pEffectList[i]->m_cMaxFrame   = NULL;
 			m_pEffectList[i]->m_dwFrameTime = 20;
 			m_pEffectList[i]->m_cDir = m_Misc.cCalcDirection(sX, sY, dX, dY);
-			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;// centu - 800x600
 			PlaySound('E', 1, sDist, lPan);
 			break;
 
@@ -6780,12 +6783,12 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			m_pEffectList[i]->m_cMaxFrame   = NULL;
 			m_pEffectList[i]->m_dwFrameTime = 20;
 			m_pEffectList[i]->m_cDir = m_Misc.cCalcDirection(sX, sY, dX, dY);
-			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;// centu - 800x600
 			PlaySound('E', 1, sDist, lPan);
 			break;
 
 		case 138: // Tremor.
-			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;// centu - 800x600
 			PlaySound('E', 4, sDist, lPan);
 			SetCameraShakingEffect(sDist, 2);
 			bAddNewEffect(14, dX*32 + (rand() % 120) - 60, dY*32 + (rand() % 80) - 40, NULL, NULL, 0, 0);
@@ -6815,7 +6818,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			m_pEffectList[i]->m_rY	   = 5 - (rand() % 10);
 			m_pEffectList[i]->m_cMaxFrame   = 7;
 			m_pEffectList[i]->m_dwFrameTime = 10;
-			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;// centu - 800x600
 			PlaySound('E', 40, sDist, lPan);
 			break;
 
@@ -6837,7 +6840,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 		case 195: // Mass-Illusion-Movement
 			m_pEffectList[i]->m_cMaxFrame   = 11;
 			m_pEffectList[i]->m_dwFrameTime = 100;
-			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;// centu - 800x600
 			PlaySound('E', 5, sDist, lPan);
 			break;
 
@@ -6849,7 +6852,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			m_pEffectList[i]->m_rY	   = 5 - (rand() % 10);
 			m_pEffectList[i]->m_cMaxFrame   = 10;
 			m_pEffectList[i]->m_dwFrameTime = 10;
-			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;// centu - 800x600
 			PlaySound('E', 40, sDist, lPan);
 			break;
 
@@ -6876,7 +6879,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			m_pEffectList[i]->m_cMaxFrame   = NULL;
 			m_pEffectList[i]->m_dwFrameTime = 20;
 			m_pEffectList[i]->m_cDir = m_Misc.cCalcDirection(sX, sY, dX, dY);
-			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;// centu - 800x600
 			PlaySound('E', 1, sDist, lPan);
 			break;
 
@@ -6886,7 +6889,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			break;
 
 		case 164: // worm-bite
-			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;// centu - 800x600
 			PlaySound('E', 4, sDist, lPan);
 			bAddNewEffect(14, dX*32 + (rand() % 120) - 60, dY*32 + (rand() % 80) - 40, NULL, NULL, 0, 0);
 			bAddNewEffect(14, dX*32 + (rand() % 120) - 60, dY*32 + (rand() % 80) - 40, NULL, NULL, 0, 0);
@@ -6910,14 +6913,14 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 		case 165: // Absolute-Magic-Protection
 			m_pEffectList[i]->m_cMaxFrame   = 21;
 			m_pEffectList[i]->m_dwFrameTime = 70;
-			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;// centu - 800x600
 			PlaySound('E', 5, sDist, lPan);
 			break;
 
 		case 166: // Armor Break
 			m_pEffectList[i]->m_cMaxFrame   = 13;
 			m_pEffectList[i]->m_dwFrameTime = 80;
-			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;// centu - 800x600
 			PlaySound('E', 5, sDist, lPan);
 			break;
 
@@ -6940,7 +6943,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			m_pEffectList[i]->m_cMaxFrame   = 23;
 			m_pEffectList[i]->m_dwFrameTime = 60;
 			sDist = sDist / 32;
-			lPan = -(((m_sViewPointX / 32) + 12) - sX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - sX)*1000;// centu - 800x600
 			PlaySound('E', 5, sDist, lPan);
 			break;
 
@@ -6957,7 +6960,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			m_pEffectList[i]->m_iErr   = 0;
 			m_pEffectList[i]->m_cMaxFrame   = NULL;
 			m_pEffectList[i]->m_dwFrameTime = 20;
-			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - dX)*1000;// centu - 800x600
 			PlaySound('E', 1, sDist, lPan);
 			break;
 
@@ -7022,7 +7025,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			if (sAbsX > sAbsY) sDist = sAbsX;
 			else sDist = sAbsY;
 			sDist = sDist / 32;
-			lPan = -(((m_sViewPointX / 32) + 12) - sX)*1000;
+			lPan = -(((m_sViewPointX / 32) + 12) - sX)*1000;// centu - 800x600
 			PlaySound('E', 4, sDist, lPan);
 			m_pEffectList[i]->m_iV1 = sDist;
 			break;
@@ -7082,7 +7085,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
             m_pEffectList[i]->m_cMaxFrame   = 17;
             m_pEffectList[i]->m_dwFrameTime = 200;
             m_pEffectList[i]->m_mX3    = sDist;
-            m_pEffectList[i]->m_mY3    = -(((m_sViewPointX / 32) + 12) - dX)*1000;
+            m_pEffectList[i]->m_mY3    = -(((m_sViewPointX / 32) + 12) - dX)*1000;// centu - 800x600
             m_pEffectList[i]->m_iV1    = rand()%35;
             m_pEffectList[i]->m_cFrame = - rand() %12;
             break;
