@@ -13566,8 +13566,8 @@ void CGame::DrawDialogBox_SysMenu(short msX, short msY, char cLB)
 	//Grid - by luqah
 	PutString(sX + 136, sY + 180, "Grid", RGB(45, 25, 25));
 	PutString(sX + 137, sY + 180, "Grid", RGB(45, 25, 25));
-	if (m_bGrid) PutString(sX + 3 + 120 + 88, sY + 180, DRAW_DIALOGBOX_SYSMENU_ON, RGB(255, 255, 255));
-	else PutString(sX + 3 + 120 + 87, sY + 180, DRAW_DIALOGBOX_SYSMENU_OFF, RGB(200, 200, 200));
+	if (m_bGrid) PutString(sX + 120 + 88, sY + 180, DRAW_DIALOGBOX_SYSMENU_ON, RGB(255, 255, 255));
+	else PutString(sX + 120 + 87, sY + 180, DRAW_DIALOGBOX_SYSMENU_OFF, RGB(200, 200, 200));
 
 
 	if ((cLB != 0) && (iGetTopDialogBoxIndex() == 19))
@@ -17872,15 +17872,14 @@ void CGame::DrawDialogBoxs(short msX, short msY, short msZ, char cLB)
 #else
 	resi = 0;
 #endif
-	// MORLA - Ubicacion del superattackleft
 	if (m_cSkillMastery[_iGetWeaponSkillType()] == 100)
 	{
 		if (m_iSuperAttackLeft > 0)
 		{
 			if (GetAsyncKeyState(VK_MENU) >> 15)
-				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutTransSprite(506 + resx, 433 + resi, 3, m_dwCurTime);
+				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutTransSprite(368+resx+7, 440+resi, 3, m_dwCurTime);
 			wsprintf(G_cTxt, "%d", m_iSuperAttackLeft);
-			PutString_SprFont2(532 + resx, 456 + resi, G_cTxt, 220, 200, 200);
+			PutString_SprFont2(380+resx+10, 454+resi, G_cTxt, 220, 200, 200);
 		}
 	}
 	else
@@ -17888,7 +17887,7 @@ void CGame::DrawDialogBoxs(short msX, short msY, short msZ, char cLB)
 		if (m_iSuperAttackLeft > 0)
 		{
 			wsprintf(G_cTxt, "%d", m_iSuperAttackLeft);
-			PutString_SprFont2(532 + resx, 456 + resi, G_cTxt, 10, 10, 10);
+			PutString_SprFont2(380+resx+5, 454+resi, G_cTxt, 10, 10, 10);
 		}
 	}
 
@@ -18041,6 +18040,7 @@ int CGame::_iCheckDlgBoxFocus(short msX, short msY, char cButtonSide)
 					case 60: // online user list
 					case 42: // Snoopy: Drag majestic stats
 					case 43: // Drajwer - friendlist s
+					case 45:
 					case 51: // Snoopy: Drag Gail menu
 						m_stMCursor.cSelectedObjectType = DEF_SELECTEDOBJTYPE_DLGBOX;
 						m_stMCursor.sSelectedObjectID = cDlgID;
@@ -18655,73 +18655,6 @@ void CGame::MotionResponseHandler(char * pData)
 			break;
 		}
 		break;
-	}
-}
-
-void CGame::UseShortCutPanel(int num, bool save) // MORLA - Hotekeys para la Casting Bar
-{
-	int index;
-	if (num < 8) index = num + 1;
-	else index = num + 7;
-	if (m_cGameMode != DEF_GAMEMODE_ONMAINGAME) return;
-	if (save == TRUE)
-	{
-		if (m_sRecentShortCut == -1)
-		{
-			wsprintf(G_cTxt, MSG_SHORTCUT6);
-			AddEventList(G_cTxt, 10);
-			return;
-		}
-		else
-		{
-			m_sShortCut[num] = m_sRecentShortCut;
-			
-			if (m_sShortCut[num] < 100)
-			{
-				if (m_pItemList[m_sShortCut[num]] == NULL)
-				{
-					m_sShortCut[num] = -1;
-					m_sRecentShortCut = -1;
-					return;
-				}
-				char cStr1[64], cStr2[64], cStr3[64];
-				ZeroMemory(cStr1, sizeof(cStr1));
-				ZeroMemory(cStr2, sizeof(cStr2));
-				ZeroMemory(cStr3, sizeof(cStr3));
-
-				GetItemName(m_pItemList[m_sShortCut[num]], cStr1, cStr2, cStr3);
-				wsprintf(G_cTxt, MSG_SHORTCUT7, cStr1, cStr2, cStr3, index - 3);// (%s %s %s) [F%d]
-				AddEventList(G_cTxt, 10);
-			}
-			else if (m_sShortCut[num] >= 100)
-			{
-				if (m_pMagicCfgList[m_sShortCut[num] - 100] == NULL)
-				{
-					m_sShortCut[num] = -1;
-					m_sRecentShortCut = -1;
-					return;
-				}
-				wsprintf(G_cTxt, MSG_SHORTCUT8, m_pMagicCfgList[m_sShortCut[num] - 100]->m_cName, index - 3);// %s) [F%d]
-				AddEventList(G_cTxt, 10);
-			}
-		}
-	}
-	else
-	{
-		if ((m_sShortCut[num] == -1) || ((bBarCast1 == 0) && (iBarCast1 == 0) && (num == 3)) ||
-			((bBarCast2 == 0) && (iBarCast2 == 0) && (num == 4)) ||
-			((bBarCast3 == 0) && (iBarCast3 == 0) && (num == 5)) ||
-			((bBarCast4 == 0) && (iBarCast4 == 0) && (num == 6)) ||
-			((bBarCast5 == 0) && (iBarCast5 == 0) && (num == 7)))
-		{
-			wsprintf(G_cTxt, MSG_SHORTCUT6);
-			AddEventList(G_cTxt, 10);
-		}
-		else if (m_sShortCut[num] < 100)
-		{
-			ItemEquipHandler((char)m_sShortCut[num]);
-		}
-		else if (m_sShortCut[num] >= 100) UseMagic(m_sShortCut[num] - 100);
 	}
 }
 
@@ -19461,7 +19394,7 @@ void CGame::DlgBoxClick_IconPannel(short msX, short msY, int cRB)
 	sX = m_stDialogBoxInfo[30].sX;
 	sY = m_stDialogBoxInfo[30].sY;
 
-	if ((msX > 469 + resx) && (msX < 502 + resx) && (434 + resi < msY) && (475 + resi > msY)) {
+	if ((msX > 322 + resx) && (msX < 355 + resx) && (434 + resi < msY) && (475 + resi > msY)) {
 		// Crusade
 		if (m_bIsCrusadeMode == FALSE) return;
 		switch (m_iCrusadeDuty) {
@@ -19483,15 +19416,14 @@ void CGame::DlgBoxClick_IconPannel(short msX, short msY, int cRB)
 		PlaySound('E', 14, 5);
 	}
 
-	if ((506 + resx < msX) && (548 + resx > msX) && (433 + resi < msY) && (475 + resi > msY)) {
+	if ((362+resx < msX) && (404+resx > msX) && (434+resi < msY) && (475+resi > msY)) {
 		// Combat Mode Toggle
 		bSendCommand(MSGID_COMMAND_COMMON, DEF_COMMONTYPE_TOGGLECOMBATMODE, NULL, NULL, NULL, NULL, NULL);
 		PlaySound('E', 14, 5);
 	}
 
-	//MORLA - Cuando hacen click en los iconos
 	// Character
-	if ((msX > 595 + resx) && (msX < 615 + resx) && (432 + resi < msY) && (453 + resi > msY)) {
+	if ((413+resx <= msX) && (446+resx >= msX) && (434+resi < msY) && (475+resi > msY)) {
 		if (m_bIsDialogEnabled[1] == TRUE)
 			DisableDialogBox(1);
 		else EnableDialogBox(1, NULL, NULL, NULL);
@@ -19499,7 +19431,7 @@ void CGame::DlgBoxClick_IconPannel(short msX, short msY, int cRB)
 	}
 
 	// Inventory
-	if ((msX > 550 + resx) && (msX < 571 + resx) && (432 + resi < msY) && (453 + resi > msY)) {
+	if ((453+resx <= msX) && (486+resx >= msX) && (434+resi < msY) && (475+resi > msY)) {
 		if (m_bIsDialogEnabled[2] == TRUE)
 			DisableDialogBox(2);
 		else EnableDialogBox(2, NULL, NULL, NULL);
@@ -19507,7 +19439,7 @@ void CGame::DlgBoxClick_IconPannel(short msX, short msY, int cRB)
 	}
 
 	// Magic
-	if ((msX > 571 + resx) && (msX < 593 + resx) && (432 + resi < msY) && (453 + resi > msY)) {
+	if ((490+resx <= msX) && (522+resx >= msX) && (434+resi < msY) && (475+resi > msY)) {
 		if (m_bIsDialogEnabled[3] == TRUE)
 			DisableDialogBox(3);
 		else EnableDialogBox(3, NULL, NULL, NULL);
@@ -19515,7 +19447,7 @@ void CGame::DlgBoxClick_IconPannel(short msX, short msY, int cRB)
 	}
 
 	// Skill
-	if ((msX > 616 + resx) && (msX < 638 + resx) && (432 + resi < msY) && (453 + resi > msY)) {
+	if ((526+resx <= msX) && (552+resx >= msX) && (434+resi < msY) && (475+resi > msY)) {
 		if (m_bIsDialogEnabled[15] == TRUE)
 			DisableDialogBox(15);
 		else EnableDialogBox(15, NULL, NULL, NULL);
@@ -19523,7 +19455,7 @@ void CGame::DlgBoxClick_IconPannel(short msX, short msY, int cRB)
 	}
 
 	// Chat
-	if ((msX > 571 + resx) && (msX < 593 + resx) && (455 + resi < msY) && (476 + resi > msY)) {
+	if ((556+resx <= msX) && (587+resx >= msX) && (434+resi < msY) && (475+resi > msY)) {
 		if (m_bIsDialogEnabled[10] == TRUE)
 			DisableDialogBox(10);
 		else EnableDialogBox(10, NULL, NULL, NULL);
@@ -19531,128 +19463,11 @@ void CGame::DlgBoxClick_IconPannel(short msX, short msY, int cRB)
 	}
 
 	// System Menu
-	if ((msX > 616 + resx) && (msX < 638 + resx) && (455 + resi < msY) && (476 + resi > msY)) {
+	if ((589+resx <= msX) && (621+resx >= msX) && (434+resi < msY) && (475+resi > msY)) {
 		if (m_bIsDialogEnabled[19] == TRUE)
 			DisableDialogBox(19);
 		else EnableDialogBox(19, NULL, NULL, NULL);
 		PlaySound('E', 14, 5);
-	}
-
-	// Help - F1
-	if ((msX > 595 + resx) && (msX < 615 + resx) && (456 + resi < msY) && (476 + resi > msY)) {
-		if (m_bIsDialogEnabled[35] == TRUE)
-			DisableDialogBox(35);
-		else EnableDialogBox(35, NULL, NULL, NULL);
-		PlaySound('E', 14, 5);
-	}
-
-	// Player Panel
-	if ((msX > 550 + resx) && (msX < 571 + resx) && (455 + resi < msY) && (476 + resi > msY)) {
-		if (m_bIsDialogEnabled[56] == TRUE)
-			DisableDialogBox(56);
-		else EnableDialogBox(56, NULL, NULL, NULL);
-		PlaySound('E', 14, 5);
-	}
-
-	//MORLA - Barra de Casting
-	if ((263 + resx <= msX) && (303 + resx >= msX) && (432 + resi < msY) && (476 + resi > msY)) 
-	{ // 1
-		if (cRB == 1) 
-		{
-			if (m_stMCursor.sCursorFrame == 4)
-			{
-				UseShortCutPanel(3, true);
-				bBarCast1 = m_sRecentShortCut;
-				iBarCast1 = 0;
-				PlaySound('E', 28, 5);
-			}
-			else {
-				UseShortCutPanel(3, false);
-				PlaySound('E', 14, 5);
-			}
-		}
-		else 
-		{
-			iBarCast1 = 0;
-			bBarCast1 = 0;
-			PlaySound('E', 29, 5);
-		}
-	}
-	if ((306 + resx <= msX) && (346 + resx >= msX) && (433 + resi < msY) && (475 + resi > msY)) { // 2
-		if (cRB == 1) {
-			if (m_stMCursor.sCursorFrame == 4){
-				UseShortCutPanel(4, true);
-				bBarCast2 = m_sRecentShortCut;
-				iBarCast2 = 0;
-				PlaySound('E', 28, 5);
-			}
-			else {
-				UseShortCutPanel(4, false);
-				PlaySound('E', 14, 5);
-			}
-		}
-		else {
-			iBarCast2 = 0;
-			bBarCast2 = 0;
-			PlaySound('E', 29, 5);
-		}
-	}
-	if ((348 + resx <= msX) && (388 + resx >= msX) && (433 + resi < msY) && (475 + resi > msY)) { // 3
-		if (cRB == 1) {
-			if (m_stMCursor.sCursorFrame == 4){
-				UseShortCutPanel(5, true);
-				bBarCast3 = m_sRecentShortCut;
-				iBarCast3 = 0;
-				PlaySound('E', 28, 5);
-			}
-			else {
-				UseShortCutPanel(5, false);
-				PlaySound('E', 14, 5);
-			}
-		}
-		else {
-			iBarCast3 = 0;
-			bBarCast3 = 0;
-			PlaySound('E', 29, 5);
-		}
-	}
-	if ((390 + resx <= msX) && (430 + resx >= msX) && (433 + resi < msY) && (475 + resi > msY)) { // 4
-		if (cRB == 1) {
-			if (m_stMCursor.sCursorFrame == 4){
-				UseShortCutPanel(6, true);
-				bBarCast4 = m_sRecentShortCut;
-				iBarCast4 = 0;
-				PlaySound('E', 28, 5);
-			}
-			else {
-				UseShortCutPanel(6, false);
-				PlaySound('E', 14, 5);
-			}
-		}
-		else {
-			iBarCast4 = 0;
-			bBarCast4 = 0;
-			PlaySound('E', 29, 5);
-		}
-	}
-	if ((433 + resx <= msX) && (473 + resx >= msX) && (433 + resi < msY) && (475 + resi > msY)) { // 5
-		if (cRB == 1) {
-			if (m_stMCursor.sCursorFrame == 4){
-				UseShortCutPanel(7, true);
-				bBarCast5 = m_sRecentShortCut;
-				iBarCast5 = 0;
-				PlaySound('E', 28, 5);
-			}
-			else {
-				UseShortCutPanel(7, false);
-				PlaySound('E', 14, 5);
-			}
-		}
-		else {
-			iBarCast5 = 0;
-			bBarCast5 = 0;
-			PlaySound('E', 29, 5);
-		}
 	}
 }
 

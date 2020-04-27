@@ -14,5 +14,4 @@ void CPSocketConnet() ;
 LONG GetRegKey(HKEY key, LPCTSTR subkey, LPTSTR retdata);
 void GoHomepage();
 
-bool IsWin8();
-bool IsWin10();
+bool IsWin();

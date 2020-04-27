@@ -59,6 +59,9 @@
 // Snoopy: MP3 support
 #include "MP3.h" 
 
+#include <vector>
+#define Vector std::vector
+
 //Snoopy: Implementation JPG sreenshots
 #include "cximage/ximage.h" // Snoopy
 #include "cximage/ximajpg.h" // Snoopy
@@ -151,12 +154,9 @@ public:
 
 	// centuu
 	int iHungerStatus = 0; // MORLA2 - Hunger Status
-	int m_iMajesticLevel = 0;
+	
 	int m_iMaxEK = 0;
 
-	// MORLA - Valores para el icono de magia de la Bar Cast
-	int bBarCast1 = 0, bBarCast2 = 0, bBarCast3 = 0, bBarCast4 = 0, bBarCast5 = 0,
-		iBarCast1 = 0, iBarCast2 = 0, iBarCast3 = 0, iBarCast4 = 0, iBarCast5 = 0;
 
 	int m_iRango_EK = 0;
 	int m_iRango_REP = 0;
@@ -190,9 +190,6 @@ public:
 
 	//50Cent - Capture The Flag
 	void DrawFlagCarrier(short sX, short sY, char cFrame, DWORD dwTime);
-
-	void reiniciarCastBar();
-	void UseShortCutPanel( int num, bool save );
 
 	void DrawDialogBox_GuildBank(short msX, short msY, short msZ, char cLB);
 	void DlgBoxClick_GuildBank(short msX, short msY);
@@ -231,6 +228,11 @@ public:
 	bool bCheckItemEquiped(char itemName[]); // Beholder neck
 
     void GetIPByDNS();
+
+	// centu - achievements
+	void NotifyMsg_NpcAchievement(char* pData);
+	void DrawDialogBox_Achievements(short msX, short msY, char cLB);
+	void ResponseNpcAchievements(char* pData);
 
 	// CLEROTH - AURAS
 	void CheckActiveAura(short sX, short sY, DWORD dwTime, short sOwnerType);
@@ -975,8 +977,16 @@ public:
 	int m_iRating; //Rating
 
 	// VAMP - ek stuff
-	DWORD dwEKNotifyTime;
+	DWORD dwEKNotifyTime, m_dwTitleNotifyTime;
 	char cEKNotifySubject[120];
+	char m_cNpcAchievement[120]; // centu - achievements
+
+	typedef struct TitleTag {
+		char cTitleID;
+		int iCount;
+	} stTitle;
+
+	Vector<stTitle*> m_vTitleList;
 
 	int m_iPrevMoveX, m_iPrevMoveY;
 	int m_iBlockYear, m_iBlockMonth, m_iBlockDay;

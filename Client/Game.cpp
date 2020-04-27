@@ -188,7 +188,7 @@ CGame::CGame()
 
 	//Chatting History Dialog(F9)
 	m_stDialogBoxInfo[10].sX = 135 + SCREENX;
-	m_stDialogBoxInfo[10].sY = 273 + SCREENY;
+	m_stDialogBoxInfo[10].sY = 273 + SCREENY + SCREENY;
 	m_stDialogBoxInfo[10].sSizeX = 364;
 	m_stDialogBoxInfo[10].sSizeY = 162;
 
@@ -301,23 +301,17 @@ CGame::CGame()
 	m_stDialogBoxInfo[28].sSizeX = 258;
 	m_stDialogBoxInfo[28].sSizeY = 339;
 
-	//Gauge Pannel
-	m_stDialogBoxInfo[29].sX = 0; //80;
-	m_stDialogBoxInfo[29].sY = 434;
-	m_stDialogBoxInfo[29].sSizeX = 157;
-	m_stDialogBoxInfo[29].sSizeY = 53;
-
 	//Icon Pannel
 #ifdef RES_HIGH
-	m_stDialogBoxInfo[30].sX = 80;
-	m_stDialogBoxInfo[30].sY = 548; // 547
+	m_stDialogBoxInfo[30].sX = 0;
+	m_stDialogBoxInfo[30].sY = 548; 
 #else
 	m_stDialogBoxInfo[30].sX = 0;
 	m_stDialogBoxInfo[30].sY = 427;
 	
 #endif
-	m_stDialogBoxInfo[30].sSizeX = 640;
-	m_stDialogBoxInfo[30].sSizeY = 53;
+	m_stDialogBoxInfo[30].sSizeX = 800;
+	m_stDialogBoxInfo[30].sSizeY = 52;
 
 	//Sell List Dialog
 	m_stDialogBoxInfo[31].sX = 170 + SCREENX;
@@ -391,18 +385,6 @@ CGame::CGame()
 	m_stDialogBoxInfo[42].sSizeX = 258;
 	m_stDialogBoxInfo[42].sSizeY = 339;
 
-	// Snoopy: Resurection
-	m_stDialogBoxInfo[50].sX = 185 + SCREENX;
-	m_stDialogBoxInfo[50].sY = 100 + SCREENY;
-	m_stDialogBoxInfo[50].sSizeX = 270;
-	m_stDialogBoxInfo[50].sSizeY = 105;
-
-	//Guild Hall Menu Dialog
-	m_stDialogBoxInfo[51].sX = 337 + SCREENX;
-	m_stDialogBoxInfo[51].sY = 57 + SCREENY;
-	m_stDialogBoxInfo[51].sSizeX = 258;
-	m_stDialogBoxInfo[51].sSizeY = 339;
-
 	//friend list
 	m_stDialogBoxInfo[43].sX = 337 + SCREENX;
 	m_stDialogBoxInfo[43].sY = 57 + SCREENY;
@@ -415,11 +397,41 @@ CGame::CGame()
 	m_stDialogBoxInfo[44].sSizeX = 258;
 	m_stDialogBoxInfo[44].sSizeY = 339;
 
+	// centu - achievements
+	m_stDialogBoxInfo[45].sX = 0 + SCREENX;
+	m_stDialogBoxInfo[45].sY = 0 + SCREENY;
+	m_stDialogBoxInfo[45].sSizeX = 258;
+	m_stDialogBoxInfo[45].sSizeY = 339;
+
+	// Snoopy: Resurection
+	m_stDialogBoxInfo[50].sX = 185 + SCREENX;
+	m_stDialogBoxInfo[50].sY = 100 + SCREENY;
+	m_stDialogBoxInfo[50].sSizeX = 270;
+	m_stDialogBoxInfo[50].sSizeY = 105;
+
+	//Guild Hall Menu Dialog
+	m_stDialogBoxInfo[51].sX = 337 + SCREENX;
+	m_stDialogBoxInfo[51].sY = 57 + SCREENY;
+	m_stDialogBoxInfo[51].sSizeX = 258;
+	m_stDialogBoxInfo[51].sSizeY = 339;
+
 	//50Cent - Repair All
     m_stDialogBoxInfo[52].sX = 337 + SCREENX;
     m_stDialogBoxInfo[52].sY = 57 + SCREENY;
     m_stDialogBoxInfo[52].sSizeX = 258;
     m_stDialogBoxInfo[52].sSizeY = 339;
+
+	//50Cent - GMPanel - Teleport
+	m_stDialogBoxInfo[53].sX = 358 + SCREENX;
+	m_stDialogBoxInfo[53].sY = 65 + SCREENY;
+	m_stDialogBoxInfo[53].sSizeX = 258;
+	m_stDialogBoxInfo[53].sSizeY = 339;
+
+	//50Cent - GMPanel - Summon
+	m_stDialogBoxInfo[54].sX = 358 + SCREENX;
+	m_stDialogBoxInfo[54].sY = 65 + SCREENY;
+	m_stDialogBoxInfo[54].sSizeX = 258;
+	m_stDialogBoxInfo[54].sSizeY = 339;
 
 	//50Cent - Quest Helper
     m_stDialogBoxInfo[55].sX = 530 + SCREENX;
@@ -427,23 +439,11 @@ CGame::CGame()
     m_stDialogBoxInfo[55].sSizeX = 110;
     m_stDialogBoxInfo[55].sSizeY = 36;
 
-	// VAMP - Online Users List
-	m_stDialogBoxInfo[60].sX = 70 + SCREENX;
-	m_stDialogBoxInfo[60].sY = 50 + SCREENY;
-	m_stDialogBoxInfo[60].sSizeX = 258;
-	m_stDialogBoxInfo[60].sSizeY = 339;
-
-	//50Cent - GMPanel - Teleport
-   	m_stDialogBoxInfo[53].sX = 358 + SCREENX;
-   	m_stDialogBoxInfo[53].sY = 65 + SCREENY;
-   	m_stDialogBoxInfo[53].sSizeX = 258;
-   	m_stDialogBoxInfo[53].sSizeY = 339;
-
-	//50Cent - GMPanel - Summon
-   	m_stDialogBoxInfo[54].sX = 358 + SCREENX;
-   	m_stDialogBoxInfo[54].sY = 65 + SCREENY;
-   	m_stDialogBoxInfo[54].sSizeX = 258;
-   	m_stDialogBoxInfo[54].sSizeY = 339;
+	//50Cent - GMPanel
+    m_stDialogBoxInfo[56].sX = 358 + SCREENX;
+    m_stDialogBoxInfo[56].sY = 65 + SCREENY;
+    m_stDialogBoxInfo[56].sSizeX = 258;
+    m_stDialogBoxInfo[56].sSizeY = 339;
 
 	//MORLA 2.3 - Sale Menu Dialog 2
 	m_stDialogBoxInfo[57].sX = 70 + SCREENX;
@@ -451,11 +451,12 @@ CGame::CGame()
 	m_stDialogBoxInfo[57].sSizeX = 258;
 	m_stDialogBoxInfo[57].sSizeY = 339;
 
-	//50Cent - GMPanel
-    m_stDialogBoxInfo[56].sX = 358 + SCREENX;
-    m_stDialogBoxInfo[56].sY = 65 + SCREENY;
-    m_stDialogBoxInfo[56].sSizeX = 258;
-    m_stDialogBoxInfo[56].sSizeY = 339;
+	//Guild Bank Dialog
+	m_stDialogBoxInfo[58].sX = 60 + SCREENX; //337
+	m_stDialogBoxInfo[58].sY = 50 + SCREENY;
+	m_stDialogBoxInfo[58].sSizeX = 258;
+	m_stDialogBoxInfo[58].sSizeY = 339;
+	m_stDialogBoxInfo[58].sV1 = 13;
 
 	//50Cent - GMPanel // MORLA 2.9 // Top Server
     m_stDialogBoxInfo[59].sX = 358 + SCREENX;
@@ -463,12 +464,11 @@ CGame::CGame()
     m_stDialogBoxInfo[59].sSizeX = 258;
     m_stDialogBoxInfo[59].sSizeY = 339;
 
-	//Guild Bank Dialog
-	m_stDialogBoxInfo[58].sX = 60 + SCREENX; //337
-	m_stDialogBoxInfo[58].sY = 50 + SCREENY;
-	m_stDialogBoxInfo[58].sSizeX = 258;
-	m_stDialogBoxInfo[58].sSizeY = 339;
-	m_stDialogBoxInfo[58].sV1 = 13;
+	// VAMP - Online Users List
+	m_stDialogBoxInfo[60].sX = 70 + SCREENX;
+	m_stDialogBoxInfo[60].sY = 50 + SCREENY;
+	m_stDialogBoxInfo[60].sSizeX = 258;
+	m_stDialogBoxInfo[60].sSizeY = 339;
 
 	m_bCtrlPressed  = FALSE;
 	m_bShiftPressed = FALSE;
@@ -1668,6 +1668,7 @@ BOOL CGame::bSendCommand(DWORD dwMsgID, WORD wCommand, char cDir, int iV1, int i
 		m_bIsTeleportRequested = TRUE;
 		break;
 
+	case MSGID_REQUEST_ACHIEVEMENTS:
 	case MSGID_REQUEST_CIVILRIGHT:
 		dwp = (DWORD *)(cMsg + DEF_INDEX4_MSGID);
 		*dwp = dwMsgID;
@@ -2431,6 +2432,11 @@ void CGame::GameRecvMsgHandler(DWORD dwMsgSize, char * pData)
 	dwpMsgID = (DWORD *)(pData + DEF_INDEX4_MSGID);
 	switch (*dwpMsgID) {
 
+	// CENTU - achievements
+	case MSGID_RESPONSE_ACHIEVEMENTS:
+		ResponseNpcAchievements(pData);
+		break;
+
 	case MSGID_RESPONSE_PING:
 		cp = (char *)(pData + DEF_INDEX2_MSGTYPE + 2);
         dwp = (DWORD *)cp;
@@ -2836,7 +2842,12 @@ void CGame::UpdateScreen_OnLoading(bool bActive)
 				m_pSprite[DEF_SPRID_INTERFACE_ND_SELECTCHAR] = new class CSprite(m_hPakFile, &m_DDraw, "GameDialog", 8, FALSE);
 				m_pSprite[DEF_SPRID_INTERFACE_ND_NEWCHAR] =    new class CSprite(m_hPakFile, &m_DDraw, "GameDialog", 9, FALSE);
 				m_pSprite[DEF_SPRID_INTERFACE_ND_NEWEXCHANGE] = new class CSprite(m_hPakFile, &m_DDraw, "GameDialog", 10, FALSE);
-				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2] = new class CSprite(m_hPakFile, &m_DDraw, "GameDialog", 11, FALSE);
+				CloseHandle(m_hPakFile);
+			}
+
+			m_hPakFile = CreateFile("sprites\\GameDialog2.pak", GENERIC_READ, NULL, NULL, OPEN_EXISTING, NULL, NULL);
+			if (m_hPakFile != INVALID_HANDLE_VALUE) {
+				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2] = new class CSprite(m_hPakFile, &m_DDraw, "GameDialog2", 6, FALSE);
 				CloseHandle(m_hPakFile);
 			}
 
@@ -3846,14 +3857,7 @@ void CGame::DrawDialogBox_Character(short msX, short msY)
 
 	int iTemp;
 	// Level
-	// centu - agregado majestic level
-
-	if (m_iMajesticLevel == 0) {
-		wsprintf(G_cTxt, "%d", m_iLevel);
-	}
-	else {
-		wsprintf(G_cTxt, "%d (%d)", m_iLevel, m_iMajesticLevel);
-	}
+	wsprintf(G_cTxt, "%d", m_iLevel);
 	PutAlignedString(sX + 180, sX + 250, sY + 107 - 6, G_cTxt, 45, 25, 25);
 
 	// Exp
@@ -3863,32 +3867,26 @@ void CGame::DrawDialogBox_Character(short msX, short msY)
 	PutAlignedString(sX + 180, sX + 250, sY + 120 - 6, G_cTxt, 45, 25, 25);
 
 	// Next.Exp
-	// centu - agregado majestic level
-	if (m_iMajesticLevel == 0) {
-		DisplayCommaNumber_G_cTxt(iGetLevelExp(m_iLevel + 1));
-	}
-	else {
-		DisplayCommaNumber_G_cTxt(iGetLevelExp(m_iLevel + m_iMajesticLevel + 1));
-	}
+	DisplayCommaNumber_G_cTxt(iGetLevelExp(m_iLevel + 1));
 	PutAlignedString(sX + 180, sX + 250, sY + 134 - 7, G_cTxt, 45, 25, 25);
 
 	// Hp
 	iTemp = m_iHP;
-	wsprintf(G_cTxt, "%d/%d", iTemp, m_iVit * 3 + (m_iLevel + m_iMajesticLevel) * 2 + (m_iStr + m_iAngelicStr) / 2);
+	wsprintf(G_cTxt, "%d/%d", iTemp, m_iVit * 3 + (m_iLevel) * 2 + (m_iStr + m_iAngelicStr) / 2);
 	PutAlignedString(sX + 180, sX + 250, sY + 148 - 9, G_cTxt, 45, 25, 25);
 
 	// Mp
 	iTemp = m_iMP;
-	wsprintf(G_cTxt, "%d/%d", iTemp, ((m_iMag + m_iAngelicMag) * 2) + (m_iLevel + m_iMajesticLevel) * 2 + (m_iInt + m_iAngelicInt) / 2);
+	wsprintf(G_cTxt, "%d/%d", iTemp, ((m_iMag + m_iAngelicMag) * 2) + (m_iLevel) * 2 + (m_iInt + m_iAngelicInt) / 2);
 	PutAlignedString(sX + 180, sX + 250, sY + 161 - 9, G_cTxt, 45, 25, 25);
 
 	// Sp
 	iTemp = m_iSP;
-	wsprintf(G_cTxt, "%d/%d", iTemp, (m_iLevel + m_iMajesticLevel) * 2 + (m_iStr + m_iAngelicStr) * 2);
+	wsprintf(G_cTxt, "%d/%d", iTemp, (m_iLevel) * 2 + (m_iStr + m_iAngelicStr) * 2);
 	PutAlignedString(sX + 180, sX + 250, sY + 175 - 11, G_cTxt, 45, 25, 25);
 
 	// Max.Load
-	wsprintf(G_cTxt, "%d/%d", (_iCalcTotalWeight() / 100), (((m_iStr + m_iAngelicStr) * 5) + (m_iLevel + m_iMajesticLevel) * 5));
+	wsprintf(G_cTxt, "%d/%d", (_iCalcTotalWeight() / 100), (((m_iStr + m_iAngelicStr) * 5) + (m_iLevel) * 5));
 	PutAlignedString(sX + 180, sX + 250, sY + 189 - 12, G_cTxt, 45, 25, 25);
 
 	// Enemy Kills
@@ -4737,50 +4735,6 @@ BOOL CGame::_bCheckDraggingItemRelease(short msX, short msY)
 	resi = 0;
 #endif
 
-	if ((435 + resi < msY) && (475 + resi > msY)) //LifeX Check
-	{ // MORLA - cuando suelta el item en la bar cast
-		if ((263 + resx <= msX) && (303 + resx >= msX)) 
-		{	 // 1
-			m_sRecentShortCut = m_stMCursor.sSelectedObjectID;
-			UseShortCutPanel(3, true);
-			iBarCast1 = m_stMCursor.sSelectedObjectID;
-			bBarCast1 = 0;
-			PlaySound('E', 28, 5);
-		}
-
-		if ((306 + resx <= msX) && (346 + resx >= msX)) { // 2
-			m_sRecentShortCut = m_stMCursor.sSelectedObjectID;
-			UseShortCutPanel(4, true);
-			iBarCast2 = m_stMCursor.sSelectedObjectID;
-			bBarCast2 = 0;
-			PlaySound('E', 28, 5);
-		}
-
-		if ((348 + resx <= msX) && (388 + resx >= msX)) { // 3
-			m_sRecentShortCut = m_stMCursor.sSelectedObjectID;
-			UseShortCutPanel(5, true);
-			iBarCast3 = m_stMCursor.sSelectedObjectID;
-			bBarCast3 = 0;
-			PlaySound('E', 28, 5);
-		}
-		if ((390 + resx <= msX) && (430 + resx >= msX)) { // 4
-			m_sRecentShortCut = m_stMCursor.sSelectedObjectID;
-			UseShortCutPanel(6, true);
-			iBarCast4 = m_stMCursor.sSelectedObjectID;
-			bBarCast4 = 0;
-			PlaySound('E', 28, 5);
-		}
-		if ((433 + resx <= msX) && (473 + resx >= msX)) { // 5
-			m_sRecentShortCut = m_stMCursor.sSelectedObjectID;
-			UseShortCutPanel(7, true);
-			iBarCast5 = m_stMCursor.sSelectedObjectID;
-			bBarCast5 = 0;
-			PlaySound('E', 28, 5);
-		}
-	}
-
-	else
-	{
 		//Snoopy: 41->61
 		for (i = 0; i < 61; i++)
 			//Snoopy: 40->60
@@ -4832,7 +4786,7 @@ BOOL CGame::_bCheckDraggingItemRelease(short msX, short msY)
 				}
 			}
 		bItemDrop_ExternalScreen((char)m_stMCursor.sSelectedObjectID, msX, msY);
-	}
+	
 	return FALSE;
 }
 
@@ -4848,10 +4802,7 @@ void CGame::bItemDrop_ExternalScreen(char cItemID, short msX, short msY)
 	{
 		ZeroMemory(cName, sizeof(cName));
 		m_pMapData->bGetOwner(m_sMCX, m_sMCY, cName, &sType, &iStatus, &m_wCommObjectID);
-		if (memcmp(m_cPlayerName, cName, 10) == 0)
-		{
-		}
-		else
+		if (memcmp(m_cPlayerName, cName, 10) != 0)
 		{
 			if (((m_pItemList[cItemID]->m_cItemType == DEF_ITEMTYPE_CONSUME) || (m_pItemList[cItemID]->m_cItemType == DEF_ITEMTYPE_ARROW))
 				&& (m_pItemList[cItemID]->m_dwCount > 1))
@@ -5129,12 +5080,12 @@ void CGame::DrawDialogBox_Magic(short msX, short msY, short msZ)
 	dV1 = dV2 * dV3;
 	iResult = (int)dV1;
 	if ((m_iInt + m_iAngelicInt) > 50) iResult += (((m_iInt + m_iAngelicInt) - 50) / 2);
-	sLevelMagic = ((m_iLevel + m_iMajesticLevel) / 10);
+	sLevelMagic = ((m_iLevel) / 10);
 	if (sMagicCircle != sLevelMagic)
 	{
 		if (sMagicCircle > sLevelMagic)
 		{
-			dV1 = (double)((m_iLevel + m_iMajesticLevel) - sLevelMagic * 10);
+			dV1 = (double)((m_iLevel) - sLevelMagic * 10);
 			dV2 = (double)abs(sMagicCircle - sLevelMagic)*_tmp_iMLevelPenalty[sMagicCircle];
 			dV3 = (double)abs(sMagicCircle - sLevelMagic) * 10;
 			dV4 = (dV1 / dV3)*dV2;
@@ -5257,6 +5208,133 @@ void CGame::NotifyMsg_EnemyKillReward(char *pData)
 	if (iEnemyKillCount >= 0) m_iEnemyKillCount = iEnemyKillCount;
 	PlaySound('E', 23, 0);
 	CreateScreenShot();
+}
+
+// centu - achievements
+void CGame::ResponseNpcAchievements(char* pData)
+{
+	char* cp;
+	char cTotal, i;
+
+	stTitle* pTitle;
+
+	m_vTitleList.clear();
+
+	cp = (char*)(pData + DEF_INDEX2_MSGTYPE + 2);
+
+	cTotal = *cp;
+	cp++;
+
+	for (i = 0; i < cTotal; i++) {
+		pTitle = new stTitle;
+
+		pTitle->cTitleID = *cp;
+		cp++;
+
+		pTitle->iCount = *(int*)cp;
+		cp += 4;
+
+		m_vTitleList.push_back(pTitle);
+	}
+
+	cTotal = *cp;
+	cp++;
+
+	for (i = 0; i < cTotal; i++) {
+		pTitle = new stTitle;
+
+		pTitle->cTitleID = *cp;
+		cp++;
+
+		pTitle->iCount = *(int*)cp;
+		cp += 4;
+
+		m_vTitleList.push_back(pTitle);
+	}
+
+}
+void CGame::NotifyMsg_NpcAchievement(char* pData)
+{
+	char* cp, cNpcType, cTxt[32];
+	int* ip, iKills;
+
+	cp = (char*)(pData + DEF_INDEX2_MSGTYPE + 2);
+	cNpcType = *cp;
+	cp++;
+
+	ip = (int*)cp;
+	iKills = *ip;
+	cp += 4;
+
+	m_dwTitleNotifyTime = m_dwCurTime;
+
+	GetNpcName(cNpcType, cTxt);
+	wsprintf(m_cNpcAchievement, "%s Lv. %d", cTxt, iKills / 1000);
+}
+void CGame::DrawDialogBox_Achievements(short msX, short msY, char cLB)
+{
+	int iIndex, iPointerLoc, iTotalLines, iCount, iNextCount, iLevel;
+	char cTxt[32];
+	short sX, sY, szX, sView;
+	double d1, d2, d3;
+	sX = m_stDialogBoxInfo[45].sX;
+	sY = m_stDialogBoxInfo[45].sY;
+	szX = m_stDialogBoxInfo[45].sSizeX;
+	sView = m_stDialogBoxInfo[45].sView;
+	COLORREF color;
+
+	DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_GAME2, sX, sY, 0);
+	DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_TEXT, sX, sY, 6);
+
+		PutString_SprFont2(sX + 65, sY + 45, "Achievements", 254, 242, 4); // previously 1,1,8
+
+		PutString(sX + 30, sY + 80, "Title:", RGB(55, 25, 25));
+		PutString(sX + 130, sY + 80, "Progress:", RGB(55, 25, 25));
+		PutString(sX + szX - 55, sY + 80, "Level:", RGB(55, 25, 25));
+
+		iIndex = 0;
+		iTotalLines = m_vTitleList.size();
+		if (sView >= iTotalLines) sView = m_stDialogBoxInfo[45].sView = 0;
+
+		for (Vector<stTitle*>::iterator it = m_vTitleList.begin() + sView; it != m_vTitleList.end() && iIndex < 14; ++it) {
+			if ((*it)->cTitleID < 120) GetNpcName((*it)->cTitleID, cTxt);
+
+			PutString(sX + 30, sY + 100 + iIndex * 15, cTxt, color);
+
+			if ((*it)->cTitleID < 120) {
+				sprintf(cTxt, "%d/%d", (*it)->iCount, (int)(floor((float)(*it)->iCount / 1000) + 1) * 1000);
+				PutString(sX + 130, sY + 100 + iIndex * 15, cTxt, color);
+				sprintf(cTxt, "%d", (int)floor((float)(*it)->iCount / 1000));
+				PutString(sX + szX - 45, sY + 100 + iIndex * 15, cTxt, color);
+			}
+			iIndex++;
+		}
+
+		if (iTotalLines > 14) {
+			d1 = (double)sView;
+			d2 = (double)(iTotalLines - 14);
+			d3 = (274.0f * d1) / d2;
+			iPointerLoc = (int)d3;
+			DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_GAME2, sX, sY, 3);
+			DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_GAME2, sX + 242, sY + iPointerLoc + 35, 7);
+		}
+		else iPointerLoc = 0;
+
+		if (cLB != 0 && iTotalLines > 14) {
+			if ((iGetTopDialogBoxIndex() == 45)) {
+				if ((msX >= sX + 240) && (msX <= sX + 260) && (msY >= sY + 40) && (msY <= sY + 320)) {
+					d1 = (double)(msY - (sY + 40));
+					d2 = (double)(iTotalLines - 14);
+					d3 = (d1 * d2) / 274.0f;
+					iPointerLoc = (int)d3;
+
+					if (iPointerLoc > iTotalLines) iPointerLoc = iTotalLines;
+					m_stDialogBoxInfo[45].sView = iPointerLoc;
+				}
+			}
+		}
+		else m_stDialogBoxInfo[45].bIsScrollSelected = FALSE;
+	
 }
 
 void CGame::NotifyMsg_ForceDisconn(char *pData)
@@ -5853,7 +5931,7 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			m_pEffectList[i]->m_mY     = sY*32 - _iAttackerHeight[iV1];
 			m_pEffectList[i]->m_iErr   = 0;
 			m_pEffectList[i]->m_cMaxFrame   = 0;
-			m_pEffectList[i]->m_dwFrameTime = 10;
+			m_pEffectList[i]->m_dwFrameTime = 10; 
 			m_pEffectList[i]->m_cDir = m_Misc.cCalcDirection(sX, sY, dX, dY);
 			PlaySound('C', 4, sDist);
 			break;
@@ -6523,24 +6601,6 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			break;
 
 		case 69: // identique au cas 70
-			m_pEffectList[i]->m_mX    = sX;
-			m_pEffectList[i]->m_mY    = sY;
-			m_pEffectList[i]->m_cMaxFrame   = 11;
-			m_pEffectList[i]->m_dwFrameTime = 30;
-#ifdef RES_HIGH
-			sAbsX = abs(400 - (sX - m_sViewPointX));
-			sAbsY = abs(300 - (sY - m_sViewPointY));
-#else
-			sAbsX = abs(320 - (sX - m_sViewPointX));
-			sAbsY = abs(240 - (sY - m_sViewPointY));
-#endif
-			if (sAbsX > sAbsY) sDist = sAbsX;
-			else sDist = sAbsY;
-			sDist = sDist / 32;
-			lPan = -(((m_sViewPointX / 32) + 12) - (sX/32))*1000;// centu - 800x600
-			PlaySound('E', 42, sDist, lPan);
-			break;
-
 		case 70: // identtique au cas 69
 			m_pEffectList[i]->m_mX    = sX;
 			m_pEffectList[i]->m_mY    = sY;
@@ -7494,7 +7554,7 @@ void CGame::DrawEffects()
 				m_pEffectList[i]->m_rX - 14, m_pEffectList[i]->m_rY - 7, 2);
 
 			//Diagonal
-			_DrawThunderEffect(dX - 500, dY - 800,
+			/*_DrawThunderEffect(dX - 500, dY - 800,
 				m_pEffectList[i]->m_mX + 15, m_pEffectList[i]->m_mY + 10,
 				m_pEffectList[i]->m_rX - 20, m_pEffectList[i]->m_rY, 3);
 			_DrawThunderEffect(dX - 500, dY - 800,
@@ -7520,7 +7580,7 @@ void CGame::DrawEffects()
 			_DrawThunderEffect(dX + 800, dY - 800,
 				dX + 15, dY - 10,
 				m_pEffectList[i]->m_rX - 14, m_pEffectList[i]->m_rY - 7, 2);
-
+			*/
 			break;
 
 		case 47:
@@ -14655,7 +14715,8 @@ void CGame::DrawBackground(short sDivX, short sModX, short sDivY, short sModY)
 				sSprFrame = m_pMapData->m_tile[indexX][indexY].m_sTileSpriteFrame;
 				m_pTileSpr[sSpr]->PutSpriteFastNoColorKeyDst(m_DDraw.m_lpPDBGS, ix - 16 +sModX, iy - 16 +sModY, sSprFrame, m_dwCurTime);
 				//Grid - by luqah
-				if (m_bGrid)m_pSprite[DEF_SPRID_INTERFACE_ND_GRID]->PutSpriteFastDst(m_DDraw.m_lpPDBGS, ix - 16 +sModX, iy - 16 +sModY, 17, m_dwCurTime);
+				if (m_bGrid) m_pSprite[DEF_SPRID_INTERFACE_ND_GRID]->PutSpriteFastDst(m_DDraw.m_lpPDBGS, ix - 16 +sModX, iy - 16 +sModY, 17, m_dwCurTime);
+				
 				indexX++;
 			}
 			indexY++;
@@ -16464,254 +16525,90 @@ int resy, resx;
 #ifdef RES_HIGH
 resy = 120;
 resx = 80;
+int addx = 10;
 #else
 resi = 0;
 #endif
     sX = m_stDialogBoxInfo[30].sX;
     sY = m_stDialogBoxInfo[30].sY;
 
-    m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFast(sX-80, sY, 0, dwTime); // Icon Pannel Background
+    m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFast(sX, sY, 14, dwTime); // Icon Pannel Background
 
 	if (m_iHP > 0) {
 		if ((m_iLU_Point > 0) && (m_bIsDialogEnabled[12] == FALSE)) // Level-Up button
-			PutString_SprFont2(720 + 5, 525 + 25 + 10 + 2, "Level Up!", (timeGetTime() / 3) % 255, (timeGetTime() / 3) % 255, 0);
+			PutString_SprFont2(720 + 5, 510, "Level Up!", (timeGetTime() / 3) % 255, (timeGetTime() / 3) % 255, 0);
 	}
 	else
 	{
 		if (m_cRestartCount == -1)
-			PutString_SprFont2(720 + 5, 525 + 25 + 10 + 2, "Restart", (timeGetTime() / 3) % 255, (timeGetTime() / 3) % 255, 0);
+			PutString_SprFont2(720 + 5, 510, "Restart", (timeGetTime() / 3) % 255, (timeGetTime() / 3) % 255, 0);
 	}
-	// MORLA - iconos de Ataque y Crusade
-	if (m_bIsSafeAttackMode) m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(506 + resx, 433+ resy, 4, dwTime); // Safe Attack Icon
-    else if (m_bIsCombatMode) m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(506 + resx, 433+ resy, 5, dwTime); // Combat Mode Icon
-    if ((506 + resx < msX)    && (548 + resx > msX) && (433+ resy < msY) && (475+ resy > msY))  { // Combat Mode Icon
-        m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(506 + resx, 433 + resy, 16, dwTime);
-        if(m_bIsCombatMode) {
-            if (m_bIsSafeAttackMode) wsprintf(G_cTxt, "Safe Attack");
-            else wsprintf(G_cTxt, "Attack");
-        }
-        else wsprintf(G_cTxt, "Peace");
-        PutString(msX-10, msY-20, G_cTxt, RGB(250,250,220));
-    } 
 
-    if ((m_bIsCrusadeMode) && (m_iCrusadeDuty != 0)) { // Crusade Icon
+	if (m_bIsSafeAttackMode) m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFast(368+resx+ addx-2, 440+resy, 4, dwTime); // Safe Attack Icon
+	else if (m_bIsCombatMode) m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFast(368+resx + addx-1, 440+resy, 5, dwTime); // Combat Mode Icon
+	if ((362+resx + addx < msX) && (404+resx + addx > msX) && (434+resy < msY) && (475+resy > msY)) { // Combat Mode Icon
+		m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFast(362+resx + addx-1, 434+resy, 16, dwTime);
+		if (m_bIsCombatMode) {
+			if (m_bIsSafeAttackMode) wsprintf(G_cTxt, "Safe Attack");
+			else wsprintf(G_cTxt, "Attack");
+		}
+		else wsprintf(G_cTxt, "Peace");
+		PutString(msX - 10, msY - 20, G_cTxt, RGB(250, 250, 220));
+	}
+
+	if ((m_bIsCrusadeMode) && (m_iCrusadeDuty != 0)) { // Crusade Icon
 		if (m_bAresden == TRUE) {
-            if ((469 + resx <= msX) && (505 + resx >= msX) && (434+ resy < msY) && (475+ resy > msY))
-                 m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(468 + resx, 433+ resy, 1, dwTime);
-            else m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(468 + resx, 433+ resy, 2, dwTime);
-        }
-        else {
-            if ((469 + resx <= msX) && (505 + resx >= msX) && (434 + resy < msY) && (475 + resy > msY))
-                 m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(468 + resx, 433 + resy, 0, dwTime);
-            else m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(468 + resx, 433 + resy, 15, dwTime);
-        }
-    }
-	wsprintf(G_cTxt, "%s", m_cMapMessage); 
-	PutAlignedString(103+25 + resx, 245+25 + resx, 446 + resy, G_cTxt, 200,200,120);
-	wsprintf(G_cTxt, "(%d, %d)", m_sPlayerX, m_sPlayerY); 
-	PutAlignedString(68+25 + resx, 289+25 + resx, 457 + resy, G_cTxt, 200,200,120); // Map Message (Center Pannel)
-
-    if ((msY > 432+ resy) && (msY < 455 + resy)) // MORLA - Menu Icons Arriva
-    {    
-        if ((msX > 550 + resx) && (msX < 571 + resx)) { // Inventory
-            m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(550 + resx, 433 + resy, 6, dwTime);
-            wsprintf(G_cTxt, "Inventory");
-            PutString(msX-10, msY-20, G_cTxt, RGB(250,250,220));
-        }
-		if ((msX > 571 + resx) && (msX < 593 + resx)) { // Magic
-            m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(572 + resx, 433 + resy, 7, dwTime);
-            wsprintf(G_cTxt, "Spell Book");
-            PutString(msX-10, msY-20, G_cTxt, RGB(250,250,220));
-        }
-        if ((msX > 595 + resx) && (msX < 615 + resx)) { // Character    
-            m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(595 + resx, 433 + resy, 8, dwTime);
-            wsprintf(G_cTxt, "Character Menu");
-            PutString(msX-10, msY-20, G_cTxt, RGB(250,250,220));
-        }
-        if ((msX > 616 + resx) && (msX < 638 + resx)) { // Skill
-            m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(617 + resx, 433 + resy, 9, dwTime);
-            wsprintf(G_cTxt, "Skill List");
-            PutString(msX-10, msY-20, G_cTxt, RGB(250,250,220));
-        }
+			if ((322+resx + addx <= msX) && (355+resx + addx >= msX) && (434+resy < msY) && (475+resy > msY))
+				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFast(322+resx + addx, 434+resy, 1, dwTime);
+			else m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFast(322+resx + addx, 434+resy, 2, dwTime);
+		}
+		else if (m_bAresden == FALSE) {
+			if ((322+resx + addx <= msX) && (355+resx + addx >= msX) && (434+resy < msY) && (475+resy > msY))
+				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFast(322+resx + addx, 434+resy, 0, dwTime);
+			else m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFast(322+resx + addx, 434+resy, 15, dwTime);
+		}
 	}
 
-    if (msY > 455 + resy)  // MORLA - Menu Icons Abajo
-    {    
-        if ((msX > 550 + resx) && (msX < 571 + resx)) { // Player Panel    
-            m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(550 + resx, 455 + resy, 10, dwTime);
-            wsprintf(G_cTxt, "Player Panel");
-            PutString(msX-10, msY-20, G_cTxt, RGB(250,250,220));
-        }
-        if ((msX > 571 + resx) && (msX < 593 + resx)) { // History
-            m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(572 + resx, 455 + resy, 11, dwTime);
-            wsprintf(G_cTxt, "Chat History");
-            PutString(msX-10, msY-20, G_cTxt, RGB(250,250,220));
-        }
-		if ((msX > 595 + resx) && (msX < 615 + resx)) { // F1
-            m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(595 + resx, 455 + resy, 13, dwTime);
-            wsprintf(G_cTxt, "Help");
-            PutString(msX-10, msY-20, G_cTxt, RGB(250,250,220));
-        }
-        if ((msX > 616 + resx) && (msX < 638 + resx)) { // System Menu
-            m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFast(617 + resx, 455 + resy, 18, dwTime);
-            wsprintf(G_cTxt, "Options");
-            PutString(msX-20, msY-20, G_cTxt, RGB(250,250,220));
-        }
-    }
-	if ((msX > 128 + resx) && (msX < 136 + resx) && (msY > 432 + resy)) { // Hunger Status Bar
+	wsprintf(G_cTxt, "%s", m_cMapMessage);
+	PutAlignedString(140+resx, 323+resx, 456 + resy, G_cTxt, 200, 200, 120); // Map Message (Center Pannel)
+
+	if ((msY > 436+resy) && (msY < 478+resy)) // Menu Icons
+	{
+		if ((msX > 410 + resx + addx) && (msX < 447 + resx + addx)) { // Character    
+			m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFast(410 + resx + addx+2, 434 + resy, 6, dwTime);
+			wsprintf(G_cTxt, "Character Menu");
+			PutString(msX - 10, msY - 20, G_cTxt, RGB(250, 250, 220));
+		}
+		if ((msX > 447 + resx + addx) && (msX < 484 + resx + addx)) { // Inventory
+			m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFast(447 + resx + addx+1, 434 + resy, 7, dwTime);
+			wsprintf(G_cTxt, "Inventory");
+			PutString(msX - 10, msY - 20, G_cTxt, RGB(250, 250, 220));
+		}
+		if ((msX > 484 + resx + addx) && (msX < 521 + resx + addx)) { // Magic
+			m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFast(484 + resx + addx, 434 + resy, 8, dwTime);
+			wsprintf(G_cTxt, "Spell Book");
+			PutString(msX - 10, msY - 20, G_cTxt, RGB(250, 250, 220));
+		}
+		if ((msX > 521 + resx + addx) && (msX < 558 + resx + addx)) { // Skill
+			m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFast(521 + resx + addx+1, 434 + resy, 9, dwTime);
+			wsprintf(G_cTxt, "Skill List");
+			PutString(msX - 10, msY - 20, G_cTxt, RGB(250, 250, 220));
+		}
+		if ((msX > 558 + resx + addx) && (msX < 595 + resx + addx)) { // History
+			m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFast(558 + resx + addx, 434 + resy, 10, dwTime);
+			wsprintf(G_cTxt, "Chat History");
+			PutString(msX - 10, msY - 20, G_cTxt, RGB(250, 250, 220));
+		}
+		if ((msX > 595 + resx + addx) && (msX < 631 + resx + addx)) { // System Menu
+			m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFast(595 + resx + addx+1, 434 + resy, 11, dwTime);
+			wsprintf(G_cTxt, "Options");
+			PutString(msX - 20, msY - 20, G_cTxt, RGB(250, 250, 220));
+		}
+	}
+
+	if ((msX > 400) && (msX < 410) && (msY > 432 + resy)) { // Hunger Status Bar
 		wsprintf(G_cTxt, "Hunger (%d%%)", 100 - iHungerStatus);
-		PutString(msX-20, msY-20, G_cTxt, RGB(250,250,220));
-    }
-	// Experience Gauge - MORLA - Fixed
-    if ((msX > 0 + resx) && (msX < 640 + resx) && (msY > 426 + resy) && (msY < 430 + resy)) 
-	{
-		unsigned long iNextExp;
-        if(m_iMajesticLevel == 0) 
-		{
-			iNextExp = iGetLevelExp(m_iLevel+1);
-		}
-        else 
-		{
-			iNextExp = iGetLevelExp(m_iLevel+m_iMajesticLevel+1);
-		}
-        wsprintf(G_cTxt, "Exp: %d / %d", m_iExp, iNextExp);
-        PutString(msX-10, msY-20, G_cTxt, RGB(250,250,220));
-    }
-
-	// MORLA - agregando el icono para la magia o item en la Bar Cast
-	if (bBarCast1 >= 100) {
-        m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutTransSprite(283 + resx, 454 + resy, 19, dwTime);
-	}
-	else
-	{
-		if (iBarCast1 != 0)
-		m_pSprite[DEF_SPRID_ITEMGROUND_PIVOTPOINT + m_pItemList[iBarCast1]->m_sSprite]->PutSpriteFast(283 + resx, 454 + resy, m_pItemList[iBarCast1]->m_sSpriteFrame, dwTime);
-
-	}
-		if (bBarCast2 >= 100) {
-        m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutTransSprite(327 + resx, 454 + resy, 19, dwTime);
-	}
-	else
-	{
-		if (iBarCast2 != 0)
-		m_pSprite[DEF_SPRID_ITEMGROUND_PIVOTPOINT + m_pItemList[iBarCast2]->m_sSprite]->PutSpriteFast(327 + resx, 454 + resy, m_pItemList[iBarCast2]->m_sSpriteFrame, dwTime);
-
-	}
-	if (bBarCast3 >= 100) {
-        m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutTransSprite(370 + resx, 454 + resy, 19, dwTime);
-	}
-	else
-	{
-		if (iBarCast3 != 0)
-		m_pSprite[DEF_SPRID_ITEMGROUND_PIVOTPOINT + m_pItemList[iBarCast3]->m_sSprite]->PutSpriteFast(370 + resx, 454 + resy, m_pItemList[iBarCast3]->m_sSpriteFrame, dwTime);
-
-	}
-	if (bBarCast4 >= 100) {
-        m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutTransSprite(411 + resx, 454 + resy, 19, dwTime);
-	}
-	else
-	{
-		if (iBarCast4 != 0)
-		m_pSprite[DEF_SPRID_ITEMGROUND_PIVOTPOINT + m_pItemList[iBarCast4]->m_sSprite]->PutSpriteFast(411 + resx, 454 + resy, m_pItemList[iBarCast4]->m_sSpriteFrame, dwTime);
-
-	}
-	if (bBarCast5 >= 100) {
-        m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutTransSprite(454 + resx, 454 + resy, 19, dwTime);
-	}
-	else
-	{
-		if (iBarCast5 != 0)
-		m_pSprite[DEF_SPRID_ITEMGROUND_PIVOTPOINT + m_pItemList[iBarCast5]->m_sSprite]->PutSpriteFast(454 + resx, 454 + resy, m_pItemList[iBarCast5]->m_sSpriteFrame, dwTime);
-
-	}
-	
-	// MORLA - Cuando pasan el mouse por encima del icono
-	if ((435 + resy < msY) && (475 + resy > msY)) 
-	{ // MORLA - cuando suelta el item
-		if ((263 + resx <= msX) && (303 + resx >= msX))
-		{
-			if (bBarCast1 >= 100) 
-			{
-				wsprintf(G_cTxt, "%s (1)", m_pMagicCfgList[bBarCast1-100]->m_cName);
-				PutString(msX-10, msY-20, G_cTxt, RGB(0,255,220));
-			}
-			else 
-			{
-				if (iBarCast1 != 0)
-				{
-					wsprintf(G_cTxt, "%s (1)", m_pItemList[iBarCast1]->m_cName);
-				}
-				else {
-					wsprintf(G_cTxt, "%s (1)", MSG_SHORTCUT1);
-				}
-				PutString(msX-10, msY-20, G_cTxt, RGB(250,250,220));
-			}
-		}
-
-		if ((306 + resx <= msX) && (346 + resx >= msX)) {
-			if (bBarCast2 >= 100) {
-				wsprintf(G_cTxt, "%s (2)", m_pMagicCfgList[bBarCast2-100]->m_cName);
-				PutString(msX-10, msY-20, G_cTxt, RGB(0,255,220));
-			}
-			else {
-				if (iBarCast2 != 0)
-				{
-					wsprintf(G_cTxt, "%s (2)", m_pItemList[iBarCast2]->m_cName);
-				}
-				else {
-					wsprintf(G_cTxt, "%s (2)", MSG_SHORTCUT1);
-				}
-				PutString(msX-10, msY-20, G_cTxt, RGB(250,250,220));
-			}
-		}
-		if ((348 + resx <= msX) && (388 + resx >= msX)) {
-			if (bBarCast3 >= 100) {
-				wsprintf(G_cTxt, "%s (3)", m_pMagicCfgList[bBarCast3-100]->m_cName);
-				PutString(msX-10, msY-20, G_cTxt, RGB(0,255,220));
-			}
-			else {
-				if (iBarCast3 != 0)
-				{
-					wsprintf(G_cTxt, "%s (3)", m_pItemList[iBarCast3]->m_cName);
-				}
-				else {
-					wsprintf(G_cTxt, "%s (3)", MSG_SHORTCUT1);
-				}
-				PutString(msX-10, msY-20, G_cTxt, RGB(250,250,220));
-			}
-		}
-		if ((390 + resx <= msX) && (430 + resx >= msX)) {
-			if (bBarCast4 >= 100) {
-				wsprintf(G_cTxt, "%s (4)", m_pMagicCfgList[bBarCast4-100]->m_cName);
-				PutString(msX-10, msY-20, G_cTxt, RGB(0,255,220));
-			}
-			else {
-				if (iBarCast4 != 0)
-				{
-					wsprintf(G_cTxt, "%s (4)", m_pItemList[iBarCast4]->m_cName);
-				}
-				else {
-					wsprintf(G_cTxt, "%s (4)", MSG_SHORTCUT1);
-				}
-				PutString(msX-10, msY-20, G_cTxt, RGB(250,250,220));
-			}
-		}
-		if ((433 + resx <= msX) && (473 + resx >= msX)) {
-			if (bBarCast5 >= 100) {
-				wsprintf(G_cTxt, "%s (5)", m_pMagicCfgList[bBarCast5-100]->m_cName);
-				PutString(msX-10, msY-20, G_cTxt, RGB(0,255,220));
-			}
-			else {
-				if (iBarCast5 != 0)
-				{
-					wsprintf(G_cTxt, "%s (5)", m_pItemList[iBarCast5]->m_cName);
-				}
-				else {
-					wsprintf(G_cTxt, "%s (5)", MSG_SHORTCUT1);
-				}
-				PutString(msX-10, msY-20, G_cTxt, RGB(250,250,220));
-			}
-		}
+		PutString(msX - 20, msY - 20, G_cTxt, RGB(250, 250, 220));
 	}
 
 	DWORD dwTimeThis = timeGetTime(); // MORLA 2.3 - Muestra el icono de Holy Shit etc...
@@ -16930,67 +16827,59 @@ void CGame::DrawDialogBox_GaugePannel()
 	resi = 0;
 #endif
 
-	// MORLA - Barras de hp sp mp y exp
-    // Health Gauge
-    iMaxPoint = m_iVit*3 + (m_iLevel+m_iMajesticLevel)*2 + ((m_iStr + m_iAngelicStr)/2);
-    iBarWidth = 101 - (m_iHP*101)/iMaxPoint;
-    if( iBarWidth < 0 ) iBarWidth = 0;
-    if( iBarWidth > 101 ) iBarWidth = 101;
-    m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFastWidth(4 + resx, 434+ resy,  12, iBarWidth, m_dwCurTime, false);
-    iTemp = m_iHP;
-    wsprintf(G_cTxt, "%d", iTemp);
-    if (m_bIsPoisoned) {
-        PutString_SprNum(50 + resx, 435 + resy, G_cTxt, m_wR[5]*11, m_wG[5]*11, m_wB[5]*11);
-        PutString_SprFont3(50 + resx, 433 + resy, "Poisoned", m_wR[5]*8, m_wG[5]*8, m_wB[5]*8, TRUE, 2);
-    }
-    else PutString_SprNum(58 + resx, 435 + resy, G_cTxt, 200, 100, 100);
+	// Health Gauge
+	iMaxPoint = m_iVit * 3 + (m_iLevel) * 2 + ((m_iStr + m_iAngelicStr) / 2);
+	iBarWidth = 101 - (m_iHP * 101) / iMaxPoint;
+	if (iBarWidth < 0) iBarWidth = 0;
+	if (iBarWidth > 101) iBarWidth = 101;
+	m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFastWidth(23+resx, 437+resy, 12, iBarWidth, m_dwCurTime, false);
+	iTemp = m_iHP;
+	wsprintf(G_cTxt, "%d", iTemp);
+	if (m_bIsPoisoned) {
+		PutString_SprNum(85+resx, 441+resy, G_cTxt, m_wR[5] * 11, m_wG[5] * 11, m_wB[5] * 11);
+		PutString_SprFont3(35+resx, 439+resy, "Poisoned", m_wR[5] * 8, m_wG[5] * 8, m_wB[5] * 8, TRUE, 2);
+	}
+	else PutString_SprNum(80+resx, 441+resy, G_cTxt, 200, 100, 100);
 
-    // Mana Gauge
-    iMaxPoint = ((m_iMag + m_iAngelicMag)*2) + (m_iLevel + m_iMajesticLevel) *2 + ((m_iInt + m_iAngelicInt)/2);
-    iBarWidth = 101 - (m_iMP*101)/iMaxPoint;
-    if( iBarWidth < 0 ) iBarWidth = 0;
-    if( iBarWidth > 101 ) iBarWidth = 101;
-    m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFastWidth(3 + resx, 451 + resy,  12, iBarWidth, m_dwCurTime, false);
-    iTemp = m_iMP;
-    wsprintf(G_cTxt, "%d", iTemp);
-    PutString_SprNum(58 + resx, 450 + resy, G_cTxt, 100, 100, 200);
+	// Mana Gauge
+	iMaxPoint = ((m_iMag + m_iAngelicMag) * 2) + (m_iLevel) * 2 + ((m_iInt + m_iAngelicInt) / 2);
+	iBarWidth = 101 - (m_iMP * 101) / iMaxPoint;
+	if (iBarWidth < 0) iBarWidth = 0;
+	if (iBarWidth > 101) iBarWidth = 101;
+	m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFastWidth(23+resx, 459+resy, 12, iBarWidth, m_dwCurTime, false);
+	iTemp = m_iMP;
+	wsprintf(G_cTxt, "%d", iTemp);
+	PutString_SprNum(80+resx, 463+resy, G_cTxt, 100, 100, 200);
 
-    // Stamina Gauge
-    iMaxPoint = ((m_iStr + m_iAngelicStr)*2) + (m_iLevel + m_iMajesticLevel) *2;
-    iBarWidth = 101 - (m_iSP*101)/iMaxPoint;
-    if( iBarWidth < 0 ) iBarWidth = 0;
-    if( iBarWidth > 101 ) iBarWidth = 101;
-    m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFastWidth(3 + resx, 467 + resy, 12, iBarWidth, m_dwCurTime, false);
-    iTemp = m_iSP;
-    wsprintf(G_cTxt, "%d", iTemp);
-    PutString_SprNum(58 + resx, 465 + resy, G_cTxt, 100, 100, 200);
+	// Stamina Gauge
+	iMaxPoint = ((m_iStr + m_iAngelicStr) * 2) + (m_iLevel) * 2;
+	iBarWidth = 167 - (m_iSP * 167) / iMaxPoint;
+	if (iBarWidth < 0) iBarWidth = 0;
+	if (iBarWidth > 167) iBarWidth = 167;
+	m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFastWidth(147+resx, 434+resy, 13, iBarWidth, m_dwCurTime, false);
+	iTemp = m_iSP;
+	wsprintf(G_cTxt, "%d", iTemp, iMaxPoint);
+	PutString_SprNum(228+resx, 435+resy, G_cTxt, 100, 100, 200);
 
     // Experience Gauge - MORLA - arreglada para que vaya de izquierda a derecha
-	// centu - agregado majestic level
+	
 	unsigned long iMaxPoint3;
-	if (m_iMajesticLevel == 0) 
-	{
-		iMaxPoint3 = iGetLevelExp(m_iLevel+1) - iGetLevelExp(m_iLevel);
-	}
-	else
-	{
-		iMaxPoint3 = iGetLevelExp(m_iLevel+m_iMajesticLevel+1) - iGetLevelExp(m_iLevel + m_iMajesticLevel);
-	}
+	iMaxPoint3 = iGetLevelExp(m_iLevel+1) - iGetLevelExp(m_iLevel);
 
-    unsigned long uTemp = m_iExp - iGetLevelExp(m_iLevel + m_iMajesticLevel);
+    unsigned long uTemp = m_iExp - iGetLevelExp(m_iLevel);
     iBarWidth = (uTemp *800) / iMaxPoint3;
     if( iBarWidth < 0 ) iBarWidth = 0;
     if( iBarWidth > 800 ) iBarWidth = 800;
-    m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFastWidth(0, 427 + resy, 1, iBarWidth, m_dwCurTime, false);
+    m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFastWidth(0, 427 + resy+2, 18, iBarWidth, m_dwCurTime, false);
 	uTemp = uTemp - iMaxPoint3;
 
 	// MORLA2 - Hunger Status
     iMaxPoint = 100;
 	iTemp = iHungerStatus;
-    iBarWidth = 42 - (iHungerStatus*42)/100;
+    iBarWidth = 35 - (iHungerStatus*35)/100;
     if( iBarWidth < 0 ) iBarWidth = 0;
-    if( iBarWidth > 42 ) iBarWidth = 42;
-    m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFastWidth(130 + resx, 436 + resy, 25, iBarWidth, m_dwCurTime, true);
+    if( iBarWidth > 35 ) iBarWidth = 35;
+    m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFastWidth(401, 558, 17, iBarWidth, m_dwCurTime, true);
 	iTemp = iHungerStatus;
 
 	int i;
@@ -17010,7 +16899,6 @@ void CGame::DrawDialogBox_GaugePannel()
 						if( iBarWidth2[i] > 66 ) iBarWidth2[i] = 66;
 						m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL]->PutSpriteFastWidth(3 + (71 * i), 60, 26, iBarWidth2[i], m_dwCurTime, false);
 					
-
 						if (iPartyMp[i] > iMaxPoint0[i]) iPartyMp[i] = iMaxPoint0[i];
 						iBarWidth0[i] = (iPartyMp[i] * 66) / iMaxPoint0[i];
 						if (iBarWidth0[i] < 0) iBarWidth0[i] = 0;
@@ -23598,34 +23486,12 @@ void CGame::OnKeyUp(WPARAM wParam)
 		m_bCtrlPressed = FALSE;
 		break;
 
-	// MORLA - Hotkeys Teclado
-	case 49:
-		if ((m_bCtrlPressed == false)&&(m_bInputStatus == FALSE)&&( m_cGameMode == DEF_GAMEMODE_ONMAINGAME ))
-		UseShortCutPanel(3, false);	
-		break;
-	case 50:
-		if ((m_bCtrlPressed == false)&&(m_bInputStatus == FALSE)&&( m_cGameMode == DEF_GAMEMODE_ONMAINGAME ))
-		UseShortCutPanel(4, false);	
-		break;
-	case 51:
-		if ((m_bCtrlPressed == false)&&(m_bInputStatus == FALSE)&&( m_cGameMode == DEF_GAMEMODE_ONMAINGAME ))
-		UseShortCutPanel(5, false);	
-		break;
-	case 52:
-		if ((m_bCtrlPressed == false)&&(m_bInputStatus == FALSE)&&( m_cGameMode == DEF_GAMEMODE_ONMAINGAME ))
-		UseShortCutPanel(6, false);	
-		break;
-	case 53:
-		if ((m_bCtrlPressed == false)&&(m_bInputStatus == FALSE)&&( m_cGameMode == DEF_GAMEMODE_ONMAINGAME ))
-		UseShortCutPanel(7, false);	
-		break;
-
 	case 65://'A'
 		
 		break;
 
 	// VAMP - online users list
-	case 81://'Q'
+	case 81://'O'
 		if( ( m_bCtrlPressed == TRUE ) && ( m_cGameMode == DEF_GAMEMODE_ONMAINGAME ) )
 		{	if (m_bIsDialogEnabled[55] == FALSE)
 			{	EnableDialogBox(55, NULL, NULL, NULL);
@@ -23957,7 +23823,12 @@ void CGame::OnKeyUp(WPARAM wParam)
 		break;
 
 	case VK_F11:
-		m_bDialogTrans = !m_bDialogTrans;
+		//m_bDialogTrans = !m_bDialogTrans;
+		if (m_bIsDialogEnabled[45] == FALSE) {
+			bSendCommand(MSGID_REQUEST_ACHIEVEMENTS, DEF_MSGTYPE_CONFIRM, NULL, NULL, NULL, NULL, NULL);
+			EnableDialogBox(45, NULL, NULL, NULL);
+		}
+		else DisableDialogBox(45);
 		break;
 
 	case VK_F12:
@@ -24191,21 +24062,7 @@ void CGame::OnKeyDown(WPARAM wParam)
 				case 55: EnableDialogBox(3, NULL, NULL, NULL); m_stDialogBoxInfo[3].sView = 6; break; // 7
 				case 56: EnableDialogBox(3, NULL, NULL, NULL); m_stDialogBoxInfo[3].sView = 7; break; // 8
 				case 57: EnableDialogBox(3, NULL, NULL, NULL); m_stDialogBoxInfo[3].sView = 8; break; // 9
-				}
-			// MORLA - Modificado para que no escriba al apretar los hotkeys de Casting Bar
-			}else if ((m_bInputStatus == FALSE) && (GetAsyncKeyState(VK_MENU)>>15 == FALSE))
-			{
-				if ((m_bShiftPressed == TRUE) || ((wParam!=49) && (wParam!=50)
-					&& (wParam!=51)&& (wParam!=52) && (wParam!=53)))
-				{
-#ifdef RES_HIGH
-					StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-					StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-					ClearInputString(); 
-				}
-		}	}
+		}	}	}
 		break;
 	}
 }
@@ -25400,13 +25257,6 @@ void CGame::NotifyMsgHandler(char * pData)
 		AddEventList(G_cTxt, 10);
 		break;
 
-	case DEF_NOTIFY_MAJESTIC_LEVEL:
-		cp = (char *)(pData	+ DEF_INDEX2_MSGTYPE + 2);
-		sp  = (short *)cp;
-		sV1 = *sp;
-		cp += 2;
-		m_iMajesticLevel = sV1;
-		break;
 
 	case DEF_NOTIFY_GIZONITEMUPGRADELEFT: // 0x0BA4// Item upgrade is possible.
 		cp = (char *)(pData	+ DEF_INDEX2_MSGTYPE + 2);
@@ -25416,7 +25266,7 @@ void CGame::NotifyMsgHandler(char * pData)
 		ip = (int *)cp;
 		switch (*ip) {
 		case 1: //
-			wsprintf(cTxt, "Majestic Level Up!!! Majestic Points: %d Level: %d", m_iGizonItemUpgradeLeft, m_iMajesticLevel);// "Level up!!! Level %d!"
+			wsprintf(cTxt, "Majestic Up!!! Majestic Points: %d", m_iGizonItemUpgradeLeft);// "Level up!!! Level %d!"
 			AddEventList(cTxt, 10);
 			switch (m_sPlayerType) {
 			case 1:
@@ -26641,6 +26491,10 @@ NMH_LOOPBREAK2:;
 		NotifyMsg_EnemyKillReward(pData);
 		break;
 
+	case DEF_NOTIFY_NPCACHIEVEMENT:
+		NotifyMsg_NpcAchievement(pData);
+		break;
+
 	case DEF_NOTIFY_PKCAPTURED:
 		NotifyMsg_PKcaptured(pData);
 		break;
@@ -27290,16 +27144,7 @@ void CGame::EraseItem(char cItemID)
 			else wsprintf(G_cTxt, ERASE_ITEM, cStr1, cStr2, cStr3, i+7);
 			AddEventList(G_cTxt, 10);
 			m_sShortCut[i] = -1;
-			// MORLA 2.8 - Arreglado para la barra cast
-			switch (i-2)
-			{
-				case 1: { bBarCast1 = 0;	iBarCast1 = 0; }break;
-				case 2: { bBarCast2 = 0;	iBarCast2 = 0; }break;
-				case 3: { bBarCast3 = 0;	iBarCast3 = 0; }break;
-				case 4: { bBarCast4 = 0;	iBarCast4 = 0; }break;
-				case 5: { bBarCast5 = 0;	iBarCast5 = 0; }break;
-				default: reiniciarCastBar(); break;
-			}
+			
 	}	}
 
 	if (cItemID == m_sRecentShortCut)
@@ -27320,11 +27165,6 @@ void CGame::EraseItem(char cItemID)
 	m_bIsItemDisabled[cItemID] = FALSE;
 }
 
-void CGame::reiniciarCastBar()
-{
-bBarCast1 = bBarCast2 = bBarCast3 = bBarCast4 = bBarCast5 = 0;
- iBarCast1 = iBarCast2 = iBarCast3 = iBarCast4 = iBarCast5 = 0;
-}
 
 void CGame::DlbBoxDoubleClick_Character(short msX, short msY)
 {
@@ -29107,7 +28947,7 @@ void CGame::CommandProcessor(short msX, short msY, short indexX, short indexY, c
 			bSendCommand(MSGID_REQUEST_PANNING, NULL, 1, NULL, NULL, NULL, NULL);
 		else if ((msY == 599) && (m_sViewDstY < 32 * m_pMapData->m_sMapSizeY - 32 * 21))
 			bSendCommand(MSGID_REQUEST_PANNING, NULL, 5, NULL, NULL, NULL, NULL);
-		else return;
+		
 #else
 		if ((msX == 0) && (msY == 0) && (m_sViewDstX > 32 * 21) && (m_sViewDstY > 32 * 16)) 
 			bSendCommand(MSGID_REQUEST_PANNING, NULL, 8, NULL, NULL, NULL, NULL);
@@ -29125,8 +28965,9 @@ void CGame::CommandProcessor(short msX, short msY, short indexX, short indexY, c
 			bSendCommand(MSGID_REQUEST_PANNING, NULL, 1, NULL, NULL, NULL, NULL);
 		else if ((msY == 479) && (m_sViewDstY < 32 * m_pMapData->m_sMapSizeY - 32 * 16)) 
 			bSendCommand(MSGID_REQUEST_PANNING, NULL, 5, NULL, NULL, NULL, NULL);
-		else return;
+		
 #endif
+		else return;
 		m_bIsObserverCommanded = TRUE;
 		m_cArrowPressed = 0;
 		return;
@@ -29153,7 +28994,7 @@ void CGame::CommandProcessor(short msX, short msY, short indexX, short indexY, c
 				m_stMCursor.cPrevStatus = DEF_CURSORSTATUS_PRESSED;
 				// Snoopy: Added Golden LevelUp
 #ifdef RES_HIGH
-				if ((msX > 720 + 5) && (msX < 780 + 5) && (msY > 525 + 35 + 2) && (msY < 540 + 35 + 2))
+				if ((msX > 720 + 5) && (msX < 780 + 5) && (msY > 510) && (msY < 525))
 #else
 				if ((msX >560) && (msX <620) && (msY>380) && (msY<405)
 #endif
@@ -29210,14 +29051,11 @@ void CGame::CommandProcessor(short msX, short msY, short indexX, short indexY, c
 			}
 			else // Click
 			{
-				// MORLA2 - Secundario Click en Bar Cast
-				if (cRB != 0)
-					_bCheckDlgBoxClick(msX, msY, 2);
-				else {
-					_bCheckDlgBoxClick(msX, msY, 1);
-					m_stMCursor.sClickX = msX;
-					m_stMCursor.sClickY = msY;
-				}
+				
+				_bCheckDlgBoxClick(msX, msY, 1);
+				m_stMCursor.sClickX = msX;
+				m_stMCursor.sClickY = msY;
+				
 			}
 			m_stMCursor.dwSelectClickTime = dwTime;
 			m_stMCursor.cPrevStatus = DEF_CURSORSTATUS_NULL;
@@ -31594,6 +31432,30 @@ void CGame::UpdateScreen_OnGame()
 #endif	
 	}
 
+	if (dwTime - m_dwTitleNotifyTime < 10000)
+	{
+		switch (m_sPlayerType) {
+		case 1:
+		case 2:
+		case 3:
+			PlaySound('C', 21, 0);
+			break;
+
+		case 4:
+		case 5:
+		case 6:
+			PlaySound('C', 22, 0);
+			break;
+		}
+		PutString_SprFont3(355, 205, "NEW ACHIEVEMENT!", 200, 250, 2);
+
+#ifdef RES_HIGH
+		PutString_SprFont3(400 - ((strlen(m_cNpcAchievement) * 7) / 2), 220, m_cNpcAchievement, 2, 200, 250);
+#else
+		PutString_SprFont3(320 - ((strlen(m_cNpcAchievement) * 7) / 2), 215, m_cNpcAchievement, 2, 200, 250);
+#endif	
+	}
+
 	if (m_bIsObserverMode == TRUE)
 	{
 		m_DDraw.PutPixel(msX, msY, 255, 255, 255);
@@ -31724,7 +31586,7 @@ void CGame::UpdateScreen_OnGame()
 	}
 
 	// centu - al estar sobrecargado no puede correr !
-	if ((_iCalcTotalWeight() / 100) == (((m_iStr + m_iAngelicStr) * 5) + (m_iLevel + m_iMajesticLevel) * 5)) {
+	if ((_iCalcTotalWeight() / 100) == (((m_iStr + m_iAngelicStr) * 5) + (m_iLevel) * 5)) {
 		if (m_bRunningMode) {
 			m_bRunningMode = FALSE;
 			AddEventList(NOTIFY_MSG_CONVERT_WALKING_MODE, 10);

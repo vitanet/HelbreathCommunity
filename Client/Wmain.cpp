@@ -118,7 +118,7 @@ LRESULT CALLBACK WndProc(HWND hWnd,UINT message,WPARAM wParam, LPARAM lParam)
 			G_pGame->m_DInput.SetAcquire(TRUE);
 			G_pGame->m_bCtrlPressed = FALSE;
 
-			if (IsWin8() || IsWin10())
+			if (IsWin())
 			{
 				G_pGame->m_bIsRedrawPDBGS = TRUE;
 				G_pGame->m_DDraw.ChangeDisplayMode(G_hWnd);
@@ -171,7 +171,7 @@ LRESULT CALLBACK WndProc(HWND hWnd,UINT message,WPARAM wParam, LPARAM lParam)
 	return NULL;
 }
 
-bool IsWin8() 
+bool IsWin() 
 {
 	OSVERSIONINFO osvi;
 
@@ -179,22 +179,8 @@ bool IsWin8()
 	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 
 	GetVersionEx(&osvi);
-	if (osvi.dwMajorVersion == 6 && osvi.dwMinorVersion >= 2) {
-
-		return true;
-	}
-	return false;
-}
-
-bool IsWin10()
-{
-	OSVERSIONINFO osvi;
-
-	ZeroMemory(&osvi, sizeof(OSVERSIONINFO));
-	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-
-	GetVersionEx(&osvi);
-	if (osvi.dwMajorVersion == 10 && osvi.dwMinorVersion >= 0) {
+	if ((osvi.dwMajorVersion == 6 && osvi.dwMinorVersion >= 2) ||
+		(osvi.dwMajorVersion == 10 && osvi.dwMinorVersion >= 0)) {
 
 		return true;
 	}
@@ -241,7 +227,7 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	// Snoopy: MP3 support
 	Mp3Init();
 
-#ifdef _DEBUG
+#ifndef _DEBUG
 	if (OpenMutex(MUTEX_ALL_ACCESS, FALSE, "0543kjg3j31%") != NULL) {
 		MessageBox(NULL, "Only one Helbreath client program allowed!", "ERROR!", MB_OK);
 		return 0;
@@ -251,7 +237,7 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	
 	EventLoop();
 
-#ifdef _DEBUG
+#ifndef _DEBUG
 	ReleaseMutex(hMutex);
 	CloseHandle(hMutex);
 #endif

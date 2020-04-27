@@ -3919,8 +3919,8 @@ BOOL CMapData::bSetItem(short sX, short sY, short sItemSpr, short sItemSprFrame,
 		{	m_pGame->PlaySound('E', 11, sDist);
 			m_pGame->bAddNewEffect(14, (m_sPivotX+dX)*32, (m_sPivotY+dY)*32, NULL, NULL, 0, 0);
 #ifdef RES_HIGH
-			m_pGame->bAddNewEffect(14, (m_sPivotX + dX) * 32 + (13 - (rand() % 20)), (m_sPivotY + dY) * 32 + (10 - (rand() % 20)), NULL, NULL, (rand() % 2), 0);
-			m_pGame->bAddNewEffect(14, (m_sPivotX + dX) * 32 + (13 - (rand() % 20)), (m_sPivotY + dY) * 32 + (10 - (rand() % 20)), NULL, NULL, (rand() % 2), 0);
+			m_pGame->bAddNewEffect(14, (m_sPivotX + dX) * 32 + (12 - (rand() % 20)), (m_sPivotY + dY) * 32 + (10 - (rand() % 20)), NULL, NULL, (rand() % 2), 0);
+			m_pGame->bAddNewEffect(14, (m_sPivotX + dX) * 32 + (12 - (rand() % 20)), (m_sPivotY + dY) * 32 + (10 - (rand() % 20)), NULL, NULL, (rand() % 2), 0);
 #else
 			m_pGame->bAddNewEffect(14, (m_sPivotX+dX)*32 +(10-(rand()%20)), (m_sPivotY+dY)*32 +(10-(rand()%20)), NULL, NULL, (rand() % 2), 0);
 			m_pGame->bAddNewEffect(14, (m_sPivotX+dX)*32 +(10-(rand()%20)), (m_sPivotY+dY)*32 +(10-(rand()%20)), NULL, NULL, (rand() % 2), 0);
