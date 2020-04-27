@@ -16559,7 +16559,7 @@ resi = 0;
 	if ((m_bIsCrusadeMode) && (m_iCrusadeDuty != 0)) { // Crusade Icon
 		if (m_bAresden == TRUE) {
 			if ((322+resx + addx <= msX) && (355+resx + addx >= msX) && (434+resy < msY) && (475+resy > msY))
-				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFast(322+resx + addx, 434+resy, 1, dwTime);
+				m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFast(322+resx + addx+1, 434+resy, 1, dwTime);
 			else m_pSprite[DEF_SPRID_INTERFACE_ND_ICONPANNEL2]->PutSpriteFast(322+resx + addx, 434+resy, 2, dwTime);
 		}
 		else if (m_bAresden == FALSE) {
