@@ -1558,13 +1558,13 @@ void CGame::CheckHeldenianResultCalculation(int iClientH)
 	if (m_pClientList[iClientH]->m_dwHeldenianGUID == m_dwHeldenianGUID) {
 		if (m_pClientList[iClientH]->m_cSide == m_sLastHeldenianWinner) {
 			if (m_pClientList[iClientH]->m_iLevel <= 80) {
-				m_pClientList[iClientH]->m_iWarContribution += (m_pClientList[iClientH]->m_iLevel + m_pClientList[iClientH]->m_iMajesticLevel) * 200;
+				m_pClientList[iClientH]->m_iWarContribution += (m_pClientList[iClientH]->m_iLevel) * 200;
 			}
 			else if (m_pClientList[iClientH]->m_iLevel > 80 && m_pClientList[iClientH]->m_iLevel <= 100) {
-				m_pClientList[iClientH]->m_iWarContribution += (m_pClientList[iClientH]->m_iLevel + m_pClientList[iClientH]->m_iMajesticLevel) * 100;
+				m_pClientList[iClientH]->m_iWarContribution += (m_pClientList[iClientH]->m_iLevel) * 100;
 			}
 			else if (m_pClientList[iClientH]->m_iLevel > 100) {
-				m_pClientList[iClientH]->m_iWarContribution += (m_pClientList[iClientH]->m_iLevel + m_pClientList[iClientH]->m_iMajesticLevel) * 30;
+				m_pClientList[iClientH]->m_iWarContribution += (m_pClientList[iClientH]->m_iLevel) * 30;
 			}
 			dV2 = (double)m_pClientList[iClientH]->m_iExp;
 			dV3 = (double)m_pClientList[iClientH]->m_iWarContribution * 1.2f;

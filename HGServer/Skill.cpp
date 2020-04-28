@@ -421,7 +421,7 @@ void CGame::CalculateSSN_ItemIndex(int iClientH, short sWeaponIndex, int iValue)
 			break;
 
 		case 3: // Magic-Resistance
-			if (m_pClientList[iClientH]->m_cSkillMastery[sSkillIndex] > ((m_pClientList[iClientH]->m_iLevel + m_pClientList[iClientH]->m_iMajesticLevel) * 2)) {
+			if (m_pClientList[iClientH]->m_cSkillMastery[sSkillIndex] > ((m_pClientList[iClientH]->m_iLevel) * 2)) {
 				m_pClientList[iClientH]->m_cSkillMastery[sSkillIndex]--;
 				m_pClientList[iClientH]->m_iSkillSSN[sSkillIndex] = iOldSSN;
 			}
@@ -545,7 +545,7 @@ void CGame::CalculateSSN_SkillIndex(int iClientH, short sSkillIndex, int iValue)
 
 		case 3:
 			// ¸¶¹ý ÀúÇ×Àº ÃÖ´ë Level*2¸¸Å­ ¿À¸¥´Ù.
-			if (m_pClientList[iClientH]->m_cSkillMastery[sSkillIndex] > ((m_pClientList[iClientH]->m_iLevel + m_pClientList[iClientH]->m_iMajesticLevel) * 2)) {
+			if (m_pClientList[iClientH]->m_cSkillMastery[sSkillIndex] > ((m_pClientList[iClientH]->m_iLevel) * 2)) {
 				// Á¦ÇÑÄ¡º¸´Ù Ä¿Á³´Ù. ¹«È¿ÀÌ¹Ç·Î ÀÌÀü»óÅÂ·Î µÇµ¹¸°´Ù.
 				m_pClientList[iClientH]->m_cSkillMastery[sSkillIndex]--;
 				m_pClientList[iClientH]->m_iSkillSSN[sSkillIndex] = iOldSSN;

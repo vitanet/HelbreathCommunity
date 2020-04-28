@@ -1962,7 +1962,6 @@ void CGame::RequestInitDataHandler(int iClientH, char * pData, char cKey, BOOL b
 	}
 	SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_CONSTRUCTIONPOINT, m_pClientList[iClientH]->m_iConstructionPoint, m_pClientList[iClientH]->m_iWarContribution, 1, NULL);
 	SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_GIZONITEMUPGRADELEFT, m_pClientList[iClientH]->m_iGizonItemUpgradeLeft, NULL, NULL, NULL);
-	SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_MAJESTIC_LEVEL, m_pClientList[iClientH]->m_iMajesticLevel, NULL, NULL, NULL, NULL);
 	
 	//50Cent - Critical Count Login Fix
 	SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_SUPERATTACKLEFT, NULL, NULL, NULL, NULL);
@@ -2671,7 +2670,7 @@ void CGame::CheckClientResponseTime()
 				if (m_pClientList[i]->m_iSuperAttackCount > 12) 
 				{
 					m_pClientList[i]->m_iSuperAttackCount = 0;
-					iMaxSuperAttack = ((m_pClientList[i]->m_iLevel + m_pClientList[i]->m_iMajesticLevel) / 10);
+					iMaxSuperAttack = ((m_pClientList[i]->m_iLevel) / 10);
 					if (m_pClientList[i]->m_iSuperAttackLeft < iMaxSuperAttack) m_pClientList[i]->m_iSuperAttackLeft++;
 					SendNotifyMsg(NULL, i, DEF_NOTIFY_SUPERATTACKLEFT, NULL, NULL, NULL, NULL);
 				}
@@ -5049,18 +5048,7 @@ BOOL CGame::_bDecodePlayerDatafileContents(int iClientH, char * pData, DWORD dwS
 				break;
 
 				
-			case 83:
-				if (_bGetIsStringIsNumber(token) == FALSE) {
-					wsprintf(cTxt, "(!!!) Player(%s) data file error! wrong Data format - Connection closed. ", m_pClientList[iClientH]->m_cCharName); 
-					PutLogList(cTxt);
-					delete[] pContents;
-					delete pStrTok;
-					return FALSE;
-				}
-
-				m_pClientList[iClientH]->m_iMajesticLevel = atoi(token);
-				cReadModeA = 0;
-				break;
+			
 
 			case 84:
 				// m_iMaxEK
@@ -5153,6 +5141,28 @@ BOOL CGame::_bDecodePlayerDatafileContents(int iClientH, char * pData, DWORD dwS
 				cReadModeA = 0;
 				break;
 
+			// centu - achievements
+			case 91:
+				switch (cReadModeB) {
+				case 1:
+				default:
+					if (_bGetIsStringIsNumber(token) == FALSE) {
+						wsprintf(cTxt, "(!!!) Player(%s) data file error! wrong Data format - Connection closed. ", m_pClientList[iClientH]->m_cCharName);
+						PutLogList(cTxt);
+						delete pContents;
+						delete pStrTok;
+						return FALSE;
+					}
+					m_pClientList[iClientH]->m_iNpcKillCount[cReadModeB - 1] = atoi(token);
+
+					if (cReadModeB - 1 < DEF_MAXNPCTYPES - 1) cReadModeB++;
+					else {
+						cReadModeA = 0;
+						cReadModeB = 0;
+					}
+					break;
+				}
+				break;
 			}
 		}
 		else {
@@ -5258,8 +5268,7 @@ BOOL CGame::_bDecodePlayerDatafileContents(int iClientH, char * pData, DWORD dwS
 
 			if (memcmp(token, "heldenian-GUID", 14) == 0)    cReadModeA = 82;
 
-			if (memcmp(token, "majestic-level", 14) == 0) cReadModeA = 83;
-
+			
 			if (memcmp(token, "max-ek", 6) == 0) cReadModeA = 84;
 
 			if (memcmp(token, "character-Deaths", 16) == 0)    cReadModeA = 85; // MORLA 2.2 - Nuevos datos para el PJ
@@ -5268,7 +5277,11 @@ BOOL CGame::_bDecodePlayerDatafileContents(int iClientH, char * pData, DWORD dwS
 			if (memcmp(token, "character-TotalDGDeaths", 23) == 0)    cReadModeA = 88;
 			if (memcmp(token, "character-TotalDGKills", 22) == 0)    cReadModeA = 89;
 			if (memcmp(token, "character-wanted-level", 22) == 0)    cReadModeA = 90; // // Wanted System
-
+			// centu - achievements
+			if (memcmp(token, "npc-kills", 9) == 0) { 
+				cReadModeA = 84;
+				cReadModeB = 1;
+			}
 			if (memcmp(token, "[EOF]", 5) == 0) goto DPDC_STOP_DECODING;
 		}
 		token = pStrTok->pGet();
@@ -5686,9 +5699,6 @@ int CGame::_iComposePlayerDataFileContents(int iClientH, char * pData)
 
 	// v2.15 ÃÃ¶ÃÂ¸Â¾Ã†Ã€ÃŒÃ…Ã›Â¾Ã·Â±Ã—Â·Â¹Ã€ÃŒÂµÃ¥
 	
-	wsprintf(cTxt, "majestic-level = %d", m_pClientList[iClientH]->m_iMajesticLevel);
-	strcat(pData, cTxt);
-	strcat(pData,"\n");
 
 	
 	wsprintf(cTxt, "gizon-item-upgrade-left = %d", m_pClientList[iClientH]->m_iGizonItemUpgradeLeft);
@@ -5734,6 +5744,14 @@ int CGame::_iComposePlayerDataFileContents(int iClientH, char * pData)
 
 	wsprintf(cTxt, "character-wanted-level = %d", m_pClientList[iClientH]->m_iWantedLevel);
 	strcat(pData, cTxt);
+	strcat(pData, "\n");
+
+	// centu - achievements
+	strcat(pData, "npc-kills = ");
+	for (i = 0; i < DEF_MAXNPCTYPES; i++) {
+		wsprintf(cTxt, " %d", m_pClientList[iClientH]->m_iNpcKillCount[i]);
+		strcat(pData, cTxt);
+	}
 	strcat(pData, "\n");
 
 	strcat(pData,"\n\n");
@@ -7442,6 +7460,11 @@ DWORD * dwp, dwTimeRcv;
 			case DEF_REQUEST_ANGEL: // Angels by Snoopy...
 				GetAngelHandler(iClientH, pData, dwMsgSize);
 				break;
+
+			// centu - achievements
+			case MSGID_REQUEST_ACHIEVEMENTS: 
+				RequestAchievementsHandler(iClientH);
+				break;
 						
 			case MSGID_REQUEST_INITPLAYER:
 				RequestInitPlayerHandler(iClientH, pData, cKey);
@@ -8589,7 +8612,7 @@ void CGame::ClientKilledHandler(int iClientH, int iAttackerH, char cAttackerType
 				for (i = 1; i < DEF_MAXCLIENTS; i++)
 				if ((m_pClientList[i] != NULL) && (m_pClientList[i]->m_iGuildGUID == m_pNpcList[iAttackerH]->m_iGuildGUID) &&
 					(m_pClientList[i]->m_iCrusadeDuty == 3)) {
-					m_pClientList[i]->m_iConstructionPoint += ((m_pClientList[iClientH]->m_iLevel+ m_pClientList[iClientH]->m_iMajesticLevel) / 2);
+					m_pClientList[i]->m_iConstructionPoint += ((m_pClientList[iClientH]->m_iLevel) / 2);
 
 					// ÁöÈÖ°ü¿¡°Ô ¹Ù·Î Åëº¸.
 					SendNotifyMsg(NULL, i, DEF_NOTIFY_CONSTRUCTIONPOINT, m_pClientList[i]->m_iConstructionPoint, m_pClientList[i]->m_iWarContribution, NULL, NULL);
@@ -8605,7 +8628,7 @@ void CGame::ClientKilledHandler(int iClientH, int iAttackerH, char cAttackerType
 				*ip = m_pNpcList[iAttackerH]->m_iGuildGUID;
 				cp += 4;
 				ip = (int*)cp;
-				*ip = ((m_pClientList[iClientH]->m_iLevel+ m_pClientList[iClientH]->m_iMajesticLevel) / 2);
+				*ip = ((m_pClientList[iClientH]->m_iLevel) / 2);
 				cp += 4;
 				bStockMsgToGateServer(cData, 9);
 			}
@@ -9454,8 +9477,8 @@ void CGame::ApplyPKpenalty(short sAttackerH, short sVictumH)
 	_bPKLog(DEF_PKLOG_BYPK,sAttackerH,sVictumH,NULL) ;
 
 	// Â°Ã¦Ã‡Ã¨Ã„Â¡ Â°Â¨Â¼Ã’ 
-	iV1 = iDice(((m_pClientList[sVictumH]->m_iLevel+ m_pClientList[sVictumH]->m_iMajesticLevel )/2)+1, 50);
-	iV2 = iDice(((m_pClientList[sAttackerH]->m_iLevel+ m_pClientList[sAttackerH]->m_iMajesticLevel)/2)+1, 50);
+	iV1 = iDice(((m_pClientList[sVictumH]->m_iLevel )/2)+1, 50);
+	iV2 = iDice(((m_pClientList[sAttackerH]->m_iLevel)/2)+1, 50);
 
 	m_pClientList[sAttackerH]->m_iExp -= iV1; 
 	m_pClientList[sAttackerH]->m_iExp -= iV2;
@@ -9613,7 +9636,7 @@ void CGame::EnemyKillRewardHandler(int iAttackerH, int iClientH)
 			m_pClientList[iAttackerH]->m_iExp += (iRewardExp/3)*4;
 			m_pClientList[iAttackerH]->m_iWarContribution += (iRewardExp - (iRewardExp/3))*12;
 
-			m_pClientList[iAttackerH]->m_iConstructionPoint += (m_pClientList[iClientH]->m_iLevel+ m_pClientList[iClientH]->m_iMajesticLevel) / 2;
+			m_pClientList[iAttackerH]->m_iConstructionPoint += (m_pClientList[iClientH]->m_iLevel) / 2;
 
 			// Â¾Ã‹Â·ÃÃÃ˜Â´Ã™.
 			SendNotifyMsg(NULL, iAttackerH, DEF_NOTIFY_CONSTRUCTIONPOINT, m_pClientList[iAttackerH]->m_iConstructionPoint, m_pClientList[iAttackerH]->m_iWarContribution, NULL, NULL);
@@ -9827,7 +9850,7 @@ void CGame::ApplyCombatKilledPenalty(int iClientH, int cPenaltyLevel, BOOL bIsSA
 		}
 
 		// Ã‡ÃƒÂ·Â¹Ã€ÃŒÂ¾Ã®Â·ÃŽÂºÃŽÃ…ÃÃ€Ã‡ Â°Ã¸Â°ÃÃ€Â» Â¹ÃžÂ°Ã­ Ã€Ã¼Ã€Ã¯ÃÃŸ Â»Ã§Â¸ÃÃ‡ÃŸÂ´Ã™.
-		iExp = iDice(1, (5*cPenaltyLevel*(m_pClientList[iClientH]->m_iLevel+ m_pClientList[iClientH]->m_iMajesticLevel)));
+		iExp = iDice(1, (5*cPenaltyLevel*(m_pClientList[iClientH]->m_iLevel)));
 
 		// ÃÃŸÂ¸Â³Ã€ÃŽ Â°Ã¦Â¿Ã¬ ÃÃ—Â¾ÃºÃ€Â» Â¶Â§ Â¶Â³Â¾Ã®ÃÃ¶Â´Ã‚ Â°Ã¦Ã‡Ã¨Ã„Â¡Â´Ã‚ 1/3
 		if (m_pClientList[iClientH]->m_bIsNeutral == TRUE) iExp = iExp / 3;
@@ -10417,7 +10440,7 @@ void CGame::Effect_Damage_Spot(short sAttackerH, char cAttackerType, short sTarg
 
 				if (m_pClientList[sTargetH]->m_iAddChargeCritical > 0) {
 					if (iDice(1,100) <= (m_pClientList[sTargetH]->m_iAddChargeCritical)) {
-						iMaxSuperAttack = ((m_pClientList[sTargetH]->m_iLevel+ m_pClientList[sTargetH]->m_iMajesticLevel) / 10);
+						iMaxSuperAttack = ((m_pClientList[sTargetH]->m_iLevel) / 10);
 						if (m_pClientList[sTargetH]->m_iSuperAttackLeft < iMaxSuperAttack) m_pClientList[sTargetH]->m_iSuperAttackLeft++;
 						SendNotifyMsg(NULL, sTargetH, DEF_NOTIFY_SUPERATTACKLEFT, NULL, NULL, NULL, NULL);
 					}
@@ -10901,7 +10924,7 @@ void CGame::Effect_Damage_Spot_Type2(short sAttackerH, char cAttackerType, short
 
 				if (m_pClientList[sTargetH]->m_iAddChargeCritical > 0) {
 					if (iDice(1,100) <= (m_pClientList[sTargetH]->m_iAddChargeCritical)) {
-						iMaxSuperAttack = ((m_pClientList[sTargetH]->m_iLevel+ m_pClientList[sTargetH]->m_iMajesticLevel) / 10);
+						iMaxSuperAttack = ((m_pClientList[sTargetH]->m_iLevel) / 10);
 						if (m_pClientList[sTargetH]->m_iSuperAttackLeft < iMaxSuperAttack) m_pClientList[sTargetH]->m_iSuperAttackLeft++;
 						SendNotifyMsg(NULL, sTargetH, DEF_NOTIFY_SUPERATTACKLEFT, NULL, NULL, NULL, NULL);
 					}
@@ -11361,7 +11384,7 @@ void CGame::Effect_Damage_Spot_DamageMove(short sAttackerH, char cAttackerType, 
 				if (m_pClientList[sTargetH]->m_iAddChargeCritical > 0) {
 					// È®·ü °è»ê¿¡ µû¶ó¼­ ÇÊ»ì±â°¡ ÃæÀüµÈ´Ù.
 					if (iDice(1,100) <= (m_pClientList[sTargetH]->m_iAddChargeCritical)) {
-						iMaxSuperAttack = ((m_pClientList[sTargetH]->m_iLevel+ m_pClientList[sTargetH]->m_iMajesticLevel) / 10);
+						iMaxSuperAttack = ((m_pClientList[sTargetH]->m_iLevel) / 10);
 						if (m_pClientList[sTargetH]->m_iSuperAttackLeft < iMaxSuperAttack) m_pClientList[sTargetH]->m_iSuperAttackLeft++;
 						// v1.12 ¼­¹ö¿Í Å¬¶óÀÌ¾ðÆ® °£¿¡ Ä«¿îÆ®°¡ ÀÏÄ¡ÇÏÁö ¾Ê´Â °æ¿ì°¡ ÀÖÀ» ¼ö ÀÖÀ¸¹Ç·Î °¡°¨¿¡ »ó°ü¾øÀÌ º¸³½´Ù.
 						SendNotifyMsg(NULL, sTargetH, DEF_NOTIFY_SUPERATTACKLEFT, NULL, NULL, NULL, NULL);
@@ -14335,7 +14358,7 @@ int CGame::iGetMaxHP(int iClientH, BOOL bBloodEffect)
 	int iRet;
 	if (m_pClientList[iClientH] == NULL) return 0;
 	// Changed to this due to patch in client that in case of odd level and Str gives 1 more HP.
-	iRet = (3*m_pClientList[iClientH]->m_iVit) + (2 * (m_pClientList[iClientH]->m_iLevel + m_pClientList[iClientH]->m_iMajesticLevel)) + ((m_pClientList[iClientH]->m_iStr+m_pClientList[iClientH]->m_iAngelicStr)/2);
+	iRet = (3*m_pClientList[iClientH]->m_iVit) + (2 * (m_pClientList[iClientH]->m_iLevel)) + ((m_pClientList[iClientH]->m_iStr+m_pClientList[iClientH]->m_iAngelicStr)/2);
 
 	if ((bBloodEffect == TRUE) && (m_pClientList[iClientH]->m_iSideEffect_MaxHPdown != 0))
 		iRet -= (iRet/m_pClientList[iClientH]->m_iSideEffect_MaxHPdown);
@@ -14348,7 +14371,7 @@ int CGame::iGetMaxMP(int iClientH)
 
 	if (m_pClientList[iClientH] == NULL) return 0;
 
-	return (2*(m_pClientList[iClientH]->m_iMag+m_pClientList[iClientH]->m_iAngelicMag)) + (2 * (m_pClientList[iClientH]->m_iLevel + m_pClientList[iClientH]->m_iMajesticLevel)) + ((m_pClientList[iClientH]->m_iInt+m_pClientList[iClientH]->m_iAngelicInt)/2);
+	return (2*(m_pClientList[iClientH]->m_iMag+m_pClientList[iClientH]->m_iAngelicMag)) + (2 * (m_pClientList[iClientH]->m_iLevel)) + ((m_pClientList[iClientH]->m_iInt+m_pClientList[iClientH]->m_iAngelicInt)/2);
 
 }
 
@@ -14357,7 +14380,7 @@ int CGame::iGetMaxSP(int iClientH)
 
 	if (m_pClientList[iClientH] == NULL) return 0;
 
-	return (2*(m_pClientList[iClientH]->m_iStr+m_pClientList[iClientH]->m_iAngelicStr)) + (2*(m_pClientList[iClientH]->m_iLevel + m_pClientList[iClientH]->m_iMajesticLevel));
+	return (2*(m_pClientList[iClientH]->m_iStr+m_pClientList[iClientH]->m_iAngelicStr)) + (2*(m_pClientList[iClientH]->m_iLevel));
 	
 }
 
@@ -18265,14 +18288,14 @@ int CGame::iCalculateAttackEffect(short sTargetH, char cTargetType, short sAttac
 		if ((bArrowUse != TRUE) && (m_pClientList[sAttackerH]->m_iSuperAttackLeft > 0) && (iAttackMode >= 20)) {
 
 			dTmp1 = (double)iAP_SM;
-			dTmp2 = (double)(m_pClientList[sAttackerH]->m_iLevel+ m_pClientList[sAttackerH]->m_iMajesticLevel);
+			dTmp2 = (double)(m_pClientList[sAttackerH]->m_iLevel);
 			dTmp3 = dTmp2 / 100.0f;
 			dTmp2 = dTmp1 * dTmp3;
 			iTemp = (int)(dTmp2 +0.5f);
 			iAP_SM += iTemp;
 
 			dTmp1 = (double)iAP_L;
-			dTmp2 = (double)(m_pClientList[sAttackerH]->m_iLevel+ m_pClientList[sAttackerH]->m_iMajesticLevel);
+			dTmp2 = (double)(m_pClientList[sAttackerH]->m_iLevel);
 			dTmp3 = dTmp2 / 100.0f;
 			dTmp2 = dTmp1 * dTmp3;
 			iTemp = (int)(dTmp2 +0.5f);
@@ -19163,7 +19186,7 @@ int CGame::iCalculateAttackEffect(short sTargetH, char cTargetType, short sAttac
 						bAnalyzeCriminalAction(sAttackerH, m_pClientList[sTargetH]->m_sX, m_pClientList[sTargetH]->m_sY);
 					ClientKilledHandler(sTargetH, sAttackerH, cAttackerType, iAP_SM);	
 					bKilled     = TRUE;
-					iKilledDice = (m_pClientList[sTargetH]->m_iLevel+ m_pClientList[sTargetH]->m_iMajesticLevel);
+					iKilledDice = (m_pClientList[sTargetH]->m_iLevel);
 				}
 				else {
 					if (iAP_SM > 0) {
@@ -19178,7 +19201,7 @@ int CGame::iCalculateAttackEffect(short sTargetH, char cTargetType, short sAttac
 						if (m_pClientList[sTargetH]->m_iAddChargeCritical > 0) {
 							// Crit increase items (bug < and not <= means CritIncrease 1% have no effect)
 							if (iDice(1,100) <= (m_pClientList[sTargetH]->m_iAddChargeCritical)) {
-								iMaxSuperAttack = ((m_pClientList[sTargetH]->m_iLevel+ m_pClientList[sTargetH]->m_iMajesticLevel) / 10);
+								iMaxSuperAttack = ((m_pClientList[sTargetH]->m_iLevel) / 10);
 								if (m_pClientList[sTargetH]->m_iSuperAttackLeft < iMaxSuperAttack) m_pClientList[sTargetH]->m_iSuperAttackLeft++;
 									SendNotifyMsg(NULL, sTargetH, DEF_NOTIFY_SUPERATTACKLEFT, NULL, NULL, NULL, NULL);
 							}
@@ -19243,7 +19266,7 @@ CAE_SKIPDAMAGEMOVE:;
 							m_pClientList[sTargetH]->m_iSuperAttackCount++;
 							if (m_pClientList[sTargetH]->m_iSuperAttackCount > 14) { 
 								m_pClientList[sTargetH]->m_iSuperAttackCount = 0;
-								iMaxSuperAttack = ((m_pClientList[sTargetH]->m_iLevel+ m_pClientList[sTargetH]->m_iMajesticLevel) / 10);
+								iMaxSuperAttack = ((m_pClientList[sTargetH]->m_iLevel) / 10);
 								if (m_pClientList[sTargetH]->m_iSuperAttackLeft < iMaxSuperAttack) m_pClientList[sTargetH]->m_iSuperAttackLeft++;
 									SendNotifyMsg(NULL, sTargetH, DEF_NOTIFY_SUPERATTACKLEFT, NULL, NULL, NULL, NULL);
 							}
@@ -20299,6 +20322,19 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 
 	// !!! sV1, sV2, sV3Â´Ã‚ DWORDÃ‡Ã¼Ã€Ã“Ã€Â» Â¸Ã­Â½Ã‰Ã‡ÃÂ¶Ã³.
 	switch (wMsgType) {
+	
+	// centu - achievements
+	case DEF_NOTIFY_NPCACHIEVEMENT: 
+		*cp = (char)sV1;
+		cp++;
+
+		ip = (int*)cp;
+		*ip = m_pClientList[iToH]->m_iNpcKillCount[sV1];
+		cp += 4;
+
+		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 11);
+		break;
+
 	case DEF_NOTIFY_EVENTFISHMODE:
 		wp = (WORD*)cp;
 		*wp = (WORD)sV1;
@@ -21537,9 +21573,8 @@ void CGame::bCheckLevelUp(int iClientH)
 		}
 		else 
 		{
-			m_pClientList[iClientH]->m_iMajesticLevel++;
-			SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_MAJESTIC_LEVEL, m_pClientList[iClientH]->m_iMajesticLevel, NULL, NULL, NULL, NULL);
-			m_pClientList[iClientH]->m_iNextLevelExp = m_iLevelExpTable[m_iPlayerMaxLevel + m_pClientList[iClientH]->m_iMajesticLevel + 1];
+			m_pClientList[iClientH]->m_iExp = m_iLevelExpTable[m_iPlayerMaxLevel];
+			m_pClientList[iClientH]->m_iNextLevelExp = m_iLevelExpTable[m_iPlayerMaxLevel + 1];
 			SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_EXP, NULL, NULL, NULL, NULL);
 			m_pClientList[iClientH]->m_iGizonItemUpgradeLeft++;		
 			SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_GIZONITEMUPGRADELEFT, m_pClientList[iClientH]->m_iGizonItemUpgradeLeft, 1, NULL, NULL, NULL);
@@ -22054,8 +22089,7 @@ RTH_NEXTSTEP:;
 	}
 	SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_CONSTRUCTIONPOINT, m_pClientList[iClientH]->m_iConstructionPoint, m_pClientList[iClientH]->m_iWarContribution, 1, NULL);
 	SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_GIZONITEMUPGRADELEFT, m_pClientList[iClientH]->m_iGizonItemUpgradeLeft, NULL, NULL, NULL);
-	SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_MAJESTIC_LEVEL, m_pClientList[iClientH]->m_iMajesticLevel, NULL, NULL, NULL, NULL);
-
+	
 	//50Cent - Critical Count Login Fix
 	SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_SUPERATTACKLEFT, NULL, NULL, NULL, NULL);
 	
@@ -22117,7 +22151,7 @@ void CGame::RequestRestartHandler(int iClientH)
 			m_pClientList[iClientH]->m_iSP = iGetMaxSP(iClientH);
 			SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_SP, NULL, NULL, NULL, NULL); 
 			// centu - added majestic level to calculate criticals
-			m_pClientList[iClientH]->m_iSuperAttackLeft = (m_pClientList[iClientH]->m_iLevel + m_pClientList[iClientH]->m_iMajesticLevel) / 10;
+			m_pClientList[iClientH]->m_iSuperAttackLeft = (m_pClientList[iClientH]->m_iLevel) / 10;
 			SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_SUPERATTACKLEFT, NULL, NULL, NULL, NULL);
 			RequestTeleportHandler(iClientH, "2   ", "fightzone1", 51, 56);
 		}
@@ -22239,15 +22273,8 @@ void CGame::InitPlayerData(int iClientH, char * pData, DWORD dwSize)
 			ForceChangePlayMode(iClientH, TRUE);
 		}
 	}
-	// centu - calculate next level exp
-	if (m_pClientList[iClientH]->m_iMajesticLevel == 0)
-	{
-		m_pClientList[iClientH]->m_iNextLevelExp = m_iLevelExpTable[m_pClientList[iClientH]->m_iLevel + 1];
-	}
-	else
-	{
-		m_pClientList[iClientH]->m_iNextLevelExp = m_iLevelExpTable[m_iPlayerMaxLevel + m_pClientList[iClientH]->m_iMajesticLevel + 1];
-	}
+	m_pClientList[iClientH]->m_iNextLevelExp = m_iLevelExpTable[m_pClientList[iClientH]->m_iLevel + 1];
+	
 	CalcTotalItemEffect(iClientH, -1, TRUE);
 	iCalcTotalWeight(iClientH);
 	bCheckMagicInt(iClientH);
@@ -24225,4 +24252,72 @@ void CGame::SetWantedFlag(short sOwnerH, char cOwnerType, bool iStatus)
 	}
 
 	SendEventToNearClient_TypeA(sOwnerH, DEF_OWNERTYPE_PLAYER, MSGID_EVENT_MOTION, DEF_OBJECTNULLACTION, NULL, NULL, NULL);
+}
+
+// centu - achievements
+void CGame::RequestAchievementsHandler(int iClientH)
+{
+	int* ip, iSize, iRet;
+	char* cp, i, * cpTotal, cTotal, cData[DEF_MAXNPCTYPES * 5 + DEF_MAXACHIEVEMENTS * 2 + 7];
+	DWORD* dwp;
+	WORD* wp;
+
+	ZeroMemory(cData, sizeof(cData));
+	dwp = (DWORD*)(cData + DEF_INDEX4_MSGID);
+	*dwp = MSGID_RESPONSE_ACHIEVEMENTS;
+	wp = (WORD*)(cData + DEF_INDEX2_MSGTYPE);
+	*wp = DEF_MSGTYPE_CONFIRM;
+	cp = (char*)(cData + DEF_INDEX2_MSGTYPE + 2);
+
+	iSize = 8;
+
+	cpTotal = cp;
+	cp++;
+
+	cTotal = 0;
+	for (i = 0; i < DEF_MAXNPCTYPES; i++)
+		if (m_pClientList[iClientH]->m_iNpcKillCount[i] > 0) {
+			*cp = i;
+			cp++;
+
+			ip = (int*)cp;
+			*ip = m_pClientList[iClientH]->m_iNpcKillCount[i];
+			cp += 4;
+
+			cTotal++;
+		}
+
+	*cpTotal = cTotal;
+
+	cpTotal = cp;
+	cp++;
+
+	iSize += cTotal * 5;
+
+	cTotal = 0;
+	for (i = 0; i < DEF_MAXACHIEVEMENTS; i++)
+		if (m_pClientList[iClientH]->m_iAchievement[i] != 0) {
+			*cp = DEF_MAXNPCTYPES + i;
+			cp++;
+
+			ip = (int*)cp;
+			*ip = m_pClientList[iClientH]->m_iAchievement[i];
+			cp += 4;
+
+			cTotal++;
+		}
+
+	*cpTotal = cTotal;
+
+	iSize += cTotal * 5;
+
+	iRet = m_pClientList[iClientH]->m_pXSock->iSendMsg(cData, iSize);
+	switch (iRet) {
+	case DEF_XSOCKEVENT_QUENEFULL:
+	case DEF_XSOCKEVENT_SOCKETERROR:
+	case DEF_XSOCKEVENT_CRITICALERROR:
+	case DEF_XSOCKEVENT_SOCKETCLOSED:
+		DeleteClient(iClientH, TRUE, TRUE);
+		break;
+	}
 }

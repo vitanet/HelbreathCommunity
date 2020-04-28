@@ -140,9 +140,9 @@ void CGame::CalcTotalItemEffect(int iClientH, int iEquipItemID, BOOL bNotify)
 	m_pClientList[iClientH]->m_cAttackDiceRange_L = 0;
 	m_pClientList[iClientH]->m_cAttackBonus_L = 0;
 
-	m_pClientList[iClientH]->m_iHitRatio = 0 + m_pClientList[iClientH]->m_iMajesticLevel;
+	m_pClientList[iClientH]->m_iHitRatio = 0;
 
-	m_pClientList[iClientH]->m_iDefenseRatio = (m_pClientList[iClientH]->m_iDex * 2) + m_pClientList[iClientH]->m_iMajesticLevel;
+	m_pClientList[iClientH]->m_iDefenseRatio = (m_pClientList[iClientH]->m_iDex * 2);
 
 	m_pClientList[iClientH]->m_iDamageAbsorption_Shield = 0;
 
@@ -150,10 +150,10 @@ void CGame::CalcTotalItemEffect(int iClientH, int iEquipItemID, BOOL bNotify)
 		m_pClientList[iClientH]->m_iDamageAbsorption_Armor[i] = 0;
 
 	m_pClientList[iClientH]->m_iManaSaveRatio = 0;
-	m_pClientList[iClientH]->m_iAddResistMagic = 0 + m_pClientList[iClientH]->m_iMajesticLevel;
+	m_pClientList[iClientH]->m_iAddResistMagic = 0;
 
-	m_pClientList[iClientH]->m_iAddPhysicalDamage = 0 + m_pClientList[iClientH]->m_iMajesticLevel;
-	m_pClientList[iClientH]->m_iAddMagicalDamage = 0 + m_pClientList[iClientH]->m_iMajesticLevel;
+	m_pClientList[iClientH]->m_iAddPhysicalDamage = 0;
+	m_pClientList[iClientH]->m_iAddMagicalDamage = 0;
 
 	m_pClientList[iClientH]->m_bIsLuckyEffect = FALSE;
 	m_pClientList[iClientH]->m_iMagicDamageSaveItemIndex = -1;
@@ -1020,7 +1020,7 @@ BOOL CGame::_bDepleteDestTypeItemUseEffect(int iClientH, int dX, int dY, short s
 			m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sItemEffectValue1,
 			NULL, iClientH, NULL);
 		if (bRet == TRUE) {
-			GetExp(iClientH, (iDice(1, (m_pClientList[iClientH]->m_iLevel + m_pClientList[iClientH]->m_iMajesticLevel)))); // centu
+			GetExp(iClientH, (iDice(1, (m_pClientList[iClientH]->m_iLevel)))); // centu
 		}
 		else {
 			SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_NOTFLAGSPOT, NULL, NULL, NULL, NULL);
@@ -1036,7 +1036,7 @@ BOOL CGame::_bDepleteDestTypeItemUseEffect(int iClientH, int dX, int dY, short s
 			iClientH); // ¼³Ä¡ÀÚ 
 		if (bRet == TRUE) {
 			// °Ç¼³ ½ÃÀÛ	
-			GetExp(iClientH, (iDice(1, (m_pClientList[iClientH]->m_iLevel + m_pClientList[iClientH]->m_iMajesticLevel)))); // centu
+			GetExp(iClientH, (iDice(1, (m_pClientList[iClientH]->m_iLevel)))); // centu
 		}
 		else {
 			// °Ç¼³ ½ÇÆÐ		
@@ -1104,7 +1104,7 @@ BOOL CGame::_bDepleteDestTypeItemUseEffect(int iClientH, int dX, int dY, short s
 
 		if (bRet == TRUE) {
 			// °Ç¼³ ½ÃÀÛ	
-			GetExp(iClientH, (iDice(1, (m_pClientList[iClientH]->m_iLevel + m_pClientList[iClientH]->m_iMajesticLevel)))); // centu
+			GetExp(iClientH, (iDice(1, (m_pClientList[iClientH]->m_iLevel)))); // centu
 		}
 		else {
 			// °Ç¼³ ½ÇÆÐ	
@@ -8597,7 +8597,7 @@ int CGame::_iCalcMaxLoad(int iClientH)
 {
 	if (m_pClientList[iClientH] == NULL) return 0;
 
-	return (((m_pClientList[iClientH]->m_iStr + m_pClientList[iClientH]->m_iAngelicStr) * 500) + ((m_pClientList[iClientH]->m_iLevel + m_pClientList[iClientH]->m_iMajesticLevel) * 500));
+	return (((m_pClientList[iClientH]->m_iStr + m_pClientList[iClientH]->m_iAngelicStr) * 500) + ((m_pClientList[iClientH]->m_iLevel) * 500));
 }
 
 BOOL CGame::bCheckAndConvertPlusWeaponItem(int iClientH, int iItemIndex)

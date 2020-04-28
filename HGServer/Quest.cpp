@@ -686,7 +686,7 @@ int CGame::_iTalkToNpcResult_Cityhall(int iClientH, int* pQuestType, int* pMode,
 				else if (m_pClientList[iClientH]->m_iQuestRewardType == -2) {
 					// Äù½ºÆ®ÀÇ ´ñ°¡´Â ºñ·Ê °æÇèÄ¡ Àû¿¡°Ô Á×¾úÀ»¶§ °æÇèÄ¡ * m_pClientList[iClientH]->m_iQuestRewardAmount ¸¸Å­ÀÇ °æÇèÄ¡¸¦ ¾ò´Â´Ù.
 					//***
-					iExp = (iDice(1, (10 * (m_pClientList[iClientH]->m_iLevel + m_pClientList[iClientH]->m_iMajesticLevel))) * m_pClientList[iClientH]->m_iQuestRewardAmount);
+					iExp = (iDice(1, (10 * (m_pClientList[iClientH]->m_iLevel))) * m_pClientList[iClientH]->m_iQuestRewardAmount);
 
 					GetExp(iClientH, iDice(1, iExp));
 					// °øÇåµµ »ó½Â 

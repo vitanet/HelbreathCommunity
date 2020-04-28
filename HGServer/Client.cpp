@@ -12,9 +12,7 @@
 
 CClient::CClient(HWND hWnd)
 {
- int i;
-
-	
+ int i;	
 
 	m_pXSock = NULL;
 	m_pXSock = new class XSocket(hWnd, DEF_CLIENTSOCKETBLOCKLIMIT);
@@ -32,6 +30,13 @@ CClient::CClient(HWND hWnd)
 	m_iGuildGUID = -1;
 	m_bIsInitComplete = FALSE;
 	m_iLU_Pool = 0; // removed
+
+	// centu - achievements
+	for (i = 0; i < DEF_MAXNPCTYPES; i++)
+		m_iNpcKillCount[i] = 0;
+	
+	for (i = 0; i < DEF_MAXACHIEVEMENTS; i++)
+		m_iAchievement[i] = 0;
 	
 	m_cWarType = 0;
 	m_iEnemyKillCount = 0;
@@ -260,7 +265,6 @@ CClient::CClient(HWND hWnd)
 	m_bIsCheckingWhisperPlayer = FALSE;
 	// <MISSING_VARIABLE_HERE> 1660h
 	m_iGizonItemUpgradeLeft = 0;
-	m_iMajesticLevel = 0;
 	// <MISSING_VARIABLE_HERE> 168Ch
 	// <MISSING_VARIABLE_HERE> 1684h
 	// <MISSING_VARIABLE_HERE> 1688h

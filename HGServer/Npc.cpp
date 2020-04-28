@@ -401,6 +401,11 @@ void CGame::NpcKilledHandler(short sAttackerH, char cAttackerType, int iNpcH, sh
 	m_pNpcList[iNpcH]->m_cTargetType = NULL;
 	// Á×´Â µ¿ÀÛ Àü¼Û.
 	if (cAttackerType == DEF_OWNERTYPE_PLAYER) {
+		// centu - achievements
+		if (m_pClientList[sAttackerH]->m_iNpcKillCount[m_pNpcList[iNpcH]->m_sType] < 15000) {
+			m_pClientList[sAttackerH]->m_iNpcKillCount[m_pNpcList[iNpcH]->m_sType]++;
+			if ((m_pClientList[sAttackerH]->m_iNpcKillCount[m_pNpcList[iNpcH]->m_sType] % 1000) == 0) SendNotifyMsg(NULL, sAttackerH, DEF_NOTIFY_NPCACHIEVEMENT, m_pNpcList[iNpcH]->m_sType, NULL, NULL, NULL);
+		}
 		sAttackerWeapon = ((m_pClientList[sAttackerH]->m_sAppr2 & 0x0FF0) >> 4);
 	}
 	else sAttackerWeapon = 1;

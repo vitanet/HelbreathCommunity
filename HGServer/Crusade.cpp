@@ -432,21 +432,21 @@ void CGame::CheckCrusadeResultCalculation(int iClientH)
 			else {
 				if (m_iCrusadeWinnerSide == m_pClientList[iClientH]->m_cSide) {
 					if (m_pClientList[iClientH]->m_iLevel <= 80) {
-						m_pClientList[iClientH]->m_iWarContribution += (m_pClientList[iClientH]->m_iLevel + m_pClientList[iClientH]->m_iMajesticLevel) * 100;
+						m_pClientList[iClientH]->m_iWarContribution += (m_pClientList[iClientH]->m_iLevel) * 100;
 					}
 					else if (m_pClientList[iClientH]->m_iLevel > 80 && m_pClientList[iClientH]->m_iLevel <= 100) {
-						m_pClientList[iClientH]->m_iWarContribution += (m_pClientList[iClientH]->m_iLevel + m_pClientList[iClientH]->m_iMajesticLevel) * 40;
+						m_pClientList[iClientH]->m_iWarContribution += (m_pClientList[iClientH]->m_iLevel) * 40;
 					}
 					else if (m_pClientList[iClientH]->m_iLevel > 100)
 					{
-						m_pClientList[iClientH]->m_iWarContribution += m_pClientList[iClientH]->m_iLevel + m_pClientList[iClientH]->m_iMajesticLevel;
+						m_pClientList[iClientH]->m_iWarContribution += m_pClientList[iClientH]->m_iLevel;
 					}
 					GetExp(iClientH, m_pClientList[iClientH]->m_iWarContribution);
 					SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_CRUSADE, (DWORD)m_bIsCrusadeMode, NULL, m_pClientList[iClientH]->m_iWarContribution, NULL);
 					_bCrusadeLog(DEF_CRUSADELOG_GETEXP, iClientH, m_pClientList[iClientH]->m_iWarContribution, NULL);
 				}
 				else if (m_iCrusadeWinnerSide != m_pClientList[iClientH]->m_cSide) {
-					m_pClientList[iClientH]->m_iWarContribution += m_pClientList[iClientH]->m_iLevel + m_pClientList[iClientH]->m_iMajesticLevel;
+					m_pClientList[iClientH]->m_iWarContribution += m_pClientList[iClientH]->m_iLevel;
 					GetExp(iClientH, (m_pClientList[iClientH]->m_iWarContribution / 10));
 					SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_CRUSADE, (DWORD)m_bIsCrusadeMode, NULL, -1 * m_pClientList[iClientH]->m_iWarContribution, NULL);
 					_bCrusadeLog(DEF_CRUSADELOG_GETEXP, iClientH, (m_pClientList[iClientH]->m_iWarContribution / 10), NULL);
@@ -475,7 +475,7 @@ void CGame::DoMeteorStrikeDamageHandler(int iMapIndex)
 
 			if (m_pClientList[i]->m_iLevel < 80)
 				iDamage = m_pClientList[i]->m_iLevel + iDice(1, 100);
-			else iDamage = (m_pClientList[i]->m_iLevel + m_pClientList[i]->m_iMajesticLevel) * 2 + iDice(1, 100);
+			else iDamage = (m_pClientList[i]->m_iLevel) * 2 + iDice(1, 100);
 
 			if (m_pClientList[i]->m_cMagicEffectStatus[DEF_MAGICTYPE_PROTECT] == 2) { //magic cut in half
 				iDamage = (iDamage / 2) - 2;
@@ -1433,7 +1433,7 @@ BOOL CGame::_bNpcBehavior_ManaCollector(int iNpcH)
 				switch (cOwnerType) {
 				case DEF_OWNERTYPE_PLAYER:
 					if (m_pNpcList[iNpcH]->m_cSide == m_pClientList[sOwnerH]->m_cSide) {
-						iMaxMP = (2 * (m_pClientList[sOwnerH]->m_iMag + m_pClientList[sOwnerH]->m_iAngelicMag)) + (2 * (m_pClientList[sOwnerH]->m_iLevel + m_pClientList[sOwnerH]->m_iMajesticLevel)) + ((m_pClientList[sOwnerH]->m_iInt + m_pClientList[sOwnerH]->m_iAngelicInt) / 2);
+						iMaxMP = (2 * (m_pClientList[sOwnerH]->m_iMag + m_pClientList[sOwnerH]->m_iAngelicMag)) + (2 * (m_pClientList[sOwnerH]->m_iLevel)) + ((m_pClientList[sOwnerH]->m_iInt + m_pClientList[sOwnerH]->m_iAngelicInt) / 2);
 						if (m_pClientList[sOwnerH]->m_iMP < iMaxMP) {
 							iTotal = iDice(1, (m_pClientList[sOwnerH]->m_iMag + m_pClientList[sOwnerH]->m_iAngelicMag));
 							if (m_pClientList[sOwnerH]->m_iAddMP != 0) {

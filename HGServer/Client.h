@@ -22,6 +22,9 @@ class CClient
 {
 public:
 
+	// centu - achievements
+	int m_iNpcKillCount[DEF_MAXNPCTYPES], m_iAchievement[DEF_MAXACHIEVEMENTS];
+
 	int  m_iAngelicStr; // By Snoopy81
 	int  m_iAngelicInt; // By Snoopy81
 	int  m_iAngelicDex; // By Snoopy81
@@ -110,7 +113,6 @@ public:
 	char m_cAura;
 	//MOG var - 3.51
 	int m_iGizonItemUpgradeLeft;
-	int m_iMajesticLevel;
 
 	int m_iAddTransMana, m_iAddChargeCritical;
 

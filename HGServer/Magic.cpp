@@ -459,10 +459,10 @@ void CGame::PlayerMagicHandler(int iClientH, int dX, int dY, short sType, BOOL b
 	if ((m_pClientList[iClientH]->m_iInt + m_pClientList[iClientH]->m_iAngelicInt) > 50)
 		iResult += ((m_pClientList[iClientH]->m_iInt + m_pClientList[iClientH]->m_iAngelicInt) - 50) / 2;
 
-	sLevelMagic = ((m_pClientList[iClientH]->m_iLevel + m_pClientList[iClientH]->m_iMajesticLevel) / 10);
+	sLevelMagic = ((m_pClientList[iClientH]->m_iLevel) / 10);
 	if (sMagicCircle != sLevelMagic) {
 		if (sMagicCircle > sLevelMagic) {
-			dV1 = (double)((m_pClientList[iClientH]->m_iLevel + m_pClientList[iClientH]->m_iMajesticLevel) - sLevelMagic * 10);
+			dV1 = (double)((m_pClientList[iClientH]->m_iLevel) - sLevelMagic * 10);
 			dV2 = (double)abs(sMagicCircle - sLevelMagic) * _tmp_iMLevelPenalty[sMagicCircle];
 			dV3 = (double)abs(sMagicCircle - sLevelMagic) * 10;
 			dV4 = (dV1 / dV3) * dV2;
@@ -534,10 +534,10 @@ void CGame::PlayerMagicHandler(int iClientH, int dX, int dY, short sType, BOOL b
 	iResult = m_pClientList[iClientH]->m_cSkillMastery[4];
 	if ((m_pClientList[iClientH]->m_iMag + m_pClientList[iClientH]->m_iAngelicMag) > 50) iResult += ((m_pClientList[iClientH]->m_iMag + m_pClientList[iClientH]->m_iAngelicMag) - 50);
 
-	sLevelMagic = ((m_pClientList[iClientH]->m_iLevel + m_pClientList[iClientH]->m_iMajesticLevel) / 10);
+	sLevelMagic = ((m_pClientList[iClientH]->m_iLevel) / 10);
 	if (sMagicCircle != sLevelMagic) {
 		if (sMagicCircle > sLevelMagic) {
-			dV1 = (double)((m_pClientList[iClientH]->m_iLevel + m_pClientList[iClientH]->m_iMajesticLevel) - sLevelMagic * 10);
+			dV1 = (double)((m_pClientList[iClientH]->m_iLevel) - sLevelMagic * 10);
 			dV2 = (double)abs(sMagicCircle - sLevelMagic) * _tmp_iMLevelPenalty[sMagicCircle];
 			dV3 = (double)abs(sMagicCircle - sLevelMagic) * 10;
 			dV4 = (dV1 / dV3) * dV2;
