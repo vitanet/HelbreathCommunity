@@ -740,7 +740,7 @@ void CGame::NotifyMsg_ShowMap(char * pData)
 void CGame::NotifyMsg_Skill(char *pData)
 {
 	WORD * wp;
-	short sSkillIndex, sValue;
+	short sSkillIndex, sValue, sStatus;
 	char * cp;
 	char cTxt[120];
 	int i;
@@ -751,6 +751,9 @@ void CGame::NotifyMsg_Skill(char *pData)
 	cp += 2;
 	wp = (WORD *)cp;
 	sValue = (short)*wp;
+	cp += 2;
+	wp = (WORD*)cp;
+	sStatus = (short)*wp;
 	cp += 2;
 	_RemoveChatMsgListByObjectID(m_sPlayerObjectID);
 	if (m_pSkillCfgList[sSkillIndex]->m_iLevel < sValue)
@@ -794,6 +797,7 @@ void CGame::NotifyMsg_Skill(char *pData)
 	}
 	m_pSkillCfgList[sSkillIndex]->m_iLevel = sValue;
 	m_cSkillMastery[sSkillIndex] = (unsigned char)sValue;
+	m_cSkillStatus[sSkillIndex] = (unsigned char)sStatus;
 }
 
 
@@ -12785,7 +12789,16 @@ void CGame::DrawDialogBox_Skill(short msX, short msY, short msZ, char cLB)
 					}
 				}
 
-				//PutString(sX + 30, sY + 45 + i * 15 + 1, "__________________________", RGB(255, 69, 0));
+				/*
+				Centu: Skill progress bar
+				*/
+
+				//int iPorc = (m_cSkillStatus[i + m_stDialogBoxInfo[15].sView] * 100) / _iCalcSkillSSNpoint(m_pSkillCfgList[i + m_stDialogBoxInfo[15].sView]->m_iLevel + 1);
+				/*for (int x = 0; x < 100; x += 5 )
+				{
+					PutString(sX + 30 + x, sY + 45 + i * 15 + 1, "_", RGB(255, 69, 0));
+					if (x == 100) break;
+				}*/
 
 				if (m_iDownSkillIndex == (i + m_stDialogBoxInfo[15].sView))
 					m_pSprite[DEF_SPRID_INTERFACE_ADDINTERFACE]->PutTransSpriteRGB(sX + 215, sY + 47 + i * 15, 21, 50, 50, 50, m_dwTime);
@@ -12836,6 +12849,21 @@ void CGame::DrawDialogBox_Skill(short msX, short msY, short msZ, char cLB)
 		if (iTotalLines > 17 && m_stDialogBoxInfo[15].sView > iTotalLines - 17) m_stDialogBoxInfo[15].sView = iTotalLines - 17;
 		break;
 	}
+}
+
+int CGame::_iCalcSkillSSNpoint(int iLevel)
+{
+	int iRet;
+
+	if (iLevel < 1) return 1;
+
+	if (iLevel <= 50)
+		iRet = iLevel;
+	else if (iLevel > 50) {
+		iRet = (iLevel * iLevel) / 10;
+	}
+
+	return iRet;
 }
 
 void CGame::DrawDialogBox_SkillDlg(short msX, short msY, short msZ, char cLB)

@@ -301,6 +301,8 @@ CGame::CGame()
 	m_stDialogBoxInfo[28].sSizeX = 258;
 	m_stDialogBoxInfo[28].sSizeY = 339;
 
+	//29
+
 	//Icon Pannel
 #ifdef RES_HIGH
 	m_stDialogBoxInfo[30].sX = 0;
@@ -397,11 +399,7 @@ CGame::CGame()
 	m_stDialogBoxInfo[44].sSizeX = 258;
 	m_stDialogBoxInfo[44].sSizeY = 339;
 
-	// centu - achievements
-	m_stDialogBoxInfo[45].sX = 0 + SCREENX;
-	m_stDialogBoxInfo[45].sY = 0 + SCREENY;
-	m_stDialogBoxInfo[45].sSizeX = 258;
-	m_stDialogBoxInfo[45].sSizeY = 339;
+	// 45
 
 	// Snoopy: Resurection
 	m_stDialogBoxInfo[50].sX = 185 + SCREENX;
@@ -1668,7 +1666,6 @@ BOOL CGame::bSendCommand(DWORD dwMsgID, WORD wCommand, char cDir, int iV1, int i
 		m_bIsTeleportRequested = TRUE;
 		break;
 
-	case MSGID_REQUEST_ACHIEVEMENTS:
 	case MSGID_REQUEST_CIVILRIGHT:
 		dwp = (DWORD *)(cMsg + DEF_INDEX4_MSGID);
 		*dwp = dwMsgID;
@@ -2431,11 +2428,6 @@ void CGame::GameRecvMsgHandler(DWORD dwMsgSize, char * pData)
   DWORD * dwp, dwTimeSent, dwTimeRcv;
 	dwpMsgID = (DWORD *)(pData + DEF_INDEX4_MSGID);
 	switch (*dwpMsgID) {
-
-	// CENTU - achievements
-	case MSGID_RESPONSE_ACHIEVEMENTS:
-		ResponseNpcAchievements(pData);
-		break;
 
 	case MSGID_RESPONSE_PING:
 		cp = (char *)(pData + DEF_INDEX2_MSGTYPE + 2);
@@ -5208,133 +5200,6 @@ void CGame::NotifyMsg_EnemyKillReward(char *pData)
 	if (iEnemyKillCount >= 0) m_iEnemyKillCount = iEnemyKillCount;
 	PlaySound('E', 23, 0);
 	CreateScreenShot();
-}
-
-// centu - achievements
-void CGame::ResponseNpcAchievements(char* pData)
-{
-	char* cp;
-	char cTotal, i;
-
-	stTitle* pTitle;
-
-	m_vTitleList.clear();
-
-	cp = (char*)(pData + DEF_INDEX2_MSGTYPE + 2);
-
-	cTotal = *cp;
-	cp++;
-
-	for (i = 0; i < cTotal; i++) {
-		pTitle = new stTitle;
-
-		pTitle->cTitleID = *cp;
-		cp++;
-
-		pTitle->iCount = *(int*)cp;
-		cp += 4;
-
-		m_vTitleList.push_back(pTitle);
-	}
-
-	cTotal = *cp;
-	cp++;
-
-	for (i = 0; i < cTotal; i++) {
-		pTitle = new stTitle;
-
-		pTitle->cTitleID = *cp;
-		cp++;
-
-		pTitle->iCount = *(int*)cp;
-		cp += 4;
-
-		m_vTitleList.push_back(pTitle);
-	}
-
-}
-void CGame::NotifyMsg_NpcAchievement(char* pData)
-{
-	char* cp, cNpcType, cTxt[32];
-	int* ip, iKills;
-
-	cp = (char*)(pData + DEF_INDEX2_MSGTYPE + 2);
-	cNpcType = *cp;
-	cp++;
-
-	ip = (int*)cp;
-	iKills = *ip;
-	cp += 4;
-
-	m_dwTitleNotifyTime = m_dwCurTime;
-
-	GetNpcName(cNpcType, cTxt);
-	wsprintf(m_cNpcAchievement, "%s Lv. %d", cTxt, iKills / 1000);
-}
-void CGame::DrawDialogBox_Achievements(short msX, short msY, char cLB)
-{
-	int iIndex, iPointerLoc, iTotalLines, iCount, iNextCount, iLevel;
-	char cTxt[32];
-	short sX, sY, szX, sView;
-	double d1, d2, d3;
-	sX = m_stDialogBoxInfo[45].sX;
-	sY = m_stDialogBoxInfo[45].sY;
-	szX = m_stDialogBoxInfo[45].sSizeX;
-	sView = m_stDialogBoxInfo[45].sView;
-	COLORREF color;
-
-	DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_GAME2, sX, sY, 0);
-	DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_TEXT, sX, sY, 6);
-
-		PutString_SprFont2(sX + 65, sY + 45, "Achievements", 254, 242, 4); // previously 1,1,8
-
-		PutString(sX + 30, sY + 80, "Title:", RGB(55, 25, 25));
-		PutString(sX + 130, sY + 80, "Progress:", RGB(55, 25, 25));
-		PutString(sX + szX - 55, sY + 80, "Level:", RGB(55, 25, 25));
-
-		iIndex = 0;
-		iTotalLines = m_vTitleList.size();
-		if (sView >= iTotalLines) sView = m_stDialogBoxInfo[45].sView = 0;
-
-		for (Vector<stTitle*>::iterator it = m_vTitleList.begin() + sView; it != m_vTitleList.end() && iIndex < 14; ++it) {
-			if ((*it)->cTitleID < 120) GetNpcName((*it)->cTitleID, cTxt);
-
-			PutString(sX + 30, sY + 100 + iIndex * 15, cTxt, color);
-
-			if ((*it)->cTitleID < 120) {
-				sprintf(cTxt, "%d/%d", (*it)->iCount, (int)(floor((float)(*it)->iCount / 1000) + 1) * 1000);
-				PutString(sX + 130, sY + 100 + iIndex * 15, cTxt, color);
-				sprintf(cTxt, "%d", (int)floor((float)(*it)->iCount / 1000));
-				PutString(sX + szX - 45, sY + 100 + iIndex * 15, cTxt, color);
-			}
-			iIndex++;
-		}
-
-		if (iTotalLines > 14) {
-			d1 = (double)sView;
-			d2 = (double)(iTotalLines - 14);
-			d3 = (274.0f * d1) / d2;
-			iPointerLoc = (int)d3;
-			DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_GAME2, sX, sY, 3);
-			DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_GAME2, sX + 242, sY + iPointerLoc + 35, 7);
-		}
-		else iPointerLoc = 0;
-
-		if (cLB != 0 && iTotalLines > 14) {
-			if ((iGetTopDialogBoxIndex() == 45)) {
-				if ((msX >= sX + 240) && (msX <= sX + 260) && (msY >= sY + 40) && (msY <= sY + 320)) {
-					d1 = (double)(msY - (sY + 40));
-					d2 = (double)(iTotalLines - 14);
-					d3 = (d1 * d2) / 274.0f;
-					iPointerLoc = (int)d3;
-
-					if (iPointerLoc > iTotalLines) iPointerLoc = iTotalLines;
-					m_stDialogBoxInfo[45].sView = iPointerLoc;
-				}
-			}
-		}
-		else m_stDialogBoxInfo[45].bIsScrollSelected = FALSE;
-	
 }
 
 void CGame::NotifyMsg_ForceDisconn(char *pData)
@@ -16569,8 +16434,29 @@ resi = 0;
 		}
 	}
 
-	wsprintf(G_cTxt, "%s", m_cMapMessage);
-	PutAlignedString(140+resx, 323+resx, 456 + resy, G_cTxt, 200, 200, 120); // Map Message (Center Pannel)
+	if (m_bCtrlPressed) {
+		unsigned long iCurExp = iGetLevelExp(m_iLevel);
+		unsigned long iNextExp = iGetLevelExp(m_iLevel + 1);
+		if (m_iExp < iNextExp)
+		{
+			iNextExp = iNextExp - iCurExp;
+			if (m_iExp > iCurExp) iCurExp = m_iExp - iCurExp; // curxp: partie faite
+			else iCurExp = 0; // below current lvl !
+			short sPerc = 0;
+			if (iCurExp > 200000) sPerc = short(((iCurExp >> 4) * 10000) / (iNextExp >> 4));
+			else sPerc = (short)((iCurExp * 10000) / iNextExp);
+			wsprintf(G_cTxt, "Rest Exp: %d (%d.%02d%%)", iNextExp - iCurExp, sPerc / 100, sPerc % 100);
+		}
+		else
+		{
+			wsprintf(G_cTxt, "Exp: %d (100.00%)", m_iExp); // "Exp: 151000/150000"
+		}
+		PutAlignedString(140 + resx, 323 + resx, 456 + resy, G_cTxt, 200, 200, 120);
+	}
+	else {
+		wsprintf(G_cTxt, "%s (%d,%d)", m_cMapMessage, m_sPlayerX, m_sPlayerY);
+		PutAlignedString(140 + resx, 323 + resx, 456 + resy, G_cTxt, 200, 200, 120); // Map Message (Center Pannel)
+	}
 
 	if ((msY > 436+resy) && (msY < 478+resy)) // Menu Icons
 	{
@@ -23493,10 +23379,10 @@ void CGame::OnKeyUp(WPARAM wParam)
 	// VAMP - online users list
 	case 81://'O'
 		if( ( m_bCtrlPressed == TRUE ) && ( m_cGameMode == DEF_GAMEMODE_ONMAINGAME ) )
-		{	if (m_bIsDialogEnabled[55] == FALSE)
-			{	EnableDialogBox(55, NULL, NULL, NULL);
+		{	if (m_bIsDialogEnabled[60] == FALSE)
+			{	EnableDialogBox(60, NULL, NULL, NULL);
 			}else	
-			{	DisableDialogBox(55);
+			{	DisableDialogBox(60);
 		}	}
 		break;
 
@@ -23823,12 +23709,8 @@ void CGame::OnKeyUp(WPARAM wParam)
 		break;
 
 	case VK_F11:
-		//m_bDialogTrans = !m_bDialogTrans;
-		if (m_bIsDialogEnabled[45] == FALSE) {
-			bSendCommand(MSGID_REQUEST_ACHIEVEMENTS, DEF_MSGTYPE_CONFIRM, NULL, NULL, NULL, NULL, NULL);
-			EnableDialogBox(45, NULL, NULL, NULL);
-		}
-		else DisableDialogBox(45);
+		m_bDialogTrans = !m_bDialogTrans;
+		
 		break;
 
 	case VK_F12:
@@ -26491,9 +26373,6 @@ NMH_LOOPBREAK2:;
 		NotifyMsg_EnemyKillReward(pData);
 		break;
 
-	case DEF_NOTIFY_NPCACHIEVEMENT:
-		NotifyMsg_NpcAchievement(pData);
-		break;
 
 	case DEF_NOTIFY_PKCAPTURED:
 		NotifyMsg_PKcaptured(pData);
@@ -31429,30 +31308,6 @@ void CGame::UpdateScreen_OnGame()
 		PutString_SprFont3(400 - ((strlen(cEKNotifySubject) * 7) / 2), 220, cEKNotifySubject, 2, 200, 250);
 #else
 		PutString_SprFont3(320 - ((strlen(cEKNotifySubject) * 7) / 2), 215, cEKNotifySubject, 2, 200, 250);
-#endif	
-	}
-
-	if (dwTime - m_dwTitleNotifyTime < 10000)
-	{
-		switch (m_sPlayerType) {
-		case 1:
-		case 2:
-		case 3:
-			PlaySound('C', 21, 0);
-			break;
-
-		case 4:
-		case 5:
-		case 6:
-			PlaySound('C', 22, 0);
-			break;
-		}
-		PutString_SprFont3(355, 205, "NEW ACHIEVEMENT!", 200, 250, 2);
-
-#ifdef RES_HIGH
-		PutString_SprFont3(400 - ((strlen(m_cNpcAchievement) * 7) / 2), 220, m_cNpcAchievement, 2, 200, 250);
-#else
-		PutString_SprFont3(320 - ((strlen(m_cNpcAchievement) * 7) / 2), 215, m_cNpcAchievement, 2, 200, 250);
 #endif	
 	}
 

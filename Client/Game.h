@@ -59,9 +59,6 @@
 // Snoopy: MP3 support
 #include "MP3.h" 
 
-#include <vector>
-#define Vector std::vector
-
 //Snoopy: Implementation JPG sreenshots
 #include "cximage/ximage.h" // Snoopy
 #include "cximage/ximajpg.h" // Snoopy
@@ -228,11 +225,6 @@ public:
 	bool bCheckItemEquiped(char itemName[]); // Beholder neck
 
     void GetIPByDNS();
-
-	// centu - achievements
-	void NotifyMsg_NpcAchievement(char* pData);
-	void DrawDialogBox_Achievements(short msX, short msY, char cLB);
-	void ResponseNpcAchievements(char* pData);
 
 	// CLEROTH - AURAS
 	void CheckActiveAura(short sX, short sY, DWORD dwTime, short sOwnerType);
@@ -512,6 +504,9 @@ public:
 	void _DrawThunderEffect(int sX, int sY, int dX, int dY, int rX, int rY, char cType);
 	void DrawLine2(int x0, int y0, int x1, int y1, int iR, int iG, int iB);
 	void DrawLine(int x0, int y0, int x1, int y1, int iR, int iG, int iB);
+
+	int _iCalcSkillSSNpoint(int iLevel);
+
 	void SetWhetherStatus(BOOL bStart, char cType);
 	void WhetherObjectFrameCounter();
 	void DrawWhetherEffects();
@@ -977,16 +972,8 @@ public:
 	int m_iRating; //Rating
 
 	// VAMP - ek stuff
-	DWORD dwEKNotifyTime, m_dwTitleNotifyTime;
+	DWORD dwEKNotifyTime;
 	char cEKNotifySubject[120];
-	char m_cNpcAchievement[120]; // centu - achievements
-
-	typedef struct TitleTag {
-		char cTitleID;
-		int iCount;
-	} stTitle;
-
-	Vector<stTitle*> m_vTitleList;
 
 	int m_iPrevMoveX, m_iPrevMoveY;
 	int m_iBlockYear, m_iBlockMonth, m_iBlockDay;
@@ -1076,6 +1063,7 @@ public:
 
 	char m_cMagicMastery[DEF_MAXMAGICTYPE];
 	unsigned char m_cSkillMastery[DEF_MAXSKILLTYPE]; // v1.4
+	unsigned char m_cSkillStatus[DEF_MAXSKILLTYPE];
 	char m_cWorldServerName[32];
 	char m_cDetailLevel;
 	char m_cMenuDir, m_cMenuDirCnt, m_cMenuFrame;
