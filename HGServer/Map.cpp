@@ -122,7 +122,23 @@ CMap::CMap(class CGame * pGame)
 	m_bIsEnergySphereGoalEnabled = FALSE;
 	m_iCurEnergySphereGoalPointIndex = -1;
 
-	
+	for (int ix = 0; ix < DEF_MAXSECTORS; ix++)
+		for (int iy = 0; iy < DEF_MAXSECTORS; iy++) {
+			m_stSectorInfo[ix][iy].iNeutralActivity = 0;
+			m_stSectorInfo[ix][iy].iAresdenActivity = 0;
+			m_stSectorInfo[ix][iy].iElvineActivity = 0;
+			m_stSectorInfo[ix][iy].iMonsterActivity = 0;
+			m_stSectorInfo[ix][iy].iPlayerActivity = 0;
+
+			m_stTempSectorInfo[ix][iy].iNeutralActivity = 0;
+			m_stTempSectorInfo[ix][iy].iAresdenActivity = 0;
+			m_stTempSectorInfo[ix][iy].iElvineActivity = 0;
+			m_stTempSectorInfo[ix][iy].iMonsterActivity = 0;
+			m_stTempSectorInfo[ix][iy].iPlayerActivity = 0;
+		}
+
+	m_iMaxNx = m_iMaxNy = m_iMaxAx = m_iMaxAy = m_iMaxEx = m_iMaxEy = m_iMaxMx = m_iMaxMy = m_iMaxPx = m_iMaxPy = 0;
+
 
 	for (i = 0; i < DEF_MAXHELDENIANDOOR; i++) {
 		m_stHeldenianGateDoor[i].cDir = 0;
@@ -2921,8 +2937,6 @@ int CGame::iRequestPanningMapDataRequest(int iClientH, char* pData)
 	*cp = cDir;
 	cp++;
 
-	RefreshPartyCoords(iClientH);
-
 	// centu - 800x600
 	iSize = iComposeMoveMapData((short)(dX - 12), (short)(dY - 9), iClientH, cDir, cp);
 	iRet = m_pClientList[iClientH]->m_pXSock->iSendMsg(cData, iSize + 12 + 1 + 4);
@@ -3904,4 +3918,115 @@ int CGame::iGetMapLocationSide(char* pMapName)
 	if (strcmp(pMapName, "Cmdhall_2") == 0) return 2;
 
 	return 0;
+}
+
+void CGame::UpdateMapSectorInfo()
+{
+	int i, ix, iy;
+	int iMaxNeutralActivity, iMaxAresdenActivity, iMaxElvineActivity, iMaxMonsterActivity, iMaxPlayerActivity;
+
+	for (i = 0; i < DEF_MAXMAPS; i++)
+		if (m_pMapList[i] != NULL) {
+
+			iMaxNeutralActivity = iMaxAresdenActivity = iMaxElvineActivity = iMaxMonsterActivity = iMaxPlayerActivity = 0;
+			m_pMapList[i]->m_iMaxNx = m_pMapList[i]->m_iMaxNy = m_pMapList[i]->m_iMaxAx = m_pMapList[i]->m_iMaxAy = 0;
+			m_pMapList[i]->m_iMaxEx = m_pMapList[i]->m_iMaxEy = m_pMapList[i]->m_iMaxMx = m_pMapList[i]->m_iMaxMy = 0;
+			m_pMapList[i]->m_iMaxPx = m_pMapList[i]->m_iMaxPy = 0;
+
+			// ±×µ¿¾È ÀúÀåÇß´ø TempSectorInfo¿¡¼­ Á¤º¸¸¦ ¾ò¾î SectorInfo¿¡ ÀúÀåÇÑ ´ÙÀ½ TempSectorInfo´Â Áö¿î´Ù.
+			for (ix = 0; ix < DEF_MAXSECTORS; ix++)
+				for (iy = 0; iy < DEF_MAXSECTORS; iy++) {
+					if (m_pMapList[i]->m_stTempSectorInfo[ix][iy].iNeutralActivity > iMaxNeutralActivity) {
+						iMaxNeutralActivity = m_pMapList[i]->m_stTempSectorInfo[ix][iy].iNeutralActivity;
+						m_pMapList[i]->m_iMaxNx = ix;
+						m_pMapList[i]->m_iMaxNy = iy;
+					}
+
+					if (m_pMapList[i]->m_stTempSectorInfo[ix][iy].iAresdenActivity > iMaxAresdenActivity) {
+						iMaxAresdenActivity = m_pMapList[i]->m_stTempSectorInfo[ix][iy].iAresdenActivity;
+						m_pMapList[i]->m_iMaxAx = ix;
+						m_pMapList[i]->m_iMaxAy = iy;
+					}
+
+					if (m_pMapList[i]->m_stTempSectorInfo[ix][iy].iElvineActivity > iMaxElvineActivity) {
+						iMaxElvineActivity = m_pMapList[i]->m_stTempSectorInfo[ix][iy].iElvineActivity;
+						m_pMapList[i]->m_iMaxEx = ix;
+						m_pMapList[i]->m_iMaxEy = iy;
+					}
+
+					if (m_pMapList[i]->m_stTempSectorInfo[ix][iy].iMonsterActivity > iMaxMonsterActivity) {
+						iMaxMonsterActivity = m_pMapList[i]->m_stTempSectorInfo[ix][iy].iMonsterActivity;
+						m_pMapList[i]->m_iMaxMx = ix;
+						m_pMapList[i]->m_iMaxMy = iy;
+					}
+
+					if (m_pMapList[i]->m_stTempSectorInfo[ix][iy].iPlayerActivity > iMaxPlayerActivity) {
+						iMaxPlayerActivity = m_pMapList[i]->m_stTempSectorInfo[ix][iy].iPlayerActivity;
+						m_pMapList[i]->m_iMaxPx = ix;
+						m_pMapList[i]->m_iMaxPy = iy;
+					}
+				}
+
+			// TempSectorInfo ³¯¸°´Ù.
+			m_pMapList[i]->ClearTempSectorInfo();
+
+			// Sector Info¿¡ ÀúÀå
+			if (m_pMapList[i]->m_iMaxNx > 0) m_pMapList[i]->m_stSectorInfo[m_pMapList[i]->m_iMaxNx][m_pMapList[i]->m_iMaxNy].iNeutralActivity++;
+			if (m_pMapList[i]->m_iMaxAx > 0) m_pMapList[i]->m_stSectorInfo[m_pMapList[i]->m_iMaxAx][m_pMapList[i]->m_iMaxAy].iAresdenActivity++;
+			if (m_pMapList[i]->m_iMaxEx > 0) m_pMapList[i]->m_stSectorInfo[m_pMapList[i]->m_iMaxEx][m_pMapList[i]->m_iMaxEy].iElvineActivity++;
+			if (m_pMapList[i]->m_iMaxMx > 0) m_pMapList[i]->m_stSectorInfo[m_pMapList[i]->m_iMaxMx][m_pMapList[i]->m_iMaxMy].iMonsterActivity++;
+			if (m_pMapList[i]->m_iMaxPx > 0) m_pMapList[i]->m_stSectorInfo[m_pMapList[i]->m_iMaxPx][m_pMapList[i]->m_iMaxPy].iPlayerActivity++;
+		}
+}
+
+
+void CGame::AgingMapSectorInfo()
+{
+	int i, ix, iy;
+
+	for (i = 0; i < DEF_MAXMAPS; i++)
+		if (m_pMapList[i] != NULL) {
+			for (ix = 0; ix < DEF_MAXSECTORS; ix++)
+				for (iy = 0; iy < DEF_MAXSECTORS; iy++) {
+					m_pMapList[i]->m_stSectorInfo[ix][iy].iNeutralActivity--;
+					m_pMapList[i]->m_stSectorInfo[ix][iy].iAresdenActivity--;
+					m_pMapList[i]->m_stSectorInfo[ix][iy].iElvineActivity--;
+					m_pMapList[i]->m_stSectorInfo[ix][iy].iMonsterActivity--;
+					m_pMapList[i]->m_stSectorInfo[ix][iy].iPlayerActivity--;
+
+					if (m_pMapList[i]->m_stSectorInfo[ix][iy].iNeutralActivity < 0) m_pMapList[i]->m_stSectorInfo[ix][iy].iNeutralActivity = 0;
+					if (m_pMapList[i]->m_stSectorInfo[ix][iy].iAresdenActivity < 0) m_pMapList[i]->m_stSectorInfo[ix][iy].iAresdenActivity = 0;
+					if (m_pMapList[i]->m_stSectorInfo[ix][iy].iElvineActivity < 0) m_pMapList[i]->m_stSectorInfo[ix][iy].iElvineActivity = 0;
+					if (m_pMapList[i]->m_stSectorInfo[ix][iy].iMonsterActivity < 0) m_pMapList[i]->m_stSectorInfo[ix][iy].iMonsterActivity = 0;
+					if (m_pMapList[i]->m_stSectorInfo[ix][iy].iPlayerActivity < 0) m_pMapList[i]->m_stSectorInfo[ix][iy].iPlayerActivity = 0;
+				}
+		}
+}
+
+void CMap::ClearSectorInfo()
+{
+	int ix, iy;
+
+	for (ix = 0; ix < DEF_MAXSECTORS; ix++)
+		for (iy = 0; iy < DEF_MAXSECTORS; iy++) {
+			m_stSectorInfo[ix][iy].iNeutralActivity = 0;
+			m_stSectorInfo[ix][iy].iAresdenActivity = 0;
+			m_stSectorInfo[ix][iy].iElvineActivity = 0;
+			m_stSectorInfo[ix][iy].iMonsterActivity = 0;
+			m_stSectorInfo[ix][iy].iPlayerActivity = 0;
+		}
+}
+
+void CMap::ClearTempSectorInfo()
+{
+	int ix, iy;
+
+	for (ix = 0; ix < DEF_MAXSECTORS; ix++)
+		for (iy = 0; iy < DEF_MAXSECTORS; iy++) {
+			m_stTempSectorInfo[ix][iy].iNeutralActivity = 0;
+			m_stTempSectorInfo[ix][iy].iAresdenActivity = 0;
+			m_stTempSectorInfo[ix][iy].iElvineActivity = 0;
+			m_stTempSectorInfo[ix][iy].iMonsterActivity = 0;
+			m_stTempSectorInfo[ix][iy].iPlayerActivity = 0;
+		}
 }

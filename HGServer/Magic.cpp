@@ -2966,7 +2966,7 @@ void CGame::PlayerMagicHandler(int iClientH, int dX, int dY, short sType, BOOL b
 				m_pMapList[m_pClientList[sOwnerH]->m_cMapIndex]->ClearDeadOwner(dX, dY);
 				m_pMapList[m_pClientList[sOwnerH]->m_cMapIndex]->SetOwner(sOwnerH, DEF_OWNERTYPE_PLAYER, dX, dY);
 				SendEventToNearClient_TypeA(sOwnerH, DEF_OWNERTYPE_PLAYER, MSGID_EVENT_MOTION, DEF_OBJECTDAMAGE, NULL, NULL, NULL);
-				SendNotifyMsg(NULL, sOwnerH, DEF_NOTIFY_HP, NULL, NULL, NULL, NULL);
+				
 				break;
 				// Resurrection is not for NPC's. 
 			case DEF_OWNERTYPE_NPC:
@@ -4217,7 +4217,19 @@ int CGame::iClientMotion_Magic_Handler(int iClientH, short sX, short sY, char cD
 
 	if ((sX != m_pClientList[iClientH]->m_sX) || (sY != m_pClientList[iClientH]->m_sY)) return 2;
 
-
+	int iStX, iStY;
+	if (m_pMapList[m_pClientList[iClientH]->m_cMapIndex] != NULL)
+	{
+		iStX = m_pClientList[iClientH]->m_sX / 20;
+		iStY = m_pClientList[iClientH]->m_sY / 20;
+		m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_stTempSectorInfo[iStX][iStY].iPlayerActivity++;
+		switch (m_pClientList[iClientH]->m_cSide) {
+		case 1: m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_stTempSectorInfo[iStX][iStY].iAresdenActivity++; break;
+		case 2: m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_stTempSectorInfo[iStX][iStY].iElvineActivity++;  break;
+		case 0:
+		default: m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_stTempSectorInfo[iStX][iStY].iNeutralActivity++; break;
+		}
+	}
 
 	ClearSkillUsingStatus(iClientH);
 
@@ -4584,8 +4596,7 @@ void CGame::RequestStudyMagicHandler(int iClientH, char* pName, BOOL bSucces, BO
 		{
 			if (m_pMagicConfigList[iRet]->m_iGoldCost < 0) bMagic = FALSE;
 			dwGoldCount = dwGetItemCount(iClientH, "Gold");
-			if ((DWORD)iCost > dwGoldCount)  
-				bMagic = FALSE;
+			if ((DWORD)iCost > dwGoldCount) bMagic = FALSE;
 			iTempInt += m_pClientList[iClientH]->m_iAngelicInt;
 			// SNOOPY: Was Buggy couldn't leran a Spell Book outside Magic Tower !
 			if (m_pClientList[iClientH]->m_bIsInsideWizardTower == FALSE) return;
@@ -4689,10 +4700,11 @@ void CGame::bCheckMagicInt(int iClientH)
 
 	for (int i = 0;i < DEF_MAXMAGICTYPE;i++)
 	{
-		if (m_pMagicConfigList[i] != NULL)
+		if (m_pMagicConfigList[i] != NULL) {
 			if (m_pMagicConfigList[i]->m_sIntLimit > (m_pClientList[iClientH]->m_iInt + m_pClientList[iClientH]->m_iAngelicInt))
 			{
 				m_pClientList[iClientH]->m_cMagicMastery[i] = 0;
 			}
+		}
 	}
 }

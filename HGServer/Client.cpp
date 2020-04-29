@@ -30,13 +30,6 @@ CClient::CClient(HWND hWnd)
 	m_iGuildGUID = -1;
 	m_bIsInitComplete = FALSE;
 	m_iLU_Pool = 0; // removed
-
-	// centu - achievements
-	for (i = 0; i < DEF_MAXNPCTYPES; i++)
-		m_iNpcKillCount[i] = 0;
-	
-	for (i = 0; i < DEF_MAXACHIEVEMENTS; i++)
-		m_iAchievement[i] = 0;
 	
 	m_cWarType = 0;
 	m_iEnemyKillCount = 0;

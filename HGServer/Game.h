@@ -110,8 +110,6 @@ public:
 
 private:
 
-	void RequestAchievementsHandler(int iClientH);
-
 	void CheckDenialServiceAttack(int iClientH, DWORD dwClientTime);
 
 	//50Cent - Repair All
@@ -745,7 +743,7 @@ private:
 
 	void DeathmatchGame();
 
-	
+	void CheckSpecialEvent(int iClientH);
 
 
 	BOOL m_bIsGameServerRegistered;

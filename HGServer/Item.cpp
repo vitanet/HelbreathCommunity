@@ -2283,8 +2283,7 @@ void CGame::RequestItemUpgradeHandler(int iClientH, int iItemIndex)
 				{	SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_ITEMUPGRADEFAIL, 3, NULL, NULL, NULL);
 					return; 
 				}
-				if(iDice(1, 100) <= 70)
-				{	m_pClientList[iClientH]->m_iGizonItemUpgradeLeft -= sItemUpgrade; 
+					m_pClientList[iClientH]->m_iGizonItemUpgradeLeft -= sItemUpgrade; 
 					SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_GIZONITEMUPGRADELEFT, m_pClientList[iClientH]->m_iGizonItemUpgradeLeft, NULL, NULL, NULL);
 					iValue++;
 					dwTemp = m_pClientList[iClientH]->m_pItemList[iItemIndex]->m_dwAttribute;
@@ -2292,11 +2291,7 @@ void CGame::RequestItemUpgradeHandler(int iClientH, int iItemIndex)
 					m_pClientList[iClientH]->m_pItemList[iItemIndex]->m_dwAttribute = dwTemp | (iValue << 28);
 					SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_ITEMATTRIBUTECHANGE, iItemIndex, m_pClientList[iClientH]->m_pItemList[iItemIndex]->m_dwAttribute, NULL, NULL);
 					_bItemLog(DEF_ITEMLOG_UPGRADESUCCESS, iClientH, (int) -1, m_pClientList[iClientH]->m_pItemList[iItemIndex]);
-				}else
-				{	m_pClientList[iClientH]->m_iGizonItemUpgradeLeft--;
-					SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_GIZONITEMUPGRADELEFT, m_pClientList[iClientH]->m_iGizonItemUpgradeLeft, NULL, NULL, NULL);
-					SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_ITEMUPGRADEFAIL, 3, NULL, NULL, NULL);
-				}
+				
 				break;
 			}
 			break;
@@ -3585,8 +3580,8 @@ void CGame::UseItemHandler(int iClientH, short sItemIndex, short dX, short dY, s
 			switch (iResult1) {
 			case 1: // All the exp you gained this level is reseted
 
-				m_pClientList[iClientH]->m_iExp = iGetLevelExp(m_pClientList[iClientH]->m_iLevel);
-				SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_NOTICEMSG, NULL, NULL, NULL, "Doh, Pandora's Box decreased your Exp...");
+				m_pClientList[iClientH]->m_iExp = m_iLevelExpTable[m_pClientList[iClientH]->m_iLevel];
+				SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_NOTICEMSG, NULL, NULL, NULL, "Doh, Pandora's Box reseted your Exp...");
 				SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_EXP, NULL, NULL, NULL, NULL);
 				break;
 			case 2: // You get a random item depending on your rep
@@ -7359,7 +7354,18 @@ int CGame::iClientMotion_GetItem_Handler(int iClientH, short sX, short sY, char 
 
 	if ((sX != m_pClientList[iClientH]->m_sX) || (sY != m_pClientList[iClientH]->m_sY)) return 2;
 
+	int iStX, iStY;
+	if (m_pMapList[m_pClientList[iClientH]->m_cMapIndex] != NULL) {
+		iStX = m_pClientList[iClientH]->m_sX / 20;
+		iStY = m_pClientList[iClientH]->m_sY / 20;
+		m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_stTempSectorInfo[iStX][iStY].iPlayerActivity++;
 
+		switch (m_pClientList[iClientH]->m_cSide) {
+		case 0: m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_stTempSectorInfo[iStX][iStY].iNeutralActivity++; break;
+		case 1: m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_stTempSectorInfo[iStX][iStY].iAresdenActivity++; break;
+		case 2: m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_stTempSectorInfo[iStX][iStY].iElvineActivity++;  break;
+		}
+	}
 
 	ClearSkillUsingStatus(iClientH);
 
@@ -7649,6 +7655,24 @@ BOOL CGame::bEquipItemHandler(int iClientH, short sItemIndex, BOOL bNotify)
 		// Stormbringer
 		if (m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 845) {
 			if ((m_pClientList[iClientH]->m_iInt + m_pClientList[iClientH]->m_iAngelicInt) < 65) {
+				SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_ITEMRELEASED, m_pClientList[iClientH]->m_iSpecialAbilityEquipPos, sItemIndex, NULL, NULL);
+				ReleaseItemHandler(iClientH, sItemIndex, TRUE);
+				return FALSE;
+			}
+			else {
+				m_pClientList[iClientH]->m_iHitRatio += 10;
+			}
+		}
+		// Centuu : Fixed las armas Blood y DemonSlayer by KaoZureS
+		else if ((m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 490) ||
+			(m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 491) ||
+			(m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 492) ||
+			(m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 616) ||
+			(m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 618)) {
+			if (m_pClientList[iClientH]->m_iDex > 119) {
+				m_pClientList[iClientH]->m_iHitRatio += 10;
+			}
+			else {
 				SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_ITEMRELEASED, m_pClientList[iClientH]->m_iSpecialAbilityEquipPos, sItemIndex, NULL, NULL);
 				ReleaseItemHandler(iClientH, sItemIndex, TRUE);
 				return FALSE;

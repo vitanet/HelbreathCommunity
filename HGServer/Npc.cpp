@@ -401,11 +401,6 @@ void CGame::NpcKilledHandler(short sAttackerH, char cAttackerType, int iNpcH, sh
 	m_pNpcList[iNpcH]->m_cTargetType = NULL;
 	// Á×´Â µ¿ÀÛ Àü¼Û.
 	if (cAttackerType == DEF_OWNERTYPE_PLAYER) {
-		// centu - achievements
-		if (m_pClientList[sAttackerH]->m_iNpcKillCount[m_pNpcList[iNpcH]->m_sType] < 15000) {
-			m_pClientList[sAttackerH]->m_iNpcKillCount[m_pNpcList[iNpcH]->m_sType]++;
-			if ((m_pClientList[sAttackerH]->m_iNpcKillCount[m_pNpcList[iNpcH]->m_sType] % 1000) == 0) SendNotifyMsg(NULL, sAttackerH, DEF_NOTIFY_NPCACHIEVEMENT, m_pNpcList[iNpcH]->m_sType, NULL, NULL, NULL);
-		}
 		sAttackerWeapon = ((m_pClientList[sAttackerH]->m_sAppr2 & 0x0FF0) >> 4);
 	}
 	else sAttackerWeapon = 1;
@@ -2139,7 +2134,7 @@ void CGame::NpcDeadItemGenerator(int iNpcH, short sAttackerH, char cAttackerType
 					return;
 				}
 
-				if (pItem->m_sItemEffectType == DEF_ITEMEFFECTTYPE_ATTACK || pItem->m_sItemEffectType == DEF_ITEMEFFECTTYPE_ATTACK_ARROW) {
+				if (pItem->m_sItemEffectType == DEF_ITEMEFFECTTYPE_ATTACK) {
 					// °ø°Ý ¹«±â·ù¿¡ ºÙÀ» ¼ö ÀÖ´Â Á¢µÎ»ç¸¦ ¼±ÅÃ 
 					// °¡º­¿î(3%) °­È­µÈ(7%) ÇÊ»ìÀÇ(15%) ¹ÎÃ¸ÀÇ(20%) Á¤ÀÇÀÇ(20%) Áßµ¶ÀÇ(16%) ¿¹¸®ÇÑ(16%) °í´ë¹®¸íÀÇ(3%)
 					iResult = iDice(1, 11500);
@@ -4243,6 +4238,38 @@ void CGame::MobGenerator()
 				if (bIsSpecialEvent == TRUE) {
 					switch (m_cSpecialEventType) {
 					case 1:
+						if (m_pMapList[i]->m_iMaxPx != 0) {
+							pX = m_pMapList[i]->m_iMaxPx * 20 + 10;
+							pY = m_pMapList[i]->m_iMaxPy * 20 + 10;
+
+							if (pX < 0) pX = 0;
+							if (pY < 0) pY = 0;
+
+							if (m_bIsCrusadeMode == TRUE) {
+								if (strcmp(m_pMapList[i]->m_cName, "aresden") == 0) {
+									switch (iDice(1, 6)) {
+									case 1: iResult = 20; break;
+									case 2: iResult = 53; break;
+									case 3: iResult = 55; break;
+									case 4: iResult = 57; break;
+									case 5: iResult = 59; break;
+									case 6: iResult = 61; break;
+									}
+								}
+								else if (strcmp(m_pMapList[i]->m_cName, "elvine") == 0) {
+									switch (iDice(1, 6)) {
+									case 1: iResult = 19; break;
+									case 2: iResult = 52; break;
+									case 3: iResult = 54; break;
+									case 4: iResult = 56; break;
+									case 5: iResult = 58; break;
+									case 6: iResult = 60; break;
+									}
+								}
+							}
+							wsprintf(G_cTxt, "(!) Mob-Event Map(%s)[%d (%d,%d)]", m_pMapList[i]->m_cName, iResult, pX, pY);
+						}
+						break;
 
 					case 2:
 						if (iDice(1, 3) == 2) {

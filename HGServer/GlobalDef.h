@@ -13,7 +13,6 @@
 #define DEF_MAXNPCITEMS				1000
 #define DEF_MAXCLIENTS				200		// 2000 -> 200
 #define DEF_MAXNPCS					15000 //LifeX Fix Mobs Respawn Limit 01/01
-#define DEF_MAXACHIEVEMENTS		10
 #define DEF_MAXITEMTYPES			5000
 #define DEF_CLIENTTIMEOUT			10000
 #define DEF_SPUPTIME				10000 //LifeX Regen Time to 10 sec 01/01

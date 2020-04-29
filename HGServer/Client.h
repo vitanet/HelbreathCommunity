@@ -21,10 +21,7 @@
 class CClient  
 {
 public:
-
-	// centu - achievements
-	int m_iNpcKillCount[DEF_MAXNPCTYPES], m_iAchievement[DEF_MAXACHIEVEMENTS];
-
+	
 	int  m_iAngelicStr; // By Snoopy81
 	int  m_iAngelicInt; // By Snoopy81
 	int  m_iAngelicDex; // By Snoopy81

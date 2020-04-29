@@ -66,6 +66,9 @@ public:
 	BOOL bAddCropsTotalSum();
 	void SetBigOwner(short sOwner, char cOwnerClass, short pX, short pY, char cArea);
 
+	void ClearSectorInfo();
+	void ClearTempSectorInfo();
+
 	CMap(class CGame * pGame);
 	virtual ~CMap();
 
@@ -177,7 +180,14 @@ public:
 	BOOL m_bIsEnergySphereGoalEnabled;
 	int m_iCurEnergySphereGoalPointIndex; 
 
+	struct {
+		int iPlayerActivity;
+		int iNeutralActivity;
+		int iAresdenActivity;
+		int iElvineActivity;
+		int iMonsterActivity;
 
+	} m_stSectorInfo[DEF_MAXSECTORS][DEF_MAXSECTORS], m_stTempSectorInfo[DEF_MAXSECTORS][DEF_MAXSECTORS];
 	
 	short sMobEventAmount;
 	int m_iTotalItemEvents;
@@ -203,7 +213,8 @@ public:
 		char  cSide;
 	} m_stHeldenianTower[DEF_MAXHELDENIANTOWER];
 
-	
+	int m_iMaxNx, m_iMaxNy, m_iMaxAx, m_iMaxAy, m_iMaxEx, m_iMaxEy, m_iMaxMx, m_iMaxMy, m_iMaxPx, m_iMaxPy;
+
 	struct {
 		char cRelatedMapName[11];
 		int iMapIndex;
