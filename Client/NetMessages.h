@@ -167,6 +167,8 @@
  #define DEF_NOTIFY_NEWGUILDSMAN					0x0B0E
  #define DEF_NOTIFY_DISMISSGUILDSMAN				0x0B0F
 
+#define DEF_NOTIFY_CURLIFESPAN 0x0BF3
+
  #define DEF_NOTIFY_MAGICSTUDYSUCCESS				0x0B10
  #define DEF_NOTIFY_MAGICSTUDYFAIL					0x0B11
  #define DEF_NOTIFY_SKILLTRAINSUCCESS				0x0B12
@@ -346,7 +348,7 @@
 
 
   #define DEF_NOTIFY_ANGELIC_STATS					0x0BF2 // Sends m_iAngelicStr, Int, Dex, Mag to client
-  #define DEF_NOTIFY_ITEM_CANT_RELEASE				0x0BF3 // "Item cannot be released"
+  //#define DEF_NOTIFY_ITEM_CANT_RELEASE				0x0BF3 // "Item cannot be released"
   #define DEF_NOTIFY_ANGEL_FAILED					0x0BF4 // Failed receiving an Angel pandent
   #define DEF_NOTIFY_ANGEL_RECEIVED					0x0BF5 // "You have received the Tutelary Angel"
 

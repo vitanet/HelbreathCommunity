@@ -15487,6 +15487,22 @@ void CGame::NotifyMsg_ItemLifeSpanEnd(char * pData)
 	PlaySound('E', 10, 0);
 }
 
+void CGame::NotifyMsg_CurLifeSpan(char* pData)
+{
+	char* cp;
+	short* sp, sItemIndex;
+
+	cp = (char*)(pData + DEF_INDEX2_MSGTYPE + 2);
+
+	sp = (short*)cp;
+	sItemIndex = *sp;
+	cp += 2;
+
+	sp = (short*)cp;
+	m_pItemList[sItemIndex]->m_wCurLifeSpan = *sp;
+	cp += 2;
+}
+
 void CGame::NotifyMsg_ItemObtained(char * pData)
 {
 	char * cp;

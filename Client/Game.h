@@ -452,6 +452,8 @@ public:
 	void NotifyMsg_ForceDisconn(char * pData);
 	void NotifyMsg_BanGuildMan(char * pData);
 
+	void NotifyMsg_CurLifeSpan(char* pData);
+
 	void ResponsePanningHandler(char * pData);
 	void _CalcSocketClosed();
 	void UpdateScreen_OnSelectServer();

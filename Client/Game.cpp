@@ -17650,7 +17650,7 @@ void CGame::DisplayCommaNumber_G_cTxt(int iGold)
 	int cnt = 0;
 	for (int i = 0 ; i < iStrLen+1 ; i++)
 	{	if( (cnt != 0) && ((cnt+1)%4 == 0) )
-		{	G_cTxt[cnt] = ',';
+		{	G_cTxt[cnt] = '.';
 			i--;
 		}else G_cTxt[cnt] = cGold[iStrLen-i];
 		cnt++;
@@ -24740,11 +24740,11 @@ void CGame::NotifyMsgHandler(char * pData)
 		cp +=4;
 		break;
 
-	case DEF_NOTIFY_ITEM_CANT_RELEASE:	// reversed by Snoopy: 0x0BF3
+	/*case DEF_NOTIFY_ITEM_CANT_RELEASE:	// reversed by Snoopy: 0x0BF3
 		AddEventList(DEF_MSG_NOTIFY_NOT_RELEASED , 10 );//"Item cannot be released"
 		cp = (char *)(pData	+ DEF_INDEX2_MSGTYPE + 2);
 		ItemEquipHandler(*cp);
-		break;
+		break;*/
 
 	case DEF_NOTIFY_ANGEL_FAILED:		// reversed by Snoopy: 0x0BF4
 		cp = (char *)(pData	+ DEF_INDEX2_MSGTYPE + 2);
@@ -26396,6 +26396,10 @@ NMH_LOOPBREAK2:;
 
 	case DEF_NOTIFY_ITEMLIFESPANEND:
 		NotifyMsg_ItemLifeSpanEnd(pData);
+		break;
+
+	case DEF_NOTIFY_CURLIFESPAN:
+		NotifyMsg_CurLifeSpan(pData);
 		break;
 
 	case DEF_NOTIFY_ITEMRELEASED:
