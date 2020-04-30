@@ -10,6 +10,8 @@
 #define MSGID_SETTINGSCONFIGURATIONCONTENTS			0x0FA314D4
 #define DEF_REJECTTYPE_GAMESERVERNOTONLINE             0x03
 
+#define DEF_NOTIFY_CURLIFESPAN 0x0BF3
+
 #define DEF_NOTIFY_ANGEL_FAILED					0x0BF4 // Failed receiving an Angel pandent
 #define DEF_NOTIFY_ANGEL_RECEIVED				0x0BF5 // "You have received the Tutelary Angel"
 

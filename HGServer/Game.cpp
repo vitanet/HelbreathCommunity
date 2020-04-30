@@ -3791,7 +3791,7 @@ BOOL CGame::_bDecodePlayerDatafileContents(int iClientH, char * pData, DWORD dwS
 				
 
 				// v1.433
-				if ((m_pClientList[iClientH]->m_pItemList[iItemIndex]->m_wCurLifeSpan == 0) && 
+				if ((m_pClientList[iClientH]->m_pItemList[iItemIndex]->m_wCurLifeSpan <= 0) && 
 					(m_pClientList[iClientH]->m_pItemList[iItemIndex]->m_sItemEffectType == DEF_ITEMEFFECTTYPE_ALTERITEMDROP)) {
 						// Â·ÃŽÂ±Ã— Â³Â²Â±Ã¤Â´Ã™. 
 						wsprintf(G_cTxt, "(!) Player(%s) DEF_ITEMEFFECTTYPE_ALTERITEMDROP !", m_pClientList[iClientH]->m_cCharName);
@@ -4345,7 +4345,7 @@ BOOL CGame::_bDecodePlayerDatafileContents(int iClientH, char * pData, DWORD dwS
 				
 
 				// v1.433
-				if ((m_pClientList[iClientH]->m_pItemInBankList[iItemInBankIndex]->m_wCurLifeSpan == 0) && 
+				if ((m_pClientList[iClientH]->m_pItemInBankList[iItemInBankIndex]->m_wCurLifeSpan <= 0) && 
 					(m_pClientList[iClientH]->m_pItemInBankList[iItemInBankIndex]->m_sItemEffectType == DEF_ITEMEFFECTTYPE_ALTERITEMDROP)) {
 						// Â·ÃŽÂ±Ã— Â³Â²Â±Ã¤Â´Ã™. 
 						wsprintf(G_cTxt, "(!) Player(%s) DEF_ITEMEFFECTTYPE_ALTERITEMDROP !", m_pClientList[iClientH]->m_cCharName);
@@ -10496,6 +10496,7 @@ void CGame::Effect_Damage_Spot(short sAttackerH, char cAttackerType, short sTarg
 			}
 			else {
 				m_pClientList[sTargetH]->m_pItemList[iIndex]->m_wCurLifeSpan -= iDamage;
+				SendNotifyMsg(NULL, sTargetH, DEF_NOTIFY_CURLIFESPAN, iIndex, m_pClientList[sTargetH]->m_pItemList[iIndex]->m_wCurLifeSpan, NULL, NULL);
 			}
 		}
 
@@ -10978,6 +10979,7 @@ void CGame::Effect_Damage_Spot_Type2(short sAttackerH, char cAttackerType, short
 			}
 			else {
 				m_pClientList[sTargetH]->m_pItemList[iIndex]->m_wCurLifeSpan -= iDamage;
+				SendNotifyMsg(NULL, sTargetH, DEF_NOTIFY_CURLIFESPAN, iIndex, m_pClientList[sTargetH]->m_pItemList[iIndex]->m_wCurLifeSpan, NULL, NULL);
 			}
 		}
 
@@ -11429,6 +11431,7 @@ void CGame::Effect_Damage_Spot_DamageMove(short sAttackerH, char cAttackerType, 
 			else {
 				// ¸¶¹ý µ¥¹ÌÁö Àý°¨ ¾ÆÀÌÅÛÀÇ ¼ö¸í¸¸ ÁÙÀÎ´Ù. 
 				m_pClientList[sTargetH]->m_pItemList[iIndex]->m_wCurLifeSpan -= iDamage;
+				SendNotifyMsg(NULL, sTargetH, DEF_NOTIFY_CURLIFESPAN, iIndex, m_pClientList[sTargetH]->m_pItemList[iIndex]->m_wCurLifeSpan, NULL, NULL);
 			}
 		}
 
@@ -18685,10 +18688,11 @@ int CGame::iCalculateAttackEffect(short sTargetH, char cTargetType, short sAttac
 				sWeaponIndex = m_pClientList[sAttackerH]->m_sItemEquipmentStatus[DEF_EQUIPPOS_RHAND];
 				if ( sWeaponIndex != -1)
 				{	m_pClientList[sAttackerH]->m_pItemList[sWeaponIndex]->m_wCurLifeSpan--;
+					SendNotifyMsg(NULL, sAttackerH, DEF_NOTIFY_CURLIFESPAN, sWeaponIndex, m_pClientList[sAttackerH]->m_pItemList[sWeaponIndex]->m_wCurLifeSpan, NULL, NULL);
 					if (m_pClientList[sAttackerH]->m_pItemList[sWeaponIndex]->m_wCurLifeSpan < 1)
 						m_pClientList[sAttackerH]->m_pItemList[sWeaponIndex]->m_wCurLifeSpan = 0;
 					// then notify the client...
-					if (m_pClientList[sAttackerH]->m_pItemList[sWeaponIndex]->m_wCurLifeSpan == 0)
+					if (m_pClientList[sAttackerH]->m_pItemList[sWeaponIndex]->m_wCurLifeSpan <= 0)
 					{	SendNotifyMsg(NULL, sAttackerH, DEF_NOTIFY_ITEMLIFESPANEND, m_pClientList[sAttackerH]->m_pItemList[sWeaponIndex]->m_cEquipPos, sWeaponIndex, NULL, NULL);
 						ReleaseItemHandler(sAttackerH, sWeaponIndex, TRUE);
 				}	}
@@ -19043,9 +19047,12 @@ int CGame::iCalculateAttackEffect(short sTargetH, char cTargetType, short sAttac
 						// Usure Shield
 						iTemp = m_pClientList[sTargetH]->m_sItemEquipmentStatus[DEF_EQUIPPOS_LHAND];
 						if ((iTemp != -1) && (m_pClientList[sTargetH]->m_pItemList[iTemp] != NULL)) 
-						{	if ((m_pClientList[sTargetH]->m_cSide != 0) && (m_pClientList[sTargetH]->m_pItemList[iTemp]->m_wCurLifeSpan > 0))	
+						{
+							if ((m_pClientList[sTargetH]->m_cSide != 0) && (m_pClientList[sTargetH]->m_pItemList[iTemp]->m_wCurLifeSpan > 0)) {
 								m_pClientList[sTargetH]->m_pItemList[iTemp]->m_wCurLifeSpan--;
-							if (m_pClientList[sTargetH]->m_pItemList[iTemp]->m_wCurLifeSpan == 0) 
+								SendNotifyMsg(NULL, sTargetH, DEF_NOTIFY_CURLIFESPAN, iTemp, m_pClientList[sTargetH]->m_pItemList[iTemp]->m_wCurLifeSpan, NULL, NULL);
+							}
+							if (m_pClientList[sTargetH]->m_pItemList[iTemp]->m_wCurLifeSpan <= 0) 
 							{	SendNotifyMsg(NULL, sTargetH, DEF_NOTIFY_ITEMLIFESPANEND, m_pClientList[sTargetH]->m_pItemList[iTemp]->m_cEquipPos, iTemp, NULL, NULL);
 								ReleaseItemHandler(sTargetH, iTemp, TRUE);
 				}	}	}	}
@@ -19056,9 +19063,12 @@ int CGame::iCalculateAttackEffect(short sTargetH, char cTargetType, short sAttac
 					// Deplete Cape durability in this case	
 					iTemp = m_pClientList[sTargetH]->m_sItemEquipmentStatus[DEF_EQUIPPOS_BACK];
 					if ((iTemp != -1) && (m_pClientList[sTargetH]->m_pItemList[iTemp] != NULL)) 
-					{	if ((m_pClientList[sTargetH]->m_cSide != 0) && (m_pClientList[sTargetH]->m_pItemList[iTemp]->m_wCurLifeSpan > 0))	
+					{
+						if ((m_pClientList[sTargetH]->m_cSide != 0) && (m_pClientList[sTargetH]->m_pItemList[iTemp]->m_wCurLifeSpan > 0)) {
 							m_pClientList[sTargetH]->m_pItemList[iTemp]->m_wCurLifeSpan--;
-						if (m_pClientList[sTargetH]->m_pItemList[iTemp]->m_wCurLifeSpan == 0) 
+							SendNotifyMsg(NULL, sTargetH, DEF_NOTIFY_CURLIFESPAN, iTemp, m_pClientList[sTargetH]->m_pItemList[iTemp]->m_wCurLifeSpan, NULL, NULL);
+						}
+						if (m_pClientList[sTargetH]->m_pItemList[iTemp]->m_wCurLifeSpan <= 0) 
 						{	SendNotifyMsg(NULL, sTargetH, DEF_NOTIFY_ITEMLIFESPANEND, m_pClientList[sTargetH]->m_pItemList[iTemp]->m_cEquipPos, iTemp, NULL, NULL);
 							ReleaseItemHandler(sTargetH, iTemp, TRUE);
 				}	}	}
@@ -19814,11 +19824,15 @@ CAE_SKIPDAMAGEMOVE2:;
 						}
 					}
 					if (m_pClientList[sAttackerH]->m_cSide != 0) {
-						if (m_pClientList[sAttackerH]->m_pItemList[sWeaponIndex]->m_wCurLifeSpan < iWepLifeOff) 
-							 m_pClientList[sAttackerH]->m_pItemList[sWeaponIndex]->m_wCurLifeSpan = 0;
-						else m_pClientList[sAttackerH]->m_pItemList[sWeaponIndex]->m_wCurLifeSpan -= iWepLifeOff;
+						if (m_pClientList[sAttackerH]->m_pItemList[sWeaponIndex]->m_wCurLifeSpan < iWepLifeOff)
+							m_pClientList[sAttackerH]->m_pItemList[sWeaponIndex]->m_wCurLifeSpan = 0;
+						else
+						{
+							m_pClientList[sAttackerH]->m_pItemList[sWeaponIndex]->m_wCurLifeSpan -= iWepLifeOff;
+							SendNotifyMsg(NULL, sAttackerH, DEF_NOTIFY_CURLIFESPAN, sWeaponIndex, m_pClientList[sAttackerH]->m_pItemList[sWeaponIndex]->m_wCurLifeSpan, NULL, NULL);
+						}
 					}
-					if (m_pClientList[sAttackerH]->m_pItemList[sWeaponIndex]->m_wCurLifeSpan == 0) {
+					if (m_pClientList[sAttackerH]->m_pItemList[sWeaponIndex]->m_wCurLifeSpan <= 0) {
 						SendNotifyMsg(NULL, sAttackerH, DEF_NOTIFY_ITEMLIFESPANEND, m_pClientList[sAttackerH]->m_pItemList[sWeaponIndex]->m_cEquipPos, sWeaponIndex, NULL, NULL);
 						ReleaseItemHandler(sAttackerH, sWeaponIndex, TRUE);
 				}	}
@@ -21330,7 +21344,8 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 
 		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 12);
 		break;
-
+	
+	case DEF_NOTIFY_CURLIFESPAN:
 	case DEF_NOTIFY_ITEMCOLORCHANGE:
 	case DEF_NOTIFY_ITEMRELEASED:
 	case DEF_NOTIFY_ITEMLIFESPANEND:
@@ -24318,6 +24333,8 @@ void CGame::bCalculateEnduranceDecrement(short sTargetH, short sAttackerH, char 
 	}
 	if ((m_pClientList[sTargetH]->m_cSide != 0) && (m_pClientList[sTargetH]->m_pItemList[iArmorType]->m_wCurLifeSpan > 0)) {
 		m_pClientList[sTargetH]->m_pItemList[iArmorType]->m_wCurLifeSpan -= iDownValue;
+		SendNotifyMsg(NULL, sTargetH, DEF_NOTIFY_CURLIFESPAN, iArmorType, m_pClientList[sTargetH]->m_pItemList[iArmorType]->m_wCurLifeSpan, NULL, NULL);
+		
 	}
 	if (m_pClientList[sTargetH]->m_pItemList[iArmorType]->m_wCurLifeSpan <= 0) {
 		m_pClientList[sTargetH]->m_pItemList[iArmorType]->m_wCurLifeSpan = 0;
