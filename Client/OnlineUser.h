@@ -17,8 +17,8 @@ public:
 	OnlineUser();
 	virtual ~OnlineUser();
 
-	char m_cName[21];
-	char m_cGuildName[22];
+	char m_cName[11];
+	char m_cGuildName[21];
 
 };
 

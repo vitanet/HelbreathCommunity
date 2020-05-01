@@ -124,13 +124,13 @@ void CGame::NotifyMsg_MagicEffectOff(char * pData) // MORLA - Aca efectua para u
 {
 	char * cp;
 	WORD * wp;
-	short  sMagicType, sMagicEffect;
+	short  sMagicType, sMagicEffect, *sp;
 	cp = (char *)(pData + DEF_INDEX2_MSGTYPE + 2);
-	wp = (WORD *)cp;
-	sMagicType = (short)*wp;
+	sp = (short *)cp;
+	sMagicType = *sp;
 	cp += 2;
-	wp = (WORD *)cp;
-	sMagicEffect = (short)*wp;
+	sp = (short *)cp;
+	sMagicEffect = *sp;
 	cp += 2;
 	switch (sMagicType) {
 	case DEF_MAGICTYPE_PROTECT:
@@ -231,20 +231,20 @@ void CGame::NotifyMsg_MagicEffectOn(char * pData)
 	char * cp;
 	DWORD * dwp;
 	WORD * wp;
-	short  sMagicType, sMagicEffect, sOwnerH;
+	short  sMagicType, sMagicEffect, sOwnerH, *sp;
 	cp = (char *)(pData + DEF_INDEX2_MSGTYPE + 2);
 
-	wp = (WORD *)cp;
-	sMagicType = (short)*wp;
+	sp = (short *)cp;
+	sMagicType = *sp;
 	cp += 2;
 
-	dwp = (DWORD *)cp;
-	sMagicEffect = (short)*dwp;
-	cp += 4;
+	sp = (short *)cp;
+	sMagicEffect = *sp;
+	cp += 2;
 
-	dwp = (DWORD *)cp;
-	sOwnerH = (short)*dwp;
-	cp += 4;
+	sp = (short *)cp;
+	sOwnerH = *sp;
+	cp += 2;
 
 	switch (sMagicType) {
 	case DEF_MAGICTYPE_PROTECT:
@@ -399,12 +399,11 @@ void CGame::NotifyMsg_MagicStudySuccess(char * pData)
 
 void CGame::NotifyMsg_MP(char * pData)
 {
-	DWORD * dwp;
-	int iPrevMP;
+	int iPrevMP, *ip;
 	char cTxt[120];
 	iPrevMP = m_iMP;
-	dwp = (DWORD *)(pData + DEF_INDEX2_MSGTYPE + 2);
-	m_iMP = (int)*dwp;
+	ip = (int *)(pData + DEF_INDEX2_MSGTYPE + 2);
+	m_iMP = *ip;
 	if (abs(m_iMP - iPrevMP) < 10) return;
 	if (m_iMP > iPrevMP)
 	{
@@ -620,7 +619,7 @@ void CGame::NotifyMsg_RatingPlayer(char * pData)
 {
 	int * ip;
 	char * cp, cName[12];
-	WORD  cValue;
+	char  cValue;
 	cp = (char *)(pData + DEF_INDEX2_MSGTYPE + 2);
 	cValue = *cp;
 	cp++;
@@ -740,20 +739,20 @@ void CGame::NotifyMsg_ShowMap(char * pData)
 void CGame::NotifyMsg_Skill(char *pData)
 {
 	WORD * wp;
-	short sSkillIndex, sValue, sStatus;
+	short sSkillIndex, sValue, sStatus, *sp;
 	char * cp;
 	char cTxt[120];
 	int i;
 
 	cp = (char *)(pData + DEF_INDEX2_MSGTYPE + 2);
-	wp = (WORD *)cp;
-	sSkillIndex = (short)*wp;
+	sp = (short *)cp;
+	sSkillIndex = *sp;
 	cp += 2;
-	wp = (WORD *)cp;
-	sValue = (short)*wp;
+	sp = (short *)cp;
+	sValue = *sp;
 	cp += 2;
-	wp = (WORD*)cp;
-	sStatus = (short)*wp;
+	sp = (short*)cp;
+	sStatus = *sp;
 	cp += 2;
 	_RemoveChatMsgListByObjectID(m_sPlayerObjectID);
 	if (m_pSkillCfgList[sSkillIndex]->m_iLevel < sValue)
@@ -839,10 +838,10 @@ void CGame::NotifyMsg_SkillUsingEnd(char * pData)
 void CGame::NotifyMsg_SP(char * pData)
 {
 	DWORD * dwp;
-	int iPrevSP;
+	int iPrevSP, *ip;
 	iPrevSP = m_iSP;
-	dwp = (DWORD *)(pData + DEF_INDEX2_MSGTYPE + 2);
-	m_iSP = (int)*dwp;
+	ip = (int *)(pData + DEF_INDEX2_MSGTYPE + 2);
+	m_iSP = *ip;
 	if (abs(m_iSP - iPrevSP) < 10) return;
 	if (m_iSP > iPrevSP)
 	{
@@ -859,10 +858,10 @@ void CGame::NotifyMsg_SP(char * pData)
 
 void CGame::NotifyMsg_TotalUsers(char * pData)
 {
-	WORD *wp;
+	int* ip;
 
-	wp = (WORD *)(pData + DEF_INDEX2_MSGTYPE + 2);
-	m_iTotalUsers = (int)*wp;
+	ip = (int *)(pData + DEF_INDEX2_MSGTYPE + 2);
+	m_iTotalUsers = *ip;
 
 	wsprintf(G_cTxt, NOTIFYMSG_TOTAL_USER1, m_iTotalUsers);
 	AddEventList(G_cTxt, 10);
@@ -7923,24 +7922,24 @@ void CGame::DlgBoxClick_OnlineUsers(int msX, int msY)
 void CGame::NotifyMsg_UserJoin(char * pData)
 {
 
-	char  * cp, cCharName[21], cGuildName[22];
+	char  * cp, cCharName[11], cGuildName[21];
 	int   i, j;
 	cp = (char *)(pData + DEF_INDEX2_MSGTYPE + 2);
 
 	ZeroMemory(cCharName, sizeof(cCharName));
-	memcpy(cCharName, cp, 21);
-	cp += 21;
+	memcpy(cCharName, cp, 10);
+	cp += 10;
 
 	ZeroMemory(cGuildName, sizeof(cGuildName));
-	memcpy(cGuildName, cp, 22);
-	cp += 22;
+	memcpy(cGuildName, cp, 20);
+	cp += 20;
 
 	// check for existing player
 	for (i = 0; i < DEF_MAXMENUITEMS; i++)
 	{
 		if (m_pOnlineUsersList[i] != NULL)
 		{
-			if (memcmp(m_pOnlineUsersList[i]->m_cName, cCharName, 21) == 0) return;
+			if (memcmp(m_pOnlineUsersList[i]->m_cName, cCharName, 10) == 0) return;
 		}
 	}
 
@@ -15200,15 +15199,12 @@ void CGame::NotifyMsg_EventFishMode(char * pData)
 
 void CGame::NotifyMsg_Exp(char * pData)
 {
-	DWORD * dwp;
 	int  * ip;
 	char * cp, cTxt[120];
-	unsigned long iPrevExp;
 
-	iPrevExp = m_iExp;
 	cp = (char *)(pData + DEF_INDEX2_MSGTYPE + 2);
-	dwp = (DWORD *)cp;
-	m_iExp = (int)*dwp;
+	ip = (int *)cp;
+	m_iExp = (unsigned long)*ip;
 	cp += 4;
 
 	ip = (int *)cp;
@@ -15317,14 +15313,13 @@ void CGame::NotifyMsg_GlobalAttackMode(char *pData)
 
 void CGame::NotifyMsg_HP(char * pData) //LifeX Fix HP Regen Bugs MP 01/01
 {
-	DWORD * dwp;
-	int iPrevHP;
+	int iPrevHP, *ip;
 	char cTxt[120];
 	int iPrevMP;
 
 	iPrevHP = m_iHP;
-	dwp = (DWORD *)(pData + DEF_INDEX2_MSGTYPE + 2);
-	m_iHP = (int)*dwp;
+	ip = (int *)(pData + DEF_INDEX2_MSGTYPE + 2);
+	m_iHP = *ip;
 
 	if (m_iHP > iPrevHP)
 	{
@@ -15932,7 +15927,7 @@ void CGame::NotifyMsg_ItemToBank(char *pData)
 
 void CGame::NotifyMsg_Killed(char * pData)
 {
-	char * cp, cAttackerName[21];
+	char * cp, cAttackerName[11];
 	m_bCommandAvailable = FALSE;
 	m_cCommand = DEF_OBJECTSTOP;
 	m_iHP = 0;
@@ -15942,8 +15937,8 @@ void CGame::NotifyMsg_Killed(char * pData)
 	ClearSkillUsingStatus();
 	ZeroMemory(cAttackerName, sizeof(cAttackerName));
 	cp = (char *)(pData + DEF_INDEX2_MSGTYPE + 2);
-	memcpy(cAttackerName, cp, 20);
-	cp += 20;
+	memcpy(cAttackerName, cp, 10);
+	cp += 10;
 
 	// Snoopy: reduced 3 lines -> 2 lines
 	AddEventList(NOTIFYMSG_KILLED1, 10);

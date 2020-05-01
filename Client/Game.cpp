@@ -21239,11 +21239,11 @@ void CGame::NotifyMsg_DismissGuildReject(char * pData)
 void CGame::NotifyMsg_DownSkillIndexSet(char *pData)
 {
  WORD * wp;
- short sSkillIndex;
+ short sSkillIndex, *sp;
  char * cp;
 	cp = (char *)(pData + DEF_INDEX2_MSGTYPE + 2);
-	wp = (WORD *)cp;
-	sSkillIndex = (short)*wp;
+	sp = (short *)cp;
+	sSkillIndex = *sp;
 	cp += 2;
 	m_iDownSkillIndex = sSkillIndex;
 	m_stDialogBoxInfo[15].bFlag = FALSE;
@@ -21251,13 +21251,13 @@ void CGame::NotifyMsg_DownSkillIndexSet(char *pData)
 
 void CGame::NotifyMsg_FishChance(char * pData)
 {
- int iFishChance;
+ int iFishChance, *ip;
  char * cp;
  WORD * wp;
 	cp = (char *)(pData	+ DEF_INDEX2_MSGTYPE + 2);
-	wp = (WORD *)cp;
-	iFishChance = (int)*wp;
-	cp += 2;
+	ip = (int *)cp;
+	iFishChance = *ip;
+	cp += 4;
 	m_stDialogBoxInfo[24].sV1 = iFishChance;
 }
 
@@ -25070,14 +25070,14 @@ void CGame::NotifyMsgHandler(char * pData)
 		break;
 	case DEF_NOTIFY_SPAWNEVENT:				// 0x0BAA
 		cp = (char *)(pData	+ DEF_INDEX2_MSGTYPE + 2);
-		m_sMonsterID = (short)(*cp);
-		cp++;
 		sp  = (short *)cp;
 		m_sEventX = *sp;
 		cp+=2;
 		sp  = (short *)cp;
 		m_sEventY = *sp;
 		cp+=2;
+		m_sMonsterID = (short)(*cp);
+		cp++;
 		m_dwMonsterEventTime = dwTime;
 		break;
 
@@ -25799,74 +25799,6 @@ NMH_LOOPBREAK2:;
 		m_bIsSpecialAbilityEnabled = TRUE;
 		break;
 
-	case DEF_NOTIFY_ENERGYSPHEREGOALIN:
-		cp = (char *)(pData	+ DEF_INDEX2_MSGTYPE + 2);
-		sp = (short *)cp;
-		sV1 = *sp;
-		cp += 2;
-		sp = (short *)cp;
-		sV2 = *sp;
-		cp += 2;
-		sp = (short *)cp;
-		sV3 = *sp;
-		cp += 2;
-		ZeroMemory(cTxt, sizeof(cTxt));
-		memcpy(cTxt, cp, 20);
-
-		if (sV2 == sV3)
-		{	PlaySound('E', 24, 0);
-			if (strcmp(cTxt, m_cPlayerName) == 0)
-			{	AddEventList(NOTIFY_MSG_HANDLER33, 10);//You pushed energy sphere to enemy's energy portal! Contribution point will be decreased by 10 points."
-				m_iContribution += sV1; // fixed, server must match...
-				m_iContributionPrice = 0;
-				if (m_iContribution < 0) m_iContribution = 0;
-			}
-			else {
-				ZeroMemory(G_cTxt, sizeof(G_cTxt));
-				if( m_bAresden == TRUE ) wsprintf(G_cTxt, NOTIFY_MSG_HANDLER34, cTxt);//"%s(Aresden) pushed energy sphere to enemy's portal!!..."
-				else if (m_bAresden == FALSE) wsprintf(G_cTxt, NOTIFY_MSG_HANDLER34_ELV, cTxt);//"%s(Elvine) pushed energy sphere to enemy's portal!!..."
-				AddEventList(G_cTxt, 10);
-			}
-		}else
-		{	PlaySound('E', 23, 0);
-			if (strcmp(cTxt, m_cPlayerName) == 0)
-			{	switch (m_sPlayerType) {
-				case 1:
-				case 2:
-				case 3:	PlaySound('C', 21, 0); break;
-				case 4:
-				case 5:
-				case 6:	PlaySound('C', 22, 0); break;
-				}
-				AddEventList(NOTIFY_MSG_HANDLER35, 10);//"Congulaturations! You brought energy sphere to energy portal and earned experience and prize gold!"
-
-				m_iContribution += 5;
-				if (m_iContribution < 0) m_iContribution = 0;
-			}else
-			{	ZeroMemory(G_cTxt, sizeof(G_cTxt));
-				if (sV3 == 1)
-				{	wsprintf(G_cTxt, NOTIFY_MSG_HANDLER36, cTxt);//"Elvine %s : Goal in!"
-					AddEventList(G_cTxt, 10);
-				}else if (sV3 == 2)
-				{	wsprintf(G_cTxt, NOTIFY_MSG_HANDLER37, cTxt);//"Aresden %s : Goal in!"
-					AddEventList(G_cTxt, 10);
-		}	}	}
-		break;
-
-	case DEF_NOTIFY_ENERGYSPHERECREATED:
-		cp = (char *)(pData	+ DEF_INDEX2_MSGTYPE + 2);
-		sp = (short *)cp;
-		sV1 = *sp;
-		cp += 2;
-		sp = (short *)cp;
-		sV2 = *sp;
-		cp += 2;
-		ZeroMemory(G_cTxt, sizeof(G_cTxt));
-		wsprintf(G_cTxt, NOTIFY_MSG_HANDLER38, sV1, sV2);//"Energy sphere was dropped in (%d, %d) of middleland!"
-		AddEventList(G_cTxt, 10);
-		AddEventList(NOTIFY_MSG_HANDLER39, 10);//"A player who pushed energy sphere to the energy portal of his city will earn many Exp and Contribution."
-		break;
-
 	case DEF_NOTIFY_QUERY_JOINPARTY:
 		EnableDialogBox(32, NULL, NULL, NULL);
 		m_stDialogBoxInfo[32].cMode = 1;
@@ -26128,8 +26060,8 @@ NMH_LOOPBREAK2:;
 		break;
 
 	case DEF_NOTIFY_SUPERATTACKLEFT:
-		sp = (short *)(pData + DEF_INDEX2_MSGTYPE + 2);
-		m_iSuperAttackLeft = (int)*sp;
+		ip = (int *)(pData + DEF_INDEX2_MSGTYPE + 2);
+		m_iSuperAttackLeft = *ip;
 		break;
 
 	case DEF_NOTIFY_SAFEATTACKMODE:
@@ -26553,7 +26485,7 @@ void CGame::NotifyMsg_DGKill(char *pData) // MORLA 2.2 - Actualiza la info del D
 	cp += 4;
 
 	strcpy(cStr, cp);
-	cp += 12;
+	cp += 10;
 
 	switch (iV1)
 	{
@@ -28950,7 +28882,7 @@ void CGame::CommandProcessor(short msX, short msY, short indexX, short indexY, c
 			}
 			return;
 		}
-		if (cLB != 0) 			// v2.05 01-11-30
+		else //if (cLB != 0) 			// v2.05 01-11-30
 		{
 			if ((m_pMapData->bIsTeleportLoc(m_sPlayerX, m_sPlayerY) == TRUE) && (m_cCommandCount == 0)) goto CP_SKIPMOUSEBUTTONSTATUS;
 
@@ -28999,7 +28931,7 @@ void CGame::CommandProcessor(short msX, short msY, short indexX, short indexY, c
 			if ((m_cCommand == DEF_OBJECTMOVE) || (m_cCommand == DEF_OBJECTRUN)) goto MOTION_COMMAND_PROCESS;
 			return;
 		}
-		if (cLB == 0) 
+		else //if (cLB == 0) 
 		{
 			switch (m_stMCursor.cSelectedObjectType) 
 			{
