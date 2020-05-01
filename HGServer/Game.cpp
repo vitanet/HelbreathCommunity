@@ -20685,7 +20685,6 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 		break;
 
 	case DEF_NOTIFY_BUILDITEMSUCCESS:
-	case DEF_NOTIFY_BUILDITEMFAIL:
 		if (sV1 >= 0) {
 			sp = (short*)cp;
 			*sp = (short)sV1;
@@ -20895,11 +20894,11 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 		break;
 
 	case DEF_NOTIFY_SUPERATTACKLEFT:
-		sp = (short*)cp;
-		*sp = m_pClientList[iToH]->m_iSuperAttackLeft;
-		cp += 2;
+		ip = (int*)cp;
+		*ip = m_pClientList[iToH]->m_iSuperAttackLeft;
+		cp += 4;
 
-		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 8);
+		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 10);
 		break;
 
 	case DEF_NOTIFY_SAFEATTACKMODE:
@@ -21016,8 +21015,30 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 8 + (m_pClientList[iToH]->totalItemRepair * 3));
 		break;
 
-	case DEF_NOTIFY_HELP:
 	case DEF_NOTIFY_QUESTREWARD:
+		sp = (short*)cp;
+		*sp = (short)sV1;
+		cp += 2;
+
+		sp = (short*)cp;
+		*sp = (short)sV2;
+		cp += 2;
+
+		ip = (int*)cp;
+		*ip = (int)sV3;
+		cp += 4;
+
+		memcpy(cp, pString, 20);
+		cp += 20;
+
+		ip = (int*)cp;
+		*ip = (int)sV4;
+		cp += 4;
+
+		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 38);
+		break;
+
+	case DEF_NOTIFY_HELP:
 	case DEF_NOTIFY_REPAIRITEMPRICE:
 	case DEF_NOTIFY_SELLITEMPRICE:
 		dwp = (DWORD*)cp;
@@ -21043,11 +21064,11 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 		break;
 
 	case DEF_NOTIFY_TOTALUSERS:
-		wp = (WORD*)cp;
-		*wp = (WORD)m_iTotalGameServerClients;
-		cp += 2;
+		ip = (int*)cp;
+		*ip = m_iTotalGameServerClients;
+		cp += 4;
 
-		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 8);
+		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 10);
 		break;
 
 	case DEF_NOTIFY_SERVERCHANGE:
@@ -21111,11 +21132,11 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 		break;
 
 	case DEF_NOTIFY_USERJOIN:
-		memcpy(cp, pString, 21);
-		cp += 21;
-		memcpy(cp, pString2, 22);
-		cp += 22;
-		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 48);
+		memcpy(cp, pString, 10);
+		cp += 10;
+		memcpy(cp, pString2, 20);
+		cp += 20;
+		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 36);
 		break;
 
 	case DEF_NOTIFY_PKCAPTURED:
@@ -21172,8 +21193,8 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 	case DEF_NOTIFY_TRAVELERLIMITEDLEVEL:
 	case DEF_NOTIFY_LIMITEDLEVEL:
 	case DEF_NOTIFY_EXP:
-		dwp = (DWORD*)cp;
-		*dwp = (DWORD)m_pClientList[iToH]->m_iExp;
+		ip = (int*)cp;
+		*ip = (unsigned int)m_pClientList[iToH]->m_iExp;
 		cp += 4;
 
 		ip = (int*)cp;
@@ -21184,8 +21205,8 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 		break;
 
 	case DEF_NOTIFY_HP:
-		dwp = (DWORD*)cp;
-		*dwp = (DWORD)m_pClientList[iToH]->m_iHP;
+		ip = (int*)cp;
+		*ip = m_pClientList[iToH]->m_iHP;
 		cp += 4;
 
 		RefreshPartyStatus(iToH);
@@ -21194,8 +21215,8 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 		break;
 
 	case DEF_NOTIFY_MP:
-		dwp = (DWORD*)cp;
-		*dwp = (DWORD)m_pClientList[iToH]->m_iMP;
+		ip = (int*)cp;
+		*ip = m_pClientList[iToH]->m_iMP;
 		cp += 4;
 
 		RefreshPartyStatus(iToH);
@@ -21204,8 +21225,8 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 		break;
 
 	case DEF_NOTIFY_SP:
-		dwp = (DWORD*)cp;
-		*dwp = (DWORD)m_pClientList[iToH]->m_iSP;
+		ip = (int*)cp;
+		*ip = m_pClientList[iToH]->m_iSP;
 		cp += 4;
 
 		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 10);
@@ -21229,6 +21250,7 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 		break;
 
 	/* Centuu: msgs agrupados */
+	case DEF_NOTIFY_BUILDITEMFAIL:
 	case DEF_NOTIFY_HELDENIANSTART:
 	case DEF_NOTIFY_ANGEL_RECEIVED:
 	case DEF_NOTIFY_DEATHMATCHSTART: // MORLA 2.3 - DEATHMACH ON
@@ -21276,39 +21298,55 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 	case DEF_NOTIFY_ELVINEWINCTF:
 	case DEF_NOTIFY_ARESDENWINCTF:
 	case DEF_NOTIFY_TIECTF:
+	case DEF_NOTIFY_METEORSTRIKEHIT:
+	case DEF_NOTIFY_SPECIALABILITYENABLED:
+	case DEF_NOTIFY_QUESTCOMPLETED:
+	case DEF_NOTIFY_QUESTABORTED:
+	case DEF_NOTIFY_SLATE_STATUS:
+	case DEF_NOTIFY_FISHSUCCESS:
+	case DEF_NOTIFY_FISHFAIL:
+	case DEF_NOTIFY_SLATE_CREATESUCCESS:
+	case DEF_NOTIFY_ITEMSOLD:
+	case DEF_NOTIFY_APOCGATECLOSE:
 		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 6);
+		break;
+
+	case DEF_NOTIFY_ITEMUPGRADEFAIL:
+	case DEF_NOTIFY_CANNOTCONSTRUCT:
+	case DEF_NOTIFY_OBSERVERMODE:
+	case DEF_NOTIFY_DOWNSKILLINDEXSET:
+	case DEF_NOTIFY_RESPONSE_CREATENEWPARTY:
+		sp = (short*)cp;
+		*sp = (short)sV1;
+		cp += 2;
+
+		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 8);
+		break;
+
+	case DEF_NOTIFY_METEORSTRIKECOMING:
+	case DEF_NOTIFY_FORCEDISCONN:
+	case DEF_NOTIFY_FISHCANCELED:
+	case DEF_NOTIFY_CANNOTRATING:
+	case DEF_NOTIFY_SKILLUSINGEND:
+		wp = (WORD*)cp;
+		*wp = (WORD)sV1;
+		cp += 2;
+
+		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 8);
 		break;
 
 	case DEF_MAX_STATS: //LifeX Fix Bytes Accuracy 01/01
 	case DEF_NOTIFY_QUESTCOUNTER:
-	case DEF_NOTIFY_ITEMUPGRADEFAIL:
-	case DEF_NOTIFY_CANNOTCONSTRUCT:
-	case DEF_NOTIFY_METEORSTRIKECOMING:
-	case DEF_NOTIFY_METEORSTRIKEHIT:
 	case DEF_NOTIFY_HELPFAILED:
-	case DEF_NOTIFY_SPECIALABILITYENABLED:
-	case DEF_NOTIFY_FORCEDISCONN:
-	case DEF_NOTIFY_OBSERVERMODE:
-	case DEF_NOTIFY_QUESTCOMPLETED:
-	case DEF_NOTIFY_QUESTABORTED:
 	case DEF_NOTIFY_ENEMYKILLS:
-	case DEF_NOTIFY_DOWNSKILLINDEXSET:
-	case DEF_NOTIFY_RESPONSE_CREATENEWPARTY:
 	case DEF_NOTIFY_CRAFTING_FAIL:	//reversed by Snoopy: 0x0BF1:
 	case DEF_NOTIFY_ANGEL_FAILED:
 	case DEF_NOTIFY_FIGHTZONERESERVE:
 	case DEF_NOTIFY_FORCERECALLTIME:
 	case DEF_NOTIFY_HELDENIANVICTORY:
 	case DEF_NOTIFY_MONSTERCOUNT:
-	case DEF_NOTIFY_SLATE_STATUS:
-	case DEF_NOTIFY_FISHCANCELED:
-	case DEF_NOTIFY_FISHSUCCESS:
-	case DEF_NOTIFY_FISHFAIL:
 	case DEF_NOTIFY_DEBUGMSG:
 	case DEF_NOTIFY_FISHCHANCE:
-	case DEF_NOTIFY_CANNOTRATING:
-	case DEF_NOTIFY_SKILLUSINGEND:
-	case DEF_NOTIFY_SLATE_CREATESUCCESS:
 		ip = (int*)cp;
 		*ip = (int)sV1;
 		cp += 4;
@@ -21330,16 +21368,16 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 		break;
 
 	case DEF_NOTIFY_SKILL:
-		wp = (WORD*)cp;
-		*wp = (WORD)sV1;
+		sp = (short*)cp;
+		*sp = (short)sV1;
 		cp += 2;
 
-		wp = (WORD*)cp;
-		*wp = (WORD)sV2;
+		sp = (short*)cp;
+		*sp = (short)sV2;
 		cp += 2;
 
-		wp = (WORD*)cp;
-		*wp = (WORD)sV3;
+		sp = (short*)cp;
+		*sp = (short)sV3;
 		cp += 2;
 
 		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 12);
@@ -21389,12 +21427,33 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 18);
 		break;
 
+	case DEF_NOTIFY_ITEMREPAIRED:
+		dwp = (DWORD*)cp;
+		*dwp = (DWORD)sV1;
+		cp += 4;
+
+		dwp = (DWORD*)cp;
+		*dwp = (DWORD)sV2;
+		cp += 4;
+
+		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 14);
+		break;
+
+	case DEF_NOTIFY_SHOWMAP:
+		wp = (WORD*)cp;
+		*wp = (WORD)sV1;
+		cp += 2;
+
+		wp = (WORD*)cp;
+		*wp = (WORD)sV2;
+		cp += 2;
+
+		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 10);
+		break;
+
 	case DEF_NOTIFY_GIZONITEMUPGRADELEFT:
 	case DEF_SEND_NPCHP: //50Cent - HP Ba
 	case DEF_NOTIFY_ENERGYSPHERECREATED:
-	case DEF_NOTIFY_ITEMSOLD:
-	case DEF_NOTIFY_ITEMREPAIRED:
-	case DEF_NOTIFY_SHOWMAP:
 		ip = (int*)cp;
 		*ip = (int)sV1;
 		cp += 4;
@@ -21422,18 +21481,18 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 		break;
 
 	case DEF_NOTIFY_SPAWNEVENT:
-		ip = (int*)cp;
-		*ip = (int)sV1;
-		cp += 4;
+		sp = (short*)cp;
+		*sp = (short)sV1;
+		cp += 2;
 
-		ip = (int*)cp;
-		*ip = (int)sV2;
-		cp += 4;
+		sp = (short*)cp;
+		*sp = (short)sV2;
+		cp += 2;
 
 		*cp = (char)sV3;   // Mob's type
 		cp++;
 
-		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 15);
+		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 11);
 		break;
 
 	case DEF_NOTIFY_QUERY_DISMISSGUILDREQPERMISSION:
@@ -21456,21 +21515,22 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 
 	case DEF_NOTIFY_MAGICEFFECTOFF:
 	case DEF_NOTIFY_MAGICEFFECTON:
-		wp = (WORD *)cp;
-		*wp = (WORD)sV1;
+		sp = (short *)cp;
+		*sp = (short)sV1;
 		cp += 2;
 
-		dwp = (DWORD *)cp;
-		*dwp = (DWORD)sV2;
-		cp += 4;
+		sp = (short*)cp;
+		*sp = (short)sV2;
+		cp += 2;
 
-		dwp = (DWORD *)cp;
-		*dwp = (DWORD)sV3;
-		cp += 4;
+		sp = (short*)cp;
+		*sp = (short)sV3;
+		cp += 2;
 
-		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 16);
+		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 12);
 		break;
 
+	case DEF_NOTIFY_CONSTRUCTIONPOINT:
 	// centu - fixed special ability bug
 	case DEF_NOTIFY_SPECIALABILITYSTATUS:
 		sp = (short*)cp;
@@ -21482,39 +21542,43 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 		cp += 2;
 
 		sp = (short*)cp;
-		*sp = (short)sV2;
+		*sp = (short)sV3;
 		cp += 2;
 
 		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 12);
 		break;
 
-	case DEF_NOTIFY_CONSTRUCTIONPOINT:
 	case DEF_NOTIFY_DAMAGEMOVE:
-		ip = (int*)cp;
-		*ip = (int)sV1;
-		cp += 4;
+		sp = (short*)cp;
+		*sp = (short)sV1;
+		cp += 2;
 
-		ip = (int*)cp;
-		*ip = (int)sV2;
-		cp += 4;
+		sp = (short*)cp;
+		*sp = (short)sV2;
+		cp += 2;
 
-		ip = (int*)cp;
-		*ip = (int)sV3;
-		cp += 4;
-
-		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 18);
+		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 10);
 		break;
 
 	case DEF_NOTIFY_PLAYERSHUTUP:
-	case DEF_NOTIFY_LOCKEDMAP:
-		ip = (int*)cp;
-		*ip = (int)sV1;
-		cp += 4;
+		wp = (WORD*)cp;
+		*wp = (WORD)sV1;
+		cp += 2;
 
 		memcpy(cp, pString, 10);
 		cp += 10;
 
-		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 20);
+		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 18);
+		break;
+	case DEF_NOTIFY_LOCKEDMAP:
+		sp = (short*)cp;
+		*sp = (short)sV1;
+		cp += 2;
+
+		memcpy(cp, pString, 10);
+		cp += 10;
+
+		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 18);
 		break;
 
 	case DEF_NOTIFY_ITEMATTRIBUTECHANGE:
@@ -21570,14 +21634,50 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 28);
 		break;
 
-	case DEF_NOTIFY_APOCGATECLOSE:
 	case DEF_NOTIFY_APOCGATEOPEN:
-	case DEF_NOTIFY_REQGUILDNAMEANSWER:
+		ip = (int*)cp;
+		*ip = (int)sV1;
+		cp += 4;
+
+		ip = (int*)cp;
+		*ip = (int)sV2;
+		cp += 4;
+
+		memcpy(cp, pString, 10);
+		cp += 10;
+
+		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 24);
+		break;
 	case DEF_NOTIFY_CANNOTREPAIRITEM:
 	case DEF_NOTIFY_CANNOTSELLITEM:
+		wp = (WORD*)cp;
+		*wp = (WORD)sV1;
+		cp += 2;
+
+		wp = (WORD*)cp;
+		*wp = (WORD)sV2;
+		cp += 2;
+
+		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 10);
+		break;
 	case DEF_NOTIFY_CANNOTGIVEITEM:
 	case DEF_NOTIFY_GIVEITEMFIN_COUNTCHANGED:
 	case DEF_NOTIFY_GIVEITEMFIN_ERASEITEM:
+		wp = (WORD*)cp;
+		*wp = (WORD)sV1;
+		cp += 2;
+
+		ip = (int*)cp;
+		*ip = (int)sV2;
+		cp += 4;
+
+		memcpy(cp, pString, 20);
+		cp += 20;
+
+		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 32);
+		break;
+
+	case DEF_NOTIFY_REQGUILDNAMEANSWER: 
 		ip = (int*)cp;
 		*ip = (int)sV1;
 		cp += 4;
@@ -21637,8 +21737,14 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 		break;
 
 	case DEF_COMMONTYPE_JOINGUILDREJECT:
-	case DEF_COMMONTYPE_DISMISSGUILDAPPROVE:
 	case DEF_COMMONTYPE_DISMISSGUILDREJECT:
+		if (m_pClientList[iFromH] != NULL)
+			memcpy(cp, m_pClientList[iFromH]->m_cGuildName, 20);
+		else memcpy(cp, "?", 1);
+		cp += 20;
+		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 26);
+		break;
+	case DEF_COMMONTYPE_DISMISSGUILDAPPROVE:
 		if (m_pClientList[iFromH] != NULL)
 			memcpy(cp, m_pClientList[iFromH]->m_cGuildName, 20);
 		else memcpy(cp, "?", 1);
