@@ -647,7 +647,7 @@ void CGame::LocalEndHeldenianMode(DWORD dwHeldenianGUID, int iWinner)
 				{
 					if (m_pNpcList[n]->m_bIsSummoned == TRUE)
 					{
-						RemoveEventNpc(n);
+						NpcKilledHandler(NULL, NULL, n, 0);//RemoveEventNpc(n);
 					}
 					else
 					{
@@ -1273,7 +1273,7 @@ void CGame::LocalStartHeldenianMode(short sV1, short sV2, DWORD dwHeldenianGUID)
 				{
 					if (m_pNpcList[i]->m_bIsSummoned == TRUE)
 					{
-						RemoveEventNpc(i);
+						NpcKilledHandler(NULL, NULL, i, 0); //RemoveEventNpc(i);
 					}
 					else
 					{	// Remove most mobs, and other Mobs become neutral
@@ -1281,7 +1281,7 @@ void CGame::LocalStartHeldenianMode(short sV1, short sV2, DWORD dwHeldenianGUID)
 						if (iDice(1, 10) != 5)
 						{
 							m_pNpcList[i]->m_bIsUnsummoned = TRUE;
-							RemoveEventNpc(i);
+							NpcKilledHandler(NULL, NULL, i, 0); //RemoveEventNpc(i);
 						}
 						else m_pNpcList[i]->m_cSide = 0;
 					}
@@ -1434,7 +1434,8 @@ void CGame::LocalStartHeldenianMode(short sV1, short sV2, DWORD dwHeldenianGUID)
 	}
 	m_bIsHeldenianMode = TRUE;
 	m_dwHeldenianFinishTime = timeGetTime() + m_dwHeldenianEndTime;  // war will end   in 1h45 
-	m_dwHeldenianWarStartTime = timeGetTime() + m_dwHeldenianWarTime;  // war will start in 0h15
+	// centu - changed from 15 to 5
+	m_dwHeldenianWarStartTime = timeGetTime() + m_dwHeldenianWarTime;  // war will start in 0h05
 	wsprintf(G_cTxt, "(!) Heldenian mode ON. (type %d, last winner:%d)", m_cHeldenianType, m_sLastHeldenianWinner);
 	PutLogList(G_cTxt);
 	PutLogList(" ");
@@ -1852,8 +1853,8 @@ void CGame::HeldenianVictoryNow(int iSide)
 		PutLogList("Heldenian victory before allowed time, Draw.");
 		break;
 	}
-
-	m_dwHeldenianFinishTime = timeGetTime() + 5 * 60 * 1000;  // war will end in 5 minutes
+	// centu - changed from 5 to 1
+	m_dwHeldenianFinishTime = timeGetTime() + 1 * 60 * 1000;  // war will end in 1 minute
 	int m;
 	int j, n;
 	for (m = 0; m < DEF_MAXMAPS; m++)

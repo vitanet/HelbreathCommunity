@@ -15,18 +15,6 @@
 #define DEF_NOTIFY_ANGEL_FAILED					0x0BF4 // Failed receiving an Angel pandent
 #define DEF_NOTIFY_ANGEL_RECEIVED				0x0BF5 // "You have received the Tutelary Angel"
 
-//50Cent - Capture The Flag
-#define DEF_NOTIFY_CAPTURETHEFLAGSTART            0x1F19
-#define MSGID_REQUEST_CHECKFLAG                  0x1F20
-#define DEF_NOTIFY_ARESDENCAPTUREDELVINEFLAG      0x1F21
-#define DEF_NOTIFY_ELVINECAPTUREDARESDENFLAG      0x1F22
-#define DEF_NOTIFY_ELVINEFLAGBACKTOCH            0x1F23
-#define DEF_NOTIFY_ARESDENFLAGBACKTOCH            0x1F24
-#define DEF_NOTIFY_ELVINEWINSROUND               0x1F25
-#define DEF_NOTIFY_ARESDENWINSROUND               0x1F26
-#define DEF_NOTIFY_ELVINEWINCTF                  0x1F27
-#define DEF_NOTIFY_ARESDENWINCTF               0x1F28
-#define DEF_NOTIFY_TIECTF                     0x1F29
 
 
 //News Addons - ZeroEoyPnk

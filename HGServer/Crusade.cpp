@@ -1268,7 +1268,7 @@ void CGame::LocalEndCrusadeMode(int iWinnerSide)
 	m_bIsCrusadeMode = FALSE;
 	PutLogList("(!)Crusade Mode OFF.");
 
-	for (n = 0; n < DEF_MAXNPCS; n++)
+	for (n = 0; n < DEF_MAXNPCS; n++) {
 		if (m_pNpcList[n] != NULL) {
 			switch (m_pNpcList[n]->m_sType) {
 			case 36:
@@ -1284,10 +1284,11 @@ void CGame::LocalEndCrusadeMode(int iWinnerSide)
 			case 46:
 			case 47:
 			case 51:
-				RemoveEventNpc(n);
+				NpcKilledHandler(NULL, NULL, n, 0);//RemoveEventNpc(n);
 				break;
 			}
 		}
+	}
 
 	_CreateCrusadeGUID(m_dwCrusadeGUID, iWinnerSide);
 	m_iCrusadeWinnerSide = iWinnerSide;

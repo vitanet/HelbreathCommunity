@@ -226,7 +226,7 @@ CGame::CGame(HWND hWnd)
 	///////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////
-	m_dwHeldenianWarTime	= 15*60*1000;  // 15 minutes before effective War start
+	m_dwHeldenianWarTime	= 5*60*1000;  // 5 minutes before effective War start
 	m_dwHeldenianEndTime	= 105*60*1000; // 90 minutes effective battle
 	m_bNpcItemConfig = FALSE;
 	m_iNotifyCleanMap = TRUE;
@@ -701,13 +701,6 @@ BOOL CGame::bInit()
 
 	m_dwCleanTime = dwTime;
 
-	//50Cent - Capture The Flag
-	m_sFlagCountWin = 0;
-	m_bIsCTFMode = false;
-	m_bIsElvineFlagCaptured = false;
-	m_bIsAresdenFlagCaptured = false;
-	m_iFlagCarrierIndex = -1;
-
 	return TRUE;
 }
 
@@ -971,7 +964,6 @@ int CGame::iClientMotion_Move_Handler(int iClientH, short sX, short sY, char cDi
 	if (m_pClientList[iClientH]->m_bIsKilled == TRUE) return 0;
 	if (m_pClientList[iClientH]->m_bIsInitComplete == FALSE) return 0;
 	if ((sX != m_pClientList[iClientH]->m_sX) && (sY != m_pClientList[iClientH]->m_sY)) return 2;
-
 	
 	dwTime = timeGetTime();
 	m_pClientList[iClientH]->m_dwLastActionTime = dwTime;
@@ -1054,6 +1046,22 @@ int CGame::iClientMotion_Move_Handler(int iClientH, short sX, short sY, char cDi
 	pTopItem = 0;
 	bRet = m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->bGetMoveable(dX, dY, &sDOtype, &pTopItem);
 	if (m_pClientList[iClientH]->m_cMagicEffectStatus[DEF_MAGICTYPE_HOLDOBJECT] != 0) bRet = FALSE;
+
+	// centu - capture the flag
+	/*int iDestX, iDestY;
+	char cDestMapName[11], cDestDir;
+	if (m_bIsCTFEvent && (m_pClientList[iClientH]->m_iStatus & 0x80000) != 0) {
+		ZeroMemory(cDestMapName, sizeof(cDestMapName));
+		if (m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->bSearchTeleportDest(dX, dY, cDestMapName, &iDestX, &iDestY, &cDestDir) &&
+			(memcmp(cDestMapName, "elvine", 6) != 0 &&
+				memcmp(cDestMapName, "aresden", 7) != 0 &&
+				memcmp(cDestMapName, "2ndmiddle", 9) != 0 &&
+				memcmp(cDestMapName, "middleland", 10) != 0)) {
+			bRet = FALSE;
+			SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_EVENT, 0, 10, NULL, NULL);
+		}
+	}*/
+
 	if ((bRet == TRUE) && (bIsBlocked == FALSE)) {
 		if (m_pClientList[iClientH]->m_iQuest != NULL) _bCheckIsQuestCompleted(iClientH);
 		m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->ClearOwner(1, iClientH, DEF_OWNERTYPE_PLAYER, m_pClientList[iClientH]->m_sX, m_pClientList[iClientH]->m_sY);
@@ -1061,12 +1069,111 @@ int CGame::iClientMotion_Move_Handler(int iClientH, short sX, short sY, char cDi
 		m_pClientList[iClientH]->m_sY   = dY;
 		m_pClientList[iClientH]->m_cDir = cDir;
 		m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->SetOwner(iClientH, DEF_OWNERTYPE_PLAYER, dX, dY);
-		if (sDOtype == DEF_DYNAMICOBJECT_SPIKE) {
-			if ((m_pClientList[iClientH]->m_sAppr2 & 0xF000) != 0) {
-				iDamage = iDice(2,4);
+		
+		// centu - capture the flag
+		/*if (m_bIsCTFEvent && (m_pClientList[iClientH]->m_iStatus & 0x80000) != 0) {
+			switch (m_pClientList[iClientH]->m_cSide) {
+			case 1:
+				if (m_pClientList[iClientH]->m_cMapIndex == m_iAresdenMapIndex && dX == 151 && dY == 128) {
+					m_pClientList[iClientH]->m_iStatus ^= 0x80000;
+					SendEventToNearClient_TypeA(iClientH, DEF_OWNERTYPE_PLAYER, MSGID_EVENT_MOTION, DEF_OBJECTNULLACTION, NULL, NULL, NULL);
+
+					m_iCTFEventFlag[1] = iAddDynamicObjectList(NULL, NULL, DEF_DYNAMICOBJECT_ELVINEFLAG2, m_iElvineMapIndex, 151, 132, NULL, NULL);
+					m_cCFTEventCount[0]++;
+					UpdateEventStatus();
+
+					SetIceFlag(iClientH, DEF_OWNERTYPE_PLAYER, FALSE);
+
+					m_pClientList[iClientH]->m_iEnemyKillCount += 100;
+					SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_ENEMYKILLS, m_pClientList[iClientH]->m_iEnemyKillCount, NULL, NULL, NULL);
+
+					m_iCTFEventFlagHolder[0] = -1;
+
+					for (int i = 1; i < DEF_MAXCLIENTS; i++)
+						if (m_pClientList[i] != NULL && m_pClientList[i]->m_cSide != 0) SendNotifyMsg(NULL, i, DEF_NOTIFY_EVENT, 0, 6 + m_pClientList[iClientH]->m_cSide - 1, NULL, NULL);
+				}
+				break;
+			case 2:
+				if (m_pClientList[iClientH]->m_cMapIndex == m_iElvineMapIndex && dX == 151 && dY == 132) {
+					m_pClientList[iClientH]->m_iStatus ^= 0x80000;
+					SendEventToNearClient_TypeA(iClientH, DEF_OWNERTYPE_PLAYER, MSGID_EVENT_MOTION, DEF_OBJECTNULLACTION, NULL, NULL, NULL);
+
+					m_iCTFEventFlag[0] = iAddDynamicObjectList(NULL, NULL, DEF_DYNAMICOBJECT_ARESDENFLAG2, m_iAresdenMapIndex, 151, 128, NULL, NULL);
+					m_cCFTEventCount[1]++;
+					UpdateEventStatus();
+
+					SetIceFlag(iClientH, DEF_OWNERTYPE_PLAYER, FALSE);
+
+					m_pClientList[iClientH]->m_iEnemyKillCount += 100;
+					SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_ENEMYKILLS, m_pClientList[iClientH]->m_iEnemyKillCount, NULL, NULL, NULL);
+
+					m_iCTFEventFlagHolder[1] = -1;
+
+					for (int i = 1; i < DEF_MAXCLIENTS; i++)
+						if (m_pClientList[i] != NULL && m_pClientList[i]->m_cSide != 0) SendNotifyMsg(NULL, i, DEF_NOTIFY_EVENT, 0, 6 + m_pClientList[iClientH]->m_cSide - 1, NULL, NULL);
+				}
+				break;
+			}
+		}*/
+		pTile = (class CTile*)(m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_pTile + dX + dY * m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_sSizeY);
+		short sTemp;
+		switch (sDOtype) {
+		case DEF_DYNAMICOBJECT_SPIKE:
+			if (!(m_pClientList[iClientH]->m_bIsNeutral == TRUE && (m_pClientList[iClientH]->m_sAppr2 & 0xF000) == 0)) {
+				iDamage = iDice(2, 4);
 				if (m_pClientList[iClientH]->m_iAdminUserLevel == 0)
 					m_pClientList[iClientH]->m_iHP -= iDamage;
 			}
+			break;
+		/*case DEF_DYNAMICOBJECT_MAGICTRAP:
+			iTemp = pTile->m_wDynamicObjectID;
+			if (m_pClientList[m_pDynamicObjectList[iTemp]->m_sOwner] != NULL && m_pClientList[m_pDynamicObjectList[iTemp]->m_sOwner]->m_cSide != m_pClientList[iClientH]->m_cSide) {
+				if (m_pDynamicObjectList[iTemp]->m_iV1 != NULL) PlayerMagicHandler(m_pDynamicObjectList[iTemp]->m_sOwner, dX, dY, m_pDynamicObjectList[iTemp]->m_iV1 - 1, 0, 0);
+				if (m_pDynamicObjectList[iTemp]->m_iV2 != NULL) PlayerMagicHandler(m_pDynamicObjectList[iTemp]->m_sOwner, dX, dY, m_pDynamicObjectList[iTemp]->m_iV2 - 1, 0, 0);
+				if (m_pDynamicObjectList[iTemp]->m_iV3 != NULL) PlayerMagicHandler(m_pDynamicObjectList[iTemp]->m_sOwner, dX, dY, m_pDynamicObjectList[iTemp]->m_iV3 - 1, 0, 0);
+
+				SendEventToNearClient_TypeB(MSGID_DYNAMICOBJECT, DEF_MSGTYPE_REJECT, m_pDynamicObjectList[iTemp]->m_cMapIndex, m_pDynamicObjectList[iTemp]->m_sX, m_pDynamicObjectList[iTemp]->m_sY, m_pDynamicObjectList[iTemp]->m_sType, iTemp, NULL);
+
+				m_pMapList[m_pDynamicObjectList[iTemp]->m_cMapIndex]->SetDynamicObject(NULL, NULL, m_pDynamicObjectList[iTemp]->m_sX, m_pDynamicObjectList[iTemp]->m_sY, dwTime);
+
+				delete m_pDynamicObjectList[iTemp];
+				m_pDynamicObjectList[iTemp] = NULL;
+			}
+			break;
+		case DEF_DYNAMICOBJECT_ARESDENFLAG2:
+		case DEF_DYNAMICOBJECT_ELVINEFLAG2:
+			if (m_bIsCTFEvent && ((m_pClientList[iClientH]->m_cSide == 1 && sDOtype == DEF_DYNAMICOBJECT_ELVINEFLAG2) || (m_pClientList[iClientH]->m_cSide == 2 && sDOtype == DEF_DYNAMICOBJECT_ARESDENFLAG2))) {
+				iTemp = pTile->m_wDynamicObjectID;
+
+				SendEventToNearClient_TypeB(MSGID_DYNAMICOBJECT, DEF_MSGTYPE_REJECT, m_pDynamicObjectList[iTemp]->m_cMapIndex, m_pDynamicObjectList[iTemp]->m_sX, m_pDynamicObjectList[iTemp]->m_sY, m_pDynamicObjectList[iTemp]->m_sType, iTemp, NULL, (short)0);
+
+				m_pMapList[m_pDynamicObjectList[iTemp]->m_cMapIndex]->SetDynamicObject(NULL, NULL, m_pDynamicObjectList[iTemp]->m_sX, m_pDynamicObjectList[iTemp]->m_sY, dwTime);
+
+				delete m_pDynamicObjectList[iTemp];
+				m_pDynamicObjectList[iTemp] = NULL;
+
+				m_iCTFEventFlagHolder[m_pClientList[iClientH]->m_cSide - 1] = iClientH;
+				m_pClientList[iClientH]->m_dwCTFHolderTime = dwTime;
+
+				m_pClientList[iClientH]->m_iStatus |= 0x80000;
+
+				SetIceFlag(iClientH, DEF_OWNERTYPE_PLAYER, TRUE);
+
+				if (m_pClientList[iClientH]->m_bIsSpecialAbilityEnabled == TRUE) {
+					m_pClientList[iClientH]->m_bIsSpecialAbilityEnabled = FALSE;
+					m_pClientList[iClientH]->m_iSpecialAbilityTime = DEF_SPECABLTYTIMESEC;
+					sTemp = m_pClientList[iClientH]->m_sAppr4;
+					sTemp = sTemp & 0xFF0F;
+					m_pClientList[iClientH]->m_sAppr4 = sTemp;
+				}
+
+				SendEventToNearClient_TypeA(iClientH, DEF_OWNERTYPE_PLAYER, MSGID_EVENT_MOTION, DEF_OBJECTNULLACTION, NULL, NULL, NULL);
+
+				for (int i = 1; i < DEF_MAXCLIENTS; i++)
+					if (m_pClientList[i] != NULL && m_pClientList[i]->m_cSide != 0) SendNotifyMsg(NULL, i, DEF_NOTIFY_EVENT, 0, 4 + m_pClientList[iClientH]->m_cSide - 1, NULL, NULL);
+
+			}
+			break;*/
 		}
 		if (m_pClientList[iClientH]->m_iHP <= 0) m_pClientList[iClientH]->m_iHP = 0;
 		dwp  = (DWORD *)(cData + DEF_INDEX4_MSGID);
@@ -1111,7 +1218,6 @@ int CGame::iClientMotion_Move_Handler(int iClientH, short sX, short sY, char cDi
 		else *cp = 0;
 		cp++;
 
-		pTile = (class CTile *)(m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_pTile + dX + dY*m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_sSizeY);
 		*cp = (char)pTile->m_iOccupyStatus;
 		cp++;
 		
@@ -2153,6 +2259,7 @@ void CGame::DeleteClient(int iClientH, BOOL bSave, BOOL bNotify, BOOL bCountLogo
 		}
 
 		if (m_pClientList[iClientH]->m_bIsInitComplete == TRUE) {
+
 			if (m_pClientList[iClientH]->m_iPartyID != NULL) {
 				ZeroMemory(cData, sizeof(cData));
 				cp = (char *)cData;
@@ -2264,13 +2371,6 @@ void CGame::DeleteClient(int iClientH, BOOL bSave, BOOL bNotify, BOOL bCountLogo
 	// centu - refresh when player gets dc/cl
 	if ((memcmp(m_pClientList[iClientH]->m_cMapName, "fightzone1", 10) == 0) && (bDeathmatch))
 		RefreshDeathmatch(iClientH); // Morla 2.3 - actualiza el deathmach
-
-	//50Cent - Capture The Flag
-	if (bCheckIfIsFlagCarrier(iClientH))
-	{
-		SetFlagCarrierFlag(iClientH, false);
-		SetIceFlag(iClientH, DEF_OWNERTYPE_PLAYER, false);
-	}
 
 	m_iTotalClients--;
 
@@ -6502,16 +6602,6 @@ void CGame::ChatMsgHandler(int iClientH, char * pData, DWORD dwMsgSize)
 			SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_TOTALUSERS, NULL, NULL, NULL, NULL);
 			
 		}
-
-		//50Cent - Capture The Flag
-		else if (memcmp(cp, "/startctf", 9) == 0) {
-			if (m_pClientList[iClientH]->m_iAdminUserLevel >= 3) StartCaptureTheFlag();
-			
-		}
-		else if (memcmp(cp, "/endctf", 7) == 0) {
-			if (m_pClientList[iClientH]->m_iAdminUserLevel >= 3) EndCaptureTheFlag(0);
-			
-		}
 		
 		else if (memcmp(cp, "/deathmatch", 11) == 0) {
             if (m_pClientList[iClientH]->m_iAdminUserLevel < 3) return;
@@ -8223,13 +8313,6 @@ void CGame::ClientKilledHandler(int iClientH, int iAttackerH, char cAttackerType
 		UpdateHeldenianStatus(-1);
 	}
 
-	//50Cent - Capture The Flag
-	if (bCheckIfIsFlagCarrier(iClientH))
-	{
-		SetIceFlag(iClientH, DEF_OWNERTYPE_PLAYER, false);
-		SetFlagCarrierFlag(iClientH, false);
-	}
-
 	if (cAttackerType == DEF_OWNERTYPE_PLAYER) {
 		// v1.432
 		// 특수 능력이 있는 무기로 공격을 당했다.
@@ -8935,9 +9018,9 @@ void CGame::SendMsgToGateServer(DWORD dwMsg, int iClientH, char * pData)
 
 		dwp = (DWORD *)cp;
 		*dwp = 1126;
-		cp += 2;
+		cp += 4;
 
-		iRet = m_pGateSock->iSendMsg(cData, 43 + m_iTotalMaps*11);
+		iRet = m_pGateSock->iSendMsg(cData, 45 + m_iTotalMaps*11);
 		break;
 
 	case MSGID_GAMESERVERALIVE:
@@ -21288,16 +21371,6 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 	case DEF_NOTIFY_SETTING_FAILED:
 	case DEF_NOTIFY_NOGUILDMASTERLEVEL:
 	case DEF_NOTIFY_CANNOTBANGUILDMAN:
-	case DEF_NOTIFY_CAPTURETHEFLAGSTART: //50Cent - Capture The Flag
-	case DEF_NOTIFY_ARESDENCAPTUREDELVINEFLAG:
-	case DEF_NOTIFY_ELVINECAPTUREDARESDENFLAG:
-	case DEF_NOTIFY_ELVINEFLAGBACKTOCH:
-	case DEF_NOTIFY_ARESDENFLAGBACKTOCH:
-	case DEF_NOTIFY_ELVINEWINSROUND:
-	case DEF_NOTIFY_ARESDENWINSROUND:
-	case DEF_NOTIFY_ELVINEWINCTF:
-	case DEF_NOTIFY_ARESDENWINCTF:
-	case DEF_NOTIFY_TIECTF:
 	case DEF_NOTIFY_METEORSTRIKEHIT:
 	case DEF_NOTIFY_SPECIALABILITYENABLED:
 	case DEF_NOTIFY_QUESTCOMPLETED:
@@ -22352,20 +22425,6 @@ RTH_NEXTSTEP:;
 	Notify_ApocalypseGateState(iClientH);
 
 	RefreshPartyCoords(iClientH);
-
-	//50Cent - Capture The Flag
-	if (m_bIsCTFMode)
-	{
-		RequestCheckFlag(iClientH);
-		if (bCheckIfIsFlagCarrier(iClientH))
-		{
-			if (m_pClientList[iClientH]->m_iHP >= 1)
-			{
-				SetInvisibilityFlag(iClientH, DEF_OWNERTYPE_PLAYER, false);
-				SetIceFlag(iClientH, DEF_OWNERTYPE_PLAYER, true);
-			}
-		}
-	}
 }
 
 void CGame::RequestRestartHandler(int iClientH)

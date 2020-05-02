@@ -83,23 +83,6 @@ public:
 	void OnClientSocketEvent(UINT message, WPARAM wParam, LPARAM lParam);
 	void OnStartGameSignal();
 
-	//50Cent - Capture The Flag
-	void StartCaptureTheFlag();
-	void RequestCheckFlag(int iClientH);
-	BOOL bCheckIfIsFlagCarrier(int iClientH);
-	void SetFlagCarrierFlag(int iClientH, BOOL bFlagMode);
-	void EndCaptureTheFlag(int iOption);
-	void _CreateCTFGUID(int iWinnerSide);
-
-	//50Cent - Capture The Flag
-	BOOL m_bIsCTFMode;
-	short m_sFlagCountWin;
-	short m_sElvineFlagCount;
-	short m_sAresdenFlagCount;
-	BOOL m_bIsElvineFlagCaptured;
-	BOOL m_bIsAresdenFlagCaptured;
-	int m_iFlagCarrierIndex;
-
 	char m_cGameServerAddrInternal[16];
 	char m_cGameServerAddrExternal[16];
 	int  m_iGameServerMode;
@@ -1040,6 +1023,7 @@ private:
 
 	int m_iDKCost;
 
+	BOOL m_bIsCTFEvent;
 
 	// Limit Checks
 	short m_sCharStatLimit;

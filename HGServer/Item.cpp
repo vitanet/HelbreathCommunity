@@ -4013,14 +4013,12 @@ void CGame::UseItemHandler(int iClientH, short sItemIndex, short dX, short dY, s
 			case 1:
 				// Recall ¸¶¹ý È¿°ú°¡ ÀÖ´Â ¾ÆÀÌÅÛ. 
 				// testcode
-				if (bCheckIfIsFlagCarrier(iClientH)) SendNotifyMsg(iClientH, iClientH, DEF_NOTIFY_NOTICEMSG, NULL, NULL, NULL, "You can't use Recall Scroll while being a flag carrier.");
-				else RequestTeleportHandler(iClientH, "1  ");
+				RequestTeleportHandler(iClientH, "1  ");
 				break;
 
 			case 2:
 				// Åõ¸í ¸¶¹ýÈ¿°ú°¡ ÀÖ´Â ¾ÆÀÌÅÛ. 
-				if (bCheckIfIsFlagCarrier(iClientH)) SendNotifyMsg(iClientH, iClientH, DEF_NOTIFY_NOTICEMSG, NULL, NULL, NULL, "You can't use Invisibility Scroll while being a flag carrier.");
-				else PlayerMagicHandler(iClientH, m_pClientList[iClientH]->m_sX, m_pClientList[iClientH]->m_sY, 32, TRUE);
+				PlayerMagicHandler(iClientH, m_pClientList[iClientH]->m_sX, m_pClientList[iClientH]->m_sY, 32, TRUE);
 				break;
 
 			case 3:
@@ -4033,16 +4031,14 @@ void CGame::UseItemHandler(int iClientH, short sItemIndex, short dX, short dY, s
 				// fixed location teleportation: ÀÔÀå±Ç µîµî
 				switch (m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sItemEffectValue2) {
 				case 1:
-					if (bCheckIfIsFlagCarrier(iClientH)) SendNotifyMsg(iClientH, iClientH, DEF_NOTIFY_NOTICEMSG, NULL, NULL, NULL, "You can't use this while being a flag carrier.");
-					else
-					{
+					
 						// ºí¸®µù ¾ÆÀÏ·Î °£´Ù 
 						if (memcmp(m_pClientList[iClientH]->m_cMapName, "bisle", 5) != 0) {
 							//v1.42
 							ItemDepleteHandler(iClientH, sItemIndex, TRUE, TRUE);
 							RequestTeleportHandler(iClientH, "2   ", "bisle", -1, -1);
 						}
-					}
+					
 					break;
 
 				//LifeX Added Reset Stat Scroll

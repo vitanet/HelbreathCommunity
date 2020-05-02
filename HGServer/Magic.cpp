@@ -2079,12 +2079,6 @@ void CGame::PlayerMagicHandler(int iClientH, int dX, int dY, short sType, BOOL b
 			// Ã…ÃšÂ·Â¹Ã†Ã·Ã†Â® Â¸Â¶Â¹Ã½. sValue 4Â¿Â¡ ÂµÃ»Â¶Ã³Â¼Â­ Ã…ÃšÂ·Â¹Ã†Ã·Ã†Â® Â¸Ã±Ã€Ã»ÃÃ¶Â°Â¡ Â°Ã¡ÃÂ¤ÂµÃˆÂ´Ã™.
 			m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->GetOwner(&sOwnerH, &cOwnerType, dX, dY);
 
-			//50Cent - Capture The Flag
-			if (bCheckIfIsFlagCarrier(iClientH))
-			{
-				SendNotifyMsg(iClientH, iClientH, DEF_NOTIFY_NOTICEMSG, NULL, NULL, NULL, "You can't use Recall while being a flag carrier.");
-				goto MAGIC_NOEFFECT;
-			}
 
 			switch (m_pMagicConfigList[sType]->m_sValue4) {
 			case 1:
@@ -2420,12 +2414,6 @@ void CGame::PlayerMagicHandler(int iClientH, int dX, int dY, short sType, BOOL b
 			break;
 
 		case DEF_MAGICTYPE_INVISIBILITY:
-			//50Cent - Capture The flag
-			if (bCheckIfIsFlagCarrier(iClientH))
-			{
-				SendNotifyMsg(iClientH, iClientH, DEF_NOTIFY_NOTICEMSG, NULL, NULL, NULL, "You can't use Invisibility while being a flag carrier.");
-				goto MAGIC_NOEFFECT;
-			}
 			switch (m_pMagicConfigList[sType]->m_sValue4) {
 			case 1:
 				m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->GetOwner(&sOwnerH, &cOwnerType, dX, dY);
