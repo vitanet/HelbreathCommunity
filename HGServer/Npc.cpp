@@ -375,7 +375,7 @@ void CGame::NpcKilledHandler(short sAttackerH, char cAttackerType, int iNpcH, sh
 	int* ip, i, iQuestIndex, iConstructionPoint, iWarContribution, iMapIndex;
 	double dTmp1, dTmp2, dTmp3;
 	char* cp, cData[120], cQuestRemain;
-	unsigned long iExp;
+	unsigned long long int iExp;
 
 	if (m_pNpcList[iNpcH] == NULL) return;
 	if (m_pNpcList[iNpcH]->m_bIsKilled == TRUE) return;
@@ -4224,14 +4224,6 @@ void CGame::MobGenerator()
 
 				pX = NULL;
 				pY = NULL;
-
-				// KaoZureS - No respawn en heldenian
-				if (memcmp(m_pMapList[i]->m_cName, "BtField", 7) == 0) {
-					if (m_bIsHeldenianMode == TRUE) {
-						m_pMapList[i]->m_iMaximumObject = 0;
-					}
-					else { m_pMapList[i]->m_iMaximumObject = 900; }
-				}
 
 				if ((m_bIsSpecialEventTime == TRUE) && (iDice(1, 10) == 3)) bIsSpecialEvent = TRUE;
 

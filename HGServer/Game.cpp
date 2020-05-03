@@ -580,7 +580,7 @@ BOOL CGame::bInit()
 	for(i =0; i < DEF_MAXFIGHTZONE; i++) 
 		m_iFightZoneReserve[i] = 0 ;
 	m_iFightzoneNoForceRecall = 0;
-	for (i = 1; i < DEF_MAXEXPTABLE; i++) { //centu - lvl jump fixed
+	for (i = 1; i <= DEF_MAXEXPTABLE; i++) { //centu - lvl jump fixed
 		m_iLevelExpTable[i] = iGetLevelExp(i);
 	}
 	
@@ -6949,7 +6949,7 @@ int CGame::iClientMotion_Attack_Handler(int iClientH, short sX, short sY, short 
  BOOL    bNearAttack = FALSE, var_AC = FALSE;
  short sItemIndex;
  int tX, tY, iErr;
- unsigned long iExp;
+ unsigned long long int iExp;
 
 	if (m_pClientList[iClientH] == NULL) return 0;
 	if ((cDir <= 0) || (cDir > 8))       return 0;
@@ -9136,9 +9136,9 @@ void CGame::Quit()
 
 }
 
-long CGame::iGetLevelExp(int iLevel)
+unsigned long long int CGame::iGetLevelExp(int iLevel)
 {
- unsigned long iRet;
+	unsigned long long int iRet;
 	
 	if (iLevel == 0) return 0;
 	
@@ -9552,7 +9552,7 @@ void CGame::RequestCivilRightHandler(int iClientH, char *pData)
 	if (m_pClientList[iClientH]->m_iPartyID != NULL) {
 		RequestDeletePartyHandler(iClientH);
 	}
-	CheckSpecialEvent(iClientH); // new
+	
 	RequestChangePlayMode(iClientH); // new
 }
 
@@ -9762,7 +9762,7 @@ void CGame::EnemyKillRewardHandler(int iAttackerH, int iClientH)
 	// Elvine kills Aresden in Elvine and gets an EK
 	// Aresden kills Elvine in Elvine and doesnt get an EK
 	
-	unsigned long iRewardExp;
+	unsigned long long int iRewardExp;
 
 	int iRangoAttacker = 1;
 	
@@ -10009,7 +10009,7 @@ void CGame::EnemyKillRewardHandler(int iAttackerH, int iClientH)
 // 05/22/2004 - Hypnotoad - register in pk log
 void CGame::ApplyCombatKilledPenalty(int iClientH, int cPenaltyLevel, BOOL bIsSAattacked)
 {  
-	unsigned long iExp;
+	unsigned long long int iExp;
 
 	if (m_pClientList[iClientH] == NULL) return;
 	if (m_pClientList[iClientH]->m_bIsInitComplete == FALSE) return;
@@ -10361,7 +10361,7 @@ void CGame::Effect_Damage_Spot(short sAttackerH, char cAttackerType, short sTarg
  DWORD dwTime;
  register double dTmp1, dTmp2, dTmp3;
  short sAtkX, sAtkY, sTgtX, sTgtY, dX, dY, sItemIndex;
- unsigned long iExp;
+ unsigned long long int iExp;
 
  	if (cAttackerType == DEF_OWNERTYPE_PLAYER)
 		if (m_pClientList[sAttackerH] == NULL) return;
@@ -10855,7 +10855,7 @@ void CGame::Effect_Damage_Spot_Type2(short sAttackerH, char cAttackerType, short
  DWORD dwTime;
  register double dTmp1, dTmp2, dTmp3;
  short sTgtX, sTgtY, sItemIndex;
- unsigned long iExp;
+ unsigned long long int iExp;
 
 	if ((cAttackerType == DEF_OWNERTYPE_PLAYER) && (m_pClientList[sAttackerH] == NULL)) return;
 	if ((cAttackerType == DEF_OWNERTYPE_NPC) && (m_pNpcList[sAttackerH] == NULL)) return;
@@ -11735,7 +11735,7 @@ EDSD_SKIPDAMAGEMOVE:;
 				}
 
 				//Crusade
-				unsigned long iExp;
+				unsigned long long int iExp;
 
 				// NPC에 대한 공격이 성공했으므로 공격자가 플레이어라면 입힌 대미지 만큼의 경험치를 공격자에게 준다. 
 				if ( (m_pNpcList[sTargetH]->m_iNoDieRemainExp > 0) && (m_pNpcList[sTargetH]->m_bIsSummoned != TRUE) && 
@@ -13424,13 +13424,14 @@ void CGame::ResponseSavePlayerDataReplyHandler(char * pData, DWORD dwMsgSize)
 	}
 }
 
-long CGame::iGetExpLevel(unsigned long iExp)
+unsigned long long int CGame::iGetExpLevel(unsigned long long int iExp)
 {
  int i;
 
-	for (i = 1; i < DEF_MAXEXPTABLE; i++)
-	if ((m_iLevelExpTable[i] <= iExp) && (m_iLevelExpTable[i+1] > iExp)) return i;
-
+	 for (i = 1; i <= DEF_MAXEXPTABLE; i++)
+	 {
+		 if ((m_iLevelExpTable[i] <= iExp) && (m_iLevelExpTable[i + 1] > iExp)) return i;
+	 }
 	return 0;
 }
 
@@ -16139,7 +16140,7 @@ void CGame::RequestOnlines(int iClientH)
 	
 }
 
-void CGame::GetExp(int iClientH, unsigned long iExp, BOOL bIsAttackerOwn)
+void CGame::GetExp(int iClientH, unsigned long long int iExp, BOOL bIsAttackerOwn)
 {
 
 	double dV1, dV2, dV3;
@@ -16156,7 +16157,7 @@ void CGame::GetExp(int iClientH, unsigned long iExp, BOOL bIsAttackerOwn)
 		dV2 = dV1 * 0.025f;
 		dV3 = (double)iExp;
 		dV1 = (dV2 + 1.025f)*dV3;
-		iExp = (unsigned long)dV1;
+		iExp = (unsigned long long int)dV1;
 	}
 		
 	//Check for party status, else give exp to player
@@ -16254,7 +16255,7 @@ void CGame::GetExp(int iClientH, unsigned long iExp, BOOL bIsAttackerOwn)
 	}
 }
 
-void CGame::MultiplicadorExp(int Client, unsigned long Exp)
+void CGame::MultiplicadorExp(int Client, unsigned long long int Exp)
 {
 	if (m_pClientList[Client] == NULL) return;
 
@@ -18214,7 +18215,7 @@ int CGame::iCalculateAttackEffect(short sTargetH, char cTargetType, short sAttac
  int    iPartyID, iConstructionPoint, iWarContribution, tX, tY, iDst1, iDst2;
  short	sItemIndex;
  short	sSkillUsed;
- unsigned long iExp;
+ unsigned long long int iExp;
 
 	dwTime = timeGetTime();
 	bKilled = FALSE;
@@ -20508,6 +20509,7 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 	char* cp;
 	short* sp;
 	int* ip, iRet, i;
+	unsigned long long int* lp;
 
 	if (m_pClientList[iToH] == NULL) return;
 
@@ -21275,13 +21277,9 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 	case DEF_NOTIFY_TRAVELERLIMITEDLEVEL:
 	case DEF_NOTIFY_LIMITEDLEVEL:
 	case DEF_NOTIFY_EXP:
-		ip = (int*)cp;
-		*ip = (unsigned int)m_pClientList[iToH]->m_iExp;
-		cp += 4;
-
-		ip = (int*)cp;
-		*ip = m_pClientList[iToH]->m_iRating;
-		cp += 4;
+		lp = (unsigned long long int*)cp;
+		*lp = m_pClientList[iToH]->m_iExp;
+		cp += 8;
 
 		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 14);
 		break;
@@ -22567,11 +22565,12 @@ void CGame::InitPlayerData(int iClientH, char * pData, DWORD dwSize)
 			ForceChangePlayMode(iClientH, TRUE);
 		}
 	}
+
 	m_pClientList[iClientH]->m_iNextLevelExp = m_iLevelExpTable[m_pClientList[iClientH]->m_iLevel + 1];
 	
 	CalcTotalItemEffect(iClientH, -1, TRUE);
 	iCalcTotalWeight(iClientH);
-	CheckSpecialEvent(iClientH); // new
+	
 	bCheckMagicInt(iClientH);
 
 	// Recover summons you may had before deco...

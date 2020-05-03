@@ -441,7 +441,7 @@ private:
 	// v1.4311-3 변경 함수 선언  Expire -> Ban 으로 
 	void UserCommand_BanGuildsman(int iClientH, char* pData, DWORD dwMsgSize);
 	// v1.4311-3 추가 함수 선언 이벤트를 대비하여 운영자가 사투장을 예약해놓는다.
-	long iGetExpLevel(unsigned long iExp);
+	unsigned long long int iGetExpLevel(unsigned long long int iExp);
 	
 	void ResponseSavePlayerDataReplyHandler(char* pData, DWORD dwMsgSize);
 	void NoticeHandler();
@@ -519,7 +519,7 @@ private:
 	void FightzoneReserveHandler(int iClientH, char* pData, DWORD dwMsgSize);
 	void bCheckLevelUp(int iClientH);
 
-	long iGetLevelExp(int iLevel);
+	unsigned long long int iGetLevelExp(int iLevel);
 	void TimeManaPointsUp(int iClientH);
 	void TimeStaminarPointsUp(int iClientH);
 
@@ -570,7 +570,7 @@ private:
 
 	void RequestOnlines(int iClientH);
 
-	void MultiplicadorExp(int Client, unsigned long Exp);
+	void MultiplicadorExp(int Client, unsigned long long int Exp);
 
 	BOOL bEquipItemHandler(int iClientH, short sItemIndex, BOOL bNotify = TRUE);
 	BOOL _bAddClientItemList(int iClientH, class CItem* pItem, int* pDelReq);
@@ -657,7 +657,7 @@ private:
 	void PartyOperationResult_Info(int iClientH, char* pName, int iTotal, char* pNameList);
 	void RequestDeletePartyHandler(int iClientH);
 	void RequestAcceptJoinPartyHandler(int iClientH, int iResult);
-	void GetExp(int iClientH, unsigned long iExp, BOOL bIsAttackerOwn = FALSE);
+	void GetExp(int iClientH, unsigned long long int iExp, BOOL bIsAttackerOwn = FALSE);
 
 	// New 07/05/2004
 	// Guild Codes
@@ -745,7 +745,7 @@ private:
 	int  m_iGateServerPort;
 	int  m_iWorldServerPort;
 
-	unsigned long  m_iLimitedUserExp, m_iLevelExp20;
+	unsigned long long int  m_iLimitedUserExp, m_iLevelExp20;
 
 	class CClient* m_pClientList[DEF_MAXCLIENTS];
 	class CNpc* m_pNpcList[DEF_MAXNPCS];
@@ -799,7 +799,7 @@ private:
 	//LifeX Auto Skills
     void AutoSkill(int iClientH);
 
-	unsigned long m_iLevelExpTable[DEF_MAXEXPTABLE];	//New 22/10/14 - centu: int -> unsigned long
+	unsigned long long int m_iLevelExpTable[DEF_MAXEXPTABLE];	//New 22/10/14 - centu: int -> unsigned long
 
 	class CFish* m_pFish[DEF_MAXFISHS];
 

@@ -86,8 +86,8 @@ public:
 	int  m_iHPstock;
 	int  m_iMP;
 	int  m_iSP;
-	unsigned long  m_iExp;
-	unsigned long m_iNextLevelExp;
+	unsigned long long int  m_iExp;
+	unsigned long long int m_iNextLevelExp;
 	BOOL m_bIsKilled;
 
 	int  m_iDefenseRatio;		// Defense Ratio
@@ -173,10 +173,10 @@ public:
 
 	BOOL  m_bIsOnServerChange;     // 이 값이 활성화 되어 있으면 삭제시 데이터 저장 및 카운팅을 하지 않는다.
 
-	unsigned long   m_iExpStock;			 // 쌓여있는 경험치 
+	unsigned long long int   m_iExpStock;			 // 쌓여있는 경험치 
 	DWORD m_dwExpStockTime;		 // ExpStock 계산 시간.
 
-	unsigned long   m_iAutoExpAmount;		 // Auto-Exp 시간 동안 얻은 경험치 
+	unsigned long long int   m_iAutoExpAmount;		 // Auto-Exp 시간 동안 얻은 경험치 
 	DWORD m_dwAutoExpTime;		 // Auto-Exp 계산 시간.
 
 	DWORD m_dwRecentAttackTime;  // 가장 최근에 공격했던 시간 
@@ -264,7 +264,7 @@ public:
 	int   m_iAddAR, m_iAddPR, m_iAddDR;
 	int   m_iAddMR, m_iAddAbsPD, m_iAddAbsMD; 
 	int   m_iAddCD, m_iAddGold;		// 고정 마법 대미지 흡수율. 반지류와는 독립적으로 계산된다.
-	unsigned long m_iAddExp;
+	unsigned long long int m_iAddExp;
 
 	int   m_iAddResistMagic;					// v1.2 추가 마법 저항 
 	int   m_iAddPhysicalDamage;					// v1.2 고정 대미지 추가 포인트 
@@ -304,7 +304,7 @@ public:
 	int   m_iWarContribution;					// 전쟁 공헌도 
 
 	DWORD m_dwSpeedHackCheckTime;				// 속도버그 검사 루틴 
-	unsigned long   m_iSpeedHackCheckExp;		
+	unsigned long long int   m_iSpeedHackCheckExp;
 	DWORD m_dwLogoutHackCheck;
 
 	DWORD m_dwInitCCTimeRcv;
