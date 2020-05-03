@@ -8020,9 +8020,18 @@ void CGame::ReleaseItemHandler(int iClientH, short sItemIndex, BOOL bNotice)
 				m_pClientList[iClientH]->m_cMagicMastery[94] = FALSE;
 				SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_RESUR_OFF, NULL, NULL, NULL, NULL);
 			}
+			else if (m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 491 || m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 492) { // Axe & Rapier
+				m_pClientList[iClientH]->m_iHitRatio -= 10;
+			}
 		}
 	}
-
+	if (cEquipPos == DEF_EQUIPPOS_TWOHAND) {
+		if (m_pClientList[iClientH]->m_pItemList[sItemIndex] != NULL) {
+			if (m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 490) { // Sword
+				m_pClientList[iClientH]->m_iHitRatio -= 10;
+			}
+		}
+	}
 	// ¾ÆÀÌÅÛÀÇ ÇØÁ¦À§Ä¡¿¡ ¸Â°Ô Apprº¯¼ö¸¦ Á¶Á¤ÇÑ´Ù.
 	switch (cEquipPos) {
 	case DEF_EQUIPPOS_RHAND:

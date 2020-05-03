@@ -9017,7 +9017,7 @@ void CGame::SendMsgToGateServer(DWORD dwMsg, int iClientH, char * pData)
 		cp += 4;
 
 		dwp = (DWORD *)cp;
-		*dwp = 1126;
+		*dwp = 3289;
 		cp += 4;
 
 		iRet = m_pGateSock->iSendMsg(cData, 45 + m_iTotalMaps*11);
@@ -9568,7 +9568,6 @@ void CGame::CheckSpecialEvent(int iClientH)
 
 	if (m_pClientList[iClientH] == NULL) return;
 	if (m_pClientList[iClientH]->m_cSide == 0) return;
-	if (m_pClientList[iClientH]->m_iSpecialEventID < 20031101) return;
 	ZeroMemory(cItemName, sizeof(cItemName));
 	strcpy(cItemName, "MemorialRing");
 	pItem = new class CItem;
@@ -23169,11 +23168,10 @@ void CGame::NpcBehavior_Attack(int iNpcH)
 		iStY = m_pNpcList[iNpcH]->m_sY / 20;
 		m_pMapList[m_pNpcList[iNpcH]->m_cMapIndex]->m_stTempSectorInfo[iStX][iStY].iMonsterActivity++;
 	}
-	if (m_pNpcList[iNpcH]->m_sBehaviorTurnCount == 0) {
+	if (m_pNpcList[iNpcH]->m_sBehaviorTurnCount == 0)
 		m_pNpcList[iNpcH]->m_iAttackCount = 0;
-		m_pNpcList[iNpcH]->m_sBehaviorTurnCount++;
-	}
-	else if (m_pNpcList[iNpcH]->m_sBehaviorTurnCount > 20) {
+	m_pNpcList[iNpcH]->m_sBehaviorTurnCount++;
+	if (m_pNpcList[iNpcH]->m_sBehaviorTurnCount > 20) {
 		m_pNpcList[iNpcH]->m_sBehaviorTurnCount = 0;
 		if ((m_pNpcList[iNpcH]->m_bIsPermAttackMode == FALSE))
 			m_pNpcList[iNpcH]->m_cBehavior = DEF_BEHAVIOR_MOVE;

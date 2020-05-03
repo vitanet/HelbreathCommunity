@@ -3632,7 +3632,7 @@ void CGame::MobGenerator()
 		}
 
 		if ((m_pMapList[i] != NULL) && (m_pMapList[i]->m_bRandomMobGenerator == TRUE) && (iResultNum > m_pMapList[i]->m_iTotalActiveObject)) {
-			if ((m_iMiddlelandMapIndex != -1) && (m_iMiddlelandMapIndex == i) && (m_bIsCrusadeMode == TRUE)) break;
+			if ((m_iMiddlelandMapIndex != -1) && (m_iMiddlelandMapIndex == i) && (m_bIsCrusadeMode == TRUE)) continue;//break;
 
 			iNamingValue = m_pMapList[i]->iGetEmptyNamingValue();
 			if (iNamingValue != -1) {
@@ -4226,7 +4226,7 @@ void CGame::MobGenerator()
 				pY = NULL;
 
 				// KaoZureS - No respawn en heldenian
-				if (strcmp(m_pMapList[i]->m_cName, "BtField") == 0) {
+				if (memcmp(m_pMapList[i]->m_cName, "BtField", 7) == 0) {
 					if (m_bIsHeldenianMode == TRUE) {
 						m_pMapList[i]->m_iMaximumObject = 0;
 					}
