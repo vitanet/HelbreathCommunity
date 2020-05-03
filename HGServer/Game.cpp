@@ -9017,7 +9017,7 @@ void CGame::SendMsgToGateServer(DWORD dwMsg, int iClientH, char * pData)
 		cp += 4;
 
 		dwp = (DWORD *)cp;
-		*dwp = 3289;
+		*dwp = 1126;
 		cp += 4;
 
 		iRet = m_pGateSock->iSendMsg(cData, 45 + m_iTotalMaps*11);
