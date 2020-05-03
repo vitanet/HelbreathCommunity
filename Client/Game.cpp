@@ -5133,7 +5133,7 @@ void CGame::NotifyMsg_EnemyKillReward(char *pData)
 	char  * cp, cName[12], cGuildName[24], cTxt[120];
 	int   iEnemyKillCount, iWarContribution;
 	int i;
-	unsigned long iExp;
+	unsigned long long int iExp;
 
 	ZeroMemory(cName, sizeof(cName));
 	ZeroMemory(cGuildName, sizeof(cGuildName));
@@ -16435,8 +16435,8 @@ resi = 0;
 	}
 
 	if (m_bCtrlPressed) {
-		unsigned long iCurExp = iGetLevelExp(m_iLevel);
-		unsigned long iNextExp = iGetLevelExp(m_iLevel + 1);
+		unsigned long long int iCurExp = iGetLevelExp(m_iLevel);
+		unsigned long long int iNextExp = iGetLevelExp(m_iLevel + 1);
 		if (m_iExp < iNextExp)
 		{
 			iNextExp = iNextExp - iCurExp;
@@ -16749,10 +16749,10 @@ void CGame::DrawDialogBox_GaugePannel()
 
     // Experience Gauge - MORLA - arreglada para que vaya de izquierda a derecha
 	
-	unsigned long iMaxPoint3;
+	unsigned long long int iMaxPoint3;
 	iMaxPoint3 = iGetLevelExp(m_iLevel+1) - iGetLevelExp(m_iLevel);
 
-    unsigned long uTemp = m_iExp - iGetLevelExp(m_iLevel);
+	unsigned long long int uTemp = m_iExp - iGetLevelExp(m_iLevel);
     iBarWidth = (uTemp *800) / iMaxPoint3;
     if( iBarWidth < 0 ) iBarWidth = 0;
     if( iBarWidth > 800 ) iBarWidth = 800;
@@ -17639,16 +17639,16 @@ void CGame::CannotConstruct(int iCode)
 	}
 }
 
-void CGame::DisplayCommaNumber_G_cTxt(int iGold)
+void CGame::DisplayCommaNumber_G_cTxt(unsigned long long int iGold)
 {char cGold[20];
- int iStrLen;
+unsigned long long int iStrLen;
 	ZeroMemory(cGold, sizeof(cGold));
 	ZeroMemory(G_cTxt, sizeof(G_cTxt));
 	itoa(iGold, cGold, 10);
 	iStrLen = strlen(cGold);
 	iStrLen--;
-	int cnt = 0;
-	for (int i = 0 ; i < iStrLen+1 ; i++)
+	unsigned long long int cnt = 0;
+	for (unsigned long long int i = 0 ; i < iStrLen+1 ; i++)
 	{	if( (cnt != 0) && ((cnt+1)%4 == 0) )
 		{	G_cTxt[cnt] = '.';
 			i--;
@@ -19317,8 +19317,9 @@ void CGame::DlgBoxClick_ItemSellorRepair(short msX, short msY)
 }
 
 
-unsigned long CGame::iGetLevelExp(int iLevel)
-{unsigned long iRet;
+unsigned long long int CGame::iGetLevelExp(int iLevel)
+{
+	unsigned long long int iRet;
 	if (iLevel == 0) return 0;
 	iRet = iGetLevelExp(iLevel - 1) + iLevel * ( 50 + (iLevel * (iLevel / 17) * (iLevel / 17) ) );
 	return iRet;
@@ -28202,11 +28203,11 @@ void CGame::DrawVersion(BOOL bAuthor)
 
 	m_Misc.ColorTransfer(m_DDraw.m_cPixelFormat, RGB(140, 140, 140), &wR, &wG, &wB);
 	m_pSprite[DEF_SPRID_INTERFACE_ADDINTERFACE]->PutTransSpriteRGB(14, 580, 19, wR, wG, wB, dwTime);
-	wsprintf(G_cTxt, "%d", DEF_UPPERVERSION);
-	PutString_SprNum(36, 580, G_cTxt, 140, 140, 140);
+	//wsprintf(G_cTxt, "%d", DEF_UPPERVERSION);
+	PutString_SprNum(36, 580, "1", 140, 140, 140);
 	m_pSprite[DEF_SPRID_INTERFACE_ADDINTERFACE]->PutTransSpriteRGB(42, 580, 18, wR, wG, wB, dwTime);
-	wsprintf(G_cTxt, "%d", DEF_LOWERVERSION);
-	PutString_SprNum(46, 580, G_cTxt, 140, 140, 140);
+	//wsprintf(G_cTxt, "%d", DEF_LOWERVERSION);
+	PutString_SprNum(46, 580, "2", 140, 140, 140);
 	if (bAuthor == FALSE) return;
 
 }
@@ -31118,7 +31119,7 @@ void CGame::UpdateScreen_OnGame()
 	}
 
 	//Snoopy adding Heldenian turret count:
-	if ((iUpdateRet != 0) && (m_bIsHeldenian) && (memcmp(m_cCurLocation, "BtField", 7) == 0))
+	if ((iUpdateRet != 0) && (memcmp(m_cCurLocation, "BtField", 7) == 0) && (m_iHeldenianAresdenLeftTower != -1))
 	{
 		wsprintf(G_cTxt, "Aresden flags : %d", m_iHeldenianAresdenFlags);
 		PutString(10, 140, G_cTxt, RGB(255, 255, 255));
@@ -31128,9 +31129,9 @@ void CGame::UpdateScreen_OnGame()
 		PutString(10, 180, G_cTxt, RGB(255, 255, 255));
 		wsprintf(G_cTxt, "Elvine death toll : %d", m_iHeldenianElvineDead);
 		PutString(10, 200, G_cTxt, RGB(255, 255, 255));
-		wsprintf(G_cTxt, "Aresden's rest building number : %d", m_iHeldenianAresdenLeftTower);
+		wsprintf(G_cTxt, "Aresden rest building number : %d", m_iHeldenianAresdenLeftTower);
 		PutString(10, 220, G_cTxt, RGB(255, 255, 255));
-		wsprintf(G_cTxt, "Elvine's rest building number : %d", m_iHeldenianElvineLeftTower);
+		wsprintf(G_cTxt, "Elvine rest building number : %d", m_iHeldenianElvineLeftTower);
 		PutString(10, 240, G_cTxt, RGB(255, 255, 255));
 	}
 

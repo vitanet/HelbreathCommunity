@@ -331,7 +331,7 @@ public:
 	void DrawDialogBox_WarningMsg(short msX, short msY);//6
 	void DrawDialogBox_15AgeMsg(short msX, short msY);//5
 	void DrawDialogBox_FeedBackCard(short msX, short msY);//40
-	void DisplayCommaNumber_G_cTxt(int iGold);// Name changed by Snoopy (easyer to understand...)
+	void DisplayCommaNumber_G_cTxt(unsigned long long int iGold);// Name changed by Snoopy (easyer to understand...)
 
 	void DrawDialogBox_ConfirmExchange(short msX, short msY); //41
 
@@ -515,7 +515,7 @@ public:
 	BOOL bCheckExID(char * pName);
 	BOOL bCheckLocalChatCommand(char * pMsg);
 	char GetOfficialMapName(char * pMapName, char * pName);
-	unsigned long iGetLevelExp(int iLevel);
+	unsigned long long int iGetLevelExp(int iLevel);
 	int _iCalcTotalWeight();
 	void DrawVersion(BOOL bAuthor = FALSE);
 	BOOL _bIsItemOnHand();
@@ -936,7 +936,7 @@ public:
 	int m_iTHAC0;					// To Hit Armour Class 0
 
 	int m_iLevel, m_iStr, m_iInt, m_iVit, m_iDex, m_iMag, m_iCharisma, m_iContribution;
-	unsigned long m_iExp;
+	unsigned long long int m_iExp;
 	// Snoopy: Added Angels
 	int m_iAngelicStr, m_iAngelicInt, m_iAngelicDex, m_iAngelicMag;
 

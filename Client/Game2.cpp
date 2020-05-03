@@ -436,7 +436,7 @@ void CGame::NotifyMsg_PKcaptured(char *pData)
 	WORD  * wp;
 	int     iPKcount, iLevel, iRewardGold;
 	char cTxt[120], cName[12];
-	unsigned long iExp;
+	unsigned long long int iExp;
 	cp = (char *)(pData + DEF_INDEX2_MSGTYPE + 2);
 	wp = (WORD *)cp;
 	iPKcount = *wp;
@@ -465,7 +465,7 @@ void CGame::NotifyMsg_PKpenalty(char *pData)
 	char  * cp;
 	DWORD * dwp;
 	int     iPKcount, iStr, iVit, iDex, iInt, iMag, iChr;
-	unsigned long iExp;
+	unsigned long long int iExp;
 	cp = (char *)(pData + DEF_INDEX2_MSGTYPE + 2);
 	dwp = (DWORD *)cp;
 	iExp = *dwp;
@@ -15199,19 +15199,13 @@ void CGame::NotifyMsg_EventFishMode(char * pData)
 
 void CGame::NotifyMsg_Exp(char * pData)
 {
-	int  * ip;
+	unsigned long long int* lp;
 	char * cp, cTxt[120];
 
 	cp = (char *)(pData + DEF_INDEX2_MSGTYPE + 2);
-	ip = (int *)cp;
-	m_iExp = (unsigned long)*ip;
-	cp += 4;
-
-	ip = (int *)cp;
-	m_iRating = *ip;
-	cp += 4;
-
-	
+	lp = (unsigned long long int *)cp;
+	m_iExp = *lp;
+	cp += 8;
 }
 
 void CGame::NotifyMsg_GiveItemFin_CountChanged(char *pData)
