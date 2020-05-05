@@ -7062,6 +7062,53 @@ int CGame::iClientMotion_Attack_Handler(int iClientH, short sX, short sY, short 
 				// End of Magic Weapons
 				sItemIndex = m_pClientList[iClientH]->m_sItemEquipmentStatus[DEF_EQUIPPOS_TWOHAND];
 				if (sItemIndex != -1 && m_pClientList[iClientH]->m_pItemList[sItemIndex] != NULL) {
+					if (m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 845) { // StormBringer
+						int  iDamage, iV1, iV2, iV3;
+						short sAppr2 = (short)((m_pClientList[iClientH]->m_sAppr2 & 0xF000) >> 12);
+						switch (cOwnerType) {
+						case DEF_OWNERTYPE_PLAYER:
+							if (sAppr2 != 0) {
+								iV1 = m_pClientList[iClientH]->m_cAttackDiceThrow_L;
+								iV2 = m_pClientList[iClientH]->m_cAttackDiceRange_L;
+								iV3 = m_pClientList[iClientH]->m_cAttackBonus_L;
+								if (m_pClientList[iClientH]->m_cMagicEffectStatus[DEF_MAGICTYPE_BERSERK] != 0) {
+									iDamage = iDice(iV1 * 2, iV2 * 2) + iV3;
+								}
+								else {
+									iDamage = iDice(iV1, iV2) + iV3;
+								}
+								m_pClientList[sOwner]->m_iHP -= iDamage;
+								if (m_pClientList[sOwner]->m_iHP <= 0) {
+									ClientKilledHandler(sOwner, iClientH, cOwnerType, (short)iDamage);
+								}
+								else {
+									SendNotifyMsg(NULL, sOwner, DEF_NOTIFY_HP, NULL, NULL, NULL, NULL);
+									SendEventToNearClient_TypeA(sOwner, DEF_OWNERTYPE_PLAYER, MSGID_EVENT_MOTION, DEF_OBJECTDAMAGE, iDamage, NULL, NULL);
+								}
+							}
+							break;
+						case DEF_OWNERTYPE_NPC:
+							if (sAppr2 != 0) {
+								iV1 = m_pClientList[iClientH]->m_cAttackDiceThrow_L;
+								iV2 = m_pClientList[iClientH]->m_cAttackDiceRange_L;
+								iV3 = m_pClientList[iClientH]->m_cAttackBonus_L;
+								if (m_pClientList[iClientH]->m_cMagicEffectStatus[DEF_MAGICTYPE_BERSERK] != 0) {
+									iDamage = iDice(iV1 * 2, iV2 * 2) + iV3;
+								}
+								else {
+									iDamage = iDice(iV1, iV2) + iV3;
+								}
+								m_pNpcList[sOwner]->m_iHP -= iDamage;
+								if (m_pNpcList[sOwner]->m_iHP <= 0) {
+									NpcKilledHandler(iClientH, cOwnerType, sOwner, (short)iDamage);
+								}
+								else {
+									SendEventToNearClient_TypeA(sOwner, DEF_OWNERTYPE_NPC, MSGID_EVENT_MOTION, DEF_OBJECTDAMAGE, iDamage, NULL, NULL);
+								}
+							}
+							break;
+						}
+					}
 					// Directional Bow. Fixed by juan249
 					if(m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 874){ // Directional bow 
 						iErr = 0; 
