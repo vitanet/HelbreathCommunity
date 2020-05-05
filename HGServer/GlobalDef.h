@@ -381,7 +381,7 @@
 // they are used to change some MSGID (Anti-hgack)
 #define DEF_HIDDEN_LOWERVERSION		95
 
-#define DEF_VERSIONPLUSMODIFIER     1+(DEF_HIDDEN_LOWERVERSION+33 % 9+3) 
+#define DEF_VERSIONPLUSMODIFIER     1+(DEF_HIDDEN_LOWERVERSION % 9) 
 //that can be whatever number you wish, 1 byte-sized numbers will work fine
 
 //NB: The version check is with the MainLog server, not the gserver!

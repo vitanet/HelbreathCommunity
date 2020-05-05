@@ -32,14 +32,14 @@ CFish::~CFish()
 
 int CGame::iCreateFish(char cMapIndex, short sX, short sY, short sType, class CItem* pItem, int iDifficulty, DWORD dwLastTime)
 {
-	int i, iDynamicHandle;
+	register int i, iDynamicHandle;
 
 	// ¸ÊÀÇ À§Ä¡°¡ ¹°ÀÎÁö È®ÀÎÇÑ´Ù. 
 	if ((cMapIndex < 0) || (cMapIndex >= DEF_MAXMAPS)) return NULL;
 	if (m_pMapList[cMapIndex] == NULL) return NULL;
 	if (m_pMapList[cMapIndex]->bGetIsWater(sX, sY) == FALSE) return NULL;
 
-	for (i = 1; i < DEF_MAXFISHS; i++)
+	for (i = 0; i < DEF_MAXFISHS; i++)
 		if (m_pFish[i] == NULL) {
 			// ºó °ø°£¿¡ ¹°°í±â¸¦ ¸¸µç´Ù.
 			m_pFish[i] = new class CFish(cMapIndex, sX, sY, sType, pItem, iDifficulty);
@@ -265,7 +265,7 @@ void CGame::ReqGetFishThisTimeHandler(int iClientH)
 void CGame::FishGenerator()
 {
 	int i, iP, tX, tY, iRet;
-	char  cItemName[22];
+	char  cItemName[21];
 	short sDifficulty;
 	DWORD dwLastTime;
 	class CItem* pItem;
@@ -306,7 +306,7 @@ void CGame::FishGenerator()
 
 				case 10:
 				case 11:
-					strcpy(cItemName, "SuperPowerGreenPotion");
+					strcpy(cItemName, "SuperGreenPotion");
 					sDifficulty = iDice(5, 4) + 50;
 					break;
 

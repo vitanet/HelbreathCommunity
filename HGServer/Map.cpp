@@ -3422,8 +3422,13 @@ void CGame::SendEventToNearClient_TypeA(short sOwnerH, char cOwnerType, DWORD dw
 		*cp_s = m_pClientList[sOwnerH]->m_cDir;
 		cp_s++;
 
-		*cp_s = (unsigned char)sV1;
-		cp_s++;
+		/* *cp_s = (unsigned char)sV1;
+		cp_s++; */
+
+		//50Cent - No Critical Damage Limit
+		ip = (int*)cp_s;
+		*ip = (unsigned int)sV1;
+		cp_s += 4;
 
 		*cp_s = (unsigned char)sV2;
 		cp_s++;
@@ -3514,7 +3519,7 @@ void CGame::SendEventToNearClient_TypeA(short sOwnerH, char cOwnerType, DWORD dw
 									iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt_Av, 13, cKey);
 							break;
 
-						case DEF_OBJECTMAGIC:
+						/*case DEF_OBJECTMAGIC:
 						case DEF_OBJECTDAMAGE:
 						case DEF_OBJECTDAMAGEMOVE:
 							if (cOwnerSend == TRUE)
@@ -3522,14 +3527,40 @@ void CGame::SendEventToNearClient_TypeA(short sOwnerH, char cOwnerType, DWORD dw
 							else
 								if (i != sOwnerH)
 									iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 11, cKey);
+							break;*/
+
+						//50Cent - No Critical Damage Limit
+						case DEF_OBJECTMAGIC:
+							if (cOwnerSend == TRUE)
+								iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 11, cKey);
+							else
+								if (i != sOwnerH)
+									iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 11, cKey);
+							break;
+						case DEF_OBJECTDAMAGE:
+						case DEF_OBJECTDAMAGEMOVE:
+							if (cOwnerSend == TRUE)
+								iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 14, cKey);
+							else
+								if (i != sOwnerH)
+									iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 14, cKey);
 							break;
 
-						case DEF_OBJECTDYING:
+
+						/*case DEF_OBJECTDYING:
 							if (cOwnerSend == TRUE)
 								iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 15, cKey);
 							else
 								if (i != sOwnerH)
 									iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 15, cKey);
+							break;*/
+
+						case DEF_OBJECTDYING:
+							if (cOwnerSend == TRUE)
+								iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 18, cKey);//50Cent - No Critical Damage Limit 15
+							else
+								if (i != sOwnerH)
+									iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 18, cKey);//50Cent - No Critical Damage Limit 15
 							break;
 
 						default:
@@ -3562,7 +3593,7 @@ void CGame::SendEventToNearClient_TypeA(short sOwnerH, char cOwnerType, DWORD dw
 									iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt_Av, 13, cKey);
 							break;
 
-						case DEF_OBJECTMAGIC:
+						/*case DEF_OBJECTMAGIC:
 						case DEF_OBJECTDAMAGE:
 						case DEF_OBJECTDAMAGEMOVE:
 							if (cOwnerSend == TRUE)
@@ -3570,14 +3601,39 @@ void CGame::SendEventToNearClient_TypeA(short sOwnerH, char cOwnerType, DWORD dw
 							else
 								if (i != sOwnerH)
 									iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 11, cKey);
+							break;*/
+
+						//50Cent - No Critical Damage Limit
+						case DEF_OBJECTMAGIC:
+							if (cOwnerSend == TRUE)
+								iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 11, cKey);
+							else
+								if (i != sOwnerH)
+									iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 11, cKey);
+							break;
+						case DEF_OBJECTDAMAGE:
+						case DEF_OBJECTDAMAGEMOVE:
+							if (cOwnerSend == TRUE)
+								iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 14, cKey);
+							else
+								if (i != sOwnerH)
+									iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 14, cKey);
 							break;
 
-						case DEF_OBJECTDYING:
+						/*case DEF_OBJECTDYING:
 							if (cOwnerSend == TRUE)
 								iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 15, cKey);
 							else
 								if (i != sOwnerH)
 									iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 15, cKey);
+							break;*/
+
+						case DEF_OBJECTDYING:
+							if (cOwnerSend == TRUE)
+								iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 18, cKey);//50Cent - No Critical Damage Limit 15
+							else
+								if (i != sOwnerH)
+									iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 18, cKey);//50Cent - No Critical Damage Limit 15
 							break;
 
 						default:
@@ -3645,8 +3701,14 @@ void CGame::SendEventToNearClient_TypeA(short sOwnerH, char cOwnerType, DWORD dw
 		*cp_s = m_pNpcList[sOwnerH]->m_cDir;
 		cp_s++;
 
-		*cp_s = (unsigned char)sV1;
-		cp_s++;
+		/* *cp_s = (unsigned char)sV1;
+		cp_s++; */
+
+		//50Cent - No Critical Damage Limit
+		ip = (int*)cp_s;
+		*ip = (unsigned int)sV1;
+		cp_s += 4;
+
 		*cp_s = (unsigned char)sV2;
 		cp_s++;
 
@@ -3704,12 +3766,14 @@ void CGame::SendEventToNearClient_TypeA(short sOwnerH, char cOwnerType, DWORD dw
 							break;
 
 						case DEF_OBJECTDYING:
-							iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 15, cKey);
+							//iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 15, cKey);
+							iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 18, cKey);//50Cent - No Critical Damage Limit 15
 							break;
 
 						case DEF_OBJECTDAMAGE:
 						case DEF_OBJECTDAMAGEMOVE:
-							iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 11, cKey);
+							//iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 11, cKey);
+							iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 14, cKey);//50Cent - No Critical Damage Limit 11
 							break;
 
 						case DEF_OBJECTATTACK:
@@ -3732,12 +3796,14 @@ void CGame::SendEventToNearClient_TypeA(short sOwnerH, char cOwnerType, DWORD dw
 							break;
 
 						case DEF_OBJECTDYING:
-							iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 15, cKey);
+							//iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 15, cKey);
+							iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 18, cKey);//50Cent - No Critical Damage Limit 15
 							break;
 
 						case DEF_OBJECTDAMAGE:
 						case DEF_OBJECTDAMAGEMOVE:
-							iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 11, cKey);
+							//iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 11, cKey);
+							iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData_Srt, 14, cKey);//50Cent - No Critical Damage Limit 11
 							break;
 
 						case DEF_OBJECTATTACK:
