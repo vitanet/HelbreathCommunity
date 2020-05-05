@@ -7083,7 +7083,7 @@ int CGame::iClientMotion_Attack_Handler(int iClientH, short sX, short sY, short 
 								}
 								else {
 									SendNotifyMsg(NULL, sOwner, DEF_NOTIFY_HP, NULL, NULL, NULL, NULL);
-									SendEventToNearClient_TypeA(sOwner, DEF_OWNERTYPE_PLAYER, MSGID_EVENT_MOTION, DEF_OBJECTDAMAGE, iDamage, NULL, NULL);
+									SendEventToNearClient_TypeA(sOwner, DEF_OWNERTYPE_PLAYER, MSGID_EVENT_MOTION, DEF_OBJECTDAMAGE, (short)iDamage, NULL, NULL);
 								}
 							}
 							break;
@@ -7103,7 +7103,7 @@ int CGame::iClientMotion_Attack_Handler(int iClientH, short sX, short sY, short 
 									NpcKilledHandler(iClientH, cOwnerType, sOwner, (short)iDamage);
 								}
 								else {
-									SendEventToNearClient_TypeA(sOwner, DEF_OWNERTYPE_NPC, MSGID_EVENT_MOTION, DEF_OBJECTDAMAGE, iDamage, NULL, NULL);
+									SendEventToNearClient_TypeA(sOwner, DEF_OWNERTYPE_NPC, MSGID_EVENT_MOTION, DEF_OBJECTDAMAGE, (short)iDamage, NULL, NULL);
 								}
 							}
 							break;
@@ -23185,16 +23185,16 @@ void CGame::NpcBehavior_Attack(int iNpcH)
 		}
 		else {
 			// new ice golem special attack! (requries new server sided MAGIC.CFG)
-			if (m_pNpcList[iNpcH]->m_cMagicLevel == 11) 
+			/*if (m_pNpcList[iNpcH]->m_cMagicLevel == 11) 
 			{
 				SendEventToNearClient_TypeA(iNpcH, DEF_OWNERTYPE_NPC, MSGID_EVENT_MOTION, DEF_OBJECTATTACK, m_pNpcList[iNpcH]->m_sX + _tmp_cTmpDirX[cDir], m_pNpcList[iNpcH]->m_sY + _tmp_cTmpDirY[cDir], 1);
 				m_pNpcList[iNpcH]->m_iMagicHitRatio = 1000;
 				NpcMagicHandler(iNpcH, m_pNpcList[iNpcH]->m_sX, m_pNpcList[iNpcH]->m_sY, 75);
 			}
-			else {
+			else {*/
 				SendEventToNearClient_TypeA(iNpcH, DEF_OWNERTYPE_NPC, MSGID_EVENT_MOTION, DEF_OBJECTATTACK, m_pNpcList[iNpcH]->m_sX + _tmp_cTmpDirX[cDir], m_pNpcList[iNpcH]->m_sY + _tmp_cTmpDirY[cDir], 1);
 				iCalculateAttackEffect(m_pNpcList[iNpcH]->m_iTargetIndex, m_pNpcList[iNpcH]->m_cTargetType, iNpcH, DEF_OWNERTYPE_NPC, dX, dY, 1, FALSE, FALSE);
-			}
+			//}
 		}
 		m_pNpcList[iNpcH]->m_iAttackCount++;
 		if ((m_pNpcList[iNpcH]->m_bIsPermAttackMode == FALSE) && (m_pNpcList[iNpcH]->m_cActionLimit == 0)) {
