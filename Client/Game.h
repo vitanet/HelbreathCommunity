@@ -331,8 +331,7 @@ public:
 	void DrawDialogBox_WarningMsg(short msX, short msY);//6
 	void DrawDialogBox_15AgeMsg(short msX, short msY);//5
 	void DrawDialogBox_FeedBackCard(short msX, short msY);//40
-	void DisplayCommaNumber_G_cTxt(unsigned long long int iGold);// Name changed by Snoopy (easyer to understand...)
-
+	
 	void DrawDialogBox_ConfirmExchange(short msX, short msY); //41
 
 	// Slates - Alastor
@@ -999,7 +998,8 @@ public:
 	short m_sMCX, m_sMCY;
 	short m_sCommX, m_sCommY;
 	int   m_iCastingMagicType;
-	short m_sDamageMove, m_sDamageMoveAmount;
+	short m_sDamageMove;
+	int m_sDamageMoveAmount;
 	short m_sAppr1_IE, m_sAppr2_IE, m_sAppr3_IE, m_sAppr4_IE;
 	int m_iStatus_IE;
 	short m_sViewDstX, m_sViewDstY;
@@ -1111,6 +1111,7 @@ public:
 	BOOL m_bIllusionMVT;
 	BOOL m_bIsXmas;
 	BOOL m_bUsingSlate;
+	BOOL m_bIsApocalypse;
 
 
 	class CBuildItem * m_pCraftItemList[DEF_MAXBUILDITEMS];

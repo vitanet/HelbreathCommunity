@@ -16,7 +16,7 @@
 *****************************************************************/
 
 /*** Put here global data for your server ***/
-#define NAME_WORLDNAME			"CEN"											// Name for default (1st) server
+#define NAME_WORLDNAME			"WS1"											// Name for default (1st) server
 #define MSG_WORLDNAME1			"Helbreath Server"								// Long name for 1st server...
 
 
@@ -47,7 +47,7 @@
 #ifdef DEF_ANTI_HACK
 	#define DEF_HIDDEN_LOWERVERSION		95
 	//that can be whatever number you wish, 1 byte-sized numbers will work fine
-	#define DEF_VERSIONPLUSMODIFIER     1+(DEF_HIDDEN_LOWERVERSION+33 % 9+3) 
+	#define DEF_VERSIONPLUSMODIFIER     1+(DEF_HIDDEN_LOWERVERSION % 9) 
 #else
 	#define DEF_VERSIONPLUSMODIFIER     0 
 #endif

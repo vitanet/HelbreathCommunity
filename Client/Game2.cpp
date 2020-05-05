@@ -1124,6 +1124,8 @@ void CGame::MotionEventHandler(char * pData)
 	int   * ip, iApprColor, iLoc;
 	char    cTxt[120];
 	int i;
+	//50Cent - No Critical Damage Limit
+	int iDamage = 0;
 	ZeroMemory(cName, sizeof(cName));
 	sV1 = sV2 = sV3 = NULL;
 	wp = (WORD *)(pData + DEF_INDEX2_MSGTYPE);
@@ -1204,9 +1206,9 @@ void CGame::MotionEventHandler(char * pData)
 	else
 	{
 		switch (wEventType) {
+		
+		//50Cent - No Critical Damage Limit
 		case DEF_OBJECTMAGIC:
-		case DEF_OBJECTDAMAGEMOVE:
-		case DEF_OBJECTDAMAGE:
 			cDir = *cp;
 			cp++;
 			sV1 = (short)*cp; //Damage
@@ -1214,18 +1216,33 @@ void CGame::MotionEventHandler(char * pData)
 			sV2 = (short)*cp; //
 			cp++;
 			break;
+		case DEF_OBJECTDAMAGEMOVE:
+		case DEF_OBJECTDAMAGE:
+			cDir = *cp;
+			cp++;
+
+			ip = (int*)cp;
+			iDamage = *ip;
+			cp += 4;
+
+			sV2 = (short)*cp; //
+			cp++;
+			break;
 
 		case DEF_OBJECTDYING:
 			cDir = *cp;
 			cp++;
-			sV1 = (short)*cp; //Damage
-			cp++;
+
+			ip = (int*)cp;
+			iDamage = *ip;
+			cp += 4;
+
 			sV2 = (short)*cp; //
 			cp++;
-			sp = (short *)cp;
+			sp = (short*)cp;
 			sX = *sp;
 			cp += 2;
-			sp = (short *)cp;
+			sp = (short*)cp;
 			sY = *sp;
 			cp += 2;
 			break;
@@ -1306,11 +1323,11 @@ void CGame::MotionEventHandler(char * pData)
 			{	/* Showing real damage done to NPCs instead of Critical!
 				Credit goes to: 50Cent, SleeQ, Matt */
 				ZeroMemory(cTxt, sizeof(cTxt));
-				wsprintf(cTxt, "-%dHP!", sV1);
+				wsprintf(cTxt, "-%dHP!", iDamage);
 				int iFontType;
-				if ((sV1 >= 0) && (sV1 < 300))        iFontType = 21;
-				else if ((sV1 >= 300) && (sV1 < 1000)) iFontType = 22;
-				else if ((sV1 >= 1000) || (sV1 < 0))    iFontType = 23;
+				if ((iDamage >= 0) && (iDamage < 12))        iFontType = 21;
+				else if ((iDamage >= 12) && (iDamage < 40)) iFontType = 22;
+				else if ((iDamage >= 40) || (iDamage < 0))    iFontType = 23;
 				m_pChatMsgList[i] = new class CMsg(iFontType, cTxt, m_dwCurTime);
 				m_pChatMsgList[i]->m_iObjectID = wObjectID - 30000;
 				if (m_pMapData->bSetChatMsgOwner(wObjectID - 30000, -10, -10, i) == FALSE)
@@ -1339,11 +1356,11 @@ void CGame::MotionEventHandler(char * pData)
 			{	/* Showing real damage done to NPCs instead of Critical!
 				Credit goes to: 50Cent, SleeQ, Matt */
 				ZeroMemory(cTxt, sizeof(cTxt));
-				wsprintf(cTxt, "-%dHP!", sV1);
+				wsprintf(cTxt, "-%dHP!", iDamage);
 				int iFontType;
-				if ((sV1 >= 0) && (sV1 < 300))        iFontType = 21;
-				else if ((sV1 >= 300) && (sV1 < 1000)) iFontType = 22;
-				else if ((sV1 >= 1000) || (sV1 < 0))    iFontType = 23;
+				if ((iDamage >= 0) && (iDamage < 12))        iFontType = 21;
+				else if ((iDamage >= 12) && (iDamage < 40)) iFontType = 22;
+				else if ((iDamage >= 40) || (iDamage < 0))    iFontType = 23;
 				m_pChatMsgList[i] = new class CMsg(iFontType, cTxt, m_dwCurTime);
 				m_pChatMsgList[i]->m_iObjectID = wObjectID - 30000;
 				if (m_pMapData->bSetChatMsgOwner(wObjectID - 30000, -10, -10, i) == FALSE)
@@ -9115,6 +9132,7 @@ void CGame::InitGameSettings()
 	m_iCrusadeDuty = NULL;
 
 	m_bIsHeldenian = FALSE;
+	m_bIsApocalypse = false;
 
 	m_iNetLagCount = NULL;
 
@@ -9261,7 +9279,7 @@ void CGame::InitGameSettings()
 	m_bIsPrevMoveBlocked = FALSE;
 	m_iPrevMoveX = m_iPrevMoveY = -1;
 	m_sDamageMove = 0;
-	m_sDamageMoveAmount = 0;
+	m_sDamageMoveAmount = 0; //50Cent - No Critical Damage Limit
 	m_bForceDisconn = FALSE;
 	m_bIsSpecialAbilityEnabled = FALSE;
 	m_iSpecialAbilityType = 0;
@@ -9874,8 +9892,8 @@ void CGame::DrawDialogBox_CityHallMenu(short msX, short msY)
 
 		//MORLA 2.4 - TP DeathMach Game
 		if ((msX > sX + 35) && (msX < sX + 220) && (msY > sY + 280) && (msY < sY + 293))
-			PutAlignedString(sX, sX + szX, sY + 280, "Go to DeathMatch Game", 255, 255, 255);//"Change the crusade assignment."
-		else PutAlignedString(sX, sX + szX, sY + 280, "Go to DeathMatch Game", 4, 0, 50);//"
+			PutAlignedString(sX, sX + szX, sY + 280, "Go to DeathMatch Arena", 255, 255, 255);//"Change the crusade assignment."
+		else PutAlignedString(sX, sX + szX, sY + 280, "Go to DeathMatch Arena", 4, 0, 50);//"
 
 		break;
 
@@ -10245,7 +10263,7 @@ void CGame::DrawDialogBox_Exchange(short msX, short msY)
 					{
 						if (m_stDialogBoxExchangeInfo[i].sV3 > 1)
 						{
-							DisplayCommaNumber_G_cTxt(m_stDialogBoxExchangeInfo[i].sV3);
+							wsprintf(G_cTxt, "%d", m_stDialogBoxExchangeInfo[i].sV3);
 							strcpy(cTxt2, G_cTxt);
 						}
 						else wsprintf(cTxt2, DRAW_DIALOGBOX_EXCHANGE2, m_stDialogBoxExchangeInfo[i].sV3);
@@ -10405,7 +10423,7 @@ void CGame::DrawDialogBox_Exchange(short msX, short msY)
 					{
 						if (m_stDialogBoxExchangeInfo[i].sV3 > 1)
 						{
-							DisplayCommaNumber_G_cTxt(m_stDialogBoxExchangeInfo[i].sV3);
+							wsprintf(G_cTxt, "%d", m_stDialogBoxExchangeInfo[i].sV3);
 							strcpy(cTxt2, G_cTxt);
 						}
 						else wsprintf(cTxt2, DRAW_DIALOGBOX_EXCHANGE2, m_stDialogBoxExchangeInfo[i].sV3);
@@ -11359,14 +11377,14 @@ void CGame::DrawDialogBox_NpcActionQuery(short msX, short msY)
 				PutString(sX + 29, sY + 55, DRAW_DIALOGBOX_NPCACTION_QUERY17, RGB(4, 0, 50));
 			}
 			// Centu - Guild Warehouse
-			if ((msX > sX + 152) && (msX < sX + 200) && (msY > sY + 23) && (msY < sY + 38)) {
+			/*if ((msX > sX + 152) && (msX < sX + 200) && (msY > sY + 23) && (msY < sY + 38)) {
 				PutString(sX + 155, sY + 23, "Guild", RGB(255, 255, 255));
 				PutString(sX + 156, sY + 23, "Guild", RGB(255, 255, 255));
 			}
 			else {
 				PutString(sX + 155, sY + 23, "Guild", RGB(4, 0, 50));
 				PutString(sX + 156, sY + 23, "Guild", RGB(4, 0, 50));
-			}
+			}*/
 		}
 		else if (m_stDialogBoxInfo[20].sV3 == 19) // CLEROTH: MAGICIAN
 		{   // LEARN
@@ -11378,14 +11396,14 @@ void CGame::DrawDialogBox_NpcActionQuery(short msX, short msY)
 				PutString(sX + 28, sY + 55, DRAW_DIALOGBOX_NPCACTION_QUERY19, RGB(4, 0, 50));
 				PutString(sX + 29, sY + 55, DRAW_DIALOGBOX_NPCACTION_QUERY19, RGB(4, 0, 50));
 			}
-			if ((msX > sX + 132) && (msX < sX + 180) && (msY > sY + 23) && (msY < sY + 38)) {
+			/*if ((msX > sX + 132) && (msX < sX + 180) && (msY > sY + 23) && (msY < sY + 38)) {
 				PutString(sX + 125, sY + 23, "Enchant", RGB(255, 255, 255)); // "Learn"
 				PutString(sX + 126, sY + 23, "Enchant", RGB(255, 255, 255));
 			}
 			else {
 				PutString(sX + 125, sY + 23, "Enchant", RGB(4, 0, 50));
 				PutString(sX + 126, sY + 23, "Enchant", RGB(4, 0, 50));
-			}
+			}*/
 		}
 		else
 		{   // TRADE
@@ -12796,7 +12814,7 @@ void CGame::DrawDialogBox_Skill(short msX, short msY, short msZ, char cLB)
 				/*for (int x = 0; x < 100; x += 5 )
 				{
 					PutString(sX + 30 + x, sY + 45 + i * 15 + 1, "_", RGB(255, 69, 0));
-					if (x == 100) break;
+					
 				}*/
 
 				if (m_iDownSkillIndex == (i + m_stDialogBoxInfo[15].sView))
@@ -16924,42 +16942,38 @@ BOOL CGame::bEffectFrameCounter()
 					break;
 
 				case 197: // Fury-Of-Thor
+					m_Misc.GetPoint(m_pEffectList[i]->m_mX
+						, m_pEffectList[i]->m_mY
+						, m_pEffectList[i]->m_dX * 32
+						, m_pEffectList[i]->m_dY * 32
+						, &m_pEffectList[i]->m_mX
+						, &m_pEffectList[i]->m_mY
+						, &m_pEffectList[i]->m_iErr
+						, 40);
+					int dX, dY;
+					dX = (m_pEffectList[i]->m_mX) - m_sViewPointX;
+					dY = (m_pEffectList[i]->m_mY) - m_sViewPointY;
+
+					_DrawThunderEffect(m_pEffectList[i]->m_dX * 32 - m_sViewPointX - 400, m_pEffectList[i]->m_dY * 32 - m_sViewPointY - 800,
+						dX, dY,
+						m_pEffectList[i]->m_mX + (rand() % 20) - 10, m_pEffectList[i]->m_mY + (rand() % 20) - 10, 1);
+
+					bAddNewEffect(10, m_pEffectList[i]->m_mX + (rand() % 20) - 10, m_pEffectList[i]->m_mY + (rand() % 20) - 10, NULL, NULL, 0, 0);
 					if (m_pEffectList[i]->m_cFrame >= m_pEffectList[i]->m_cMaxFrame)
 					{
-						bAddNewEffect(10, m_pEffectList[i]->m_dX * 32, m_pEffectList[i]->m_dY * 32, NULL, NULL, 0);
 						delete m_pEffectList[i];
 						m_pEffectList[i] = NULL;
 					}
 					else
 					{
-						m_pEffectList[i]->m_rX = 5 - (rand() % 10);
-						m_pEffectList[i]->m_rY = 5 - (rand() % 10);
-						m_Misc.GetPoint(m_pEffectList[i]->m_mX
-							, m_pEffectList[i]->m_mY
-							, m_pEffectList[i]->m_dX * 32
-							, m_pEffectList[i]->m_dY * 32
-							, &m_pEffectList[i]->m_mX
-							, &m_pEffectList[i]->m_mY
-							, &m_pEffectList[i]->m_iErr
-							, 8);
-
-						if (m_pEffectList[i]->m_cFrame == 0 || m_pEffectList[i]->m_cFrame == 10 || m_pEffectList[i]->m_cFrame == 20
-							|| m_pEffectList[i]->m_cFrame == 30) {
-							m_pEffectList[i]->m_rX = 5 - (rand() % 10);
-							m_pEffectList[i]->m_rY = 5 - (rand() % 10);
-							bAddNewEffect(83, m_pEffectList[i]->m_mX + 26, m_pEffectList[i]->m_mY + 16, NULL, NULL, 0, 0);
-							bAddNewEffect(83, m_pEffectList[i]->m_mX + 38, m_pEffectList[i]->m_mY + 18, NULL, NULL, 0, 0);
-							bAddNewEffect(83, m_pEffectList[i]->m_mX + 34, m_pEffectList[i]->m_mY + 34, NULL, NULL, 0, 0);
-							bAddNewEffect(83, m_pEffectList[i]->m_mX, m_pEffectList[i]->m_mY + 2, NULL, NULL, 0, 0);
-							bAddNewEffect(10, m_pEffectList[i]->m_mX, m_pEffectList[i]->m_mY, NULL, NULL, 0);
-							sAbsX = abs(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX); // centu - 800x600
-							sAbsY = abs(((m_sViewPointY / 32) + 9) - m_pEffectList[i]->m_dY); // centu - 800x600
-							if (sAbsX > sAbsY) sDist = sAbsX - 10;
-							else sDist = sAbsY - 10;
-							lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX); // centu - 800x600
-							PlaySound('M', 152, sDist, lPan);
-						}
+						sAbsX = abs(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX);
+						sAbsY = abs(((m_sViewPointY / 32) + 9) - m_pEffectList[i]->m_dY);
+						if (sAbsX > sAbsY) sDist = sAbsX - 10;
+						else sDist = sAbsY - 10;
+						lPan = -(((m_sViewPointX / 32) + 12) - m_pEffectList[i]->m_dX);
+						PlaySound('E', 1, sDist, lPan);
 					}
+
 					break;
 
 				case 156: // Mass-Lightning-Arrow

@@ -33,7 +33,7 @@ CGame::CGame()
 
 	//LifeX Fix Declaration Bugs 01/01
 	DEF_STATS_LIMIT = 0;
-	bDeathmatch = FALSE;
+	bDeathmatch = TRUE;
 
 	bChangeBigItems = FALSE;
 	
@@ -3502,8 +3502,8 @@ void CGame::UpdateScreen_OnLoading_Progress()
 
 	wsprintf(G_cTxt, "%d%%", m_cLoading);
 
-	PutString_SprFont2(592 + SCREENX+39+10, 442 + SCREENY + 39, G_cTxt, 255, 255, 0);
-	m_pSprite[DEF_SPRID_INTERFACE_ND_LOADING]->PutSpriteFastWidth(472 + SCREENX+39,442 + SCREENY+39, 1, (int)m_cLoading, G_dwGlobalTime, false);
+	PutString_SprFont2(592 + SCREENX+39+10, 442 + SCREENY + 39-1, G_cTxt, 255, 255, 0);
+	m_pSprite[DEF_SPRID_INTERFACE_ND_LOADING]->PutSpriteFastWidth(472 + SCREENX+39+1,442 + SCREENY+39-1-1, 1, (int)m_cLoading, G_dwGlobalTime, false);
 
 	m_DDraw.iFlip();
 }
@@ -3853,13 +3853,11 @@ void CGame::DrawDialogBox_Character(short msX, short msY)
 	PutAlignedString(sX + 180, sX + 250, sY + 107 - 6, G_cTxt, 45, 25, 25);
 
 	// Exp
-	// centu - mostrar valor con coma
-
-	DisplayCommaNumber_G_cTxt(m_iExp);
+	wsprintf(G_cTxt, "%d", m_iExp);
 	PutAlignedString(sX + 180, sX + 250, sY + 120 - 6, G_cTxt, 45, 25, 25);
 
 	// Next.Exp
-	DisplayCommaNumber_G_cTxt(iGetLevelExp(m_iLevel + 1));
+	wsprintf(G_cTxt, "%d", iGetLevelExp(m_iLevel + 1));
 	PutAlignedString(sX + 180, sX + 250, sY + 134 - 7, G_cTxt, 45, 25, 25);
 
 	// Hp
@@ -5347,6 +5345,7 @@ void CGame::InitPlayerCharacteristics(char * pData)
 {int  * ip;
  char * cp;
  WORD * wp;
+ unsigned long long int* lp;
 	// Snoopy: Angels
 	m_iAngelicStr = 0;
 	m_iAngelicDex = 0;
@@ -5392,13 +5391,18 @@ void CGame::InitPlayerCharacteristics(char * pData)
 	cp += 4;
 
 	// CLEROTH - LU
-	wp = (WORD *)cp;
-	m_iLU_Point = *wp - 3;
-	cp += 7; // 2 + 5
-
-	ip   = (int *)cp;
-	m_iExp = *ip;
+	ip = (int *)cp;
+	m_iLU_Point = *ip;//*wp - 3;
+	//cp += 7; // 2 + 5
 	cp += 4;
+
+	/*ip   = (int *)cp;
+	m_iExp = *ip;
+	cp += 4;*/
+
+	lp = (unsigned long long int*)cp;
+	m_iExp = *lp;
+	cp += 8;
 
 	ip   = (int *)cp;
 	m_iEnemyKillCount = *ip;
@@ -6051,24 +6055,16 @@ void CGame::bAddNewEffect(short sType, int sX, int sY, int dX, int dY, char cSta
 			break;
 
 		case 197: // Fury-Of-Thor
-			m_pEffectList[i]->m_rX = 5 - (rand() % 10);
-			m_pEffectList[i]->m_rY = 5 - (rand() % 10);
 			m_pEffectList[i]->m_mX = sX * 32;
 			m_pEffectList[i]->m_mY = sY * 32;
 			m_pEffectList[i]->m_iErr = 0;
-			m_pEffectList[i]->m_cMaxFrame = 35;
-			m_pEffectList[i]->m_dwFrameTime = 20;
-#ifdef RES_HIGH
+			m_pEffectList[i]->m_cMaxFrame = 8;
+			m_pEffectList[i]->m_dwFrameTime = 25;
 			sAbsX = abs(400 - (sX - m_sViewPointX));
 			sAbsY = abs(300 - (sY - m_sViewPointY));
-#else
-			sAbsX = abs(320 - (sX - m_sViewPointX));
-			sAbsY = abs(240 - (sY - m_sViewPointY));
-#endif
 			if (sAbsX > sAbsY) sDist = sAbsX;
 			else sDist = sAbsY;
 			sDist = sDist / 32;
-			SetCameraShakingEffect(sDist);
 			break;
 
 		//HellFire Rain
@@ -7402,50 +7398,15 @@ void CGame::DrawEffects()
 			}
 			break;
 		case 197:  // Fury-Of-Thor
+			cTempFrame = m_pEffectList[i]->m_cFrame;
+			if (cTempFrame < 0) break;
+ 
 			dX = (m_pEffectList[i]->m_mX) - m_sViewPointX;
 			dY = (m_pEffectList[i]->m_mY) - m_sViewPointY;
-			//Lineal
-			_DrawThunderEffect(dX, dY - 800,
-				m_pEffectList[i]->m_mX, m_pEffectList[i]->m_mY,
-				m_pEffectList[i]->m_rX - 20, m_pEffectList[i]->m_rY, 3);
-			_DrawThunderEffect(dX, dY - 800,
+			_DrawThunderEffect(m_pEffectList[i]->m_dX * 32 - m_sViewPointX - 400, m_pEffectList[i]->m_dY * 32 - m_sViewPointY - 800,
 				dX, dY,
 				m_pEffectList[i]->m_rX, m_pEffectList[i]->m_rY, 1);
-			_DrawThunderEffect(dX, dY - 800,
-				dX, dY,
-				m_pEffectList[i]->m_rX + 18, m_pEffectList[i]->m_rY + 7, 2);
-			_DrawThunderEffect(dX, dY - 800,
-				dX, dY,
-				m_pEffectList[i]->m_rX - 14, m_pEffectList[i]->m_rY - 7, 2);
 
-			//Diagonal
-			/*_DrawThunderEffect(dX - 500, dY - 800,
-				m_pEffectList[i]->m_mX + 15, m_pEffectList[i]->m_mY + 10,
-				m_pEffectList[i]->m_rX - 20, m_pEffectList[i]->m_rY, 3);
-			_DrawThunderEffect(dX - 500, dY - 800,
-				dX + 15, dY + 10,
-				m_pEffectList[i]->m_rX, m_pEffectList[i]->m_rY, 1);
-			_DrawThunderEffect(dX - 500, dY - 800,
-				dX + 15, dY + 10,
-				m_pEffectList[i]->m_rX + 18, m_pEffectList[i]->m_rY + 7, 2);
-			_DrawThunderEffect(dX - 500, dY - 800,
-				dX + 15, dY + 10,
-				m_pEffectList[i]->m_rX - 14, m_pEffectList[i]->m_rY - 7, 2);
-
-			//Diagonal
-			_DrawThunderEffect(dX + 800, dY - 800,
-				m_pEffectList[i]->m_mX + 15, m_pEffectList[i]->m_mY - 10,
-				m_pEffectList[i]->m_rX - 20, m_pEffectList[i]->m_rY, 3);
-			_DrawThunderEffect(dX + 800, dY - 800,
-				dX + 15, dY - 10,
-				m_pEffectList[i]->m_rX, m_pEffectList[i]->m_rY, 1);
-			_DrawThunderEffect(dX + 800, dY - 800,
-				dX + 15, dY - 10,
-				m_pEffectList[i]->m_rX + 18, m_pEffectList[i]->m_rY + 7, 2);
-			_DrawThunderEffect(dX + 800, dY - 800,
-				dX + 15, dY - 10,
-				m_pEffectList[i]->m_rX - 14, m_pEffectList[i]->m_rY - 7, 2);
-			*/
 			break;
 
 		case 47:
@@ -16434,29 +16395,9 @@ resi = 0;
 		}
 	}
 
-	if (m_bCtrlPressed) {
-		unsigned long long int iCurExp = iGetLevelExp(m_iLevel);
-		unsigned long long int iNextExp = iGetLevelExp(m_iLevel + 1);
-		if (m_iExp < iNextExp)
-		{
-			iNextExp = iNextExp - iCurExp;
-			if (m_iExp > iCurExp) iCurExp = m_iExp - iCurExp; // curxp: partie faite
-			else iCurExp = 0; // below current lvl !
-			short sPerc = 0;
-			if (iCurExp > 200000) sPerc = short(((iCurExp >> 4) * 10000) / (iNextExp >> 4));
-			else sPerc = (short)((iCurExp * 10000) / iNextExp);
-			wsprintf(G_cTxt, "Rest Exp: %d (%d.%02d%%)", iNextExp - iCurExp, sPerc / 100, sPerc % 100);
-		}
-		else
-		{
-			wsprintf(G_cTxt, "Exp: %d (100.00%)", m_iExp); // "Exp: 151000/150000"
-		}
-		PutAlignedString(140 + resx, 323 + resx, 456 + resy, G_cTxt, 200, 200, 120);
-	}
-	else {
 		wsprintf(G_cTxt, "%s (%d,%d)", m_cMapMessage, m_sPlayerX, m_sPlayerY);
 		PutAlignedString(140 + resx, 323 + resx, 456 + resy, G_cTxt, 200, 200, 120); // Map Message (Center Pannel)
-	}
+	
 
 	if ((msY > 436+resy) && (msY < 478+resy)) // Menu Icons
 	{
@@ -17639,27 +17580,6 @@ void CGame::CannotConstruct(int iCode)
 	}
 }
 
-void CGame::DisplayCommaNumber_G_cTxt(unsigned long long int iGold)
-{char cGold[20];
-unsigned long long int iStrLen;
-	ZeroMemory(cGold, sizeof(cGold));
-	ZeroMemory(G_cTxt, sizeof(G_cTxt));
-	itoa(iGold, cGold, 10);
-	iStrLen = strlen(cGold);
-	iStrLen--;
-	unsigned long long int cnt = 0;
-	for (unsigned long long int i = 0 ; i < iStrLen+1 ; i++)
-	{	if( (cnt != 0) && ((cnt+1)%4 == 0) )
-		{	G_cTxt[cnt] = '.';
-			i--;
-		}else G_cTxt[cnt] = cGold[iStrLen-i];
-		cnt++;
-	}
-	iStrLen = strlen(G_cTxt);
-	G_cTxt[iStrLen] = '\0';
-	strrev(G_cTxt);
-}
-
 void CGame::DrawDialogBox_Inventory(int msX, int msY)
 {int i;
  short sX, sY;
@@ -17714,7 +17634,7 @@ void CGame::DrawDialogBox_Inventory(int msX, int msY)
 			}	}	}
 			if (   (m_pItemList[m_cItemOrder[i]]->m_cItemType == DEF_ITEMTYPE_CONSUME)
 				|| (m_pItemList[m_cItemOrder[i]]->m_cItemType == DEF_ITEMTYPE_ARROW) )
-			{	DisplayCommaNumber_G_cTxt((int)m_pItemList[m_cItemOrder[i]]->m_dwCount); // nbe show, as US: 1,200,000
+			{	wsprintf(G_cTxt, "%d", m_pItemList[m_cItemOrder[i]]->m_dwCount); // gold amount
 				PutString2(sX + 29 + m_pItemList[m_cItemOrder[i]]->m_sX +10, sY + 41 + m_pItemList[m_cItemOrder[i]]->m_sY +10
 					, G_cTxt, 200,200,200);
 	}	}	}
@@ -18691,7 +18611,7 @@ void CGame::DlgBoxClick_CityhallMenu(short msX, short msY)
 		//MORLA 2.4 - Clcik en TP DeathMach Game
 		if ((msX > sX + 35) && (msX < sX + 220) && (msY > sY + 280) && (msY < sY + 293))
 		{
-			if (bDeathmatch) bSendCommand(MSGID_COMMAND_COMMON, DEF_COMMONTYPE_REQTPDG, NULL, NULL, NULL, NULL, NULL); // MORLA2.2 - Pregunta EK y REP del player
+			if (!m_bIsCrusadeMode || !m_bIsHeldenian || !m_bIsApocalypse || !m_bIsCTFMode) bSendCommand(MSGID_COMMAND_COMMON, DEF_COMMONTYPE_REQTPDG, NULL, NULL, NULL, NULL, NULL); // MORLA2.2 - Pregunta EK y REP del player
 			PlaySound('E', 14, 5);
 		}
 		break;
@@ -19321,7 +19241,7 @@ unsigned long long int CGame::iGetLevelExp(int iLevel)
 {
 	unsigned long long int iRet;
 	if (iLevel == 0) return 0;
-	iRet = iGetLevelExp(iLevel - 1) + iLevel * ( 50 + (iLevel * (iLevel / 17) * (iLevel / 17) ) );
+	iRet = iGetLevelExp(iLevel - 1) + iLevel * ( 50 + (iLevel * (iLevel / 175) * (iLevel / 175) ) );
 	return iRet;
 }
 
@@ -24031,8 +23951,8 @@ void CGame::UpdateScreen_OnQueryForceLogin()
 
 	if (m_cGameModeCount == 0) {
 		pMI = new class CMouseInterface;
-		pMI->AddRect(200,244,200+DEF_BTNSZX,244+DEF_BTNSZY);
-		pMI->AddRect(370,244,370+DEF_BTNSZX,244+DEF_BTNSZY);
+		pMI->AddRect(200 + SCREENX,244 + SCREENY,200+DEF_BTNSZX + SCREENX,244+DEF_BTNSZY + SCREENY);
+		pMI->AddRect(370 + SCREENX,244 + SCREENY,370+DEF_BTNSZX + SCREENX,244+DEF_BTNSZY + SCREENY);
 		m_bEnterPressed = FALSE;
 		m_bEscPressed   = FALSE;
 		m_cArrowPressed = 0;
@@ -24072,9 +23992,9 @@ void CGame::UpdateScreen_OnQueryForceLogin()
 #endif
 	DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_GAME4, 162 + SCREENX, 130 + SCREENY, 2);
 
-	PutString_SprFont(172 + 86 + SCREENX, 160 + SCREENY, "Character on Use", 7,0,0);
-	PutAlignedString(178, 453 + SCREENX, 195 + SCREENY, UPDATE_SCREEN_ON_QUERY_FORCE_LOGIN1);
-	PutAlignedString(178, 453 + SCREENX, 215 + SCREENY, UPDATE_SCREEN_ON_QUERY_FORCE_LOGIN2);
+	PutString_SprFont(172 + 86 + SCREENX, 160 + SCREENY, "Character in Use", 7,0,0);
+	PutAlignedString(178, 453 + SCREENX + SCREENX, 195 + SCREENY, UPDATE_SCREEN_ON_QUERY_FORCE_LOGIN2);
+	PutAlignedString(178, 453 + SCREENX + SCREENX, 215 + SCREENY, UPDATE_SCREEN_ON_QUERY_FORCE_LOGIN3);
 
 	if ((msX >= 200 + SCREENX) && (msX <= 200 + SCREENX + DEF_BTNSZX) && (msY >= 244 + SCREENY) && (msY <= 244 + SCREENY + DEF_BTNSZY))
 		 DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_BUTTON, 200 + SCREENX, 244 + SCREENY, 19);
@@ -24172,7 +24092,7 @@ void CGame::UpdateScreen_OnSelectCharacter(short sX, short sY, short msX, short 
 					int	_sLevel = m_pCharList[i]->m_sLevel;
 					wsprintf(G_cTxt, "%d", _sLevel);
 					PutString(sX + 138 +i*109 + SCREENX, sY +196 -10 + SCREENY, G_cTxt, RGB(51,0,51)); //25,35,25
-					DisplayCommaNumber_G_cTxt(m_pCharList[i]->m_iExp);
+					wsprintf(G_cTxt, "%d", m_pCharList[i]->m_iExp);
 					PutString(sX + 138 +i*109 + SCREENX, sY +211 -10 + SCREENY, G_cTxt, RGB(51,0,51)); //25,35,25
 				}
 				iTemp2 = m_pCharList[i]->m_iYear*1000000 + m_pCharList[i]->m_iMonth*60000 + m_pCharList[i]->m_iDay*1700 + m_pCharList[i]->m_iHour*70 + m_pCharList[i]->m_iMinute;
@@ -24466,12 +24386,12 @@ void CGame::NotifyMsgHandler(char * pData)
 	//MORLA 2.3 - Deathmatch Activado
     case DEF_NOTIFY_DEATHMATCHSTART: 
 		bDeathmatch = TRUE;
-        SetTopMsg("¡Deathmatch Game Started! Teleport in CityHall", 10);
+        //SetTopMsg("¡Deathmatch Game Started! Teleport in CityHall", 10);
 		break;
 
     case DEF_NOTIFY_DEATHMATCHEND:
 		bDeathmatch = FALSE;
-        SetTopMsg("¡Deathmatch Game is Over!", 10);
+        //SetTopMsg("¡Deathmatch Game is Over!", 10);
 		break;
 
 	// VAMP- online users list
@@ -24808,10 +24728,12 @@ void CGame::NotifyMsgHandler(char * pData)
 
 	case DEF_NOTIFY_APOCGATESTARTMSG: // Snoopy 0x0BD2
 		SetTopMsg("The portal to the Apocalypse is opened.", 10);
+		m_bIsApocalypse = true;
 		break;
 
 	case DEF_NOTIFY_APOCGATEENDMSG: // Snoopy 0x0BD3
 		SetTopMsg("The portal to the Apocalypse is closed.", 10);
+		m_bIsApocalypse = false;
 		break;
 
 	case DEF_NOTIFY_APOCGATEOPEN: // Snoopy ;  Case BD4 of switch 00454077
@@ -25830,14 +25752,15 @@ NMH_LOOPBREAK2:;
 		cp += 4;
         break;
 
+	//50Cent - No Critical Damage Limit
 	case DEF_NOTIFY_DAMAGEMOVE:
 		cp = (char *)(pData + DEF_INDEX2_MSGTYPE + 2);
 		sp = (short *)cp;
 		m_sDamageMove = *sp;
 		cp += 2;
-		sp = (short *)cp;
-		m_sDamageMoveAmount = *sp;
-		cp += 2;
+		ip = (int *)cp;
+		m_sDamageMoveAmount = *ip;
+		cp += 4;
 		break;
 
 	case DEF_NOTIFY_OBSERVERMODE:
@@ -30099,9 +30022,9 @@ MOTION_COMMAND_PROCESS:;
 					wsprintf(cTxt, "-%dHP!", m_sDamageMoveAmount);
 
 					int iFontType;
-					if ((m_sDamageMoveAmount >= 0) && (m_sDamageMoveAmount < 300))        iFontType = 21;
-					else if ((m_sDamageMoveAmount >= 300) && (m_sDamageMoveAmount < 1000)) iFontType = 22;
-					else if ((m_sDamageMoveAmount >= 1000) || (m_sDamageMoveAmount < 0))    iFontType = 23;
+					if ((m_sDamageMoveAmount >= 0) && (m_sDamageMoveAmount < 12))        iFontType = 21;
+					else if ((m_sDamageMoveAmount >= 12) && (m_sDamageMoveAmount < 40)) iFontType = 22;
+					else if ((m_sDamageMoveAmount >= 40) || (m_sDamageMoveAmount < 0))    iFontType = 23;
 
 					m_pChatMsgList[i] = new class CMsg(iFontType, cTxt, m_dwCurTime);
 					m_pChatMsgList[i]->m_iObjectID = m_sPlayerObjectID;
@@ -31267,102 +31190,103 @@ void CGame::UpdateScreen_OnGame()
 		//MORLA2.2 - Deathmach Game
 		if (bDeathmatch)
 		{
+			int resx = 175;
 			wsprintf(G_cTxt, "Name");
-			PutAlignedString(500, 535, 104 + resi, G_cTxt, 255, 120, 120);
+			PutAlignedString(500+ resx, 535 + resx, 104 + resi, G_cTxt, 255, 120, 120);
 			wsprintf(G_cTxt, "Kills");
-			PutAlignedString(565, 575, 104 + resi, G_cTxt, 255, 120, 120);
+			PutAlignedString(565 + resx, 575 + resx, 104 + resi, G_cTxt, 255, 120, 120);
 			wsprintf(G_cTxt, "Deaths");
-			PutAlignedString(600, 610, 104 + resi, G_cTxt, 255, 120, 120);
-			if (iDGKill1 != 0) {
+			PutAlignedString(600 + resx, 610 + resx, 104 + resi, G_cTxt, 255, 120, 120);
+			if (iDGKill1 != 0 || iDGDeath1 != 0) {
 				wsprintf(G_cTxt, "%s", cDGName1);
-				PutAlignedString(500, 535, 104 + 14 + resi, G_cTxt, 255, 255, 0);
+				PutAlignedString(500 + resx, 535 + resx, 104 + 14 + resi, G_cTxt, 255, 255, 0);
 				wsprintf(G_cTxt, "%d", iDGKill1);
-				PutAlignedString(565, 575, 104 + 14 + resi, G_cTxt, 180, 180, 180);
+				PutAlignedString(565 + resx, 575 + resx, 104 + 14 + resi, G_cTxt, 180, 180, 180);
 				wsprintf(G_cTxt, "%d", iDGDeath1);
-				PutAlignedString(600, 610, 104 + 14 + resi, G_cTxt, 180, 180, 180);
+				PutAlignedString(600 + resx, 610 + resx, 104 + 14 + resi, G_cTxt, 180, 180, 180);
 			}
 
-			if (iDGKill2 != 0) {
+			if (iDGKill2 != 0 || iDGDeath2 != 0) {
 				wsprintf(G_cTxt, "%s", cDGName2);
-				PutAlignedString(500, 535, 104 + 14 * 2 + resi, G_cTxt, 180, 180, 180);
+				PutAlignedString(500 + resx, 535 + resx, 104 + 14 * 2 + resi, G_cTxt, 180, 180, 180);
 				wsprintf(G_cTxt, "%d", iDGKill2);
-				PutAlignedString(565, 575, 104 + 14 * 2 + resi, G_cTxt, 180, 180, 180);
+				PutAlignedString(565 + resx, 575 + resx, 104 + 14 * 2 + resi, G_cTxt, 180, 180, 180);
 				wsprintf(G_cTxt, "%d", iDGDeath2);
-				PutAlignedString(600, 610, 104 + 14 * 2 + resi, G_cTxt, 180, 180, 180);
+				PutAlignedString(600 + resx, 610 + resx, 104 + 14 * 2 + resi, G_cTxt, 180, 180, 180);
 			}
 
-			if (iDGKill3 != 0) {
+			if (iDGKill3 != 0 || iDGDeath3 != 0) {
 				wsprintf(G_cTxt, "%s", cDGName3);
-				PutAlignedString(500, 535, 104 + 14 * 3 + resi, G_cTxt, 180, 180, 180);
+				PutAlignedString(500 + resx, 535 + resx, 104 + 14 * 3 + resi, G_cTxt, 180, 180, 180);
 				wsprintf(G_cTxt, "%d", iDGKill3);
-				PutAlignedString(565, 575, 104 + 14 * 3 + resi, G_cTxt, 180, 180, 180);
+				PutAlignedString(565 + resx, 575 + resx, 104 + 14 * 3 + resi, G_cTxt, 180, 180, 180);
 				wsprintf(G_cTxt, "%d", iDGDeath3);
-				PutAlignedString(600, 610, 104 + 14 * 3 + resi, G_cTxt, 180, 180, 180);
+				PutAlignedString(600 + resx, 610 + resx, 104 + 14 * 3 + resi, G_cTxt, 180, 180, 180);
 			}
 
-			if (iDGKill4 != 0) {
+			if (iDGKill4 != 0 || iDGDeath4 != 0) {
 				wsprintf(G_cTxt, "%s", cDGName4);
-				PutAlignedString(500, 535, 104 + 14 * 4 + resi, G_cTxt, 180, 180, 180);
+				PutAlignedString(500 + resx, 535 + resx, 104 + 14 * 4 + resi, G_cTxt, 180, 180, 180);
 				wsprintf(G_cTxt, "%d", iDGKill4);
-				PutAlignedString(565, 575, 104 + 14 * 4 + resi, G_cTxt, 180, 180, 180);
+				PutAlignedString(565 + resx, 575 + resx, 104 + 14 * 4 + resi, G_cTxt, 180, 180, 180);
 				wsprintf(G_cTxt, "%d", iDGDeath4);
-				PutAlignedString(600, 610, 104 + 14 * 4 + resi, G_cTxt, 180, 180, 180);
+				PutAlignedString(600 + resx, 610 + resx, 104 + 14 * 4 + resi, G_cTxt, 180, 180, 180);
 			}
 
-			if (iDGKill5 != 0) {
+			if (iDGKill5 != 0 || iDGDeath5 != 0) {
 				wsprintf(G_cTxt, "%s", cDGName5);
-				PutAlignedString(500, 535, 104 + 14 * 5 + resi, G_cTxt, 180, 180, 180);
+				PutAlignedString(500 + resx, 535 + resx, 104 + 14 * 5 + resi, G_cTxt, 180, 180, 180);
 				wsprintf(G_cTxt, "%d", iDGKill5);
-				PutAlignedString(565, 575, 104 + 14 * 5 + resi, G_cTxt, 180, 180, 180);
+				PutAlignedString(565 + resx, 575 + resx, 104 + 14 * 5 + resi, G_cTxt, 180, 180, 180);
 				wsprintf(G_cTxt, "%d", iDGDeath5);
-				PutAlignedString(600, 610, 104 + 14 * 5 + resi, G_cTxt, 180, 180, 180);
+				PutAlignedString(600 + resx, 610 + resx, 104 + 14 * 5 + resi, G_cTxt, 180, 180, 180);
 			}
 
 			if (m_bCtrlPressed)
 			{
-				if (iDGKill6 != 0) {
+				if (iDGKill6 != 0 || iDGDeath6 != 0) {
 					wsprintf(G_cTxt, "%s", cDGName6);
-					PutAlignedString(500, 535, 104 + 14 * 6 + resi, G_cTxt, 180, 180, 180);
+					PutAlignedString(500 + resx, 535 + resx, 104 + 14 * 6 + resi, G_cTxt, 180, 180, 180);
 					wsprintf(G_cTxt, "%d", iDGKill6);
-					PutAlignedString(565, 575, 104 + 14 * 6 + resi, G_cTxt, 180, 180, 180);
+					PutAlignedString(565 + resx, 575 + resx, 104 + 14 * 6 + resi, G_cTxt, 180, 180, 180);
 					wsprintf(G_cTxt, "%d", iDGDeath6);
-					PutAlignedString(600, 610, 104 + 14 * 6 + resi, G_cTxt, 180, 180, 180);
+					PutAlignedString(600 + resx, 610 + resx, 104 + 14 * 6 + resi, G_cTxt, 180, 180, 180);
 				}
 
-				if (iDGKill7 != 0) {
+				if (iDGKill7 != 0 || iDGDeath7 != 0) {
 					wsprintf(G_cTxt, "%s", cDGName7);
-					PutAlignedString(500, 535, 104 + 14 * 7 + resi, G_cTxt, 180, 180, 180);
+					PutAlignedString(500 + resx, 535 + resx, 104 + 14 * 7 + resi, G_cTxt, 180, 180, 180);
 					wsprintf(G_cTxt, "%d", iDGKill7);
-					PutAlignedString(565, 575, 104 + 14 * 7 + resi, G_cTxt, 180, 180, 180);
+					PutAlignedString(565 + resx, 575 + resx, 104 + 14 * 7 + resi, G_cTxt, 180, 180, 180);
 					wsprintf(G_cTxt, "%d", iDGDeath7);
-					PutAlignedString(600, 610, 104 + 14 * 7 + resi, G_cTxt, 180, 180, 180);
+					PutAlignedString(600 + resx, 610 + resx, 104 + 14 * 7 + resi, G_cTxt, 180, 180, 180);
 				}
 
-				if (iDGKill8 != 0) {
+				if (iDGKill8 != 0 || iDGDeath8 != 0) {
 					wsprintf(G_cTxt, "%s", cDGName8);
-					PutAlignedString(500, 535, 104 + 14 * 8 + resi, G_cTxt, 180, 180, 180);
+					PutAlignedString(500 + resx, 535 + resx, 104 + 14 * 8 + resi, G_cTxt, 180, 180, 180);
 					wsprintf(G_cTxt, "%d", iDGKill8);
-					PutAlignedString(565, 575, 104 + 14 * 8 + resi, G_cTxt, 180, 180, 180);
+					PutAlignedString(565 + resx, 575 + resx, 104 + 14 * 8 + resi, G_cTxt, 180, 180, 180);
 					wsprintf(G_cTxt, "%d", iDGDeath8);
-					PutAlignedString(600, 610, 104 + 14 * 8 + resi, G_cTxt, 180, 180, 180);
+					PutAlignedString(600 + resx, 610 + resx, 104 + 14 * 8 + resi, G_cTxt, 180, 180, 180);
 				}
 
-				if (iDGKill9 != 0) {
+				if (iDGKill9 != 0 || iDGDeath9 != 0) {
 					wsprintf(G_cTxt, "%s", cDGName9);
-					PutAlignedString(500, 535, 104 + 14 * 9 + resi, G_cTxt, 180, 180, 180);
+					PutAlignedString(500 + resx, 535 + resx, 104 + 14 * 9 + resi, G_cTxt, 180, 180, 180);
 					wsprintf(G_cTxt, "%d", iDGKill9);
-					PutAlignedString(565, 575, 104 + 14 * 9 + resi, G_cTxt, 180, 180, 180);
+					PutAlignedString(565 + resx, 575 + resx, 104 + 14 * 9 + resi, G_cTxt, 180, 180, 180);
 					wsprintf(G_cTxt, "%d", iDGDeath9);
-					PutAlignedString(600, 610, 104 + 14 * 9 + resi, G_cTxt, 180, 180, 180);
+					PutAlignedString(600 + resx, 610 + resx, 104 + 14 * 9 + resi, G_cTxt, 180, 180, 180);
 				}
 
-				if (iDGKill10 != 0) {
+				if (iDGKill10 != 0 || iDGDeath10 != 0) {
 					wsprintf(G_cTxt, "%s", cDGName10);
-					PutAlignedString(500, 535, 104 + 14 * 10 + resi, G_cTxt, 180, 180, 180);
+					PutAlignedString(500 + resx, 535 + resx, 104 + 14 * 10 + resi, G_cTxt, 180, 180, 180);
 					wsprintf(G_cTxt, "%d", iDGKill10);
-					PutAlignedString(565, 575, 104 + 14 * 10 + resi, G_cTxt, 180, 180, 180);
+					PutAlignedString(565 + resx, 575 + resx, 104 + 14 * 10 + resi, G_cTxt, 180, 180, 180);
 					wsprintf(G_cTxt, "%d", iDGDeath10);
-					PutAlignedString(600, 610, 104 + 14 * 10 + resi, G_cTxt, 180, 180, 180);
+					PutAlignedString(600 + resx, 610 + resx, 104 + 14 * 10 + resi, G_cTxt, 180, 180, 180);
 				}
 			}
 		}
