@@ -369,7 +369,7 @@ private:
 
 	void _CheckStrategicPointOccupyStatus(char cMapIndex);
 	void GetMapInitialPoint(int iMapIndex, short* pX, short* pY, char* pPlayerLocation = NULL);
-	int  iGetMaxHP(int iClientH, BOOL bBloodEffect = TRUE);
+	int  iGetMaxHP(int iClientH, BOOL bBloodEffect = FALSE);
 	int  iGetMaxMP(int iClientH);
 	int  iGetMaxSP(int iClientH);
 	void _ClearQuestStatus(int iClientH);
