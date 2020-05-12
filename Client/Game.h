@@ -438,7 +438,7 @@ public:
 	void NotifyMsg_CannotJoinMoreGuildsMan(char * pData);
 	void NotifyMsg_GuildDisbanded(char * pData);
 	void NotifyMsg_Exp(char * pData);
-	void NotifyMsg_Killed(char * pData);
+	void NotifyMsg_Killed();
 	void NotifyMsg_HP(char * pData);
 	void NotifyMsg_ItemPurchased(char * pData);
 	void NotifyMsg_DismissGuildReject(char * pData);
@@ -1160,7 +1160,7 @@ public:
 	void DrawDialogBox_OnlineUsers(short msX, short msY, short msZ, char cLB);
 	void NotifyMsg_UserJoin(char * pData); // VAMP - online users list
 
-	
+	void DrawGM(short sX, short sY, DWORD dwTime);
 };
 
 #endif // !defined(AFX_GAME_H__0089D9E3_74E6_11D2_A8E6_00001C7030A6__INCLUDED_)

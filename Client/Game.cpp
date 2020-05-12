@@ -555,7 +555,15 @@ BOOL CGame::bInit(HWND hWnd, HINSTANCE hInst, char * pCmdLine)
 		return FALSE;
 	}
 
+#ifdef DEF_USE_LOGIN
+	if (bReadLoginConfigFile("login.cfg") == FALSE)
+	{
+		MessageBox(m_hWnd, "login.cfg file contains wrong infomation.", "ERROR", MB_ICONEXCLAMATION | MB_OK);
+		return FALSE;
+	}
+#else
 	bReadIp();
+#endif
 	
 	if(bReadItemNameConfigFile() == FALSE)
 	{	MessageBox(m_hWnd, "ItemName.cfg file contains wrong infomation.","ERROR",MB_ICONEXCLAMATION | MB_OK);
@@ -669,6 +677,83 @@ BOOL CGame::bInit(HWND hWnd, HINSTANCE hInst, char * pCmdLine)
 
 	return TRUE;
 }
+
+BOOL CGame::bReadLoginConfigFile(char* cFn)
+{
+	FILE* pFile;
+	HANDLE hFile;
+	DWORD  dwFileSize;
+	char* cp, * token, cReadMode;
+	char seps[] = "= ,\t\n";
+	cReadMode = 0;
+	// Get file size only
+	hFile = CreateFile(cFn, GENERIC_READ, NULL, NULL, OPEN_EXISTING, NULL, NULL);
+	dwFileSize = GetFileSize(hFile, NULL);
+	if (hFile != INVALID_HANDLE_VALUE) CloseHandle(hFile);
+	pFile = fopen(cFn, "rt");
+	if (pFile == NULL) goto DEFAULT_IP;
+	cp = new char[dwFileSize + 2];
+	ZeroMemory(cp, dwFileSize + 2);
+	fread(cp, dwFileSize, 1, pFile);
+	token = strtok(cp, seps);
+	while (token != NULL)
+	{
+		if (cReadMode != 0)
+		{
+			switch (cReadMode) {
+			case 1: // log-server-address
+				if (strlen(token) > 15)
+				{
+					delete[] cp;
+					fclose(pFile);
+					goto DEFAULT_IP;
+				}
+				ZeroMemory(m_cLogServerAddr, sizeof(m_cLogServerAddr));
+				strcpy(m_cLogServerAddr, token);
+				cReadMode = 0;
+				break;
+			case 2: // log-server-port
+				m_iLogServerPort = atoi(token);
+				if (m_iLogServerPort == 0)
+				{
+					delete[] cp;
+					fclose(pFile);
+					goto DEFAULT_IP;
+				}
+				cReadMode = 0;
+				break;
+			case 3: // game-server-mode
+				if ((memcmp(token, "lan", 3) == 0) || (memcmp(token, "LAN", 3) == 0))
+				{
+					m_iGameServerMode = 1;  // Will no connect multi-hoster HB
+										// but will connect from LAN even with bad router
+				}
+				else if ((memcmp(token, "internet", 8) == 0) || (memcmp(token, "INTERNET", 8) == 0))
+				{
+					m_iGameServerMode = 2; // Default HB mode
+				}
+				cReadMode = 0;
+				break;
+			}
+		}
+		else
+		{
+			if (memcmp(token, "log-server-address", 18) == 0) cReadMode = 1;
+			if (memcmp(token, "log-server-port", 15) == 0)    cReadMode = 2;
+			if (memcmp(token, "game-server-mode", 16) == 0)   cReadMode = 3;
+		}
+		token = strtok(NULL, seps);
+	}
+	delete[] cp;
+	fclose(pFile);
+	return TRUE;
+DEFAULT_IP:
+	ZeroMemory(m_cLogServerAddr, sizeof(m_cLogServerAddr));
+	strcpy(m_cLogServerAddr, DEF_SERVER_DNS);
+	m_iLogServerPort = DEF_SERVER_PORT;
+	return TRUE;
+}
+
 
 void CGame::Quit()
 {int i;
@@ -8680,9 +8765,11 @@ BOOL   CGame::DrawObject_OnAttack(int indexX, int indexY, int sX, int sY, BOOL b
 			if (((_tmp_sAppr4 & 0xF000) >> 12) == 0)
 				 iBootsIndex = -1;
 			else iBootsIndex = DEF_SPRID_BOOT_W + ((_tmp_sAppr4 & 0xF000) >> 12)*15 + iAdd;
+			
 			if (((_tmp_sAppr2 & 0x0FF0) >> 4) == 0)
 				iWeaponIndex = -1;
 			else iWeaponIndex = DEF_SPRID_WEAPON_W + ((_tmp_sAppr2 & 0x0FF0) >> 4)*64 + 8*4 + (_tmp_cDir - 1);
+			
 			if ((_tmp_sAppr2 & 0x000F) == 0)
 				iShieldIndex = -1;
 			else iShieldIndex = DEF_SPRID_SHIELD_W + (_tmp_sAppr2 & 0x000F)*8 + 4;
@@ -8996,6 +9083,7 @@ BOOL   CGame::DrawObject_OnAttack(int indexX, int indexY, int sX, int sY, BOOL b
 			m_pSprite[iBodyIndex + (_tmp_cDir -1)]->PutTransSpriteRGB(sX, sY, _tmp_cFrame, 0, -5, -5, dwTime);
 		DrawAngel((_tmp_cDir - 1), sX+20, sY-20, _tmp_cFrame%8, dwTime);
 		DrawWanted(sX, sY, dwTime); // Wanted System
+		DrawGM(sX, sY, dwTime);
 		CheckActiveAura2(sX, sY, dwTime,  _tmp_sOwnerType);
 
 		//50Cent - Capture The Flag
@@ -9564,6 +9652,7 @@ BOOL   CGame::DrawObject_OnAttackMove(int indexX, int indexY, int sX, int sY, BO
 			m_pSprite[iBodyIndex + (_tmp_cDir -1)]->PutTransSpriteRGB(sX+dx, sY+dy, _tmp_cFrame, 0, -5, -5, dwTime);
 		DrawAngel(8+(_tmp_cDir - 1), sX+dx+20, sY+dy-20, _tmp_cFrame%8, dwTime);
 		DrawWanted(sX + dx, sY + dy, dwTime);
+		DrawGM(sX + dx, sY + dy, dwTime);
 		CheckActiveAura2(sX+dx, sY+dy, dwTime,  _tmp_sOwnerType);
 
 		//50Cent - Capture The Flag
@@ -9795,6 +9884,7 @@ BOOL   CGame::DrawObject_OnMagic(int indexX, int indexY, int sX, int sY, BOOL bT
 			m_pSprite[iBodyIndex + (_tmp_cDir -1)]->PutTransSpriteRGB(sX, sY, _tmp_cFrame, 0, -5, -5, dwTime);
 		DrawAngel(32+(_tmp_cDir - 1), sX+20, sY-20, _tmp_cFrame%16, dwTime);
 		DrawWanted(sX, sY, dwTime);
+		DrawGM(sX, sY, dwTime);
 		CheckActiveAura2(sX, sY, dwTime,  _tmp_sOwnerType);
 
 		//50Cent - Capture The Flag
@@ -10030,6 +10120,7 @@ BOOL   CGame::DrawObject_OnGetItem(int indexX, int indexY, int sX, int sY, BOOL 
 			m_pSprite[iBodyIndex + (_tmp_cDir -1)]->PutTransSpriteRGB(sX, sY, _tmp_cFrame, 0, -5, -5, dwTime);
 		DrawAngel(40+(_tmp_cDir - 1), sX+20, sY-20, _tmp_cFrame%4, dwTime);
 		DrawWanted(sX, sY, dwTime);
+		DrawGM(sX, sY, dwTime);
 		CheckActiveAura2(sX, sY, dwTime,  _tmp_sOwnerType);
 
 		//50Cent - Capture The Flag
@@ -10530,6 +10621,7 @@ BOOL CGame::DrawObject_OnDamage(int indexX, int indexY, int sX, int sY, BOOL bTr
 				m_pSprite[iBodyIndex + (_tmp_cDir -1)]->PutTransSpriteRGB(sX, sY, cFrame, 0, -5, -5, dwTime);
 			DrawAngel(16+(_tmp_cDir - 1), sX+20, sY-20, cFrame%4, dwTime);
 			DrawWanted(sX, sY, dwTime);
+			DrawGM(sX, sY, dwTime);
 			CheckActiveAura2(sX, sY, dwTime,  _tmp_sOwnerType);
 
 			//50Cent - Capture The Flag
@@ -10770,6 +10862,7 @@ BOOL CGame::DrawObject_OnDamage(int indexX, int indexY, int sX, int sY, BOOL bTr
 				m_pSprite[iBodyIndex + (_tmp_cDir - 1)]->PutTransSpriteRGB(sX, sY, cFrame, 0, -5, -5, dwTime);
 			DrawAngel(16+(_tmp_cDir - 1), sX+20, sY-20, cFrame%4, dwTime);
 			DrawWanted(sX, sY, dwTime);
+			DrawGM(sX, sY, dwTime);
 			CheckActiveAura2(sX, sY, dwTime,  _tmp_sOwnerType);
 
 			//50Cent - Capture The Flag
@@ -11168,6 +11261,7 @@ BOOL CGame::DrawObject_OnDying(int indexX, int indexY, int sX, int sY, BOOL bTra
 			m_pSprite[iBodyIndex + (_tmp_cDir - 1)]->PutTransSpriteRGB(sX, sY,  cFrame, 0, -5, -5, dwTime);
 		DrawAngel(24+(_tmp_cDir - 1), sX+20, sY-20, _tmp_cFrame, dwTime);
 		DrawWanted(sX, sY, dwTime);
+		DrawGM(sX, sY, dwTime);
 		CheckActiveAura2(sX, sY, dwTime,  _tmp_sOwnerType);
 
 	}else if( strlen(_tmp_cName) > 0 )
@@ -12047,6 +12141,7 @@ BOOL   CGame::DrawObject_OnMove(int indexX, int indexY, int sX, int sY, BOOL bTr
 			m_pSprite[iBodyIndex + (_tmp_cDir -1)]->PutTransSpriteRGB(sX+dx, sY+dy, _tmp_cFrame, 0, -5, -5, dwTime);
 		DrawAngel(40+(_tmp_cDir - 1), sX+dx+20, sY+dy-20, _tmp_cFrame%4, dwTime);
 		DrawWanted(sX + dx, sY + dy, dwTime);
+		DrawGM(sX + dx, sY + dy, dwTime);
 		CheckActiveAura2(sX+dx, sY+dy, dwTime,  _tmp_sOwnerType);
 
 		//50Cent - Capture The Flag
@@ -12517,6 +12612,7 @@ BOOL CGame::DrawObject_OnDamageMove(int indexX, int indexY, int sX, int sY, BOOL
 			m_pSprite[iBodyIndex + (_tmp_cDir -1)]->PutTransSpriteRGB(sX+dx, sY+dy, cFrame, 0, -5, -5, dwTime);
 		DrawAngel(16+(_tmp_cDir - 1), sX+dx+20, sY+dy-20, cFrame%4, dwTime);
 		DrawWanted(sX + dx, sY + dy, dwTime);
+		DrawGM(sX + dx, sY + dy, dwTime);
 		CheckActiveAura2(sX+dx, sY+dy, dwTime,  _tmp_sOwnerType);
 
 		//50Cent - Capture The Flag
@@ -13426,6 +13522,7 @@ BOOL   CGame::DrawObject_OnStop(int indexX, int indexY, int sX, int sY, BOOL bTr
 			m_pSprite[iBodyIndex + (_tmp_cDir - 1)]->PutTransSpriteRGB(sX, sY, _tmp_cFrame, 0, -5, -5, dwTime);
 		DrawAngel(40+(_tmp_cDir - 1), sX+20, sY-20, _tmp_cFrame%4, dwTime);
 		DrawWanted(sX, sY, dwTime);
+		DrawGM(sX, sY, dwTime);
 		CheckActiveAura2(sX, sY, dwTime,  _tmp_sOwnerType);
 
 		//50Cent - Capture The Flag
@@ -14205,7 +14302,14 @@ void CGame::LogResponseHandler(char * pData)
 			memcpy(m_cGameServerName, cp, 20);
 			cp += 20;
 			m_pGSock = new class XSocket(m_hWnd, DEF_SOCKETBLOCKLIMIT);
-			m_pGSock->bConnect(m_cLogServerAddr, iGameServerPort, WM_USER_GAMESOCKETEVENT);
+			if (m_iGameServerMode == 1) // LAN
+			{
+				m_pGSock->bConnect(m_cLogServerAddr, iGameServerPort, WM_USER_GAMESOCKETEVENT);
+			}
+			else // INTERNET
+			{
+				m_pGSock->bConnect(cGameServerAddr, iGameServerPort, WM_USER_GAMESOCKETEVENT);
+			}
 			m_pGSock->bInitBufferSize(30000);
 		}
 		break;
@@ -15105,6 +15209,7 @@ BOOL CGame::DrawObject_OnRun(int indexX, int indexY, int sX, int sY, BOOL bTrans
 			m_pSprite[iBodyIndex + (_tmp_cDir - 1)]->PutTransSpriteRGB(sX + dx, sY + dy, _tmp_cFrame, 0, -5, -5, dwTime);
 		DrawAngel(40 + (_tmp_cDir - 1), sX + dx + 20, sY + dy - 20, _tmp_cFrame % 4, dwTime);
 		DrawWanted(sX + dx, sY + dy, dwTime);
+		DrawGM(sX + dx, sY + dy, dwTime);
 		CheckActiveAura2(sX + dx, sY + dy, dwTime, _tmp_sOwnerType);
 
 		//50Cent - Capture The Flag
@@ -24386,12 +24491,12 @@ void CGame::NotifyMsgHandler(char * pData)
 	//MORLA 2.3 - Deathmatch Activado
     case DEF_NOTIFY_DEATHMATCHSTART: 
 		bDeathmatch = TRUE;
-        //SetTopMsg("¡Deathmatch Game Started! Teleport in CityHall", 10);
+        SetTopMsg("¡Deathmatch Game Started! Teleport in CityHall", 10);
 		break;
 
     case DEF_NOTIFY_DEATHMATCHEND:
 		bDeathmatch = FALSE;
-        //SetTopMsg("¡Deathmatch Game is Over!", 10);
+        SetTopMsg("¡Deathmatch Game is Over!", 10);
 		break;
 
 	// VAMP- online users list
@@ -26320,7 +26425,7 @@ NMH_LOOPBREAK2:;
 		NotifyMsg_SP(pData);
 		break;
 	case DEF_NOTIFY_KILLED:
-		NotifyMsg_Killed(pData);
+		NotifyMsg_Killed();
 		break;
 	case DEF_NOTIFY_EXP:
 		NotifyMsg_Exp(pData);
@@ -28029,10 +28134,10 @@ void CGame::DrawObjectName(short sX, short sY, char * pName, int iStatus)
 	}
 
 	//50Cent - GM Effect sin shield
-	if (((memcmp(pName, "GM1", 3) == 0) && (strlen(pName) == strlen("GM1"))))
+	/*if (((memcmp(pName, "GM1", 3) == 0) && (strlen(pName) == strlen("GM1"))))
 	{
 		m_pEffectSpr[45]->PutTransSprite(sX - 13, sY - 34, 0, m_dwCurTime);
-	}
+	}*/
 
 }
 

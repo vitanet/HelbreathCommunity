@@ -680,7 +680,15 @@ void CGame::NotifyMsg_ServerChange(char * pData)
 	}
 	m_pLSock = new class XSocket(m_hWnd, DEF_SOCKETBLOCKLIMIT);
 	GetIPByDNS();
-	m_pLSock->bConnect(m_cLogServerAddr, iWorldServerPort, WM_USER_LOGSOCKETEVENT);
+
+	if (m_iGameServerMode == 1) // LAN
+	{
+		m_pLSock->bConnect(m_cLogServerAddr, iWorldServerPort, WM_USER_LOGSOCKETEVENT);
+	}
+	else // INTERNET
+	{
+		m_pLSock->bConnect(cWorldServerAddr, iWorldServerPort, WM_USER_LOGSOCKETEVENT);
+	}
 	m_pLSock->bInitBufferSize(30000);
 
 	m_bIsPoisoned = FALSE;
@@ -4138,7 +4146,7 @@ void CGame::DKGlare(int iWeaponColor, int iWeaponIndex, int *iWeaponGlare)
 		*iWeaponGlare = 2;
 	}
 	else if (((iWeaponIndex >= DEF_SPRID_WEAPON_M + 64 * 32) && (iWeaponIndex < DEF_SPRID_WEAPON_M + 64 * 32 + 56)) //BBH
-		|| ((iWeaponIndex >= DEF_SPRID_WEAPON_M + 64 * 32) && (iWeaponIndex < DEF_SPRID_WEAPON_W + 64 * 32 + 56)))//BBH
+		|| ((iWeaponIndex >= DEF_SPRID_WEAPON_W + 64 * 32) && (iWeaponIndex < DEF_SPRID_WEAPON_W + 64 * 32 + 56)))//BBH
 	{
 		*iWeaponGlare = 1;
 	} // MORLA 2.6 - Agregado el efecto al Dark Knight Barbarian Hammer +15
@@ -15937,9 +15945,8 @@ void CGame::NotifyMsg_ItemToBank(char *pData)
 	}
 }
 
-void CGame::NotifyMsg_Killed(char * pData)
+void CGame::NotifyMsg_Killed()
 {
-	char * cp, cAttackerName[11];
 	m_bCommandAvailable = FALSE;
 	m_cCommand = DEF_OBJECTSTOP;
 	m_iHP = 0;
@@ -15947,10 +15954,6 @@ void CGame::NotifyMsg_Killed(char * pData)
 	// Restart
 	m_bItemUsingStatus = FALSE;
 	ClearSkillUsingStatus();
-	ZeroMemory(cAttackerName, sizeof(cAttackerName));
-	cp = (char *)(pData + DEF_INDEX2_MSGTYPE + 2);
-	memcpy(cAttackerName, cp, 10);
-	cp += 10;
 
 	// Snoopy: reduced 3 lines -> 2 lines
 	AddEventList(NOTIFYMSG_KILLED1, 10);
@@ -18743,7 +18746,16 @@ void CGame::DrawAngel(int iSprite, short sX, short sY, char cFrame, DWORD dwTime
 void CGame::DrawWanted(short sX, short sY, DWORD dwTime)
 {
 	if ((_tmp_iStatus & 0x40000) != 0)
-		m_pEffectSpr[105]->PutTransSprite70(sX, sY - 80, 5, dwTime); // Wanted Skull
+		if ((_tmp_iStatus & 0x10) != 0)
+			m_pEffectSpr[105]->PutTransSprite(sX, sY - 80, 5, dwTime); // Wanted Skull
+		else
+			m_pEffectSpr[105]->PutSpriteFast(sX, sY - 80, 5, dwTime); // Wanted Skull
+}
+
+void CGame::DrawGM(short sX, short sY, DWORD dwTime)
+{
+	//if ((_tmp_iStatus & 0x8000) != 0)
+	//	m_pEffectSpr[45]->PutTransSprite(sX - 13, sY - 34, 0, dwTime);
 }
 
 void CGame::EnableDialogBox(int iBoxID, int cType, int sV1, int sV2, char * pString)
