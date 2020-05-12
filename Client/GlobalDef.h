@@ -19,7 +19,7 @@
 #define NAME_WORLDNAME			"WS1"											// Name for default (1st) server
 #define MSG_WORLDNAME1			"Helbreath Server"								// Long name for 1st server...
 
-
+//#define DEF_USE_LOGIN
 
 #define DEF_UPPERVERSION		3
 #define DEF_LOWERVERSION		51

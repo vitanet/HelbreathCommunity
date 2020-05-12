@@ -3390,7 +3390,7 @@ void CGame::RequestPurchaseItemHandler2(int iClientH, char* pItemName, int iNum)
 				m_pClientList[iClientH]->m_iEnemyKillCount -= iEKCost;
 				m_pClientList[iClientH]->m_iDGPoints -= iDPCost;
 				SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_ENEMYKILLS, m_pClientList[iClientH]->m_iEnemyKillCount, NULL, NULL, NULL);
-				SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_REPDGDEATHS, m_pClientList[iClientH]->m_iDGPoints, m_pClientList[iClientH]->m_iDeaths, m_pClientList[iClientH]->m_iRating, NULL);
+				SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_REPDGDEATHS, m_pClientList[iClientH]->m_iDGPoints, m_pClientList[iClientH]->m_iTotalDGKills, m_pClientList[iClientH]->m_iRating, NULL);
 
 				iRet = m_pClientList[iClientH]->m_pXSock->iSendMsg(cData, 48);
 
@@ -7664,10 +7664,8 @@ BOOL CGame::bEquipItemHandler(int iClientH, short sItemIndex, BOOL bNotify)
 			}
 		}
 		// Centuu : Fixed las armas Blood by KaoZureS
-		else if (m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 490) 
-		{ // Sword
-			if (m_pClientList[iClientH]->m_iStr + m_pClientList[iClientH]->m_iAngelicStr < 131) 
-			{
+		else if (m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 490) { // Sword
+			if (m_pClientList[iClientH]->m_iStr + m_pClientList[iClientH]->m_iAngelicStr < 131) {
 				SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_ITEMRELEASED, m_pClientList[iClientH]->m_iSpecialAbilityEquipPos, sItemIndex, NULL, NULL);
 				ReleaseItemHandler(iClientH, sItemIndex, TRUE);
 				return FALSE;
@@ -7688,12 +7686,9 @@ BOOL CGame::bEquipItemHandler(int iClientH, short sItemIndex, BOOL bNotify)
 				SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_RESUR_ON, NULL, NULL, NULL, NULL);
 			}
 		}
-
 		// Centuu : Fixed las armas Blood by KaoZureS
-		else if (m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 491)
-		{ // Axe
-			if (m_pClientList[iClientH]->m_iStr + m_pClientList[iClientH]->m_iAngelicStr < 61)
-			{
+		else if (m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 491) { // Axe
+			if (m_pClientList[iClientH]->m_iStr + m_pClientList[iClientH]->m_iAngelicStr < 61) {
 				SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_ITEMRELEASED, m_pClientList[iClientH]->m_iSpecialAbilityEquipPos, sItemIndex, NULL, NULL);
 				ReleaseItemHandler(iClientH, sItemIndex, TRUE);
 				return FALSE;
@@ -7704,10 +7699,8 @@ BOOL CGame::bEquipItemHandler(int iClientH, short sItemIndex, BOOL bNotify)
 			}
 		}
 		// Centuu : Fixed las armas Blood by KaoZureS
-		else if (m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 492)
-		{ // Rapier
-			if (m_pClientList[iClientH]->m_iStr + m_pClientList[iClientH]->m_iAngelicStr < 11)
-			{
+		else if (m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 492) { // Rapier
+			if (m_pClientList[iClientH]->m_iStr + m_pClientList[iClientH]->m_iAngelicStr < 11) {
 				SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_ITEMRELEASED, m_pClientList[iClientH]->m_iSpecialAbilityEquipPos, sItemIndex, NULL, NULL);
 				ReleaseItemHandler(iClientH, sItemIndex, TRUE);
 				return FALSE;
@@ -8027,16 +8020,6 @@ void CGame::ReleaseItemHandler(int iClientH, short sItemIndex, BOOL bNotice)
 			if ((m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 865) || (m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 866)) {
 				m_pClientList[iClientH]->m_cMagicMastery[94] = FALSE;
 				SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_RESUR_OFF, NULL, NULL, NULL, NULL);
-			}
-			else if (m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 491 || m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 492) { // Axe & Rapier
-				m_pClientList[iClientH]->m_iHitRatio -= 10;
-			}
-		}
-	}
-	if (cEquipPos == DEF_EQUIPPOS_TWOHAND) {
-		if (m_pClientList[iClientH]->m_pItemList[sItemIndex] != NULL) {
-			if (m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 490) { // Sword
-				m_pClientList[iClientH]->m_iHitRatio -= 10;
 			}
 		}
 	}
@@ -9163,34 +9146,6 @@ char CGame::_cCheckHeroItemEquipped(int iClientH)
 		(m_pClientList[iClientH]->m_pItemList[sHeroLeggings]->m_sIDnum == 426)) return 2;
 
 	return 0;
-}
-
-bool CGame::SpecialWeapon_DS(int iClientH)
-{
-	register int ix, iy, sX, sY;
-	short sOwnerH;
-	char  cOwnerType;
-
-	if (m_pClientList[iClientH] == NULL) return FALSE;
-
-	sX = m_pClientList[iClientH]->m_sX;
-	sY = m_pClientList[iClientH]->m_sY;
-
-	for (ix = sX - 20; ix <= sX + 20; ix++)
-		for (iy = sY - 20; iy <= sY + 20; iy++) {
-			m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->GetOwner(&sOwnerH, &cOwnerType, ix, iy);
-			if ((sOwnerH != NULL)
-				&& (cOwnerType == DEF_OWNERTYPE_NPC)
-				&& (m_pNpcList[sOwnerH] != NULL))
-			{
-				if (((m_pNpcList[sOwnerH]->m_sType == 31))
-					&& (m_pNpcList[sOwnerH]->m_bIsKilled == FALSE))
-				{
-					return TRUE;
-				}
-			}
-		}
-	return FALSE;
 }
 
 void CGame::_bDecodeDupItemIDFileContents(char* pData, DWORD dwMsgSize)

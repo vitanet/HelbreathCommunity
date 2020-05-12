@@ -485,7 +485,7 @@ void CGame::NpcKilledHandler(short sAttackerH, char cAttackerType, int iNpcH, sh
 			// À¯´ÏÄÜÀÌ Á×¾ú´Ù. Á×ÀÎ ÀÚ¿¡°Ô Æä³ÎÆ¼¸¦ ¹°¸°´Ù. 
 			m_pClientList[sAttackerH]->m_iRating -= 5;
 			// MORLA 2.4 - Actualizo la rep
-			SendNotifyMsg(NULL, sAttackerH, DEF_NOTIFY_REPDGDEATHS, m_pClientList[sAttackerH]->m_iDGPoints, m_pClientList[sAttackerH]->m_iDeaths, m_pClientList[sAttackerH]->m_iRating, NULL);
+			SendNotifyMsg(NULL, sAttackerH, DEF_NOTIFY_REPDGDEATHS, m_pClientList[sAttackerH]->m_iDGPoints, m_pClientList[sAttackerH]->m_iTotalDGKills, m_pClientList[sAttackerH]->m_iRating, NULL);
 			break;
 
 		case 33:
@@ -731,7 +731,7 @@ BOOL CGame::_bInitNpcAttr(class CNpc* pNpc, char* pNpcName, short sClass, char c
 				pNpc->m_cChatMsgPresence = m_pNpcConfigList[i]->m_cChatMsgPresence;
 				pNpc->m_cDayOfWeekLimit = m_pNpcConfigList[i]->m_cDayOfWeekLimit;
 				pNpc->m_cTargetSearchRange = m_pNpcConfigList[i]->m_cTargetSearchRange;
-				pNpc->m_sAreaSize = m_pNpcConfigList[i]->m_sAreaSize;
+				//pNpc->m_sAreaSize = m_pNpcConfigList[i]->m_sAreaSize;
 				switch (sClass) {
 				case 43:
 				case 44:
@@ -3561,7 +3561,7 @@ BOOL CGame::_bDecodeNpcConfigFileContents(char* pData, DWORD dwMsgSize)
 					iNpcConfigListIndex++;
 					break;
 
-				case 29:
+				case 28:
 					// Added by SNOOPY to allow some npcs to be subject to poison
 					if (_bGetIsStringIsNumber(token) == FALSE) {
 						// Il the value not here, the npc have absolute poison resistance.
@@ -3581,8 +3581,6 @@ BOOL CGame::_bDecodeNpcConfigFileContents(char* pData, DWORD dwMsgSize)
 
 				}
 				break;
-
-
 
 			default:
 				break;
@@ -4865,8 +4863,8 @@ int CGame::bCreateNewNpc(char* pNpcName, char* pName, char* pMapName, short sCla
 				else {
 					for (j = 0; j <= 30; j++) {
 						// SNOOPY: Why -15 ?
-						sX = (rand() % (m_pMapList[iMapIndex]->m_sSizeX - 50)) + 25;//15
-						sY = (rand() % (m_pMapList[iMapIndex]->m_sSizeY - 50)) + 25;//15
+						sX = (rand() % (m_pMapList[iMapIndex]->m_sSizeX - 50)) + 15;//15
+						sY = (rand() % (m_pMapList[iMapIndex]->m_sSizeY - 50)) + 15;//15
 						bFlag = TRUE;
 						for (k = 0; k < DEF_MAXMGAR; k++)
 							if (m_pMapList[iMapIndex]->m_rcMobGenAvoidRect[k].left != -1) {
@@ -4920,7 +4918,7 @@ int CGame::bCreateNewNpc(char* pNpcName, char* pName, char* pMapName, short sCla
 				break;
 			}
 			// new - sends 1x1 monsters to a different position checker than 2x2/3x3
-			if (m_pNpcList[i]->m_sAreaSize == 0) {
+			/*if (m_pNpcList[i]->m_sAreaSize == 0) {
 				if (bGetEmptyPosition(&sX, &sY, iMapIndex) == FALSE) {
 					delete m_pNpcList[i];
 					m_pNpcList[i] = NULL;
@@ -4934,6 +4932,13 @@ int CGame::bCreateNewNpc(char* pNpcName, char* pName, char* pMapName, short sCla
 					m_pNpcList[i] = NULL;
 					break;
 				}
+			}*/
+
+			if (bGetEmptyPosition(&sX, &sY, iMapIndex) == FALSE) // centu
+			{
+				delete m_pNpcList[i];
+				m_pNpcList[i] = NULL;
+				return FALSE;
 			}
 
 			if ((bHideGenMode == TRUE) && (_iGetPlayerNumberOnSpot(sX, sY, iMapIndex, 7) != 0)) {
@@ -5008,7 +5013,7 @@ int CGame::bCreateNewNpc(char* pNpcName, char* pName, char* pMapName, short sCla
 				case 24: // Tom
 				case 25: // William
 				case 26: // Kennedy
-					m_pNpcList[i]->m_cDir = iDice(1, 3) + 3;
+					m_pNpcList[i]->m_cDir = 8; //iDice(1, 3) + 3;
 					break;
 
 				default:
@@ -5097,12 +5102,15 @@ int CGame::bCreateNewNpc(char* pNpcName, char* pName, char* pMapName, short sCla
 				PutLogList(G_cTxt);
 			}
 			// new - creates blocked spaces below 1x1, 2x2, and 3x3 monsters
-			if (m_pNpcList[i]->m_sAreaSize == 0) {
+			/*if (m_pNpcList[i]->m_sAreaSize == 0) {
 				m_pMapList[iMapIndex]->SetOwner(i, DEF_OWNERTYPE_NPC, sX, sY);
 			}
 			else {
 				m_pMapList[iMapIndex]->SetBigOwner(i, DEF_OWNERTYPE_NPC, sX, sY, m_pNpcList[i]->m_sAreaSize);
-			}
+			}*/
+
+			m_pMapList[iMapIndex]->SetOwner(i, DEF_OWNERTYPE_NPC, sX, sY); // centu 
+
 			if ((m_bIsHeldenianMode == TRUE) // If any mob created as Helnian war not started,, ensure it's Neutral...
 				&& (m_bHeldenianWarInitiated == FALSE)
 				&& (m_pMapList[iMapIndex]->m_bIsHeldenianMap == TRUE)

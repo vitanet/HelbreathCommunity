@@ -666,7 +666,7 @@ void CGame::ReqCreateCraftingHandler(int iClientH, char* pData)
 
 	// Search Crafting you wanna build
 	ZeroMemory(cCraftingName, sizeof(cCraftingName));
-	for (i = 0; i < DEF_MAXPOTIONTYPES; i++)
+	for (i = 0; i < DEF_MAXPOTIONTYPES; i++) {
 		if (m_pCraftingConfigList[i] != NULL)
 		{
 			bFlag = FALSE;
@@ -682,7 +682,7 @@ void CGame::ReqCreateCraftingHandler(int iClientH, char* pData)
 				iDifficulty = m_pCraftingConfigList[i]->m_iDifficulty;
 			}
 		}
-
+	}
 
 	// Check if recipe is OK
 	if (strlen(cCraftingName) == 0)
@@ -697,14 +697,14 @@ void CGame::ReqCreateCraftingHandler(int iClientH, char* pData)
 		return;
 	}
 	// Check possible Failure
-	if (iDice(1, 100) > iDifficulty)
+	if (iDice(1, 100) < iDifficulty)
 	{
 		SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_CRAFTING_FAIL, 3, NULL, NULL, NULL); // "Crafting failed"
 	// Remove parts...
 		pItem = NULL;
 		pItem = new class CItem;
 		if (pItem == NULL) return;
-		for (i = 0; i < 6; i++)
+		for (i = 0; i < 6; i++) {
 			if (sItemIndex[i] != -1)
 			{	// Deplete any Merien Stone
 				if ((m_pClientList[iClientH]->m_pItemList[sItemIndex[i]]->m_cItemType == DEF_ITEMTYPE_NONE)
@@ -713,7 +713,7 @@ void CGame::ReqCreateCraftingHandler(int iClientH, char* pData)
 				{
 					ItemDepleteHandler(iClientH, sItemIndex[i], FALSE, TRUE);
 				}
-				else
+				else {
 					// Risk to deplete any other items (not stackable ones) // DEF_ITEMTYPE_CONSUME
 					if ((m_pClientList[iClientH]->m_pItemList[sItemIndex[i]]->m_cItemType == DEF_ITEMTYPE_EQUIP)
 						|| (m_pClientList[iClientH]->m_pItemList[sItemIndex[i]]->m_cItemType == DEF_ITEMTYPE_MATERIAL))
@@ -723,7 +723,9 @@ void CGame::ReqCreateCraftingHandler(int iClientH, char* pData)
 							ItemDepleteHandler(iClientH, sItemIndex[i], FALSE, TRUE);
 						}
 					}
+				}
 			}
+		}
 		return;
 	}
 
