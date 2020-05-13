@@ -375,7 +375,7 @@ void CGame::NpcKilledHandler(short sAttackerH, char cAttackerType, int iNpcH, sh
 	int* ip, i, iQuestIndex, iConstructionPoint, iWarContribution, iMapIndex;
 	double dTmp1, dTmp2, dTmp3;
 	char* cp, cData[120], cQuestRemain;
-	unsigned long long int iExp;
+	unsigned long long iExp;
 
 	if (m_pNpcList[iNpcH] == NULL) return;
 	if (m_pNpcList[iNpcH]->m_bIsKilled == TRUE) return;
@@ -731,7 +731,7 @@ BOOL CGame::_bInitNpcAttr(class CNpc* pNpc, char* pNpcName, short sClass, char c
 				pNpc->m_cChatMsgPresence = m_pNpcConfigList[i]->m_cChatMsgPresence;
 				pNpc->m_cDayOfWeekLimit = m_pNpcConfigList[i]->m_cDayOfWeekLimit;
 				pNpc->m_cTargetSearchRange = m_pNpcConfigList[i]->m_cTargetSearchRange;
-				//pNpc->m_sAreaSize = m_pNpcConfigList[i]->m_sAreaSize;
+				pNpc->m_sAreaSize = m_pNpcConfigList[i]->m_sAreaSize;
 				switch (sClass) {
 				case 43:
 				case 44:
@@ -3556,24 +3556,19 @@ BOOL CGame::_bDecodeNpcConfigFileContents(char* pData, DWORD dwMsgSize)
 						return FALSE;
 					}
 					m_pNpcConfigList[iNpcConfigListIndex]->m_iAttackRange = atoi(token);
-					cReadModeA = 0;
-					cReadModeB = 0;
-					iNpcConfigListIndex++;
+					cReadModeB = 28;
 					break;
 
+				
 				case 28:
-					// Added by SNOOPY to allow some npcs to be subject to poison
+					// AreaSize
 					if (_bGetIsStringIsNumber(token) == FALSE) {
-						// Il the value not here, the npc have absolute poison resistance.
-						m_pNpcConfigList[iNpcConfigListIndex]->m_cPoisonResistance = 110;
+						PutLogList("(!!!) CRITICAL ERROR! NPC configuration file error - Wrong Data format.");
+						delete[] pContents;
+						delete pStrTok;
+						return FALSE;
 					}
-					else
-					{
-						m_pNpcConfigList[iNpcConfigListIndex]->m_cPoisonResistance = atoi(token);
-						// always 10 minimal PR
-						if (m_pNpcConfigList[iNpcConfigListIndex]->m_cPoisonResistance < 10)
-							m_pNpcConfigList[iNpcConfigListIndex]->m_cPoisonResistance = 10;
-					}
+					m_pNpcConfigList[iNpcConfigListIndex]->m_sAreaSize = atoi(token);
 					cReadModeA = 0;
 					cReadModeB = 0;
 					iNpcConfigListIndex++;
@@ -4918,7 +4913,7 @@ int CGame::bCreateNewNpc(char* pNpcName, char* pName, char* pMapName, short sCla
 				break;
 			}
 			// new - sends 1x1 monsters to a different position checker than 2x2/3x3
-			/*if (m_pNpcList[i]->m_sAreaSize == 0) {
+			if (m_pNpcList[i]->m_sAreaSize == 0) {
 				if (bGetEmptyPosition(&sX, &sY, iMapIndex) == FALSE) {
 					delete m_pNpcList[i];
 					m_pNpcList[i] = NULL;
@@ -4932,13 +4927,6 @@ int CGame::bCreateNewNpc(char* pNpcName, char* pName, char* pMapName, short sCla
 					m_pNpcList[i] = NULL;
 					break;
 				}
-			}*/
-
-			if (bGetEmptyPosition(&sX, &sY, iMapIndex) == FALSE) // centu
-			{
-				delete m_pNpcList[i];
-				m_pNpcList[i] = NULL;
-				return FALSE;
 			}
 
 			if ((bHideGenMode == TRUE) && (_iGetPlayerNumberOnSpot(sX, sY, iMapIndex, 7) != 0)) {
@@ -5102,15 +5090,12 @@ int CGame::bCreateNewNpc(char* pNpcName, char* pName, char* pMapName, short sCla
 				PutLogList(G_cTxt);
 			}
 			// new - creates blocked spaces below 1x1, 2x2, and 3x3 monsters
-			/*if (m_pNpcList[i]->m_sAreaSize == 0) {
+			if (m_pNpcList[i]->m_sAreaSize == 0) {
 				m_pMapList[iMapIndex]->SetOwner(i, DEF_OWNERTYPE_NPC, sX, sY);
 			}
 			else {
 				m_pMapList[iMapIndex]->SetBigOwner(i, DEF_OWNERTYPE_NPC, sX, sY, m_pNpcList[i]->m_sAreaSize);
-			}*/
-
-			m_pMapList[iMapIndex]->SetOwner(i, DEF_OWNERTYPE_NPC, sX, sY); // centu 
-
+			}
 			if ((m_bIsHeldenianMode == TRUE) // If any mob created as Helnian war not started,, ensure it's Neutral...
 				&& (m_bHeldenianWarInitiated == FALSE)
 				&& (m_pMapList[iMapIndex]->m_bIsHeldenianMap == TRUE)

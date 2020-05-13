@@ -580,7 +580,7 @@ BOOL CGame::bInit()
 	for(i =0; i < DEF_MAXFIGHTZONE; i++) 
 		m_iFightZoneReserve[i] = 0 ;
 	m_iFightzoneNoForceRecall = 0;
-	for (i = 1; i <= DEF_MAXEXPTABLE; i++) { //centu - lvl jump fixed
+	for (i = 0; i < DEF_MAXEXPTABLE; i++) { //centu - lvl jump fixed
 		m_iLevelExpTable[i] = iGetLevelExp(i);
 	}
 	
@@ -1345,7 +1345,7 @@ void CGame::RequestInitDataHandler(int iClientH, char * pData, char cKey, BOOL b
  int iMapSide, iMapSide2;
  BOOL bIsItemListNull;
  POINT TempItemPosList[DEF_MAXITEMS];
- unsigned long long int* lp;
+ unsigned long long * lp;
 
 	if (m_pClientList[iClientH] == NULL) return;
 	pBuffer = new char [DEF_MSGBUFFERSIZE+1];
@@ -1448,7 +1448,7 @@ void CGame::RequestInitDataHandler(int iClientH, char * pData, char cKey, BOOL b
 	*ip  = m_pClientList[iClientH]->m_iExp;
 	cp  += 4;*/
 
-	lp = (unsigned long long int*)cp;
+	lp = (unsigned long long*)cp;
 	*lp = m_pClientList[iClientH]->m_iExp;
 	cp += 8;
 
@@ -6878,7 +6878,7 @@ int CGame::iClientMotion_Attack_Handler(int iClientH, short sX, short sY, short 
  BOOL    bNearAttack = FALSE, var_AC = FALSE;
  short sItemIndex;
  int tX, tY, iErr;
- unsigned long long int iExp;
+ unsigned long long iExp;
  int  iDamage, iV1, iV2, iV3;
 
 	if (m_pClientList[iClientH] == NULL) return 0;
@@ -9045,9 +9045,9 @@ void CGame::Quit()
 
 }
 
-unsigned long long int CGame::iGetLevelExp(int iLevel)
+unsigned long long CGame::iGetLevelExp(int iLevel)
 {
-	unsigned long long int iRet;
+	unsigned long long iRet;
 	
 	if (iLevel == 0) return 0;
 	
@@ -9674,7 +9674,7 @@ void CGame::EnemyKillRewardHandler(int iAttackerH, int iClientH)
 	// Elvine kills Aresden in Elvine and gets an EK
 	// Aresden kills Elvine in Elvine and doesnt get an EK
 	
-	unsigned long long int iRewardExp;
+	unsigned long long iRewardExp;
 
 	int iRangoAttacker = 1;
 	
@@ -9921,7 +9921,7 @@ void CGame::EnemyKillRewardHandler(int iAttackerH, int iClientH)
 // 05/22/2004 - Hypnotoad - register in pk log
 void CGame::ApplyCombatKilledPenalty(int iClientH, int cPenaltyLevel, BOOL bIsSAattacked)
 {  
-	unsigned long long int iExp;
+	unsigned long long iExp;
 
 	if (m_pClientList[iClientH] == NULL) return;
 	if (m_pClientList[iClientH]->m_bIsInitComplete == FALSE) return;
@@ -10273,7 +10273,7 @@ void CGame::Effect_Damage_Spot(short sAttackerH, char cAttackerType, short sTarg
  DWORD dwTime;
  register double dTmp1, dTmp2, dTmp3;
  short sAtkX, sAtkY, sTgtX, sTgtY, dX, dY, sItemIndex;
- unsigned long long int iExp;
+ unsigned long long iExp;
 
  	if (cAttackerType == DEF_OWNERTYPE_PLAYER)
 		if (m_pClientList[sAttackerH] == NULL) return;
@@ -10767,7 +10767,7 @@ void CGame::Effect_Damage_Spot_Type2(short sAttackerH, char cAttackerType, short
  DWORD dwTime;
  register double dTmp1, dTmp2, dTmp3;
  short sTgtX, sTgtY, sItemIndex;
- unsigned long long int iExp;
+ unsigned long long iExp;
 
 	if ((cAttackerType == DEF_OWNERTYPE_PLAYER) && (m_pClientList[sAttackerH] == NULL)) return;
 	if ((cAttackerType == DEF_OWNERTYPE_NPC) && (m_pNpcList[sAttackerH] == NULL)) return;
@@ -11647,7 +11647,7 @@ EDSD_SKIPDAMAGEMOVE:;
 				}
 
 				//Crusade
-				unsigned long long int iExp;
+				unsigned long long iExp;
 
 				// NPC에 대한 공격이 성공했으므로 공격자가 플레이어라면 입힌 대미지 만큼의 경험치를 공격자에게 준다. 
 				if ( (m_pNpcList[sTargetH]->m_iNoDieRemainExp > 0) && (m_pNpcList[sTargetH]->m_bIsSummoned != TRUE) && 
@@ -13336,7 +13336,7 @@ void CGame::ResponseSavePlayerDataReplyHandler(char * pData, DWORD dwMsgSize)
 	}
 }
 
-unsigned long long int CGame::iGetExpLevel(unsigned long long int iExp)
+unsigned long long CGame::iGetExpLevel(unsigned long long iExp)
 {
  int i;
 
@@ -16051,7 +16051,7 @@ void CGame::RequestOnlines(int iClientH)
 	
 }
 
-void CGame::GetExp(int iClientH, unsigned long long int iExp, BOOL bIsAttackerOwn)
+void CGame::GetExp(int iClientH, unsigned long long iExp, BOOL bIsAttackerOwn)
 {
 
 	double dV1, dV2, dV3;
@@ -16068,7 +16068,7 @@ void CGame::GetExp(int iClientH, unsigned long long int iExp, BOOL bIsAttackerOw
 		dV2 = dV1 * 0.025f;
 		dV3 = (double)iExp;
 		dV1 = (dV2 + 1.025f)*dV3;
-		iExp = (unsigned long long int)dV1;
+		iExp = (unsigned long long)dV1;
 	}
 		
 	//Check for party status, else give exp to player
@@ -16166,7 +16166,7 @@ void CGame::GetExp(int iClientH, unsigned long long int iExp, BOOL bIsAttackerOw
 	}
 }
 
-void CGame::MultiplicadorExp(int Client, unsigned long long int Exp)
+void CGame::MultiplicadorExp(int Client, unsigned long long Exp)
 {
 	if (m_pClientList[Client] == NULL) return;
 
@@ -18126,7 +18126,7 @@ int CGame::iCalculateAttackEffect(short sTargetH, char cTargetType, short sAttac
  int    iPartyID, iConstructionPoint, iWarContribution, tX, tY, iDst1, iDst2;
  short	sItemIndex;
  short	sSkillUsed;
- unsigned long long int iExp;
+ unsigned long long iExp;
 
 	dwTime = timeGetTime();
 	bKilled = FALSE;
@@ -18766,11 +18766,13 @@ int CGame::iCalculateAttackEffect(short sTargetH, char cTargetType, short sAttac
 			}
 			else {
 				switch (cProtect) {
+				case 1:
+					if (bNormalMissileAttack) return 0;
+					break;
 				case 3: iTargetDefenseRatio += 40;  break;
 				case 4: iTargetDefenseRatio += 100; break;
 				}
 				if (iTargetDefenseRatio < 0) iTargetDefenseRatio = 1;
-				if ((cProtect == 1) && (bNormalMissileAttack)) return 0;
 			}
 		}
 	}
@@ -18829,7 +18831,7 @@ int CGame::iCalculateAttackEffect(short sTargetH, char cTargetType, short sAttac
 	}
 
 	// Centuu : Ranged Hit Fix - HB2
-	BOOL bRangedWeapon = FALSE;
+	/*BOOL bRangedWeapon = FALSE;
 	if (cAttackerType == DEF_OWNERTYPE_PLAYER) {
 		if (m_pClientList[sAttackerH]->m_sItemEquipmentStatus[DEF_EQUIPPOS_TWOHAND] != -1)
 			 sWeaponIndex = m_pClientList[sAttackerH]->m_sItemEquipmentStatus[DEF_EQUIPPOS_TWOHAND];
@@ -18885,7 +18887,7 @@ int CGame::iCalculateAttackEffect(short sTargetH, char cTargetType, short sAttac
 			}
 			break;
 		}
-	}
+	}*/
 
 	iResult = iDice(1, 100);
 
@@ -20411,7 +20413,7 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 	char* cp;
 	short* sp;
 	int* ip, iRet, i;
-	unsigned long long int* lp;
+	unsigned long long* lp;
 
 	if (m_pClientList[iToH] == NULL) return;
 
@@ -21138,18 +21140,19 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 		dwp = (DWORD*)cp;
 		*dwp = (DWORD)m_pClientList[iToH]->m_iRewardGold;
 		cp += 4;
-		dwp = (DWORD*)cp;
-		*dwp = m_pClientList[iToH]->m_iExp;
-		cp += 4;
 
-		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 28);
+		lp = (unsigned long long*)cp;
+		*lp = m_pClientList[iToH]->m_iExp;
+		cp += 8;
+
+		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 32);
 		break;
 
 	case DEF_NOTIFY_PKPENALTY:
 		// PK 횈채쨀횓횈쩌쨍짝 쨍횚쩐첬쨈횢.
-		dwp = (DWORD*)cp;
-		*dwp = (DWORD)m_pClientList[iToH]->m_iExp;
-		cp += 4;
+		lp = (unsigned long long*)cp;
+		*lp = m_pClientList[iToH]->m_iExp;
+		cp += 8;
 		dwp = (DWORD*)cp;
 		*dwp = (DWORD)m_pClientList[iToH]->m_iStr;
 		cp += 4;
@@ -21172,13 +21175,13 @@ void CGame::SendNotifyMsg(int iFromH, int iToH, WORD wMsgType, DWORD sV1, DWORD 
 		*dwp = (DWORD)m_pClientList[iToH]->m_iPKCount;
 		cp += 4;
 
-		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 38);
+		iRet = m_pClientList[iToH]->m_pXSock->iSendMsg(cData, 42);
 		break;
 
 	case DEF_NOTIFY_TRAVELERLIMITEDLEVEL:
 	case DEF_NOTIFY_LIMITEDLEVEL:
 	case DEF_NOTIFY_EXP:
-		lp = (unsigned long long int*)cp;
+		lp = (unsigned long long*)cp;
 		*lp = m_pClientList[iToH]->m_iExp;
 		cp += 8;
 
@@ -23119,10 +23122,10 @@ void CGame::NpcBehavior_Attack(int iNpcH)
 		return;
 	}
 	
-	/*if (m_pNpcList[iNpcH]->m_sAreaSize != 0) {
+	if (m_pNpcList[iNpcH]->m_sAreaSize != 0) {
 		bFly = m_pMapList[m_pClientList[iNpcH]->m_cMapIndex]->bCheckFlySpaceAvailable(dX, dY, cDir, iNpcH);
-	}*/
-	if (((abs(sX - dX) <= 1) && (abs(sY - dY) <= 1)) /*&& (m_pNpcList[iNpcH]->m_sAreaSize == 0)*/) 
+	}
+	if (((abs(sX - dX) <= 1) && (abs(sY - dY) <= 1)) && (m_pNpcList[iNpcH]->m_sAreaSize == 0)) 
 	{
 		cDir = m_Misc.cGetNextMoveDir(sX, sY, dX, dY);
 		if (cDir == 0) return;
@@ -23130,19 +23133,6 @@ void CGame::NpcBehavior_Attack(int iNpcH)
 		if (m_pNpcList[iNpcH]->m_cActionLimit == 5) 
 		{
 			switch (m_pNpcList[iNpcH]->m_sType) {
-			/*case 36: // Crossbow Guard Tower:
-			case 53: // CT
-				SendEventToNearClient_TypeA(iNpcH, DEF_OWNERTYPE_NPC, MSGID_EVENT_MOTION, DEF_OBJECTATTACK, m_pNpcList[iNpcH]->m_sX + _tmp_cTmpDirX[cDir], m_pNpcList[iNpcH]->m_sY + _tmp_cTmpDirY[cDir], 2);
-				iCalculateAttackEffect(m_pNpcList[iNpcH]->m_iTargetIndex, m_pNpcList[iNpcH]->m_cTargetType, iNpcH, DEF_OWNERTYPE_NPC, dX, dY, 2, FALSE, FALSE, FALSE);
-				break;
-
-			case 37: // Cannon Guard Tower: 
-			case 51: // Catapault
-				SendEventToNearClient_TypeA(iNpcH, DEF_OWNERTYPE_NPC, MSGID_EVENT_MOTION, DEF_OBJECTATTACK, dX, dY, 1);
-				m_pNpcList[iNpcH]->m_iMagicHitRatio = 1000;
-				NpcMagicHandler(iNpcH, dX, dY, 61);
-				break;*/
-
 			case 89: // AGT
 				SendEventToNearClient_TypeA(iNpcH, DEF_OWNERTYPE_NPC, MSGID_EVENT_MOTION, DEF_OBJECTATTACK, dX, dY, 1);
 				m_pNpcList[iNpcH]->m_iMagicHitRatio = 1000;
@@ -23189,7 +23179,7 @@ void CGame::NpcBehavior_Attack(int iNpcH)
 		if (cDir == 0) return;
 		m_pNpcList[iNpcH]->m_cDir = cDir;
 		if ((m_pNpcList[iNpcH]->m_cMagicLevel > 0) && (iDice(1, 2) == 1) &&
-			(abs(sX - dX) <= 12) && (abs(sY - dY) <= 10)) {
+			(abs(sX - dX) <= 12) && (abs(sY - dY) <= 9)) {
 			iMagicType = -1;
 			switch (m_pNpcList[iNpcH]->m_cMagicLevel) {
 			case 1:
@@ -23365,21 +23355,6 @@ void CGame::NpcBehavior_Attack(int iNpcH)
 			m_pNpcList[iNpcH]->m_cDir = cDir;
 			if (m_pNpcList[iNpcH]->m_cActionLimit == 5) {
 				switch (m_pNpcList[iNpcH]->m_sType) {
-					//case 36: // Crossbow Guard Tower
-					//case 54: // CT
-					//case 89:
-					//	SendEventToNearClient_TypeA(iNpcH, DEF_OWNERTYPE_NPC, MSGID_EVENT_MOTION, DEF_OBJECTATTACK, dX, dY, 2);
-					//	iCalculateAttackEffect(m_pNpcList[iNpcH]->m_iTargetIndex, m_pNpcList[iNpcH]->m_cTargetType, iNpcH, DEF_OWNERTYPE_NPC, dX, dY, 2);
-					//	break;
-
-					//case 37: // Cannon Guard Tower: 매스 파이어 스트라이크 공격
-					//case 51:
-					//case 87:
-					//	SendEventToNearClient_TypeA(iNpcH, DEF_OWNERTYPE_NPC, MSGID_EVENT_MOTION, DEF_OBJECTATTACK, dX, dY, 1);
-					//	m_pNpcList[iNpcH]->m_iMagicHitRatio = 1000;
-					//	NpcMagicHandler(iNpcH, dX, dY, 61);
-					//	break;
-
 				case 89: // AGT
 					SendEventToNearClient_TypeA(iNpcH, DEF_OWNERTYPE_NPC, MSGID_EVENT_MOTION, DEF_OBJECTATTACK, dX, dY, 1);
 					m_pNpcList[iNpcH]->m_iMagicHitRatio = 1000;
@@ -23488,12 +23463,11 @@ void CGame::NpcBehavior_Attack(int iNpcH)
 						}
 						break;
 					}
-				NBA_BREAK1:;
+
 					SendEventToNearClient_TypeA(iNpcH, DEF_OWNERTYPE_NPC, MSGID_EVENT_MOTION, DEF_OBJECTATTACK, dX, dY, 20);
 					iCalculateAttackEffect(m_pNpcList[iNpcH]->m_iTargetIndex, m_pNpcList[iNpcH]->m_cTargetType, iNpcH, DEF_OWNERTYPE_NPC, dX, dY, 20);
 					break;
-
-
+NBA_BREAK1:;
 				default:
 					SendEventToNearClient_TypeA(iNpcH, DEF_OWNERTYPE_NPC, MSGID_EVENT_MOTION, DEF_OBJECTATTACK, dX, dY, 20);
 					iCalculateAttackEffect(m_pNpcList[iNpcH]->m_iTargetIndex, m_pNpcList[iNpcH]->m_cTargetType, iNpcH, DEF_OWNERTYPE_NPC, dX, dY, 20);
@@ -23518,32 +23492,35 @@ void CGame::NpcBehavior_Attack(int iNpcH)
 			}
 		}
 
-	NBA_CHASE:;
+NBA_CHASE:;
 		if (m_pNpcList[iNpcH]->m_cActionLimit != 0) return;
 		m_pNpcList[iNpcH]->m_iAttackCount = 0;
-		{
+		if ((m_pNpcList[iNpcH]->m_iAttackRange > 1) && // centu - fixed attack range
+			(abs(sX - dX) <= m_pNpcList[iNpcH]->m_iAttackRange) &&
+			(abs(sY - dY) <= m_pNpcList[iNpcH]->m_iAttackRange)) {
+			SendEventToNearClient_TypeA(iNpcH, DEF_OWNERTYPE_NPC, MSGID_EVENT_MOTION, DEF_OBJECTATTACK, dX, dY, 20);
+			iCalculateAttackEffect(m_pNpcList[iNpcH]->m_iTargetIndex, m_pNpcList[iNpcH]->m_cTargetType, iNpcH, DEF_OWNERTYPE_NPC, dX, dY, 20);
+		}
+		else {
 			// new
-			/*if (m_pNpcList[iNpcH]->m_sAreaSize == 0) {
+			if (m_pNpcList[iNpcH]->m_sAreaSize == 0) {
 				cDir = cGetNextMoveDir(sX, sY, dX, dY, m_pNpcList[iNpcH]->m_cMapIndex, m_pNpcList[iNpcH]->m_cTurn, &m_pNpcList[iNpcH]->m_tmp_iError);
 			}
 			else {
 				cDir = cGetNextMoveArea(iNpcH, sX, sY, dX, dY, m_pNpcList[iNpcH]->m_cMapIndex, m_pNpcList[iNpcH]->m_cTurn, &m_pNpcList[iNpcH]->m_tmp_iError, m_pNpcList[iNpcH]->m_sAreaSize);
-			}*/
-			cDir = cGetNextMoveDir(sX, sY, dX, dY, m_pNpcList[iNpcH]->m_cMapIndex, m_pNpcList[iNpcH]->m_cTurn, &m_pNpcList[iNpcH]->m_tmp_iError);
+			}
 			if (cDir == 0) return;
 			dX = m_pNpcList[iNpcH]->m_sX + _tmp_cTmpDirX[cDir];
 			dY = m_pNpcList[iNpcH]->m_sY + _tmp_cTmpDirY[cDir];
 			// new 1x1, 2x2, 3x3 npc attack
-			/*if (m_pNpcList[iNpcH]->m_sAreaSize == 0) {
+			if (m_pNpcList[iNpcH]->m_sAreaSize == 0) {
 				m_pMapList[m_pNpcList[iNpcH]->m_cMapIndex]->ClearOwner(9, iNpcH, DEF_OWNERTYPE_NPC, m_pNpcList[iNpcH]->m_sX, m_pNpcList[iNpcH]->m_sY);
 				m_pMapList[m_pNpcList[iNpcH]->m_cMapIndex]->SetOwner(iNpcH, DEF_OWNERTYPE_NPC, dX, dY);
 			}
 			else {
 				m_pMapList[m_pNpcList[iNpcH]->m_cMapIndex]->ClearBigOwner(iNpcH, DEF_OWNERTYPE_NPC, m_pNpcList[iNpcH]->m_sX, m_pNpcList[iNpcH]->m_sY, m_pNpcList[iNpcH]->m_sAreaSize);
 				m_pMapList[m_pNpcList[iNpcH]->m_cMapIndex]->SetBigOwner(iNpcH, DEF_OWNERTYPE_NPC, dX, dY, m_pNpcList[iNpcH]->m_sAreaSize);
-			}*/
-			m_pMapList[m_pNpcList[iNpcH]->m_cMapIndex]->ClearOwner(9, iNpcH, DEF_OWNERTYPE_NPC, m_pNpcList[iNpcH]->m_sX, m_pNpcList[iNpcH]->m_sY);
-			m_pMapList[m_pNpcList[iNpcH]->m_cMapIndex]->SetOwner(iNpcH, DEF_OWNERTYPE_NPC, dX, dY);
+			}
 			m_pNpcList[iNpcH]->m_sX = dX;
 			m_pNpcList[iNpcH]->m_sY = dY;
 			m_pNpcList[iNpcH]->m_cDir = cDir;
@@ -24032,7 +24009,7 @@ char CGame::cGetNextMoveArea(short sOwnerH, short sX, short sY, short dstX, shor
 
 	// centu - 800x600
 	if (cTurn == 0) {
-		for (i = cDir; i <= cDir + 12; i++) {
+		for (i = cDir; i <= cDir + 7; i++) {
 			cTmpDir = i;
 			if (cTmpDir != 0) {
 				if (cTmpDir > 8) cTmpDir -= 8;
@@ -24045,7 +24022,7 @@ char CGame::cGetNextMoveArea(short sOwnerH, short sX, short sY, short dstX, shor
 		}
 	}
 	else if (cTurn == 1) {
-		for (i = cDir; i >= cDir - 9; i--) {
+		for (i = cDir; i >= cDir - 7; i--) {
 			cTmpDir = i;
 			if (cTmpDir < 1) cTmpDir += 8;
 			aX = _tmp_cTmpDirX[cTmpDir];
@@ -24193,28 +24170,25 @@ void CGame::NpcBehavior_Move(int iNpcH)
 
 		if (sDistance >= 3) {
 			// new 1x1, 2x2, 3x3 monster move 
-			/*if (m_pNpcList[iNpcH]->m_sAreaSize == 0) {
+			if (m_pNpcList[iNpcH]->m_sAreaSize == 0) {
 				cDir = cGetNextMoveDir(sX, sY, dX, dY, m_pNpcList[iNpcH]->m_cMapIndex, m_pNpcList[iNpcH]->m_cTurn, &m_pNpcList[iNpcH]->m_tmp_iError);
 			}
 			else {
 				cDir = cGetNextMoveArea(iNpcH, sX, sY, dX, dY, m_pNpcList[iNpcH]->m_cMapIndex, m_pNpcList[iNpcH]->m_cTurn, &m_pNpcList[iNpcH]->m_tmp_iError, m_pNpcList[iNpcH]->m_sAreaSize);
-			}*/
-			cDir = cGetNextMoveDir(sX, sY, dX, dY, m_pNpcList[iNpcH]->m_cMapIndex, m_pNpcList[iNpcH]->m_cTurn, &m_pNpcList[iNpcH]->m_tmp_iError);
+			}
 			if (cDir != 0) {
 
 				dX = m_pNpcList[iNpcH]->m_sX + _tmp_cTmpDirX[cDir];
 				dY = m_pNpcList[iNpcH]->m_sY + _tmp_cTmpDirY[cDir];
 				// new 1x1, 2x2, 3x3 npc move
-				/*if (m_pNpcList[iNpcH]->m_sAreaSize == 0) {
+				if (m_pNpcList[iNpcH]->m_sAreaSize == 0) {
 					m_pMapList[m_pNpcList[iNpcH]->m_cMapIndex]->ClearOwner(3, iNpcH, DEF_OWNERTYPE_NPC, m_pNpcList[iNpcH]->m_sX, m_pNpcList[iNpcH]->m_sY);
 					m_pMapList[m_pNpcList[iNpcH]->m_cMapIndex]->SetOwner(iNpcH, DEF_OWNERTYPE_NPC, dX, dY);
 				}
 				else {
 					m_pMapList[m_pNpcList[iNpcH]->m_cMapIndex]->ClearBigOwner(iNpcH, DEF_OWNERTYPE_NPC, m_pNpcList[iNpcH]->m_sX, m_pNpcList[iNpcH]->m_sY, m_pNpcList[iNpcH]->m_sAreaSize);
 					m_pMapList[m_pNpcList[iNpcH]->m_cMapIndex]->SetBigOwner(iNpcH, DEF_OWNERTYPE_NPC, dX, dY, m_pNpcList[iNpcH]->m_sAreaSize);
-				}*/
-				m_pMapList[m_pNpcList[iNpcH]->m_cMapIndex]->ClearOwner(3, iNpcH, DEF_OWNERTYPE_NPC, m_pNpcList[iNpcH]->m_sX, m_pNpcList[iNpcH]->m_sY);
-				m_pMapList[m_pNpcList[iNpcH]->m_cMapIndex]->SetOwner(iNpcH, DEF_OWNERTYPE_NPC, dX, dY);
+				}
 				m_pNpcList[iNpcH]->m_sX = dX;
 				m_pNpcList[iNpcH]->m_sY = dY;
 				m_pNpcList[iNpcH]->m_cDir = cDir;
@@ -24224,13 +24198,12 @@ void CGame::NpcBehavior_Move(int iNpcH)
 	}
 	else {
 		// new 1x1, 2x2, 3x3 monster move 
-		/*if (m_pNpcList[iNpcH]->m_sAreaSize == 0) {
+		if (m_pNpcList[iNpcH]->m_sAreaSize == 0) {
 			cDir = cGetNextMoveDir(m_pNpcList[iNpcH]->m_sX, m_pNpcList[iNpcH]->m_sY, m_pNpcList[iNpcH]->m_dX, m_pNpcList[iNpcH]->m_dY, m_pNpcList[iNpcH]->m_cMapIndex, m_pNpcList[iNpcH]->m_cTurn, &m_pNpcList[iNpcH]->m_tmp_iError);
 		}
 		else {
 			cDir = cGetNextMoveArea(iNpcH, m_pNpcList[iNpcH]->m_sX, m_pNpcList[iNpcH]->m_sY, m_pNpcList[iNpcH]->m_dX, m_pNpcList[iNpcH]->m_dY, m_pNpcList[iNpcH]->m_cMapIndex, m_pNpcList[iNpcH]->m_cTurn, &m_pNpcList[iNpcH]->m_tmp_iError, m_pNpcList[iNpcH]->m_sAreaSize);
-		}*/
-		cDir = cGetNextMoveDir(m_pNpcList[iNpcH]->m_sX, m_pNpcList[iNpcH]->m_sY, m_pNpcList[iNpcH]->m_dX, m_pNpcList[iNpcH]->m_dY, m_pNpcList[iNpcH]->m_cMapIndex, m_pNpcList[iNpcH]->m_cTurn, &m_pNpcList[iNpcH]->m_tmp_iError);
+		}
 		if (cDir == 0) {
 			if (iDice(1, 10) == 3) CalcNextWayPointDestination(iNpcH);
 		}
@@ -24238,16 +24211,14 @@ void CGame::NpcBehavior_Move(int iNpcH)
 			dX = m_pNpcList[iNpcH]->m_sX + _tmp_cTmpDirX[cDir];
 			dY = m_pNpcList[iNpcH]->m_sY + _tmp_cTmpDirY[cDir];
 			// new 1x1, 2x2, 3x3 npc move
-			/*if (m_pNpcList[iNpcH]->m_sAreaSize == 0) {
+			if (m_pNpcList[iNpcH]->m_sAreaSize == 0) {
 				m_pMapList[m_pNpcList[iNpcH]->m_cMapIndex]->ClearOwner(4, iNpcH, DEF_OWNERTYPE_NPC, m_pNpcList[iNpcH]->m_sX, m_pNpcList[iNpcH]->m_sY);
 				m_pMapList[m_pNpcList[iNpcH]->m_cMapIndex]->SetOwner(iNpcH, DEF_OWNERTYPE_NPC, dX, dY);
 			}
 			else {
 				m_pMapList[m_pNpcList[iNpcH]->m_cMapIndex]->ClearBigOwner(iNpcH, DEF_OWNERTYPE_NPC, m_pNpcList[iNpcH]->m_sX, m_pNpcList[iNpcH]->m_sY, m_pNpcList[iNpcH]->m_sAreaSize);
 				m_pMapList[m_pNpcList[iNpcH]->m_cMapIndex]->SetBigOwner(iNpcH, DEF_OWNERTYPE_NPC, dX, dY, m_pNpcList[iNpcH]->m_sAreaSize);
-			}*/
-			m_pMapList[m_pNpcList[iNpcH]->m_cMapIndex]->ClearOwner(4, iNpcH, DEF_OWNERTYPE_NPC, m_pNpcList[iNpcH]->m_sX, m_pNpcList[iNpcH]->m_sY);
-			m_pMapList[m_pNpcList[iNpcH]->m_cMapIndex]->SetOwner(iNpcH, DEF_OWNERTYPE_NPC, dX, dY);
+			}
 			m_pNpcList[iNpcH]->m_sX = dX;
 			m_pNpcList[iNpcH]->m_sY = dY;
 			m_pNpcList[iNpcH]->m_cDir = cDir;
@@ -24332,16 +24303,14 @@ void CGame::NpcBehavior_Flee(int iNpcH)
 		// 예전 위치에서 지운다. 
 		// 새 위치에 표시한다. 
 		// new 1x1, 2x2, 3x3 npc flee
-		/*if (m_pNpcList[iNpcH]->m_sAreaSize == 0) {
+		if (m_pNpcList[iNpcH]->m_sAreaSize == 0) {
 			m_pMapList[m_pNpcList[iNpcH]->m_cMapIndex]->ClearOwner(11, iNpcH, DEF_OWNERTYPE_NPC, m_pNpcList[iNpcH]->m_sX, m_pNpcList[iNpcH]->m_sY);
 			m_pMapList[m_pNpcList[iNpcH]->m_cMapIndex]->SetOwner(iNpcH, DEF_OWNERTYPE_NPC, dX, dY);
 		}
 		else {
 			m_pMapList[m_pNpcList[iNpcH]->m_cMapIndex]->ClearBigOwner(iNpcH, DEF_OWNERTYPE_NPC, m_pNpcList[iNpcH]->m_sX, m_pNpcList[iNpcH]->m_sY, m_pNpcList[iNpcH]->m_sAreaSize);
 			m_pMapList[m_pNpcList[iNpcH]->m_cMapIndex]->SetBigOwner(iNpcH, DEF_OWNERTYPE_NPC, dX, dY, m_pNpcList[iNpcH]->m_sAreaSize);
-		}*/
-		m_pMapList[m_pNpcList[iNpcH]->m_cMapIndex]->ClearOwner(11, iNpcH, DEF_OWNERTYPE_NPC, m_pNpcList[iNpcH]->m_sX, m_pNpcList[iNpcH]->m_sY);
-		m_pMapList[m_pNpcList[iNpcH]->m_cMapIndex]->SetOwner(iNpcH, DEF_OWNERTYPE_NPC, dX, dY);
+		}
 		m_pNpcList[iNpcH]->m_sX = dX;
 		m_pNpcList[iNpcH]->m_sY = dY;
 		m_pNpcList[iNpcH]->m_cDir = cDir;

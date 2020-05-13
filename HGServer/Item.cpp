@@ -5193,25 +5193,25 @@ void CGame::ReqRepairItemCofirmHandler(int iClientH, char cItemID, char* pString
 			//µ·ÀÌ ÃæºÐÇÏ´Ù. °íÄ¥ ¼ö ÀÖ´Ù. 
 
 			// Centuu : Repair Fix (Recalculation of maxlifespan) - HB2
-			for (int i = 0; i < DEF_MAXITEMTYPES; i++) {
-				if ((m_pItemConfigList[i] != NULL) &&
-					(m_pItemConfigList[i]->m_sIDnum == m_pClientList[iClientH]->m_pItemList[cItemID]->m_sIDnum)) {
-					m_pClientList[iClientH]->m_pItemList[cItemID]->m_wMaxLifeSpan = m_pItemConfigList[i]->m_wMaxLifeSpan;
-					if ((m_pClientList[iClientH]->m_pItemList[cItemID]->m_dwAttribute & 0x00F00000) != NULL) {
-						dwSWEType = (m_pClientList[iClientH]->m_pItemList[cItemID]->m_dwAttribute & 0x00F00000) >> 20;
-						dwSWEValue = (m_pClientList[iClientH]->m_pItemList[cItemID]->m_dwAttribute & 0x000F0000) >> 16;
-						switch (dwSWEType) {
-						case 8: // Strong
-						case 9: // Ancient
-							dV2 = (double)m_pClientList[iClientH]->m_pItemList[cItemID]->m_wMaxLifeSpan;
-							dV3 = (double)(dwSWEValue * 7);
-							dV1 = (dV3 / 100.0f) * dV2;
-							m_pClientList[iClientH]->m_pItemList[cItemID]->m_wMaxLifeSpan += (int)dV1;
-							break;
-						}
-					}
-				}
-			}
+			//for (int i = 0; i < DEF_MAXITEMTYPES; i++) {
+			//	if ((m_pItemConfigList[i] != NULL) &&
+			//		(m_pItemConfigList[i]->m_sIDnum == m_pClientList[iClientH]->m_pItemList[cItemID]->m_sIDnum)) {
+			//		m_pClientList[iClientH]->m_pItemList[cItemID]->m_wMaxLifeSpan = m_pItemConfigList[i]->m_wMaxLifeSpan;
+			//		if ((m_pClientList[iClientH]->m_pItemList[cItemID]->m_dwAttribute & 0x00F00000) != NULL) {
+			//			dwSWEType = (m_pClientList[iClientH]->m_pItemList[cItemID]->m_dwAttribute & 0x00F00000) >> 20;
+			//			dwSWEValue = (m_pClientList[iClientH]->m_pItemList[cItemID]->m_dwAttribute & 0x000F0000) >> 16;
+			//			switch (dwSWEType) {
+			//			case 8: // Strong
+			//			case 9: // Ancient
+			//				dV2 = (double)m_pClientList[iClientH]->m_pItemList[cItemID]->m_wMaxLifeSpan;
+			//				dV3 = (double)(dwSWEValue * 7);
+			//				dV1 = (dV3 / 100.0f) * dV2;
+			//				m_pClientList[iClientH]->m_pItemList[cItemID]->m_wMaxLifeSpan += (int)dV1;
+			//				break;
+			//			}
+			//		}
+			//	}
+			//}
 
 			// ¾ÆÀÌÅÛÀÇ ¼ö¸íÀ» ´Ã¸®°í Åëº¸ÇÑ´Ù. !BUG POINT À§Ä¡°¡ Áß¿äÇÏ´Ù. ¸ÕÀú ¼ö¸íÀ» ´Ã¸®°í µ·ÀÇ Ä«¿îÆ®¸¦ ³·Ãá´Ù.
 			m_pClientList[iClientH]->m_pItemList[cItemID]->m_wCurLifeSpan = m_pClientList[iClientH]->m_pItemList[cItemID]->m_wMaxLifeSpan;

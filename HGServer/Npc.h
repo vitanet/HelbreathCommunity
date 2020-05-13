@@ -77,15 +77,15 @@ public:
 	DWORD m_dwDeadTime, m_dwRegenTime;
 
 	int  m_iHP;						// Hit Point 
-	unsigned long long int  m_iExp;                    // 죽였을 경우 얻는 경험치. ExpDice에 의해 결정된다.
+	unsigned long long  m_iExp;                    // 죽였을 경우 얻는 경험치. ExpDice에 의해 결정된다.
 
 	int  m_iHitDice;				// 몬스터의 Hit Dice. 이것에 의해 HP가 결정된다.
 	int  m_iDefenseRatio;			// Defense Ratio
 	int  m_iHitRatio;				// HitRatio
 	int  m_iMagicHitRatio;			// v1.4 마법 공격 Ratio
 	int  m_iMinBravery;			    // 최소 용감치 
-	unsigned long long int m_iExpDiceMin;
-	unsigned long long int m_iExpDiceMax;
+	unsigned long long m_iExpDiceMin;
+	unsigned long long m_iExpDiceMax;
 	int  m_iGoldDiceMin;
 	int  m_iGoldDiceMax;
 
@@ -125,7 +125,7 @@ public:
 	char  m_cMagicEffectStatus[DEF_MAXMAGICEFFECTS];
 
 	BOOL  m_bIsPermAttackMode;		// 이 플래그가 활성화 되어 있으면 공격도중 목표를 바꾸지 않는다.
-	unsigned long long int   m_iNoDieRemainExp;		// 죽지 않고 명중시에 얻을 수 있는 경험치 
+	unsigned long long   m_iNoDieRemainExp;		// 죽지 않고 명중시에 얻을 수 있는 경험치 
 	int   m_iAttackStrategy; 		// 전투 교리 인공지능 타입  
 	int   m_iAILevel;				// 지능 레벨 
 
