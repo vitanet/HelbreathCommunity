@@ -436,7 +436,7 @@ void CGame::NotifyMsg_PKcaptured(char *pData)
 	WORD  * wp;
 	int     iPKcount, iLevel, iRewardGold;
 	char cTxt[120], cName[12];
-	unsigned long long int iExp;
+	unsigned long long iExp, * lp;
 	cp = (char *)(pData + DEF_INDEX2_MSGTYPE + 2);
 	wp = (WORD *)cp;
 	iPKcount = *wp;
@@ -450,9 +450,9 @@ void CGame::NotifyMsg_PKcaptured(char *pData)
 	dwp = (DWORD *)cp;
 	iRewardGold = *dwp;
 	cp += 4;
-	dwp = (DWORD *)cp;
-	iExp = *dwp;
-	cp += 4;
+	lp = (unsigned long long*)cp;
+	iExp = *lp;
+	cp += 8;
 	wsprintf(cTxt, NOTIFYMSG_PK_CAPTURED1, iLevel, cName, iPKcount);
 	AddEventList(cTxt, 10);
 	
@@ -465,11 +465,11 @@ void CGame::NotifyMsg_PKpenalty(char *pData)
 	char  * cp;
 	DWORD * dwp;
 	int     iPKcount, iStr, iVit, iDex, iInt, iMag, iChr;
-	unsigned long long int iExp;
+	unsigned long long iExp, *lp;
 	cp = (char *)(pData + DEF_INDEX2_MSGTYPE + 2);
-	dwp = (DWORD *)cp;
-	iExp = *dwp;
-	cp += 4;
+	lp = (unsigned long long*)cp;
+	iExp = *lp;
+	cp += 8;
 	dwp = (DWORD *)cp;
 	iStr = *dwp;
 	cp += 4;
@@ -15225,11 +15225,11 @@ void CGame::NotifyMsg_EventFishMode(char * pData)
 
 void CGame::NotifyMsg_Exp(char * pData)
 {
-	unsigned long long int* lp;
+	unsigned long long * lp;
 	char * cp, cTxt[120];
 
 	cp = (char *)(pData + DEF_INDEX2_MSGTYPE + 2);
-	lp = (unsigned long long int *)cp;
+	lp = (unsigned long long *)cp;
 	m_iExp = *lp;
 	cp += 8;
 }

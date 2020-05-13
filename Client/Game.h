@@ -53,7 +53,6 @@
 #include "BuildItem.h"
 #include "ItemName.h"
 #include "Curse.h"
-#include "Cint.h"
 #include "OnlineUser.h" // VAMP - online users list
 //#include "Friend.h" // VAMP - friends list
 // Snoopy: MP3 support
@@ -514,7 +513,7 @@ public:
 	BOOL bCheckExID(char * pName);
 	BOOL bCheckLocalChatCommand(char * pMsg);
 	char GetOfficialMapName(char * pMapName, char * pName);
-	unsigned long long int iGetLevelExp(int iLevel);
+	unsigned long long iGetLevelExp(int iLevel);
 	int _iCalcTotalWeight();
 	void DrawVersion(BOOL bAuthor = FALSE);
 	BOOL _bIsItemOnHand();
@@ -721,7 +720,7 @@ public:
 	} m_stDialogBoxInfo[61];	 // Snoopy passé à 61 (origine 41, Alastor 60), j'ai mis +20 car plus pratique.
 
 	char m_cDialogBoxOrder[61];
-	CInt m_bIsDialogEnabled[61];//was BOOL
+	BOOL m_bIsDialogEnabled[61];//was BOOL
 //Snoopy=>>>>>>>>>>>>>>>>>>>>>
 	struct {
 		int   sV1, sV2, sV3, sV4, sV5, sV6, sV7, sItemID;
@@ -840,7 +839,7 @@ public:
 	DWORD m_dwCurTime;
 	DWORD m_dwCheckConnTime, m_dwCheckSprTime, m_dwCheckChatTime;
 	DWORD m_dwDialogCloseTime;
-	CInt  m_dwLogOutCountTime;//was DWORD
+	DWORD  m_dwLogOutCountTime;//was DWORD
 	DWORD m_dwRestartCountTime;
 	DWORD m_dwWOFtime; //v1.4
 	DWORD m_dwObserverCamTime;
@@ -883,40 +882,40 @@ public:
 
 	BOOL m_bZoomMap;
 	BOOL m_bIsProgramActive;
-	CInt m_bCommandAvailable;//was BOOL
+	BOOL m_bCommandAvailable;//was BOOL
 	BOOL m_bSoundFlag;
 	BOOL m_bSoundStat, m_bMusicStat; // On/Off
-	CInt m_bIsItemEquipped[DEF_MAXITEMS];//was BOOL
-	CInt m_bIsItemDisabled[DEF_MAXITEMS];//was BOOL
-	CInt m_bIsGetPointingMode;//was BOOL
+	BOOL m_bIsItemEquipped[DEF_MAXITEMS];//was BOOL
+	BOOL m_bIsItemDisabled[DEF_MAXITEMS];//was BOOL
+	BOOL m_bIsGetPointingMode;//was BOOL
 	BOOL m_bEnterPressed, m_bEscPressed, m_bCtrlPressed, m_bRunningMode, m_bShiftPressed;
 
 	BOOL m_bDialogTrans;
 	BOOL m_bIsCombatMode;
 	BOOL m_bIsSafeAttackMode;
-	CInt m_bSkillUsingStatus;//was BOOL
-	CInt m_bItemUsingStatus;//was BOOL
+	BOOL m_bSkillUsingStatus;//was BOOL
+	BOOL m_bItemUsingStatus;//was BOOL
 	BOOL m_bIsWhetherEffect;
 	BOOL m_bSuperAttackMode;	//
 	BOOL m_bIsObserverMode, m_bIsObserverCommanded;
-	CInt m_bIsPoisoned;//was BOOL
+	BOOL m_bIsPoisoned;//was BOOL
 	BOOL m_bIsFirstConn;
 	BOOL m_bIsConfusion;
 	BOOL m_bIsRedrawPDBGS;
 	BOOL m_bDrawFlagDir;
 	BOOL m_bIsCrusadeMode;
-	CInt m_bIsSpecialAbilityEnabled;//was BOOL
+	BOOL m_bIsSpecialAbilityEnabled;//was BOOL
 	BOOL m_bInputStatus;
 	BOOL m_bToggleScreen;
 	BOOL m_bIsSpecial;
 	bool m_bIsRare;
 
 	BOOL m_bIsF1HelpWindowEnabled;
-	CInt m_bIsTeleportRequested;//was BOOL
+	BOOL m_bIsTeleportRequested;//was BOOL
 	BOOL m_bIsPrevMoveBlocked;
 	BOOL m_bIsHideLocalCursor;
 
-	CInt m_bForceDisconn;//was BOOL
+	BOOL m_bForceDisconn;//was BOOL
 
 	BOOL m_bParalyze;
 
@@ -928,14 +927,14 @@ public:
 	int m_iFightzoneNumber;
 	int m_iFightzoneNumberTemp;
 	int m_iPlayerApprColor; // v1.4
-	CInt m_iHP;//was int			// Hit Point
-	CInt m_iMP;//was int			// Mana Point
-	CInt m_iSP;//was int			// Staminar Point
+	int m_iHP;//was int			// Hit Point
+	int m_iMP;//was int			// Mana Point
+	int m_iSP;//was int			// Staminar Point
 	int m_iAC;						// Armour Class
 	int m_iTHAC0;					// To Hit Armour Class 0
 
 	int m_iLevel, m_iStr, m_iInt, m_iVit, m_iDex, m_iMag, m_iCharisma, m_iContribution;
-	unsigned long long int m_iExp;
+	unsigned long long m_iExp;
 	// Snoopy: Added Angels
 	int m_iAngelicStr, m_iAngelicInt, m_iAngelicDex, m_iAngelicMag;
 
@@ -1055,7 +1054,7 @@ public:
 	short m_cLU_Str, m_cLU_Vit, m_cLU_Dex, m_cLU_Int, m_cLU_Mag, m_cLU_Char; // sleeq - fix for negative level up points
 
 
-	DWORD m_dwCheckWhoTime;
+	
 	int m_iTotalUsers, m_iDeaths, m_iPing;
 	DWORD m_dwCheckPingTime;
 

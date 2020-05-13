@@ -1016,7 +1016,7 @@ char CGame::cGetNextMoveDir(short sX, short sY, short dstX, short dstY, BOOL bMo
     else cDir = m_Misc.cGetNextMoveDir(dstX, dstY, dX, dY);
 
 	if (m_cPlayerTurn == 0) {
-		for (i = cDir; i <= cDir + 2;i++)
+		for (i = cDir; i <= cDir + 7;i++) // Original: 2
 		{
 			cTmpDir = i;
 			if (cTmpDir > 8) cTmpDir -= 8;
@@ -1038,7 +1038,7 @@ char CGame::cGetNextMoveDir(short sX, short sY, short dstX, short dstY, BOOL bMo
 		}
 	}
 	else if (m_cPlayerTurn == 1) {
-		for (i = cDir; i >= cDir - 2;i--)
+		for (i = cDir; i >= cDir - 7;i--) // Original: 2
 		{
 			cTmpDir = i;
 			if (cTmpDir < 1) cTmpDir += 8;
@@ -2294,6 +2294,7 @@ void CGame::DrawObjects(short sPivotX, short sPivotY, short sDivX, short sDivY, 
 
 				case DEF_DYNAMICOBJECT_FIRE:			// 1
 				case DEF_DYNAMICOBJECT_FIRE3:			// 14
+				case DEF_DYNAMICOBJECT_FIRE2:			// 13 centu
 					switch (rand() % 3) {
 					case 0: m_pEffectSpr[0]->PutTransSprite25_NoColorKey(ix, iy, 1, dwTime); break;
 					case 1: m_pEffectSpr[0]->PutTransSprite50_NoColorKey(ix, iy, 1, dwTime); break;
@@ -2302,13 +2303,13 @@ void CGame::DrawObjects(short sPivotX, short sPivotY, short sDivX, short sDivY, 
 					m_pEffectSpr[9]->PutTransSprite70_NoColorKey(ix, iy, sDynamicObjectFrame/3, dwTime);
 					break;
 
-				case DEF_DYNAMICOBJECT_FIRE2:			// 13
+				/*case DEF_DYNAMICOBJECT_FIRE2:			// 13
 					switch (rand() % 3) {
 					case 0: m_pEffectSpr[0]->PutTransSprite25_NoColorKey(ix, iy, 1, dwTime); break;
 					case 1: m_pEffectSpr[0]->PutTransSprite50_NoColorKey(ix, iy, 1, dwTime); break;
 					case 2: m_pEffectSpr[0]->PutTransSprite70_NoColorKey(ix, iy, 1, dwTime); break;
 					}
-					break;
+					break;*/
 
 				case DEF_DYNAMICOBJECT_FISH:			// 2
 					{	char cTmpDOdir, cTmpDOframe;
@@ -3588,7 +3589,7 @@ void CGame::UpdateScreen_OnLoading_Progress()
 	wsprintf(G_cTxt, "%d%%", m_cLoading);
 
 	PutString_SprFont2(592 + SCREENX+39+10, 442 + SCREENY + 39-1, G_cTxt, 255, 255, 0);
-	m_pSprite[DEF_SPRID_INTERFACE_ND_LOADING]->PutSpriteFastWidth(472 + SCREENX+39+1,442 + SCREENY+39-1-1, 1, (int)m_cLoading, G_dwGlobalTime, false);
+	m_pSprite[DEF_SPRID_INTERFACE_ND_LOADING]->PutSpriteFastWidth(472 + SCREENX+39,442 + SCREENY+39-1-1, 1, (int)m_cLoading, G_dwGlobalTime, false);
 
 	m_DDraw.iFlip();
 }
@@ -3622,11 +3623,6 @@ void CGame::OnTimer()
 		{	m_dwCheckConnTime = dwTime;
 			if ((m_bIsCrusadeMode) && (m_iCrusadeDuty == NULL)) EnableDialogBox(33, 1, NULL, NULL);
 		}
-
-		if ((dwTime - m_dwCheckWhoTime) > 5000)
-        {
-            m_dwCheckWhoTime = dwTime;
-        }
 
 		if ((dwTime - m_dwCheckPingTime) > 5000)
         {
@@ -5216,7 +5212,7 @@ void CGame::NotifyMsg_EnemyKillReward(char *pData)
 	char  * cp, cName[12], cGuildName[24], cTxt[120];
 	int   iEnemyKillCount, iWarContribution;
 	int i;
-	unsigned long long int iExp;
+	unsigned long long iExp;
 
 	ZeroMemory(cName, sizeof(cName));
 	ZeroMemory(cGuildName, sizeof(cGuildName));
@@ -5430,7 +5426,7 @@ void CGame::InitPlayerCharacteristics(char * pData)
 {int  * ip;
  char * cp;
  WORD * wp;
- unsigned long long int* lp;
+ unsigned long long * lp;
 	// Snoopy: Angels
 	m_iAngelicStr = 0;
 	m_iAngelicDex = 0;
@@ -5485,7 +5481,7 @@ void CGame::InitPlayerCharacteristics(char * pData)
 	m_iExp = *ip;
 	cp += 4;*/
 
-	lp = (unsigned long long int*)cp;
+	lp = (unsigned long long *)cp;
 	m_iExp = *lp;
 	cp += 8;
 
@@ -16795,10 +16791,10 @@ void CGame::DrawDialogBox_GaugePannel()
 
     // Experience Gauge - MORLA - arreglada para que vaya de izquierda a derecha
 	
-	unsigned long long int iMaxPoint3;
+	unsigned long long iMaxPoint3;
 	iMaxPoint3 = iGetLevelExp(m_iLevel+1) - iGetLevelExp(m_iLevel);
 
-	unsigned long long int uTemp = m_iExp - iGetLevelExp(m_iLevel);
+	unsigned long long uTemp = m_iExp - iGetLevelExp(m_iLevel);
     iBarWidth = (uTemp *800) / iMaxPoint3;
     if( iBarWidth < 0 ) iBarWidth = 0;
     if( iBarWidth > 800 ) iBarWidth = 800;
@@ -19342,9 +19338,9 @@ void CGame::DlgBoxClick_ItemSellorRepair(short msX, short msY)
 }
 
 
-unsigned long long int CGame::iGetLevelExp(int iLevel)
+unsigned long long CGame::iGetLevelExp(int iLevel)
 {
-	unsigned long long int iRet;
+	unsigned long long iRet;
 	if (iLevel == 0) return 0;
 	iRet = iGetLevelExp(iLevel - 1) + iLevel * ( 50 + (iLevel * (iLevel / 175) * (iLevel / 175) ) );
 	return iRet;
@@ -30407,7 +30403,7 @@ void CGame::UpdateScreen_OnGame()
 	if (m_cGameModeCount == 0)
 	{
 		m_DDraw.ClearBackB4();
-		m_dwCheckPingTime = m_dwFPStime = m_dwCheckConnTime = m_dwCheckSprTime = m_dwCheckChatTime = m_dwAuraTime = m_dwCheckWhoTime = dwTime;
+		m_dwCheckPingTime = m_dwFPStime = m_dwCheckConnTime = m_dwCheckSprTime = m_dwCheckChatTime = m_dwAuraTime = dwTime;
 		m_sFrameCount = 0;
 		if (m_bMusicStat) StartBGM();
 	}
