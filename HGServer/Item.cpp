@@ -7658,15 +7658,56 @@ BOOL CGame::bEquipItemHandler(int iClientH, short sItemIndex, BOOL bNotify)
 				ReleaseItemHandler(iClientH, sItemIndex, TRUE);
 				return FALSE;
 			}
+			else
+			{
+				m_pClientList[iClientH]->m_iHitRatio += 10;
+			}
+		}
+		// Centuu : Fixed las armas Blood by KaoZureS
+		else if (m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 490) { // Sword
+			if (m_pClientList[iClientH]->m_iStr + m_pClientList[iClientH]->m_iAngelicStr < 131) {
+				SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_ITEMRELEASED, m_pClientList[iClientH]->m_iSpecialAbilityEquipPos, sItemIndex, NULL, NULL);
+				ReleaseItemHandler(iClientH, sItemIndex, TRUE);
+				return FALSE;
+			}
+			else
+			{
+				m_pClientList[iClientH]->m_iHitRatio += 10;
+			}
 		}
 	}
 
-	if (cEquipPos == DEF_EQUIPPOS_RHAND) {
+	if (cEquipPos == DEF_EQUIPPOS_RHAND) 
+	{
 		// Resurrection wand(MS.10) or Resurrection wand(MS.20)
 		if ((m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 865) || (m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 866)) {
 			if (((m_pClientList[iClientH]->m_iInt + m_pClientList[iClientH]->m_iAngelicInt) > 99) && ((m_pClientList[iClientH]->m_iMag + m_pClientList[iClientH]->m_iAngelicMag) > 99) && (m_pClientList[iClientH]->m_iSpecialAbilityTime < 1)) {
 				m_pClientList[iClientH]->m_cMagicMastery[94] = TRUE;
 				SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_RESUR_ON, NULL, NULL, NULL, NULL);
+			}
+		}
+		// Centuu : Fixed las armas Blood by KaoZureS
+		else if (m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 491) { // Axe
+			if (m_pClientList[iClientH]->m_iStr + m_pClientList[iClientH]->m_iAngelicStr < 61) {
+				SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_ITEMRELEASED, m_pClientList[iClientH]->m_iSpecialAbilityEquipPos, sItemIndex, NULL, NULL);
+				ReleaseItemHandler(iClientH, sItemIndex, TRUE);
+				return FALSE;
+			}
+			else
+			{
+				m_pClientList[iClientH]->m_iHitRatio += 10;
+			}
+		}
+		// Centuu : Fixed las armas Blood by KaoZureS
+		else if (m_pClientList[iClientH]->m_pItemList[sItemIndex]->m_sIDnum == 492) { // Rapier
+			if (m_pClientList[iClientH]->m_iStr + m_pClientList[iClientH]->m_iAngelicStr < 11) {
+				SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_ITEMRELEASED, m_pClientList[iClientH]->m_iSpecialAbilityEquipPos, sItemIndex, NULL, NULL);
+				ReleaseItemHandler(iClientH, sItemIndex, TRUE);
+				return FALSE;
+			}
+			else
+			{
+				m_pClientList[iClientH]->m_iHitRatio += 10;
 			}
 		}
 	}
