@@ -1,5 +1,0 @@
-"035","Doluk","Barrack's trainee","Tourist","","Aresden","Unknown","614","M","0","0","58926"
-"089","JorgeLRoa","Ogre slaughterer","Tourist","","Elvine","Unknown","123","M","0","0","3431873"
-"108","testo","Werewolve blaster","Squire","","Aresden","Unknown","test","F","0","0","9303521"
-"143","K1Ller2GM","Gargoyle killer","Squire","","Aresden","Unknown","3","F","0","0","38317293"
-"180","Centuu","Tigerworm's fear","Squire","Carp's hunter","Aresden","Somebody","Centuu","F","500","0","119633989"
