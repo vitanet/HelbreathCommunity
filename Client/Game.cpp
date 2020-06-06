@@ -1008,7 +1008,7 @@ char CGame::cGetNextMoveDir(short sX, short sY, short dstX, short dstY, BOOL bMo
     else cDir = m_Misc.cGetNextMoveDir(dstX, dstY, dX, dY);
 
 	if (m_cPlayerTurn == 0) {
-		for (i = cDir; i <= cDir + 7;i++) // Original: 2
+		for (i = cDir; i <= cDir + 2;i++) // Original: 2
 		{
 			cTmpDir = i;
 			if (cTmpDir > 8) cTmpDir -= 8;
@@ -1030,7 +1030,7 @@ char CGame::cGetNextMoveDir(short sX, short sY, short dstX, short dstY, BOOL bMo
 		}
 	}
 	else if (m_cPlayerTurn == 1) {
-		for (i = cDir; i >= cDir - 7;i--) // Original: 2
+		for (i = cDir; i >= cDir - 2;i--) // Original: 2
 		{
 			cTmpDir = i;
 			if (cTmpDir < 1) cTmpDir += 8;
