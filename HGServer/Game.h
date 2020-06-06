@@ -93,6 +93,8 @@ public:
 
 private:
 
+	void CalcExpStock(int iClientH);
+
 	void CheckDenialServiceAttack(int iClientH, DWORD dwClientTime);
 
 	//50Cent - Repair All

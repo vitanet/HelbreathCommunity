@@ -3024,7 +3024,7 @@ int CGame::iComposeInitMapData(short sX, short sY, int iClientH, char* pData)
 	pTileSrc = (class CTile*)(m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_pTile + (sX)+(sY)*m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_sSizeY);
 	// centu - 800x600
 	for (iy = 0; iy < 20; iy++) // 16
-		for (ix = 0; ix < 26; ix++) { // 21
+		for (ix = 0; ix < 25; ix++) { // 21
 			if (((sX + ix) == 100) && ((sY + iy) == 100)) sX = sX;
 			pTile = (class CTile*)(pTileSrc + ix + iy * m_pMapList[m_pClientList[iClientH]->m_cMapIndex]->m_sSizeY);
 
@@ -3302,6 +3302,7 @@ void CGame::SendEventToNearClient_TypeA(short sOwnerH, char cOwnerType, DWORD dw
 	BOOL  cOwnerSend;
 	char cKey;
 	int iTemp3, iTemp, iTemp2;
+	BOOL bFlag;
 
 	ZeroMemory(cData_All, sizeof(cData_All));
 	ZeroMemory(cData_Srt, sizeof(cData_Srt));
@@ -3338,7 +3339,6 @@ void CGame::SendEventToNearClient_TypeA(short sOwnerH, char cOwnerType, DWORD dw
 		(wMsgType == DEF_OBJECTATTACKMOVE) || (wMsgType == DEF_OBJECTDAMAGEMOVE) || (wMsgType == DEF_OBJECTDYING))
 		sRange = 1;
 	else sRange = 0;
-
 
 	if (cOwnerType == DEF_OWNERTYPE_PLAYER) {
 		if (m_pClientList[sOwnerH] == NULL) return;
@@ -3460,18 +3460,21 @@ void CGame::SendEventToNearClient_TypeA(short sOwnerH, char cOwnerType, DWORD dw
 		*sp = sV3;
 		cp_sv += 2;
 
+		bFlag = TRUE;
 		iShortCutIndex = 0;
-		i = m_iClientShortCut[iShortCutIndex];
-		while (i != 0) {
+		
+		while (bFlag) {
 
+			i = m_iClientShortCut[iShortCutIndex];
 			iShortCutIndex++;
-			if ((m_pClientList[i] != NULL) && (m_pClientList[i]->m_bIsInitComplete == TRUE)) {
+			if (i == 0) bFlag = FALSE;
+			if ((m_pClientList[i] != NULL) && (m_pClientList[i]->m_bIsInitComplete == TRUE) && (bFlag)) {
 				// centu - 800x600
 				if ((m_pClientList[i]->m_cMapIndex == m_pClientList[sOwnerH]->m_cMapIndex) &&
 					(m_pClientList[i]->m_sX >= m_pClientList[sOwnerH]->m_sX - 12 - sRange) && // 10
 					(m_pClientList[i]->m_sX <= m_pClientList[sOwnerH]->m_sX + 12 + sRange) && // 10
-					(m_pClientList[i]->m_sY >= m_pClientList[sOwnerH]->m_sY - 9 - sRange) && // 8
-					(m_pClientList[i]->m_sY <= m_pClientList[sOwnerH]->m_sY + 9 + sRange)) { // 8
+					(m_pClientList[i]->m_sY >= m_pClientList[sOwnerH]->m_sY - 9+1 - sRange) && // 8
+					(m_pClientList[i]->m_sY <= m_pClientList[sOwnerH]->m_sY + 9+1 + sRange)) { // 8
 
 					if (m_pClientList[sOwnerH]->m_cSide != m_pClientList[i]->m_cSide) {
 						if (m_pClientList[i]->m_iAdminUserLevel > 0) {
@@ -3494,8 +3497,8 @@ void CGame::SendEventToNearClient_TypeA(short sOwnerH, char cOwnerType, DWORD dw
 					*ipStatus = iTemp;
 
 					// centu - 800x600
-					if ((m_pClientList[i]->m_sX >= m_pClientList[sOwnerH]->m_sX - 12) && // 9
-						(m_pClientList[i]->m_sX <= m_pClientList[sOwnerH]->m_sX + 12) && // 9
+					if ((m_pClientList[i]->m_sX >= m_pClientList[sOwnerH]->m_sX - 12-1) && // 9
+						(m_pClientList[i]->m_sX <= m_pClientList[sOwnerH]->m_sX + 12-1) && // 9
 						(m_pClientList[i]->m_sY >= m_pClientList[sOwnerH]->m_sY - 9) && // 7
 						(m_pClientList[i]->m_sY <= m_pClientList[sOwnerH]->m_sY + 9)) { // 7
 
@@ -3647,7 +3650,6 @@ void CGame::SendEventToNearClient_TypeA(short sOwnerH, char cOwnerType, DWORD dw
 					} //else
 				} // If 1
 			}
-			i = m_iClientShortCut[iShortCutIndex];
 		} //While finish
 	} //Finish Player
 	else {
@@ -3734,18 +3736,22 @@ void CGame::SendEventToNearClient_TypeA(short sOwnerH, char cOwnerType, DWORD dw
 		*sp = sV3;
 		cp_sv += 2;
 
+		bFlag = TRUE;
 		iShortCutIndex = 0;
-		i = m_iClientShortCut[iShortCutIndex];
-		while (i != 0) {
+		
+		while (bFlag) {
 
+			i = m_iClientShortCut[iShortCutIndex];
 			iShortCutIndex++;
-			if (m_pClientList[i] != NULL) {
+
+			if (i == 0) bFlag = FALSE;
+			if (m_pClientList[i] != NULL && bFlag) {
 				// centu - 800x600
 				if ((m_pClientList[i]->m_cMapIndex == m_pNpcList[sOwnerH]->m_cMapIndex) &&
 					(m_pClientList[i]->m_sX >= m_pNpcList[sOwnerH]->m_sX - 12 - sRange) && // 10
 					(m_pClientList[i]->m_sX <= m_pNpcList[sOwnerH]->m_sX + 12 + sRange) && // 10
-					(m_pClientList[i]->m_sY >= m_pNpcList[sOwnerH]->m_sY - 9 - sRange) && // 8
-					(m_pClientList[i]->m_sY <= m_pNpcList[sOwnerH]->m_sY + 9 + sRange)) { // 8
+					(m_pClientList[i]->m_sY >= m_pNpcList[sOwnerH]->m_sY - 9+1 - sRange) && // 8
+					(m_pClientList[i]->m_sY <= m_pNpcList[sOwnerH]->m_sY + 9+1 + sRange)) { // 8
 
 					iTemp = *ipStatus;
 					iTemp = 0x0FFFFFFF & iTemp;
@@ -3754,8 +3760,8 @@ void CGame::SendEventToNearClient_TypeA(short sOwnerH, char cOwnerType, DWORD dw
 					*ipStatus = iTemp;
 
 					// centu - 800x600
-					if ((m_pClientList[i]->m_sX >= m_pNpcList[sOwnerH]->m_sX - 12) && // 9
-						(m_pClientList[i]->m_sX <= m_pNpcList[sOwnerH]->m_sX + 12) && // 9
+					if ((m_pClientList[i]->m_sX >= m_pNpcList[sOwnerH]->m_sX - 12-1) && // 9
+						(m_pClientList[i]->m_sX <= m_pNpcList[sOwnerH]->m_sX + 12-1) && // 9
 						(m_pClientList[i]->m_sY >= m_pNpcList[sOwnerH]->m_sY - 9) && // 7
 						(m_pClientList[i]->m_sY <= m_pNpcList[sOwnerH]->m_sY + 9)) { // 7
 						switch (wMsgType) {
@@ -3819,7 +3825,6 @@ void CGame::SendEventToNearClient_TypeA(short sOwnerH, char cOwnerType, DWORD dw
 					}
 				}
 			}
-			i = m_iClientShortCut[iShortCutIndex];
 		}
 	} // else - NPC
 }
@@ -3867,26 +3872,28 @@ void CGame::SendEventToNearClient_TypeB(DWORD dwMsgID, WORD wMsgType, char cMapI
 
 	dwTime = timeGetTime();
 
+	BOOL bFlag = TRUE;
 	iShortCutIndex = 0;
-	i = m_iClientShortCut[iShortCutIndex];
 
-	while (i != 0) {
+	while (bFlag) {
 		// DEF_MAXCLIENTS ±îÁö ·çÇÁ¸¦ µ¹Áö ¾Ê±â À§ÇÑ ¹æ¹ý. Å¬¶óÀÌ¾ðÆ® ¼ôÄÆ ¸®½ºÆ®¿¡¼­ 0ÀÌ ³ª¿À¸é ³¡ÀÌ´Ù.
 
+		i = m_iClientShortCut[iShortCutIndex];
 		iShortCutIndex++;
 
-		if (m_pClientList[i] != NULL) {
+		if (i == 0) bFlag = FALSE;
+
+		if (m_pClientList[i] != NULL && bFlag) {
 			// centu - 800x600
 			if ((m_pClientList[i]->m_cMapIndex == cMapIndex) &&
 				(m_pClientList[i]->m_sX >= sX - 12) && // 10
 				(m_pClientList[i]->m_sX <= sX + 12) && // 10
-				(m_pClientList[i]->m_sY >= sY - 9) && // 8
-				(m_pClientList[i]->m_sY <= sY + 9)) { // 8
+				(m_pClientList[i]->m_sY >= sY - 9+1) && // 8
+				(m_pClientList[i]->m_sY <= sY + 9+1)) { // 8
 
 				iRet = m_pClientList[i]->m_pXSock->iSendMsg(cData, 18);
 			}
 		}
-		i = m_iClientShortCut[iShortCutIndex];
 	}
 }
 
