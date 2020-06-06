@@ -121,7 +121,7 @@ CGame::CGame()
 	m_stMCursor.dwSelectClickTime = NULL;
 
 	ZeroMemory(m_cLogServerAddr, sizeof(m_cLogServerAddr));
-	m_iGameServerMode = 2; // Snoopy: Default is INTERNET
+	m_iGameServerMode = 1; // Snoopy: Default is INTERNET
 
 	for (i = 0; i < DEF_MAXMENUITEMS; i++)
 		m_pItemForSaleList[i] = NULL;
@@ -419,17 +419,9 @@ CGame::CGame()
     m_stDialogBoxInfo[52].sSizeX = 258;
     m_stDialogBoxInfo[52].sSizeY = 339;
 
-	//50Cent - GMPanel - Teleport
-	m_stDialogBoxInfo[53].sX = 358 + SCREENX;
-	m_stDialogBoxInfo[53].sY = 65 + SCREENY;
-	m_stDialogBoxInfo[53].sSizeX = 258;
-	m_stDialogBoxInfo[53].sSizeY = 339;
+	// 53
 
-	//50Cent - GMPanel - Summon
-	m_stDialogBoxInfo[54].sX = 358 + SCREENX;
-	m_stDialogBoxInfo[54].sY = 65 + SCREENY;
-	m_stDialogBoxInfo[54].sSizeX = 258;
-	m_stDialogBoxInfo[54].sSizeY = 339;
+	// 54
 
 	//50Cent - Quest Helper
     m_stDialogBoxInfo[55].sX = 530 + SCREENX;
@@ -3816,12 +3808,6 @@ BOOL CGame::_bCheckDlgBoxClick(short msX, short msY, int cRB)
 			case 52://50Cent Repair All
                 DlgBoxClick_RepairAll(msX, msY);
                 break;
-			case 53://50Cent - GMPanel - Teleport
-				DlgBoxClick_GMPanel_Teleport(msX, msY);
-				break;
-			case 54://50Cent - GMPanel - Summon
-				DlgBoxClick_GMPanel_Summon(msX, msY);
-				break;
 			case 56://50Cent - GMPanel
 				DlgBoxClick_GMPanel(msX, msY);
 				break;
@@ -16496,9 +16482,8 @@ resi = 0;
 		}
 	}
 
-		wsprintf(G_cTxt, "%s (%d,%d)", m_cMapMessage, m_sPlayerX, m_sPlayerY);
-		PutAlignedString(140 + resx, 323 + resx, 456 + resy, G_cTxt, 200, 200, 120); // Map Message (Center Pannel)
-	
+	wsprintf(G_cTxt, "%s (%d,%d)", m_cMapMessage, m_sPlayerX, m_sPlayerY);// Map Message (Center Pannel)
+	PutAlignedString(140 + resx, 323 + resx, 456 + resy, G_cTxt, 200, 200, 120);
 
 	if ((msY > 436+resy) && (msY < 478+resy)) // Menu Icons
 	{
@@ -23398,14 +23383,13 @@ void CGame::OnKeyUp(WPARAM wParam)
 		
 		break;
 
-	// VAMP - online users list
-	case 81://'O'
+	case 81://'Q'
 		if( ( m_bCtrlPressed == TRUE ) && ( m_cGameMode == DEF_GAMEMODE_ONMAINGAME ) )
-		{	if (m_bIsDialogEnabled[60] == FALSE)
-			{	EnableDialogBox(60, NULL, NULL, NULL);
-			}else	
-			{	DisableDialogBox(60);
-		}	}
+		{
+			if (m_bIsDialogEnabled[56] == FALSE)
+				EnableDialogBox(56, NULL, NULL, NULL);
+			else DisableDialogBox(56);
+		}
 		break;
 
 	case 69://'E'
@@ -23636,10 +23620,9 @@ void CGame::OnKeyUp(WPARAM wParam)
 			return;
 		}
 
-		// centu: red candy
 		for (i = 0; i < DEF_MAXITEMS; i++)
 		if ( (m_pItemList[i] != NULL) && (m_bIsItemDisabled[i] != TRUE) &&
-			 (m_pItemList[i]->m_sSprite == 6) && (m_pItemList[i]->m_sSpriteFrame == 1 || m_pItemList[i]->m_sSpriteFrame == 2 || m_pItemList[i]->m_sSpriteFrame == 131))
+			 (m_pItemList[i]->m_sSprite == 6) && (m_pItemList[i]->m_sSpriteFrame == 1 || m_pItemList[i]->m_sSpriteFrame == 2))
 		{	
 			
 				bSendCommand(MSGID_COMMAND_COMMON, DEF_COMMONTYPE_REQ_USEITEM, NULL, i, NULL, NULL, NULL);
@@ -23662,10 +23645,9 @@ void CGame::OnKeyUp(WPARAM wParam)
 			return;
 		}
 
-		// centu: blue candy
 		for (i = 0; i < DEF_MAXITEMS; i++)
 		if ( (m_pItemList[i] != NULL) && (m_bIsItemDisabled[i] != TRUE) &&
-			 (m_pItemList[i]->m_sSprite == 6) && (m_pItemList[i]->m_sSpriteFrame == 3 || m_pItemList[i]->m_sSpriteFrame == 4 || m_pItemList[i]->m_sSpriteFrame == 132))
+			 (m_pItemList[i]->m_sSprite == 6) && (m_pItemList[i]->m_sSpriteFrame == 3 || m_pItemList[i]->m_sSpriteFrame == 4))
 		{	
 				bSendCommand(MSGID_COMMAND_COMMON, DEF_COMMONTYPE_REQ_USEITEM, NULL, i, NULL, NULL, NULL);
 				m_bIsItemDisabled[i] = TRUE;
@@ -23724,10 +23706,7 @@ void CGame::OnKeyUp(WPARAM wParam)
 		else DisableDialogBox(10);
 		break;
 
-	case VK_F10: // f10 player panel
-		if (m_bIsDialogEnabled[56] == TRUE)
-			 DisableDialogBox(56);
-		else EnableDialogBox(56, NULL, NULL, NULL);
+	case VK_F10: 
 		break;
 
 	case VK_F11:
@@ -30622,6 +30601,7 @@ void CGame::UpdateScreen_OnGame()
 		}
 		else
 		{
+			if (m_cGameMode != DEF_GAMEMODE_ONMAINGAME) return; // centu anti-nixu
 			if (!m_bInputStatus)
 			{
 				switch (m_cBackupChatMsg[0]){
@@ -31282,6 +31262,12 @@ void CGame::UpdateScreen_OnGame()
 	}
 	else m_pSprite[DEF_SPRID_MOUSECURSOR]->PutSpriteFast(msX, msY, m_stMCursor.sCursorFrame, dwTime);
 
+	// Centuu - no hay mapa en maze ;D
+	if (memcmp(m_cCurLocation, "maze", 4) == 0)
+	{
+		if (m_bIsDialogEnabled[9]) m_bIsDialogEnabled[9] = FALSE;
+
+	}
 
 	// centuu - si esta en Arena 1 desactiva el mapa para mostrar las auras arriba
 	if (memcmp(m_cCurLocation, "fightzone1", 10) == 0)

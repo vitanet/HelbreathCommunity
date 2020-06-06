@@ -4548,7 +4548,7 @@ void CGame::DrawDialogBox_RepairAll(short msX, short msY, short msZ) //4LifeX Mo
 	DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_GAME2, sX, sY, 2);
 	DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_TEXT, sX, sY, 10);
 
-	for (i = 0; i < 15; i++)
+	for (i = 0; i < 15; i++) {
 		if ((i + m_stDialogBoxInfo[52].sView) < totalItemRepair)
 		{
 			ZeroMemory(cTxt, sizeof(cTxt));
@@ -4557,12 +4557,12 @@ void CGame::DrawDialogBox_RepairAll(short msX, short msY, short msZ) //4LifeX Mo
 			PutString(sX + 30, sY + 45 + i * 15, cTxt, RGB(5, 5, 5));
 			m_bIsItemDisabled[m_stRepairAll[i + m_stDialogBoxInfo[52].sView].index] = TRUE;
 		}
-
+	}
 
 	iTotalLines = totalItemRepair;
 	if (iTotalLines > 15)
 	{
-		d1 = (double)m_stDialogBoxInfo[56].sView;
+		d1 = (double)m_stDialogBoxInfo[52].sView;
 		d2 = (double)(iTotalLines - 15);
 		d3 = (274.0f * d1) / d2;
 		iPointerLoc = (int)d3;
@@ -4577,7 +4577,7 @@ void CGame::DrawDialogBox_RepairAll(short msX, short msY, short msZ) //4LifeX Mo
 
 	if (iTotalLines > 15)
 	{
-		if (iGetTopDialogBoxIndex() == 56 && msZ != 0)
+		if (iGetTopDialogBoxIndex() == 52 && msZ != 0)
 		{
 			if (msZ > 0) m_stDialogBoxInfo[52].sView--;
 			if (msZ < 0) m_stDialogBoxInfo[52].sView++;
@@ -4590,9 +4590,6 @@ void CGame::DrawDialogBox_RepairAll(short msX, short msY, short msZ) //4LifeX Mo
 		if (iTotalLines > 15 && m_stDialogBoxInfo[52].sView > iTotalLines - 15)
 			m_stDialogBoxInfo[52].sView = iTotalLines - 15;
 	}
-
-
-
 
 	if (totalItemRepair > 0)
 	{
@@ -4640,7 +4637,7 @@ void CGame::DlgBoxClick_RepairAll(short msX, short msY)
 	sX = m_stDialogBoxInfo[52].sX;
 	sY = m_stDialogBoxInfo[52].sY;
 
-	for (i = 0; i < 15; i++)
+	for (i = 0; i < 15; i++) {
 		if ((i + m_stDialogBoxInfo[52].sView) < totalItemRepair)
 		{
 			if ((msX >= sX + 30) && (msX <= sX + 30 + DEF_BTNSZX) && (msY >= sY + DEF_BTNPOSY) && (msY <= sY + DEF_BTNPOSY + DEF_BTNSZY))
@@ -4657,463 +4654,1392 @@ void CGame::DlgBoxClick_RepairAll(short msX, short msY)
 			if ((msX >= sX + 154) && (msX <= sX + 154 + DEF_BTNSZX) && (msY >= sY + DEF_BTNPOSY) && (msY <= sY + DEF_BTNPOSY + DEF_BTNSZY))
 				DisableDialogBox(52);
 		}
+	}
 }
 
+//bSendCommand(MSGID_COMMAND_CHATMSG, NULL, NULL, NULL, NULL, NULL, "/tp elvine");
 
-
-// MORLA 2.4 - Nuevo User Panel... y mejor programado :P
-void CGame::DlgBoxClick_GMPanel(short msX, short msY)
+void CGame::DlgBoxClick_GMPanel(short msX, short msY) // edited by centu
 {
 	short sX, sY;
-	int NPlLvl, GMLvl, AdminLvl;
 	sX = m_stDialogBoxInfo[56].sX;
 	sY = m_stDialogBoxInfo[56].sY;
-
-	/*******CONFIGURACION*******/
-	NPlLvl = 221;// El nivel maximo alcansable por cualquier player normal.
-	GMLvl = 378;// El nivel para GM Admin Lvl, DEBE SER CONSTANTE.
-	/*******CONFIGURACION*******/
-
-	//50Cent - Verifica tu nivel de admin segun tu lvl.
-	if (m_iLevel < NPlLvl)
-	{
-		AdminLvl = 0;
-	}
-	else if ((m_iLevel >(GMLvl - 10)) && (m_iLevel < GMLvl))
-	{
-		AdminLvl = 1;
-	}
-
-	DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_GAME2, sX, sY, 2, FALSE, m_bDialogTrans);
-	ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
 	switch (m_stDialogBoxInfo[56].cMode) {
+	// GM Panel
 	case 0:
-		switch (AdminLvl) {
-		case 1:
-			/********GM Status & Tools********/
-			//Enable
-			if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 85) && (msY < sY + 100))
-			{
-				strcpy(m_cChatMsg, "/enableadmincommand       ");
-#ifdef RES_HIGH
-				StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-				StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-				PlaySound('E', 14, 5);
-			}
-			//Obs. Mode On
-			if ((msX > sX + 30) && (msX < sX + 107) && (msY > sY + 100) && (msY < sY + 115))
-			{
-				strcpy(m_cChatMsg, "/setobservermode 1 ");
-#ifdef RES_HIGH
-				StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-				StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-				PlaySound('E', 14, 5);
-			}
-			//Obs. Mode Off
-			if ((msX > sX + 107) && (msX < sX + 125) && (msY > sY + 100) && (msY < sY + 115))
-			{
-				strcpy(m_cChatMsg, "/setobservermode 0 ");
-#ifdef RES_HIGH
-				StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-				StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-				PlaySound('E', 14, 5);
-			}
-			//Teleport
-			if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 115) && (msY < sY + 130))
-			{
-				if (m_bIsDialogEnabled[53] == TRUE) DisableDialogBox(53);
-				else EnableDialogBox(53, 0, 0, 0, NULL);
-				PlaySound('E', 14, 5);
-			}
-			//Admin Attack
-			if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 130) && (msY < sY + 145))
-			{
-				strcpy(m_cChatMsg, "/adminattack");
-#ifdef RES_HIGH
-				StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-				StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-				PlaySound('E', 14, 5);
-			}
-			//Invi On
-			if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 145) && (msY < sY + 160))
-			{
-				strcpy(m_cChatMsg, "/setinvi 1 ");
-#ifdef RES_HIGH
-				StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-				StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-				PlaySound('E', 14, 5);
-			}
-			//Invi Off
-			if ((msX > sX + 75) && (msX < sX + 125) && (msY > sY + 145) && (msY < sY + 160))
-			{
-				strcpy(m_cChatMsg, "/setinvi 0 ");
-#ifdef RES_HIGH
-				StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-				StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-				PlaySound('E', 14, 5);
-			}
-			//Event On
-			if ((msX > sX + 30) && (msX < sX + 80) && (msY > sY + 160) && (msY < sY + 175))
-			{
-				strcpy(m_cChatMsg, "/eventon ");
-#ifdef RES_HIGH
-				StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-				StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-				PlaySound('E', 14, 5);
-			}
-			//Event Off
-			if ((msX > sX + 80) && (msX < sX + 125) && (msY > sY + 160) && (msY < sY + 175))
-			{
-				strcpy(m_cChatMsg, "/eventoff");
-#ifdef RES_HIGH
-				StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-				StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-				PlaySound('E', 14, 5);
-			}
-			//Summon
-			if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 175) && (msY < sY + 190))
-			{
-				if (m_bIsDialogEnabled[54] == TRUE) DisableDialogBox(54);
-				else EnableDialogBox(54, 0, 0, 0, NULL);
-				PlaySound('E', 14, 5);
-			}
-			//CreateItem
-			if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 190) && (msY < sY + 205))
-			{
-				strcpy(m_cChatMsg, "/createitem ");
-#ifdef RES_HIGH
-				StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-				StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-				PlaySound('E', 14, 5);
-			}
-			//Event Tp
-			if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 205) && (msY < sY + 220))
-			{
-				strcpy(m_cChatMsg, "/tpeventoff");
-#ifdef RES_HIGH
-				StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-				StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-				PlaySound('E', 14, 5);
-			}
-			/********GM Status & Tools********/
-			/********Server Manipulation********/
-			//Shut Down
-			if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 243) && (msY < sY + 258))
-			{
-				strcpy(m_cChatMsg, "/shutdownthisserverrightnow ");
-#ifdef RES_HIGH
-				StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-				StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-				PlaySound('E', 14, 5);
-			}
-			//Reserve FZ
-			if ((msX > sX + 30) && (msX < sX + 80) && (msY > sY + 258) && (msY < sY + 273))
-			{
-				strcpy(m_cChatMsg, "/reservefightzone ");
-#ifdef RES_HIGH
-				StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-				StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-				PlaySound('E', 14, 5);
-			}
-			//Attack Mode On
-			if ((msX > sX + 30) && (msX < sX + 120) && (msY > sY + 273) && (msY < sY + 288))
-			{
-				strcpy(m_cChatMsg, "/setattackmode 1 ");
-#ifdef RES_HIGH
-				StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-				StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-				PlaySound('E', 14, 5);
-			}
-			//Attack Mode Off
-			if ((msX > sX + 120) && (msX < sX + 135) && (msY > sY + 273) && (msY < sY + 288))
-			{
-				strcpy(m_cChatMsg, "/setattackmode 0 ");
-#ifdef RES_HIGH
-				StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-				StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-				PlaySound('E', 14, 5);
-			}
-			//Disconnect All
-			if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 288) && (msY < sY + 303))
-			{
-				strcpy(m_cChatMsg, "/disconnectall ");
-#ifdef RES_HIGH
-				StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-				StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-				PlaySound('E', 14, 5);
-			}
-			//Clear Npc
-			if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 303) && (msY < sY + 318))
-			{
-				strcpy(m_cChatMsg, "/clearnpc ");
-#ifdef RES_HIGH
-				StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-				StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-				PlaySound('E', 14, 5);
-			}
-			/********Server Manipulation********/
-			/********Player Manipulation********/
-			//Kill
-			if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 85) && (msY < sY + 100))
-			{
-				strcpy(m_cChatMsg, "/kill ");
-#ifdef RES_HIGH
-				StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-				StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-				PlaySound('E', 14, 5);
-			}
-			//Revive
-			if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 100) && (msY < sY + 115))
-			{
-				strcpy(m_cChatMsg, "/revive ");
-#ifdef RES_HIGH
-				StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-				StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-				PlaySound('E', 14, 5);
-			}
-			//Closecon
-			if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 115) && (msY < sY + 130))
-			{
-				strcpy(m_cChatMsg, "/closeconn ");
-#ifdef RES_HIGH
-				StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-				StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-				PlaySound('E', 14, 5);
-			}
-			//Send
-			if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 130) && (msY < sY + 145))
-			{
-				strcpy(m_cChatMsg, "/checkek ");
-#ifdef RES_HIGH
-				StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-				StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-				PlaySound('E', 14, 5);
-			}
-			//Goto
-			if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 145) && (msY < sY + 160))
-			{
-				strcpy(m_cChatMsg, "/paraliseall");
-#ifdef RES_HIGH
-				StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-				StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-				PlaySound('E', 14, 5);
-			}
-			//Summon All
-			if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 160) && (msY < sY + 175))
-			{
-				strcpy(m_cChatMsg, "/summonall ");
-#ifdef RES_HIGH
-				StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-				StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-				PlaySound('E', 14, 5);
-			}
-			//Summon Player
-			if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 175) && (msY < sY + 190))
-			{
-				strcpy(m_cChatMsg, "/summonplayer ");
-#ifdef RES_HIGH
-				StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-				StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-				PlaySound('E', 14, 5);
-			}
-			//Shutup
-			if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 190) && (msY < sY + 205))
-			{
-				strcpy(m_cChatMsg, "/shutup ");
-#ifdef RES_HIGH
-				StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-				StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-				PlaySound('E', 14, 5);
-			}
-			//Guard Attack
-			if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 205) && (msY < sY + 220))
-			{
-				strcpy(m_cChatMsg, "/attack ");
-#ifdef RES_HIGH
-				StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-				StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-				PlaySound('E', 14, 5);
-			}
-			/********Player Manipulation********/
-			break;
-
-		case 0:
-			if ((msY >= sY + 148) && (msY <= sY + 161 + 14 * 8))
-			{
-				if ((msX >= sX + 25) && (msX < sX + 120))
-				{
-					if ((msY >= sY + 148) && (msY <= sY + 161))
-					{
-						if (msX <= sX + 72)
-						{
-							strcpy(m_cChatMsg, "/rep+ ");
-						}
-						else
-						{
-							strcpy(m_cChatMsg, "/rep- ");
-
-						}
-					}
-					if ((msY >= sY + 148 + 14) && (msY <= sY + 161 + 14))
-					{
-						strcpy(m_cChatMsg, "/to ");
-					}
-					if ((msY >= sY + 148 + 14 * 2) && (msY <= sY + 161 + 14 * 2))
-					{
-						strcpy(m_cChatMsg, "/createparty");
-					}
-					if ((msY >= sY + 148 + 14 * 3) && (msY <= sY + 161 + 14 * 3))
-					{
-						strcpy(m_cChatMsg, "/setpf");
-					}
-					if ((msY >= sY + 148 + 14 * 4) && (msY <= sY + 161 + 14 * 4))
-					{
-						strcpy(m_cChatMsg, "/pf");
-					}
-					if ((msY >= sY + 148 + 14 * 5) && (msY <= sY + 161 + 14 * 5))
-					{
-						strcpy(m_cChatMsg, "/hold");
-					}
-					if ((msY >= sY + 148 + 14 * 6) && (msY <= sY + 161 + 14 * 6))
-					{
-						strcpy(m_cChatMsg, "/free");
-					}
-					if ((msY >= sY + 148 + 14 * 7) && (msY <= sY + 161 + 14 * 7))
-					{
-						strcpy(m_cChatMsg, "/tgt");
-					}
-					if ((msY >= sY + 148 + 14 * 8) && (msY <= sY + 161 + 14 * 8))
-					{
-						strcpy(m_cChatMsg, "/summonguild");
-					}
-#ifdef RES_HIGH
-					StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-					StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-					PlaySound('E', 14, 5);
-				}
-			}
-
-
-			PutString2(sX + 145, sY + 75 + 14 * 13, "Save", 170, 170, 170);
-
-			if ((msY >= sY + 148) && (msY <= sY + 161 + 14 * 8))
-			{
-
-				if ((msX >= sX + 120) && (msX <= sX + 220))
-				{
-					if ((msY >= sY + 148) && (msY <= sY + 161))
-					{
-						strcpy(m_cChatMsg, "/save");
-					}
-					if ((msY >= sY + 148 + 14) && (msY <= sY + 161 + 14 * 2))
-					{
-						strcpy(m_cChatMsg, "/checkrep");
-					}
-					if ((msY >= sY + 148 + 14 * 2) && (msY <= sY + 161 + 14 * 3))
-					{
-						strcpy(m_cChatMsg, "/getrep");
-					}
-					if ((msY >= sY + 148 + 14 * 3) && (msY <= sY + 161 + 14 * 4))
-					{
-						strcpy(m_cChatMsg, "/changecity");
-					}
-					if ((msY >= sY + 148 + 14 * 4) && (msY <= sY + 161 + 14 * 5))
-					{
-						strcpy(m_cChatMsg, "/bigitems");
-					}
-					if ((msY >= sY + 148 + 14 * 5) && (msY <= sY + 161 + 14 * 6))
-					{
-						strcpy(m_cChatMsg, "/criticals");
-					}
-
-					if ((msY >= sY + 148 + 14 * 6) && (msY <= sY + 161 + 14 * 7))
-					{
-						strcpy(m_cChatMsg, "/tpevent");
-					}
-
-#ifdef RES_HIGH
-					StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-					StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-					PlaySound('E', 14, 5);
-				}
-			}
-
-			if ((msX > sX + 60) && (msX < sX + 190))
-			{
-				if ((msY > sY + 81 + 14 * 14) && (msY <= sY + 75 + 14 * 16))
-				{
-					if (m_bIsDialogEnabled[59] == TRUE) DisableDialogBox(59);
-					else EnableDialogBox(59, 0, 0, 0, NULL);
-					PlaySound('E', 14, 5);
-				}
-				if ((msY > sY + 75 + 14 * 16) && (msY <= sY + 75 + 14 * 17))
-				{
-					if (m_bIsDialogEnabled[59] == TRUE) DisableDialogBox(59);
-					else EnableDialogBox(59, 0, 0, 0, NULL);
-					PlaySound('E', 14, 5);
-				}
-			}
-			break;
+		/********GM Status & Tools********/
+		//Enable
+		if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 85) && (msY < sY + 100))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/enableadmincommand hb914 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
 		}
+		//Obs. Mode On
+		if ((msX > sX + 30) && (msX < sX + 107) && (msY > sY + 100) && (msY < sY + 115))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/setobservermode 1 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		//Obs. Mode Off
+		if ((msX > sX + 107) && (msX < sX + 125) && (msY > sY + 100) && (msY < sY + 115))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/setobservermode 0 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		//Teleport
+		if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 115) && (msY < sY + 130))
+		{	/*ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg) );
+			strcpy(m_cChatMsg, "/tp ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);*/
+			/*if (m_bIsDialogEnabled[53] == TRUE) DisableDialogBox(53);
+			else EnableDialogBox(53, 0, 0, 0, NULL);*/
+			m_stDialogBoxInfo[56].cMode = 1; // centu - teleport panel
+			PlaySound('E', 14, 5);
+		}
+		//Polyformph
+		if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 130) && (msY < sY + 145))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/polymorph ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		//Invi On
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 145) && (msY < sY + 160))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/setinvi 1 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		//Invi Off
+		if ((msX > sX + 75) && (msX < sX + 125) && (msY > sY + 145) && (msY < sY + 160))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/setinvi 0 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		//Zerk On
+		if ((msX > sX + 30) && (msX < sX + 80) && (msY > sY + 160) && (msY < sY + 175))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/setzerk 1 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		//Zerk Off
+		if ((msX > sX + 80) && (msX < sX + 125) && (msY > sY + 160) && (msY < sY + 175))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/setzerk 0 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		//Summon
+		if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 175) && (msY < sY + 190))
+		{	/*ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg) );
+			strcpy(m_cChatMsg, "/summon ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);*/
+			/*if (m_bIsDialogEnabled[54] == TRUE) DisableDialogBox(54);
+			else EnableDialogBox(54, 0, 0, 0, NULL);*/
+			m_stDialogBoxInfo[56].cMode = 2; // centu - summon panel
+			PlaySound('E', 14, 5);
+		}
+		//CreateItem
+		if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 190) && (msY < sY + 205))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/createitem ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		//Storm
+		if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 205) && (msY < sY + 220))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/storm ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		/********GM Status & Tools********/
+		/********Server Manipulation********/
+		//Shut Down
+		if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 243) && (msY < sY + 258))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/shutdownthisserverrightnow ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		//Reserve FZ
+		if ((msX > sX + 30) && (msX < sX + 80) && (msY > sY + 258) && (msY < sY + 273))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/reservefightzone ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		//Attack Mode On
+		if ((msX > sX + 30) && (msX < sX + 120) && (msY > sY + 273) && (msY < sY + 288))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/setattackmode 1 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		//Attack Mode Off
+		if ((msX > sX + 120) && (msX < sX + 135) && (msY > sY + 273) && (msY < sY + 288))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/setattackmode 0 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		//Disconnect All
+		if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 288) && (msY < sY + 303))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/disconnectall ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		//Clear Npc
+		if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 303) && (msY < sY + 318))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/clearnpc ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		/********Server Manipulation********/
+		/********Player Manipulation********/
+		//Kill
+		if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 85) && (msY < sY + 100))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/kill ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		//Revive
+		if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 100) && (msY < sY + 115))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/revive ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		//Closecon
+		if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 115) && (msY < sY + 130))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/closecon ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		//Send
+		if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 130) && (msY < sY + 145))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/send ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		//Goto
+		if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 145) && (msY < sY + 160))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/goto ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		//Summon All
+		if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 160) && (msY < sY + 175))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summonall ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		//Summon Player
+		if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 175) && (msY < sY + 190))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summonplayer ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		//Shutup
+		if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 190) && (msY < sY + 205))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/shutup ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		//Guard Attack
+		if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 205) && (msY < sY + 220))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/attack ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		/********Player Manipulation********/
+		break;
+	// Teleport Panel
+	case 1:
+		/********Ares********/
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 81) && (msY < sY + 92))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp arefarm ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 92) && (msY < sY + 103))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp arebrk11 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 103) && (msY < sY + 114))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp arebrk12 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 114) && (msY < sY + 125))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp arebrk21 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 125) && (msY < sY + 136))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp arebrk22 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 136) && (msY < sY + 147))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp aresdend1 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 147) && (msY < sY + 158))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp aresden ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 158) && (msY < sY + 169))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp bsmith_1 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 169) && (msY < sY + 180))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp cityhall_1 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 180) && (msY < sY + 191))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp gldhall_1 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 191) && (msY < sY + 202))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp gshop_1 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 202) && (msY < sY + 213))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp wzdtwr_1 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 213) && (msY < sY + 224))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp wrhus_1 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 224) && (msY < sY + 235))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp arewrhus ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 235) && (msY < sY + 246))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp cath_1 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 246) && (msY < sY + 257))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp resurr1 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 257) && (msY < sY + 268))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp areuni ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 268) && (msY < sY + 279))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp arejail ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 279) && (msY < sY + 290))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp CmdHall_1 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		/********Ares********/
+		/********Elv********/
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 81) && (msY < sY + 92))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp elvfarm ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 92) && (msY < sY + 103))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp elvbrk11 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 103) && (msY < sY + 114))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp elvbrk12 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 114) && (msY < sY + 125))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp elvbrk21 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 125) && (msY < sY + 136))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp elvbrk22 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 136) && (msY < sY + 147))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp elvined1 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 147) && (msY < sY + 158))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp elvine ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 158) && (msY < sY + 169))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp bsmith_2 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 169) && (msY < sY + 180))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp cityhall_2 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 180) && (msY < sY + 191))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp gldhall_2 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 191) && (msY < sY + 202))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp gshop_2 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 202) && (msY < sY + 213))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp wzdtwr_2 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 213) && (msY < sY + 224))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp wrhus_2 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 224) && (msY < sY + 235))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp elvwrhus ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 235) && (msY < sY + 246))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp cath_2 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 246) && (msY < sY + 257))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp resurr2 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 257) && (msY < sY + 268))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp elvuni ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 268) && (msY < sY + 279))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp elvjail ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 279) && (msY < sY + 290))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp CmdHall_2 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		/********Elv********/
+		/********Dungeon********/
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 81) && (msY < sY + 92))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp dglv2 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 92) && (msY < sY + 103))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp dglv3 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 103) && (msY < sY + 114))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp dglv4 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 114) && (msY < sY + 125))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp middled1x ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 125) && (msY < sY + 136))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp midddlen ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 136) && (msY < sY + 147))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp druncncity ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 147) && (msY < sY + 158))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp inferniaA ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 158) && (msY < sY + 169))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp inferniaB ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 169) && (msY < sY + 180))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp maze ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 180) && (msY < sY + 191))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp abaddon ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		/********Dungeon********/
+		/********Others********/
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 202) && (msY < sY + 213))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp default ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 213) && (msY < sY + 224))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp huntzone1 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 224) && (msY < sY + 235))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp huntzone2 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 235) && (msY < sY + 246))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp huntzone3 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 246) && (msY < sY + 257))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp huntzone4 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 257) && (msY < sY + 268))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp toh1 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 268) && (msY < sY + 279))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp toh2 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 279) && (msY < sY + 290))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp toh3 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 290) && (msY < sY + 301))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp 2ndmiddle ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 301) && (msY < sY + 312))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp icebound ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 301) && (msY < sY + 312))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp procella ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		/********Others********/
+		/********Event********/
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 81) && (msY < sY + 92))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp fightzone1 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 92) && (msY < sY + 103))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp fightzone2 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 103) && (msY < sY + 114))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp fightzone3 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 114) && (msY < sY + 125))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp fightzone4 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 125) && (msY < sY + 136))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp fightzone5 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 136) && (msY < sY + 147))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp fightzone6 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 147) && (msY < sY + 158))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp fightzone7 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 158) && (msY < sY + 169))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp fightzone8 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 169) && (msY < sY + 180))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp fightzone9 ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 180) && (msY < sY + 191))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp bisle ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 191) && (msY < sY + 202))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp BtField ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 202) && (msY < sY + 213))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp GodH ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 213) && (msY < sY + 224))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp HRampart ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 224) && (msY < sY + 235))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp middleland ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 235) && (msY < sY + 246))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/tp icebound ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		/********Event********/
+		break;
+	// Summon Panel
+	case 2:
+		/********Common********/
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 81) && (msY < sY + 92))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Dummy ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 92) && (msY < sY + 103))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Slime ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 103) && (msY < sY + 114))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Skeleton ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 114) && (msY < sY + 125))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Stone-Golem ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 125) && (msY < sY + 136))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Cyclops ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 136) && (msY < sY + 147))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Orc ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 147) && (msY < sY + 158))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Giant-Ant ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 158) && (msY < sY + 169))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Scorpion ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 169) && (msY < sY + 180))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Zombie ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 180) && (msY < sY + 191))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Amphis ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 191) && (msY < sY + 202))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Clay-Golem ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 202) && (msY < sY + 213))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Hellbound ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 213) && (msY < sY + 224))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Troll ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 224) && (msY < sY + 235))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Giant-Frog ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 235) && (msY < sY + 246))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Rudolph ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		/********Common********/
+		/********Misc********/
+		if ((msX > sX + 30) && (msX < sX + 54) && (msY > sY + 257) && (msY < sY + 268))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Guard-Aresden ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 54) && (msX < sX + 68) && (msY > sY + 257) && (msY < sY + 268))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Guard-Elvine ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 68) && (msX < sX + 75) && (msY > sY + 257) && (msY < sY + 268))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Guard-Neutral ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 268) && (msY < sY + 279))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Unicorn ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 279) && (msY < sY + 290))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Rabbit ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 290) && (msY < sY + 301))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Cat ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 301) && (msY < sY + 312))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Crops ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		/********Misc********/
+		/********Master********/
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 81) && (msY < sY + 92))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Orge ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 92) && (msY < sY + 103))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon WereWolf ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 103) && (msY < sY + 114))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Cannibal-Plant ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 114) && (msY < sY + 125))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Mountain-Giant ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 125) && (msY < sY + 136))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon DireBoar ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 136) && (msY < sY + 147))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Frost ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 147) && (msY < sY + 158))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Ice-Golem ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 158) && (msY < sY + 169))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Claw-Turtle ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 169) && (msY < sY + 180))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Giant-Crayfish ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 180) && (msY < sY + 191))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Giant-Plant ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 191) && (msY < sY + 202))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Tentocle ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		/********Master********/
+		/********Helde********/
+		if ((msX > sX + 85) && (msX < sX + 115) && (msY > sY + 213) && (msY < sY + 224))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon CP-Aresden ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 115) && (msX < sX + 120) && (msY > sY + 213) && (msY < sY + 224))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon CP-Aresden ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 85) && (msX < sX + 120) && (msY > sY + 224) && (msY < sY + 235))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Sor-Aresden ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 125) && (msY > sY + 224) && (msY < sY + 235))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Sor-Elvine ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 85) && (msX < sX + 125) && (msY > sY + 235) && (msY < sY + 246))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon ATK-Aresden ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 125) && (msX < sX + 130) && (msY > sY + 235) && (msY < sY + 246))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon ATK-Evline ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 85) && (msX < sX + 128) && (msY > sY + 246) && (msY < sY + 257))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Elf-Aresden ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 128) && (msX < sX + 133) && (msY > sY + 246) && (msY < sY + 257))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Elf-Aresden ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 85) && (msX < sX + 125) && (msY > sY + 257) && (msY < sY + 268))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon DSK-Aresden ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 125) && (msX < sX + 130) && (msY > sY + 257) && (msY < sY + 268))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon DSK-Elvine ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 85) && (msX < sX + 124) && (msY > sY + 268) && (msY < sY + 279))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon HBT-Aresden ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 124) && (msX < sX + 129) && (msY > sY + 268) && (msY < sY + 279))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon HBT-Elvine ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 85) && (msX < sX + 115) && (msY > sY + 279) && (msY < sY + 290))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon CT-Aresden ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 115) && (msX < sX + 120) && (msY > sY + 279) && (msY < sY + 290))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon CT-Elvine ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 85) && (msX < sX + 120) && (msY > sY + 290) && (msY < sY + 301))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Bar-Aresden ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 125) && (msY > sY + 290) && (msY < sY + 301))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Bar-Elvine ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 85) && (msX < sX + 125) && (msY > sY + 301) && (msY < sY + 312))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon AGC-Aresden ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 125) && (msX < sX + 130) && (msY > sY + 301) && (msY < sY + 312))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon AGC-Elvine ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		/********Helde********/
+		/********Sade********/
+		if ((msX > sX + 120) && (msX < sX + 150) && (msY > sY + 81) && (msY < sY + 92))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon AGT-Aresden ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 150) && (msX < sX + 165) && (msY > sY + 81) && (msY < sY + 92))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon AGT-Elvine ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 150) && (msY > sY + 92) && (msY < sY + 103))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon CGT-Aresden ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 150) && (msX < sX + 165) && (msY > sY + 92) && (msY < sY + 103))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon CGT-Elvine ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 155) && (msY > sY + 103) && (msY < sY + 114))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon MS-Aresden ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 155) && (msX < sX + 165) && (msY > sY + 103) && (msY < sY + 114))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon MS-Elvine ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 150) && (msY > sY + 114) && (msY < sY + 125))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon DT-Aresden ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 150) && (msX < sX + 165) && (msY > sY + 114) && (msY < sY + 125))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon DT-Elvine ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 150) && (msY > sY + 125) && (msY < sY + 136))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon XY-Aresden ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 150) && (msX < sX + 165) && (msY > sY + 125) && (msY < sY + 136))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon XY-Elvine ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 160) && (msY > sY + 136) && (msY < sY + 147))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon LWB-Aresden ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 160) && (msX < sX + 165) && (msY > sY + 136) && (msY < sY + 147))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon LWB-Elvine ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 147) && (msY < sY + 158))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon ManaStone ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 158) && (msY < sY + 169))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon GHK ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 169) && (msY < sY + 180))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon TK ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 180) && (msY < sY + 191))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon BG ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		/********Sade********/
+		/********Elite********/
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 81) && (msY < sY + 92))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Liche ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 92) && (msY < sY + 103))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Demon ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 103) && (msY < sY + 114))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Ettin ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 114) && (msY < sY + 125))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Stalker ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 125) && (msY < sY + 136))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Gagoyle ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 136) && (msY < sY + 147))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Beholder ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 147) && (msY < sY + 158))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Dark-Elf ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 158) && (msY < sY + 169))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Barlog ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 169) && (msY < sY + 180))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Centaurus ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 180) && (msY < sY + 191))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Giant-Lizard ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 191) && (msY < sY + 202))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon MasterMage-Orc ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 202) && (msY < sY + 213))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Minotaurs ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 213) && (msY < sY + 224))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Nizie ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		/********Elite********/
+		/********Boss********/
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 235) && (msY < sY + 246))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Abaddon ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 246) && (msY < sY + 257))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Fire-Wyvern ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 257) && (msY < sY + 268))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Wyvern ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 268) && (msY < sY + 279))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Tigerworm ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 279) && (msY < sY + 290))
+		{
+			ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
+			strcpy(m_cChatMsg, "/summon Hellclaw ");
+			StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
+			PlaySound('E', 14, 5);
+		}
+		/********Boss********/
 		break;
 	}
 }
-
-void CGame::DrawDialogBox_GMPanel(short msX, short msY) // Lo que muestra
+void CGame::DrawDialogBox_GMPanel(short msX, short msY)
 {
 	short sX, sY, szX;
 	char cTxt[120];
@@ -5124,523 +6050,237 @@ void CGame::DrawDialogBox_GMPanel(short msX, short msY) // Lo que muestra
 	szX = m_stDialogBoxInfo[56].sSizeX;
 
 	/*******CONFIGURACION*******/
-	NPlLvl = 221;// El nivel maximo alcansable por cualquier player normal.
+	NPlLvl = 181;// El nivel maximo alcansable por cualquier player normal.
 	GMLvl = 378;// El nivel para GM Admin Lvl, DEBE SER CONSTANTE.
 	/*******CONFIGURACION*******/
 
-	//50Cent - Verifica tu nivel de admin segun tu lvl.
-	if (m_iLevel < NPlLvl)
-	{
+	if (m_iLevel < NPlLvl) {//50Cent - Verifica tu nivel de admin segun tu lvl.
 		AdminLvl = 0;
 	}
-	else if ((m_iLevel >(GMLvl - 10)) && (m_iLevel < GMLvl))
-	{
+	if ((m_iLevel > (GMLvl - 10)) && (m_iLevel < GMLvl)) {//50Cent - Verifica tu nivel de admin segun tu lvl.
 		AdminLvl = 1;
 	}
-
 	DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_GAME2, sX, sY, 2, FALSE, m_bDialogTrans);
-
 	/*******NO TOCAR/SACAR, GRACIAS =D********/
-	GMPVerE = 1;
-	GMPVerR = 3;
+	GMPVerE = 2;
+	GMPVerR = 0;
 	/*******NO TOCAR/SACAR, GRACIAS =D********/
 
 	switch (m_stDialogBoxInfo[56].cMode) {
 	case 0:
 		switch (AdminLvl) {
 		case 0:
-			PutString_SprFont(sX + 75, sY + 35, "Player Panel", 1, 1, 8);//"Player Panel"
-			PutString2(sX + 35, sY + 75 + 14 * 4, "Commands", 0, 255, 0);
-			PutString2(sX + 140, sY + 75 + 14 * 4, "       ", 0, 255, 0); // Chat-Commands
-
-			PutString2(sX + 30, sY + 75 + 14 * 5, "Rep (+) / (-)", 170, 170, 170);
-			PutString2(sX + 30, sY + 75 + 14 * 6, "Whisp Player", 170, 170, 170);
-			PutString2(sX + 30, sY + 75 + 14 * 7, "Create Party", 170, 170, 170);
-			PutString2(sX + 30, sY + 75 + 14 * 8, "Set Profile", 170, 170, 170);
-			PutString2(sX + 30, sY + 75 + 14 * 9, "Get Profile", 170, 170, 170);
-			PutString2(sX + 30, sY + 75 + 14 * 10, "Hold NPC", 170, 170, 170);
-			PutString2(sX + 30, sY + 75 + 14 * 11, "Free NPC", 170, 170, 170);
-			PutString2(sX + 30, sY + 75 + 14 * 12, "TGT NPC", 170, 170, 170);
-			PutString2(sX + 30, sY + 75 + 14 * 13, "Summon Guild", 170, 170, 170);
-
-			PutString2(sX + 145, sY + 75 + 14 * 5, "Save", 170, 170, 170);
-			PutString2(sX + 145, sY + 75 + 14 * 6, "Check Rep", 170, 170, 170);
-			PutString2(sX + 145, sY + 75 + 14 * 7, "Get Rep", 170, 170, 170);
-			PutString2(sX + 145, sY + 75 + 14 * 8, "Change City", 170, 170, 170);
-			PutString2(sX + 145, sY + 75 + 14 * 9, "Big Items", 170, 170, 170);
-			PutString2(sX + 145, sY + 75 + 14 * 10, "Criticals", 170, 170, 170);
-
-			PutString2(sX + 145, sY + 75 + 14 * 11, "TP to Event", 170, 170, 170);
-
+			DisableDialogBox(56);
 			break;
-
 		case 1:
 			PutString_SprFont(sX + 55, sY + 35, "GameMaster Panel", 1, 1, 8);//"GameMaster Panel"
 			PutString2(sX + 30, sY + 70, DEF_CATEG_STATUSTOOLS, 255, 200, 0);//"GM Status & Tools"
 			PutString2(sX + 30, sY + 228, DEF_CATEG_SERVERMANIP, 255, 200, 0);//"Server Manipulation"
 			PutString2(sX + 135, sY + 70, DEF_CATEG_PLAYERMANIP, 255, 200, 0);//"Player Manipulation"
 			/*******NO TOCAR/SACAR, GRACIAS =D********/
-			wsprintf(G_cTxt, "GameMaster Panel Ver%d.%d", GMPVerE, GMPVerR);
-			PutString2(sX + 58, sY + 50, G_cTxt, 255, 255, 255);
+			/*wsprintf(G_cTxt, "GM Panel Version %d.%d", GMPVerE, GMPVerR);
+			PutString2(sX + 60, sY + 50, G_cTxt, 255, 255, 255);*/
 			/*******NO TOCAR/SACAR, GRACIAS =D********/
 
-			/********GM Status & Tools********/
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
+		/********GM Status & Tools********/
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
 				if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 85) && (msY < sY + 100))
 					PutString2(sX + 30, sY + 85, DEF_ENABLE, 255, 255, 255);//"Enable Admin Cmd"
 				else PutString2(sX + 30, sY + 85, DEF_ENABLE, 4, 0, 50);//"Enable Admin Cmd"
-			}
-			else	PutString2(sX + 30, sY + 85, DEF_ENABLE, 65, 65, 65);//"Enable Admin Cmd"
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
+			//}
+			//else	PutString2(sX + 30, sY + 85, DEF_ENABLE, 65, 65, 65);//"Enable Admin Cmd"
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
 				if ((msX > sX + 30) && (msX < sX + 107) && (msY > sY + 100) && (msY < sY + 115))
 					PutString2(sX + 30, sY + 100, DEF_OBSERVERMODE_ON, 255, 255, 255);//"Obs. Mode On/"
 				else PutString2(sX + 30, sY + 100, DEF_OBSERVERMODE_ON, 4, 0, 50);//"Obs. Mode On/"
-			}
-			else	PutString2(sX + 30, sY + 100, DEF_OBSERVERMODE_ON, 65, 65, 65);//"Obs. Mode On/"
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
+			//}
+			//else	PutString2(sX + 30, sY + 100, DEF_OBSERVERMODE_ON, 65, 65, 65);//"Obs. Mode On/"
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
 				if ((msX > sX + 108) && (msX < sX + 125) && (msY > sY + 100) && (msY < sY + 115))
 					PutString2(sX + 108, sY + 100, DEF_OBSERVERMODE_OFF, 255, 255, 255);//"Off"
 				else PutString2(sX + 108, sY + 100, DEF_OBSERVERMODE_OFF, 4, 0, 50);//"Off"
-			}
-			else	PutString2(sX + 108, sY + 100, DEF_OBSERVERMODE_OFF, 65, 65, 65);//"Off"
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
+			//}
+			//else	PutString2(sX + 108, sY + 100, DEF_OBSERVERMODE_OFF, 65, 65, 65);//"Off"
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
 				if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 115) && (msY < sY + 130))
 					PutString2(sX + 30, sY + 115, DEF_TELEPORT, 255, 255, 255);//"Teleport"
 				else PutString2(sX + 30, sY + 115, DEF_TELEPORT, 4, 0, 50);//"Teleport"
-			}
-			else	PutString2(sX + 30, sY + 115, DEF_TELEPORT, 65, 65, 65);//"Teleport"
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
+			//}
+			//else	PutString2(sX + 30, sY + 115, DEF_TELEPORT, 65, 65, 65);//"Teleport"
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
 				if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 130) && (msY < sY + 145))
-					PutString2(sX + 30, sY + 130, DEF_GMATTACK, 255, 255, 255);//"Admin Attack Cmd"
-				else PutString2(sX + 30, sY + 130, DEF_GMATTACK, 4, 0, 50);//"Admin Attack Cmd"
-			}
-			else	PutString2(sX + 30, sY + 130, DEF_GMATTACK, 65, 65, 65);//"Admin Attack Cmd"
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
+					PutString2(sX + 30, sY + 130, DEF_POLYMORPH, 255, 255, 255);//"Polymorph Cmd"
+				else PutString2(sX + 30, sY + 130, DEF_POLYMORPH, 4, 0, 50);//"Polymorph Cmd"
+			//}
+			//else	PutString2(sX + 30, sY + 130, DEF_POLYMORPH, 65, 65, 65);//"Polymorph Cmd"
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
 				if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 145) && (msY < sY + 160))
 					PutString2(sX + 30, sY + 145, DEF_INVI_ON, 255, 255, 255);//"Invi On/"
 				else PutString2(sX + 30, sY + 145, DEF_INVI_ON, 4, 0, 50);//"Invi On/"
-			}
-			else	PutString2(sX + 30, sY + 145, DEF_INVI_ON, 65, 65, 65);//"Invi On/"
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
+			//}
+			//else	PutString2(sX + 30, sY + 145, DEF_INVI_ON, 65, 65, 65);//"Invi On/"
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
 				if ((msX > sX + 75) && (msX < sX + 125) && (msY > sY + 145) && (msY < sY + 160))
 					PutString2(sX + 75, sY + 145, DEF_INVI_OFF, 255, 255, 255);//"Off"
 				else PutString2(sX + 75, sY + 145, DEF_INVI_OFF, 4, 0, 50);//"Off"
-			}
-			else	PutString2(sX + 75, sY + 145, DEF_INVI_OFF, 65, 65, 65);//"Off"
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
+			//}
+			//else	PutString2(sX + 75, sY + 145, DEF_INVI_OFF, 65, 65, 65);//"Off"
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
 				if ((msX > sX + 30) && (msX < sX + 80) && (msY > sY + 160) && (msY < sY + 175))
-					PutString2(sX + 30, sY + 160, DEF_EVENT_ON, 255, 255, 255);//"Event On/"
-				else PutString2(sX + 30, sY + 160, DEF_EVENT_ON, 4, 0, 50);//"Event On/"
-			}
-			else	PutString2(sX + 30, sY + 160, DEF_EVENT_ON, 65, 65, 65);//"Event On/"
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
-				if ((msX > sX + 82) && (msX < sX + 125) && (msY > sY + 160) && (msY < sY + 175))
-					PutString2(sX + 82, sY + 160, DEF_EVENT_OFF, 255, 255, 255);//"Off"
-				else PutString2(sX + 82, sY + 160, DEF_EVENT_OFF, 4, 0, 50);//"Off"
-			}
-			else	PutString2(sX + 82, sY + 160, DEF_EVENT_OFF, 65, 65, 65);//"Off"
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
+					PutString2(sX + 30, sY + 160, DEF_ZERK_ON, 255, 255, 255);//"Zerk On/"
+				else PutString2(sX + 30, sY + 160, DEF_ZERK_ON, 4, 0, 50);//"Zerk On/"
+			//}
+			//else	PutString2(sX + 30, sY + 160, DEF_ZERK_ON, 65, 65, 65);//"Zerk On/"
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
+				if ((msX > sX + 80) && (msX < sX + 125) && (msY > sY + 160) && (msY < sY + 175))
+					PutString2(sX + 78, sY + 160, DEF_ZERK_OFF, 255, 255, 255);//"Off"
+				else PutString2(sX + 78, sY + 160, DEF_ZERK_OFF, 4, 0, 50);//"Off"
+			//}
+			//else	PutString2(sX + 78, sY + 160, DEF_ZERK_OFF, 65, 65, 65);//"Off"
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
 				if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 175) && (msY < sY + 190))
 					PutString2(sX + 30, sY + 175, DEF_SUMMON, 255, 255, 255);//"Summon Cmd"
 				else PutString2(sX + 30, sY + 175, DEF_SUMMON, 4, 0, 50);//"Summon Cmd"
-			}
-			else	PutString2(sX + 30, sY + 175, DEF_SUMMON, 65, 65, 65);//"Summon Cmd"
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
+			//}
+			//else	PutString2(sX + 30, sY + 175, DEF_SUMMON, 65, 65, 65);//"Summon Cmd"
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
 				if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 190) && (msY < sY + 205))
 					PutString2(sX + 30, sY + 190, DEF_CREATEITEM, 255, 255, 255);//"Create Item Cmd"
 				else PutString2(sX + 30, sY + 190, DEF_CREATEITEM, 4, 0, 50);//"Create Item Cmd"
-			}
-			else	PutString2(sX + 30, sY + 190, DEF_CREATEITEM, 65, 65, 65);//"Create Item Cmd"
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
+			//}
+			//else	PutString2(sX + 30, sY + 190, DEF_CREATEITEM, 65, 65, 65);//"Create Item Cmd"
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
 				if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 205) && (msY < sY + 220))
-					PutString2(sX + 30, sY + 205, DEF_EVENTTP_OFF, 255, 255, 255);//"Event Tp Cmd"
-				else PutString2(sX + 30, sY + 205, DEF_EVENTTP_OFF, 4, 0, 50);//"Event Tp Cmd"
-			}
-			else	PutString2(sX + 30, sY + 205, DEF_EVENTTP_OFF, 65, 65, 65);//"Event Tp Cmd"
-			/********GM Status & Tools********/
-			/********Server Manipulation********/
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
+					PutString2(sX + 30, sY + 205, DEF_STORM, 255, 255, 255);//"Storm Cmd"
+				else PutString2(sX + 30, sY + 205, DEF_STORM, 4, 0, 50);//"Storm Cmd"
+			//}
+			//else	PutString2(sX + 30, sY + 205, DEF_STORM, 65, 65, 65);//"Storm Cmd"
+		   /********GM Status & Tools********/
+		   /********Server Manipulation********/
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
 				if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 243) && (msY < sY + 258))
 					PutString2(sX + 30, sY + 243, DEF_SHUTDOWN, 255, 255, 255);//"Shut Down Server Cmd"
 				else PutString2(sX + 30, sY + 243, DEF_SHUTDOWN, 4, 0, 50);//"Shut Down Server Cmd"
-			}
-			else  PutString2(sX + 30, sY + 243, DEF_SHUTDOWN, 65, 65, 65);//"Shut Down Server Cmd"
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
+			//}
+			//else  PutString2(sX + 30, sY + 243, DEF_SHUTDOWN, 65, 65, 65);//"Shut Down Server Cmd"
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
 				if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 258) && (msY < sY + 273))
 					PutString2(sX + 30, sY + 258, DEF_RESERVEFZ, 255, 255, 255);//"Reserve Arena Cmd"
 				else PutString2(sX + 30, sY + 258, DEF_RESERVEFZ, 4, 0, 50);//"Reserve Arena Cmd"
-			}
-			else  PutString2(sX + 30, sY + 258, DEF_RESERVEFZ, 65, 65, 65);//"Reserve Arena Cmd"
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
+			//}
+			//else  PutString2(sX + 30, sY + 258, DEF_RESERVEFZ, 65, 65, 65);//"Reserve Arena Cmd"
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
 				if ((msX > sX + 30) && (msX < sX + 120) && (msY > sY + 273) && (msY < sY + 288))
 					PutString2(sX + 30, sY + 273, DEF_SETATTACKMODE_ON, 255, 255, 255);//"Attack Mode On/"
 				else PutString2(sX + 30, sY + 273, DEF_SETATTACKMODE_ON, 4, 0, 50);//"Attack Mode On/"
-			}
-			else  PutString2(sX + 30, sY + 273, DEF_SETATTACKMODE_ON, 65, 65, 65);//"Attack Mode On/"
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
+			//}
+			//else  PutString2(sX + 30, sY + 273, DEF_SETATTACKMODE_ON, 65, 65, 65);//"Attack Mode On/"
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
 				if ((msX > sX + 120) && (msX < sX + 125) && (msY > sY + 273) && (msY < sY + 288))
 					PutString2(sX + 120, sY + 273, DEF_SETATTACKMODE_OFF, 255, 255, 255);//"Off"
 				else PutString2(sX + 120, sY + 273, DEF_SETATTACKMODE_OFF, 4, 0, 50);//"Off"
-			}
-			else  PutString2(sX + 120, sY + 273, DEF_SETATTACKMODE_OFF, 65, 65, 65);//"Off"
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
+			//}
+			//else  PutString2(sX + 120, sY + 273, DEF_SETATTACKMODE_OFF, 65, 65, 65);//"Off"
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
 				if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 288) && (msY < sY + 303))
 					PutString2(sX + 30, sY + 288, DEF_DISCONNECTALL, 255, 255, 255);//"Disconnect All Cmd"
 				else PutString2(sX + 30, sY + 288, DEF_DISCONNECTALL, 4, 0, 50);//"Disconnect All Cmd"
-			}
-			else  PutString2(sX + 30, sY + 288, DEF_DISCONNECTALL, 65, 65, 65);//"Disconnect All Cmd"
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
+			//}
+			//else  PutString2(sX + 30, sY + 288, DEF_DISCONNECTALL, 65, 65, 65);//"Disconnect All Cmd"
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
 				if ((msX > sX + 30) && (msX < sX + 125) && (msY > sY + 303) && (msY < sY + 318))
 					PutString2(sX + 30, sY + 303, DEF_CLEARNPC, 255, 255, 255);//"Clear Npc Cmd"
 				else PutString2(sX + 30, sY + 303, DEF_CLEARNPC, 4, 0, 50);//"Clear Npc Cmd"
-			}
-			else  PutString2(sX + 30, sY + 303, DEF_CLEARNPC, 65, 65, 65);//"Clear Npc Cmd"
-
-			/********Server Manipulation********/
-			/********Player Manipulation********/
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
+			//}
+			//else  PutString2(sX + 30, sY + 303, DEF_CLEARNPC, 65, 65, 65);//"Clear Npc Cmd"
+		   /********Server Manipulation********/
+		   /********Player Manipulation********/
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
 				if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 85) && (msY < sY + 100))
 					PutString2(sX + 135, sY + 85, DEF_KILL, 255, 255, 255);//"Kill Cmd"
 				else PutString2(sX + 135, sY + 85, DEF_KILL, 4, 0, 50);//"Kill Cmd"
-			}
-			else	PutString2(sX + 135, sY + 85, DEF_KILL, 65, 65, 65);//"Kill Cmd"
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
+			//}
+			//else	PutString2(sX + 135, sY + 85, DEF_KILL, 65, 65, 65);//"Kill Cmd"
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
 				if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 100) && (msY < sY + 115))
 					PutString2(sX + 135, sY + 100, DEF_REVIVE, 255, 255, 255);//"Revive Cmd"
 				else PutString2(sX + 135, sY + 100, DEF_REVIVE, 4, 0, 50);//"Revive Cmd"
-			}
-			else	PutString2(sX + 135, sY + 100, DEF_REVIVE, 65, 65, 65);//"Revive Cmd"
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
+			//}
+			//else	PutString2(sX + 135, sY + 100, DEF_REVIVE, 65, 65, 65);//"Revive Cmd"
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
 				if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 115) && (msY < sY + 130))
 					PutString2(sX + 135, sY + 115, DEF_CLOSECON, 255, 255, 255);//"Close Con. Cmd"
 				else PutString2(sX + 135, sY + 115, DEF_CLOSECON, 4, 0, 50);//"Close Con. Cmd"
-			}
-			else	PutString2(sX + 135, sY + 115, DEF_CLOSECON, 65, 65, 65);//"Close Con. Cmd"
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
+			//}
+			//else	PutString2(sX + 135, sY + 115, DEF_CLOSECON, 65, 65, 65);//"Close Con. Cmd"
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
 				if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 130) && (msY < sY + 145))
 					PutString2(sX + 135, sY + 130, DEF_SEND, 255, 255, 255);//"Send Cmd"
 				else PutString2(sX + 135, sY + 130, DEF_SEND, 4, 0, 50);//"Send Cmd"
-			}
-			else	PutString2(sX + 135, sY + 130, DEF_SEND, 65, 65, 65);//"Send Cmd"
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
+			//}
+			//else	PutString2(sX + 135, sY + 130, DEF_SEND, 65, 65, 65);//"Send Cmd"
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
 				if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 145) && (msY < sY + 160))
 					PutString2(sX + 135, sY + 145, DEF_GOTO, 255, 255, 255);//"Goto Cmd"
 				else PutString2(sX + 135, sY + 145, DEF_GOTO, 4, 0, 50);//"Goto Cmd"
-			}
-			else	PutString2(sX + 135, sY + 145, DEF_GOTO, 65, 65, 65);//"Goto Cmd"
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
+			//}
+			//else	PutString2(sX + 135, sY + 145, DEF_GOTO, 65, 65, 65);//"Goto Cmd"
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
 				if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 160) && (msY < sY + 175))
 					PutString2(sX + 135, sY + 160, DEF_SUMMONALL, 255, 255, 255);//"Summon All Cmd"
 				else PutString2(sX + 135, sY + 160, DEF_SUMMONALL, 4, 0, 50);//"Summon All Cmd"
-			}
-			else	PutString2(sX + 135, sY + 160, DEF_SUMMONALL, 65, 65, 65);//"Summon All Cmd"
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
+			//}
+			//else	PutString2(sX + 135, sY + 160, DEF_SUMMONALL, 65, 65, 65);//"Summon All Cmd"
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
 				if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 175) && (msY < sY + 190))
 					PutString2(sX + 135, sY + 175, DEF_SUMMONPLAYER, 255, 255, 255);//"Summon Player Cmd"
 				else PutString2(sX + 135, sY + 175, DEF_SUMMONPLAYER, 4, 0, 50);//"Summon Player Cmd"
-			}
-			else	PutString2(sX + 135, sY + 175, DEF_SUMMONPLAYER, 65, 65, 65);//"Summon Player Cmd"
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
+			//}
+			//else	PutString2(sX + 135, sY + 175, DEF_SUMMONPLAYER, 65, 65, 65);//"Summon Player Cmd"
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
 				if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 190) && (msY < sY + 205))
 					PutString2(sX + 135, sY + 190, DEF_SHUTUP, 255, 255, 255);//"Shutup Cmd"
 				else PutString2(sX + 135, sY + 190, DEF_SHUTUP, 4, 0, 50);//"Shutup Cmd"
-			}
-			else	PutString2(sX + 135, sY + 190, DEF_SHUTUP, 65, 65, 65);//"Shutup Cmd"
-			if (m_bCitizen == FALSE)//Verifica si eres Traveler
-			{
+			//}
+			//else	PutString2(sX + 135, sY + 190, DEF_SHUTUP, 65, 65, 65);//"Shutup Cmd"
+			//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+			//{
 				if ((msX > sX + 135) && (msX < sX + 225) && (msY > sY + 205) && (msY < sY + 220))
 					PutString2(sX + 135, sY + 205, DEF_ATTACK, 255, 255, 255);//"Guard Attack Cmd"
 				else PutString2(sX + 135, sY + 205, DEF_ATTACK, 4, 0, 50);//"Guard Attack Cmd"
-			}
-			else	PutString2(sX + 135, sY + 205, DEF_ATTACK, 65, 65, 65);//"Guard Attack Cmd"
-			/********Player Manipulation********/
+			//}
+			//else	PutString2(sX + 135, sY + 205, DEF_ATTACK, 65, 65, 65);//"Guard Attack Cmd"
+		   /********Player Manipulation********/
 			break;
 		}
-	}
-}
-
-void CGame::DlgBoxClick_GMPanel_Teleport(short msX, short msY)
-{
-	short sX, sY;
-	sX = m_stDialogBoxInfo[53].sX;
-	sY = m_stDialogBoxInfo[53].sY;
-	DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_GAME2, sX, sY, 2, FALSE, m_bDialogTrans);
-	ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
-	switch (m_stDialogBoxInfo[53].cMode) {
-	case 0:
-		/********Ares********/
-		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 81) && (msY < sY + 92))
-		{
-			strcpy(m_cChatMsg, "/tp aresden ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 92) && (msY < sY + 103))
-		{
-			strcpy(m_cChatMsg, "/tp cityhall_1 ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 103) && (msY < sY + 114))
-		{
-			strcpy(m_cChatMsg, "/tp gshop_1 ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 114) && (msY < sY + 125))
-		{
-			strcpy(m_cChatMsg, "/tp wrhus_1 ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 125) && (msY < sY + 136))
-		{
-			strcpy(m_cChatMsg, "/tp arejail ");
-
-			PlaySound('E', 14, 5);
-		}
-
-		/********Ares********/
-		/********Elv********/
-		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 81) && (msY < sY + 92))
-		{
-			strcpy(m_cChatMsg, "/tp elvine ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 92) && (msY < sY + 103))
-		{
-			strcpy(m_cChatMsg, "/tp cityhall_2 ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 103) && (msY < sY + 114))
-		{
-			strcpy(m_cChatMsg, "/tp gshop_2 ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 114) && (msY < sY + 125))
-		{
-			strcpy(m_cChatMsg, "/tp wrhus_2 ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 125) && (msY < sY + 136))
-		{
-			strcpy(m_cChatMsg, "/tp elvjail ");
-
-			PlaySound('E', 14, 5);
-		}
-		/********Elv********/
-		/********Dungeon********/
-
-		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 81) && (msY < sY + 92))
-		{
-			strcpy(m_cChatMsg, "/tp dglv4 ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 92) && (msY < sY + 103))
-		{
-			strcpy(m_cChatMsg, "/tp druncncity ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 103) && (msY < sY + 114))
-		{
-			strcpy(m_cChatMsg, "/tp inferniaA ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 114) && (msY < sY + 125))
-		{
-			strcpy(m_cChatMsg, "/tp inferniaB ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 125) && (msY < sY + 136))
-		{
-			strcpy(m_cChatMsg, "/tp maze ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 136) && (msY < sY + 147))
-		{
-			strcpy(m_cChatMsg, "/tp abaddon ");
-
-			PlaySound('E', 14, 5);
-		}
-
-		/********Dungeon********/
-		/********Others********/
-		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 202) && (msY < sY + 213))
-		{
-			strcpy(m_cChatMsg, "/tp default ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 213) && (msY < sY + 224))
-		{
-			strcpy(m_cChatMsg, "/tp middleland ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 224) && (msY < sY + 235))
-		{
-			strcpy(m_cChatMsg, "/tp icebound ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 235) && (msY < sY + 246))
-		{
-			strcpy(m_cChatMsg, "/tp toh3 ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 246) && (msY < sY + 257))
-		{
-			strcpy(m_cChatMsg, "/tp procella ");
-
-			PlaySound('E', 14, 5);
-		}
-
-
-		/********Others********/
-		/********Event********/
-		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 81) && (msY < sY + 92))
-		{
-			strcpy(m_cChatMsg, "/tp fightzone1 ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 92) && (msY < sY + 103))
-		{
-			strcpy(m_cChatMsg, "/tp fightzone2 ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 103) && (msY < sY + 114))
-		{
-			strcpy(m_cChatMsg, "/tp fightzone3 ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 114) && (msY < sY + 125))
-		{
-			strcpy(m_cChatMsg, "/tp fightzone4 ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 125) && (msY < sY + 136))
-		{
-			strcpy(m_cChatMsg, "/tp fightzone5 ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 136) && (msY < sY + 147))
-		{
-			strcpy(m_cChatMsg, "/tp fightzone6 ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 147) && (msY < sY + 158))
-		{
-			strcpy(m_cChatMsg, "/tp fightzone7 ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 158) && (msY < sY + 169))
-		{
-			strcpy(m_cChatMsg, "/tp fightzone8 ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 169) && (msY < sY + 180))
-		{
-			strcpy(m_cChatMsg, "/tp fightzone9 ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 180) && (msY < sY + 191))
-		{
-			strcpy(m_cChatMsg, "/tp bisle ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 191) && (msY < sY + 202))
-		{
-			strcpy(m_cChatMsg, "/tp BtField ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 202) && (msY < sY + 213))
-		{
-			strcpy(m_cChatMsg, "/tp GodH ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 213) && (msY < sY + 224))
-		{
-			strcpy(m_cChatMsg, "/tp HRampart ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 224) && (msY < sY + 235))
-		{
-			strcpy(m_cChatMsg, "/tp deathmach ");
-
-			PlaySound('E', 14, 5);
-		}
-#ifdef RES_HIGH
-		StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-		StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
-
-		/********Event********/
 		break;
-	}
-}
-
-void CGame::DrawDialogBox_GMPanel_Teleport(short msX, short msY)
-{
-	short sX, sY, szX;
-	char cTxt[120];
-
-	sX = m_stDialogBoxInfo[53].sX;
-	sY = m_stDialogBoxInfo[53].sY;
-	szX = m_stDialogBoxInfo[53].sSizeX;
-
-	DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_GAME2, sX, sY, 2, FALSE, m_bDialogTrans);
-	switch (m_stDialogBoxInfo[53].cMode) {
-	case 0:
+	case 1:
 		PutString_SprFont(sX + 55, sY + 35, "GameMaster Panel", 1, 1, 8);//"GameMaster Panel"
 		PutString_SprFont(sX + 75, sY + 50, "Teleport List", 1, 1, 8);//"Teleport List"
 		PutString2(sX + 30, sY + 70, DEF_SUBTP_CATE_ARE, 255, 200, 0);//"Ares"
@@ -5649,822 +6289,528 @@ void CGame::DrawDialogBox_GMPanel_Teleport(short msX, short msY)
 		PutString2(sX + 120, sY + 191, DEF_SUBTP_CATE_OTH, 255, 200, 0);//"Others"
 		PutString2(sX + 175, sY + 70, DEF_SUBTP_CATE_EVE, 255, 200, 0);//"Event"
 		/********Ares********/
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 81) && (msY < sY + 92))
-				PutString2(sX + 30, sY + 81, DEF_SUBTP7, 255, 255, 255);//
-			else PutString2(sX + 30, sY + 81, DEF_SUBTP7, 4, 0, 50);//
-		}
-		else PutString2(sX + 30, sY + 81, DEF_SUBTP7, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 92) && (msY < sY + 103))
-				PutString2(sX + 30, sY + 92, DEF_SUBTP9, 255, 255, 255);//
-			else PutString2(sX + 30, sY + 92, DEF_SUBTP9, 4, 0, 50);//
-		}
-		else PutString2(sX + 30, sY + 92, DEF_SUBTP9, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 103) && (msY < sY + 114))
-				PutString2(sX + 30, sY + 103, DEF_SUBTP11, 255, 255, 255);//
-			else PutString2(sX + 30, sY + 103, DEF_SUBTP11, 4, 0, 50);//
-		}
-		else PutString2(sX + 30, sY + 103, DEF_SUBTP11, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 114) && (msY < sY + 125))
-				PutString2(sX + 30, sY + 114, DEF_SUBTP13, 255, 255, 255);//
-			else PutString2(sX + 30, sY + 114, DEF_SUBTP13, 4, 0, 50);//
-		}
-		else PutString2(sX + 30, sY + 114, DEF_SUBTP13, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 125) && (msY < sY + 136))
-				PutString2(sX + 30, sY + 125, DEF_SUBTP20, 255, 255, 255);//
-			else PutString2(sX + 30, sY + 125, DEF_SUBTP20, 4, 0, 50);//
-		}
-		else PutString2(sX + 30, sY + 125, DEF_SUBTP20, 65, 65, 65);//
-
-		/********Ares********/
-		/********Elv********/
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 81) && (msY < sY + 92))
-				PutString2(sX + 75, sY + 81, DEF_SUBTP7, 255, 255, 255);//
-			else PutString2(sX + 75, sY + 81, DEF_SUBTP7, 4, 0, 50);//
-		}
-		else PutString2(sX + 75, sY + 81, DEF_SUBTP7, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 92) && (msY < sY + 103))
-				PutString2(sX + 75, sY + 92, DEF_SUBTP9, 255, 255, 255);//
-			else PutString2(sX + 75, sY + 92, DEF_SUBTP9, 4, 0, 50);//
-		}
-		else PutString2(sX + 75, sY + 92, DEF_SUBTP9, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 103) && (msY < sY + 114))
-				PutString2(sX + 75, sY + 103, DEF_SUBTP11, 255, 255, 255);//
-			else PutString2(sX + 75, sY + 103, DEF_SUBTP11, 4, 0, 50);//
-		}
-		else PutString2(sX + 75, sY + 103, DEF_SUBTP11, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 114) && (msY < sY + 125))
-				PutString2(sX + 75, sY + 114, DEF_SUBTP13, 255, 255, 255);//
-			else PutString2(sX + 75, sY + 114, DEF_SUBTP13, 4, 0, 50);//
-		}
-		else PutString2(sX + 75, sY + 114, DEF_SUBTP13, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 125) && (msY < sY + 136))
-				PutString2(sX + 75, sY + 125, DEF_SUBTP20, 255, 255, 255);//
-			else PutString2(sX + 75, sY + 125, DEF_SUBTP20, 4, 0, 50);//
-		}
-		else PutString2(sX + 75, sY + 125, DEF_SUBTP20, 65, 65, 65);//
-
-		/********Elv********/
-		/********Dungeon********/
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 81) && (msY < sY + 92))
-				PutString2(sX + 120, sY + 81, DEF_SUBTP24, 255, 255, 255);//
-			else PutString2(sX + 120, sY + 81, DEF_SUBTP24, 4, 0, 50);//
-		}
-		else PutString2(sX + 120, sY + 81, DEF_SUBTP24, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 92) && (msY < sY + 103))
-				PutString2(sX + 120, sY + 92, DEF_SUBTP27, 255, 255, 255);//
-			else PutString2(sX + 120, sY + 92, DEF_SUBTP27, 4, 0, 50);//
-		}
-		else PutString2(sX + 120, sY + 92, DEF_SUBTP27, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 103) && (msY < sY + 114))
-				PutString2(sX + 120, sY + 103, DEF_SUBTP28, 255, 255, 255);//
-			else PutString2(sX + 120, sY + 103, DEF_SUBTP28, 4, 0, 50);//
-		}
-		else PutString2(sX + 120, sY + 103, DEF_SUBTP28, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 114) && (msY < sY + 125))
-				PutString2(sX + 120, sY + 114, DEF_SUBTP29, 255, 255, 255);//
-			else PutString2(sX + 120, sY + 114, DEF_SUBTP29, 4, 0, 50);//
-		}
-		else PutString2(sX + 120, sY + 114, DEF_SUBTP29, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 125) && (msY < sY + 136))
-				PutString2(sX + 120, sY + 125, DEF_SUBTP30, 255, 255, 255);//
-			else PutString2(sX + 120, sY + 125, DEF_SUBTP30, 4, 0, 50);//
-		}
-		else PutString2(sX + 120, sY + 125, DEF_SUBTP30, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 136) && (msY < sY + 147))
-				PutString2(sX + 120, sY + 136, DEF_SUBTP31, 255, 255, 255);//
-			else PutString2(sX + 120, sY + 136, DEF_SUBTP31, 4, 0, 50);//
-		}
-		else PutString2(sX + 120, sY + 136, DEF_SUBTP13, 65, 65, 65);//
-
-		/********Dungeon********/
-		/********Others********/
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 202) && (msY < sY + 213))
-				PutString2(sX + 120, sY + 202, DEF_SUBTP47, 255, 255, 255);//
-			else PutString2(sX + 120, sY + 202, DEF_SUBTP47, 4, 0, 50);//
-		}
-		else PutString2(sX + 120, sY + 202, DEF_SUBTP47, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 213) && (msY < sY + 224))
-				PutString2(sX + 120, sY + 213, DEF_SUBTP45, 255, 255, 255);//
-			else PutString2(sX + 120, sY + 213, DEF_SUBTP45, 4, 0, 50);//
-		}
-		else PutString2(sX + 120, sY + 213, DEF_SUBTP45, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 224) && (msY < sY + 235))
-				PutString2(sX + 120, sY + 224, DEF_SUBTP46, 255, 255, 255);//
-			else PutString2(sX + 120, sY + 224, DEF_SUBTP46, 4, 0, 50);//
-		}
-		else PutString2(sX + 120, sY + 224, DEF_SUBTP46, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 235) && (msY < sY + 246))
-				PutString2(sX + 120, sY + 235, DEF_SUBTP54, 255, 255, 255);//
-			else PutString2(sX + 120, sY + 235, DEF_SUBTP54, 4, 0, 50);//
-		}
-		else PutString2(sX + 120, sY + 235, DEF_SUBTP54, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 246) && (msY < sY + 257))
-				PutString2(sX + 120, sY + 246, DEF_SUBTP56, 255, 255, 255);//
-			else PutString2(sX + 120, sY + 246, DEF_SUBTP56, 4, 0, 50);//
-		}
-		else PutString2(sX + 120, sY + 246, DEF_SUBTP56, 65, 65, 65);//
-
-		/********Others********/
-		/********Event********/
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 81) && (msY < sY + 92))
-				PutString2(sX + 175, sY + 81, DEF_SUBTP32, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 81, DEF_SUBTP32, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 81, DEF_SUBTP32, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 92) && (msY < sY + 103))
-				PutString2(sX + 175, sY + 92, DEF_SUBTP33, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 92, DEF_SUBTP33, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 92, DEF_SUBTP33, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 103) && (msY < sY + 114))
-				PutString2(sX + 175, sY + 103, DEF_SUBTP34, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 103, DEF_SUBTP34, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 103, DEF_SUBTP34, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 114) && (msY < sY + 125))
-				PutString2(sX + 175, sY + 114, DEF_SUBTP35, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 114, DEF_SUBTP35, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 114, DEF_SUBTP35, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 125) && (msY < sY + 136))
-				PutString2(sX + 175, sY + 125, DEF_SUBTP36, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 125, DEF_SUBTP36, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 125, DEF_SUBTP36, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 136) && (msY < sY + 147))
-				PutString2(sX + 175, sY + 136, DEF_SUBTP37, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 136, DEF_SUBTP37, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 136, DEF_SUBTP37, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 147) && (msY < sY + 158))
-				PutString2(sX + 175, sY + 147, DEF_SUBTP38, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 147, DEF_SUBTP38, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 147, DEF_SUBTP38, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 158) && (msY < sY + 169))
-				PutString2(sX + 175, sY + 158, DEF_SUBTP39, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 158, DEF_SUBTP39, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 158, DEF_SUBTP39, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 169) && (msY < sY + 180))
-				PutString2(sX + 175, sY + 169, DEF_SUBTP40, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 169, DEF_SUBTP40, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 169, DEF_SUBTP40, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 180) && (msY < sY + 191))
-				PutString2(sX + 175, sY + 180, DEF_SUBTP41, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 180, DEF_SUBTP41, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 180, DEF_SUBTP41, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 191) && (msY < sY + 202))
-				PutString2(sX + 175, sY + 191, DEF_SUBTP42, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 191, DEF_SUBTP42, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 191, DEF_SUBTP42, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 202) && (msY < sY + 213))
-				PutString2(sX + 175, sY + 202, DEF_SUBTP43, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 202, DEF_SUBTP43, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 202, DEF_SUBTP43, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 213) && (msY < sY + 224))
-				PutString2(sX + 175, sY + 213, DEF_SUBTP44, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 213, DEF_SUBTP44, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 213, DEF_SUBTP44, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 224) && (msY < sY + 235))
-				PutString2(sX + 175, sY + 224, DEF_SUBTP57, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 224, DEF_SUBTP57, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 224, DEF_SUBTP57, 65, 65, 65);//
-		/********Event********/
-		break;
-	}
-}
-
-void CGame::DlgBoxClick_GMPanel_Summon(short msX, short msY)
-{
-	short sX, sY;
-	sX = m_stDialogBoxInfo[54].sX;
-	sY = m_stDialogBoxInfo[54].sY;
-	DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_GAME2, sX, sY, 2, FALSE, m_bDialogTrans);
-	ZeroMemory(m_cChatMsg, sizeof(m_cChatMsg));
-	switch (m_stDialogBoxInfo[54].cMode) {
-	case 0:
-		/********Common********/
-		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 81) && (msY < sY + 92))
-		{
-			strcpy(m_cChatMsg, "/summon Dummy ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 92) && (msY < sY + 103))
-		{
-			strcpy(m_cChatMsg, "/summon Slime ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 103) && (msY < sY + 114))
-		{
-			strcpy(m_cChatMsg, "/summon Skeleton ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 114) && (msY < sY + 125))
-		{
-			strcpy(m_cChatMsg, "/summon Stone-Golem ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 125) && (msY < sY + 136))
-		{
-			strcpy(m_cChatMsg, "/summon Cyclops ");
-
-			PlaySound('E', 14, 5);
-		}
+		//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+		//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 81) && (msY < sY + 92))
+			PutString2(sX + 30, sY + 81, DEF_SUBTP1, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 81, DEF_SUBTP1, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 81, DEF_SUBTP1, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 92) && (msY < sY + 103))
+			PutString2(sX + 30, sY + 92, DEF_SUBTP2, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 92, DEF_SUBTP2, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 92, DEF_SUBTP2, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 103) && (msY < sY + 114))
+			PutString2(sX + 30, sY + 103, DEF_SUBTP3, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 103, DEF_SUBTP3, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 103, DEF_SUBTP3, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 114) && (msY < sY + 125))
+			PutString2(sX + 30, sY + 114, DEF_SUBTP4, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 114, DEF_SUBTP4, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 114, DEF_SUBTP4, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 125) && (msY < sY + 136))
+			PutString2(sX + 30, sY + 125, DEF_SUBTP5, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 125, DEF_SUBTP5, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 125, DEF_SUBTP5, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
 		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 136) && (msY < sY + 147))
-		{
-			strcpy(m_cChatMsg, "/summon Orc ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 147) && (msY < sY + 158))
-		{
-			strcpy(m_cChatMsg, "/summon Giant-Ant ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 158) && (msY < sY + 169))
-		{
-			strcpy(m_cChatMsg, "/summon Scorpion ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 169) && (msY < sY + 180))
-		{
-			strcpy(m_cChatMsg, "/summon Zombie ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 180) && (msY < sY + 191))
-		{
-			strcpy(m_cChatMsg, "/summon Amphis ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 191) && (msY < sY + 202))
-		{
-			strcpy(m_cChatMsg, "/summon Clay-Golem ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 202) && (msY < sY + 213))
-		{
-			strcpy(m_cChatMsg, "/summon Hellbound ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 213) && (msY < sY + 224))
-		{
-			strcpy(m_cChatMsg, "/summon Troll ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 224) && (msY < sY + 235))
-		{
-			strcpy(m_cChatMsg, "/summon Giant-Frog ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 235) && (msY < sY + 246))
-		{
-			strcpy(m_cChatMsg, "/summon Rudolph ");
-
-			PlaySound('E', 14, 5);
-		}
-		/********Common********/
-		/********Misc********/
-		if ((msX > sX + 30) && (msX < sX + 54) && (msY > sY + 257) && (msY < sY + 268))
-		{
-			strcpy(m_cChatMsg, "/summon Guard-Aresden ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 54) && (msX < sX + 68) && (msY > sY + 257) && (msY < sY + 268))
-		{
-			strcpy(m_cChatMsg, "/summon Guard-Elvine ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 68) && (msX < sX + 75) && (msY > sY + 257) && (msY < sY + 268))
-		{
-			strcpy(m_cChatMsg, "/summon Guard-Neutral ");
-
-			PlaySound('E', 14, 5);
-		}
+			PutString2(sX + 30, sY + 136, DEF_SUBTP6, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 136, DEF_SUBTP6, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 136, DEF_SUBTP6, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 147) && (msY < sY + 158))
+			PutString2(sX + 30, sY + 147, DEF_SUBTP7, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 147, DEF_SUBTP7, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 147, DEF_SUBTP7, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 158) && (msY < sY + 169))
+			PutString2(sX + 30, sY + 158, DEF_SUBTP8, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 158, DEF_SUBTP8, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 158, DEF_SUBTP8, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 169) && (msY < sY + 180))
+			PutString2(sX + 30, sY + 169, DEF_SUBTP9, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 169, DEF_SUBTP9, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 169, DEF_SUBTP9, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 180) && (msY < sY + 191))
+			PutString2(sX + 30, sY + 180, DEF_SUBTP10, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 180, DEF_SUBTP10, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 180, DEF_SUBTP10, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 191) && (msY < sY + 202))
+			PutString2(sX + 30, sY + 191, DEF_SUBTP11, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 191, DEF_SUBTP11, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 191, DEF_SUBTP11, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 202) && (msY < sY + 213))
+			PutString2(sX + 30, sY + 202, DEF_SUBTP12, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 202, DEF_SUBTP12, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 202, DEF_SUBTP12, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 213) && (msY < sY + 224))
+			PutString2(sX + 30, sY + 213, DEF_SUBTP13, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 213, DEF_SUBTP13, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 213, DEF_SUBTP13, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 224) && (msY < sY + 235))
+			PutString2(sX + 30, sY + 224, DEF_SUBTP14, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 224, DEF_SUBTP14, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 224, DEF_SUBTP14, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 235) && (msY < sY + 246))
+			PutString2(sX + 30, sY + 235, DEF_SUBTP15, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 235, DEF_SUBTP15, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 235, DEF_SUBTP15, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 246) && (msY < sY + 257))
+			PutString2(sX + 30, sY + 246, DEF_SUBTP18, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 246, DEF_SUBTP18, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 246, DEF_SUBTP18, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 257) && (msY < sY + 268))
+			PutString2(sX + 30, sY + 257, DEF_SUBTP19, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 257, DEF_SUBTP19, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 257, DEF_SUBTP19, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
 		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 268) && (msY < sY + 279))
-		{
-			strcpy(m_cChatMsg, "/summon Unicorn ");
-
-			PlaySound('E', 14, 5);
-		}
+			PutString2(sX + 30, sY + 268, DEF_SUBTP20, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 268, DEF_SUBTP20, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 268, DEF_SUBTP20, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
 		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 279) && (msY < sY + 290))
-		{
-			strcpy(m_cChatMsg, "/summon Rabbit ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 290) && (msY < sY + 301))
-		{
-			strcpy(m_cChatMsg, "/summon Cat ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 301) && (msY < sY + 312))
-		{
-			strcpy(m_cChatMsg, "/summon Crops ");
-
-			PlaySound('E', 14, 5);
-		}
-		/********Misc********/
-		/********Master********/
+			PutString2(sX + 30, sY + 279, DEF_SUBTP21, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 279, DEF_SUBTP21, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 279, DEF_SUBTP21, 65, 65, 65);//
+   /********Ares********/
+   /********Elv********/
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
 		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 81) && (msY < sY + 92))
-		{
-			strcpy(m_cChatMsg, "/summon Orge ");
-
-			PlaySound('E', 14, 5);
-		}
+			PutString2(sX + 75, sY + 81, DEF_SUBTP1, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 81, DEF_SUBTP1, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 81, DEF_SUBTP1, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
 		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 92) && (msY < sY + 103))
-		{
-			strcpy(m_cChatMsg, "/summon WereWolf ");
-
-			PlaySound('E', 14, 5);
-		}
+			PutString2(sX + 75, sY + 92, DEF_SUBTP2, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 92, DEF_SUBTP2, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 92, DEF_SUBTP2, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
 		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 103) && (msY < sY + 114))
-		{
-			strcpy(m_cChatMsg, "/summon Cannibal-Plant ");
-
-			PlaySound('E', 14, 5);
-		}
+			PutString2(sX + 75, sY + 103, DEF_SUBTP3, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 103, DEF_SUBTP3, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 103, DEF_SUBTP3, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
 		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 114) && (msY < sY + 125))
-		{
-			strcpy(m_cChatMsg, "/summon Mountain-Giant ");
-
-			PlaySound('E', 14, 5);
-		}
+			PutString2(sX + 75, sY + 114, DEF_SUBTP4, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 114, DEF_SUBTP4, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 114, DEF_SUBTP4, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
 		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 125) && (msY < sY + 136))
-		{
-			strcpy(m_cChatMsg, "/summon DireBoar ");
-
-			PlaySound('E', 14, 5);
-		}
+			PutString2(sX + 75, sY + 125, DEF_SUBTP5, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 125, DEF_SUBTP5, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 125, DEF_SUBTP5, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
 		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 136) && (msY < sY + 147))
-		{
-			strcpy(m_cChatMsg, "/summon Frost ");
-
-			PlaySound('E', 14, 5);
-		}
+			PutString2(sX + 75, sY + 136, DEF_SUBTP6, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 136, DEF_SUBTP6, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 136, DEF_SUBTP6, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
 		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 147) && (msY < sY + 158))
-		{
-			strcpy(m_cChatMsg, "/summon Ice-Golem ");
-
-			PlaySound('E', 14, 5);
-		}
+			PutString2(sX + 75, sY + 147, DEF_SUBTP7, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 147, DEF_SUBTP7, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 147, DEF_SUBTP7, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
 		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 158) && (msY < sY + 169))
-		{
-			strcpy(m_cChatMsg, "/summon Claw-Turtle ");
-
-			PlaySound('E', 14, 5);
-		}
+			PutString2(sX + 75, sY + 158, DEF_SUBTP8, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 158, DEF_SUBTP8, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 158, DEF_SUBTP8, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
 		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 169) && (msY < sY + 180))
-		{
-			strcpy(m_cChatMsg, "/summon Giant-Crayfish ");
-
-			PlaySound('E', 14, 5);
-		}
+			PutString2(sX + 75, sY + 169, DEF_SUBTP9, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 169, DEF_SUBTP9, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 169, DEF_SUBTP9, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
 		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 180) && (msY < sY + 191))
-		{
-			strcpy(m_cChatMsg, "/summon Giant-Plant ");
-
-			PlaySound('E', 14, 5);
-		}
+			PutString2(sX + 75, sY + 180, DEF_SUBTP10, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 180, DEF_SUBTP10, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 180, DEF_SUBTP10, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
 		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 191) && (msY < sY + 202))
-		{
-			strcpy(m_cChatMsg, "/summon Tentocle ");
-
-			PlaySound('E', 14, 5);
-		}
-		/********Master********/
-		/********Helde********/
-		if ((msX > sX + 85) && (msX < sX + 115) && (msY > sY + 213) && (msY < sY + 224))
-		{
-			strcpy(m_cChatMsg, "/summon CP-Aresden ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 115) && (msX < sX + 120) && (msY > sY + 213) && (msY < sY + 224))
-		{
-			strcpy(m_cChatMsg, "/summon CP-Aresden ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 85) && (msX < sX + 120) && (msY > sY + 224) && (msY < sY + 235))
-		{
-			strcpy(m_cChatMsg, "/summon Sor-Aresden ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 120) && (msX < sX + 125) && (msY > sY + 224) && (msY < sY + 235))
-		{
-			strcpy(m_cChatMsg, "/summon Sor-Elvine ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 85) && (msX < sX + 125) && (msY > sY + 235) && (msY < sY + 246))
-		{
-			strcpy(m_cChatMsg, "/summon ATK-Aresden ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 125) && (msX < sX + 130) && (msY > sY + 235) && (msY < sY + 246))
-		{
-			strcpy(m_cChatMsg, "/summon ATK-Evline ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 85) && (msX < sX + 128) && (msY > sY + 246) && (msY < sY + 257))
-		{
-			strcpy(m_cChatMsg, "/summon Elf-Aresden ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 128) && (msX < sX + 133) && (msY > sY + 246) && (msY < sY + 257))
-		{
-			strcpy(m_cChatMsg, "/summon Elf-Aresden ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 85) && (msX < sX + 125) && (msY > sY + 257) && (msY < sY + 268))
-		{
-			strcpy(m_cChatMsg, "/summon DSK-Aresden ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 125) && (msX < sX + 130) && (msY > sY + 257) && (msY < sY + 268))
-		{
-			strcpy(m_cChatMsg, "/summon DSK-Elvine ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 85) && (msX < sX + 124) && (msY > sY + 268) && (msY < sY + 279))
-		{
-			strcpy(m_cChatMsg, "/summon HBT-Aresden ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 124) && (msX < sX + 129) && (msY > sY + 268) && (msY < sY + 279))
-		{
-			strcpy(m_cChatMsg, "/summon HBT-Elvine ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 85) && (msX < sX + 115) && (msY > sY + 279) && (msY < sY + 290))
-		{
-			strcpy(m_cChatMsg, "/summon CT-Aresden ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 115) && (msX < sX + 120) && (msY > sY + 279) && (msY < sY + 290))
-		{
-			strcpy(m_cChatMsg, "/summon CT-Elvine ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 85) && (msX < sX + 120) && (msY > sY + 290) && (msY < sY + 301))
-		{
-			strcpy(m_cChatMsg, "/summon Bar-Aresden ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 120) && (msX < sX + 125) && (msY > sY + 290) && (msY < sY + 301))
-		{
-			strcpy(m_cChatMsg, "/summon Bar-Elvine ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 85) && (msX < sX + 125) && (msY > sY + 301) && (msY < sY + 312))
-		{
-			strcpy(m_cChatMsg, "/summon AGC-Aresden ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 125) && (msX < sX + 130) && (msY > sY + 301) && (msY < sY + 312))
-		{
-			strcpy(m_cChatMsg, "/summon AGC-Elvine ");
-
-			PlaySound('E', 14, 5);
-		}
-		/********Helde********/
-		/********Sade********/
-		if ((msX > sX + 120) && (msX < sX + 150) && (msY > sY + 81) && (msY < sY + 92))
-		{
-			strcpy(m_cChatMsg, "/summon AGT-Aresden ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 150) && (msX < sX + 165) && (msY > sY + 81) && (msY < sY + 92))
-		{
-			strcpy(m_cChatMsg, "/summon AGT-Elvine ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 120) && (msX < sX + 150) && (msY > sY + 92) && (msY < sY + 103))
-		{
-			strcpy(m_cChatMsg, "/summon CGT-Aresden ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 150) && (msX < sX + 165) && (msY > sY + 92) && (msY < sY + 103))
-		{
-			strcpy(m_cChatMsg, "/summon CGT-Elvine ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 120) && (msX < sX + 155) && (msY > sY + 103) && (msY < sY + 114))
-		{
-			strcpy(m_cChatMsg, "/summon MS-Aresden ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 155) && (msX < sX + 165) && (msY > sY + 103) && (msY < sY + 114))
-		{
-			strcpy(m_cChatMsg, "/summon MS-Elvine ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 120) && (msX < sX + 150) && (msY > sY + 114) && (msY < sY + 125))
-		{
-			strcpy(m_cChatMsg, "/summon DT-Aresden ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 150) && (msX < sX + 165) && (msY > sY + 114) && (msY < sY + 125))
-		{
-			strcpy(m_cChatMsg, "/summon DT-Elvine ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 120) && (msX < sX + 150) && (msY > sY + 125) && (msY < sY + 136))
-		{
-			strcpy(m_cChatMsg, "/summon XY-Aresden ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 150) && (msX < sX + 165) && (msY > sY + 125) && (msY < sY + 136))
-		{
-			strcpy(m_cChatMsg, "/summon XY-Elvine ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 120) && (msX < sX + 160) && (msY > sY + 136) && (msY < sY + 147))
-		{
-			strcpy(m_cChatMsg, "/summon LWB-Aresden ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 160) && (msX < sX + 165) && (msY > sY + 136) && (msY < sY + 147))
-		{
-			strcpy(m_cChatMsg, "/summon LWB-Elvine ");
-
-			PlaySound('E', 14, 5);
-		}
+			PutString2(sX + 75, sY + 191, DEF_SUBTP11, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 191, DEF_SUBTP11, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 191, DEF_SUBTP11, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 202) && (msY < sY + 213))
+			PutString2(sX + 75, sY + 202, DEF_SUBTP12, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 202, DEF_SUBTP12, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 202, DEF_SUBTP12, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 213) && (msY < sY + 224))
+			PutString2(sX + 75, sY + 213, DEF_SUBTP13, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 213, DEF_SUBTP13, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 213, DEF_SUBTP13, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 224) && (msY < sY + 235))
+			PutString2(sX + 75, sY + 224, DEF_SUBTP14, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 224, DEF_SUBTP14, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 224, DEF_SUBTP14, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 235) && (msY < sY + 246))
+			PutString2(sX + 75, sY + 235, DEF_SUBTP15, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 235, DEF_SUBTP15, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 235, DEF_SUBTP15, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 246) && (msY < sY + 257))
+			PutString2(sX + 75, sY + 246, DEF_SUBTP18, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 246, DEF_SUBTP18, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 246, DEF_SUBTP18, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 257) && (msY < sY + 268))
+			PutString2(sX + 75, sY + 257, DEF_SUBTP19, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 257, DEF_SUBTP19, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 257, DEF_SUBTP19, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 268) && (msY < sY + 279))
+			PutString2(sX + 75, sY + 268, DEF_SUBTP20, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 268, DEF_SUBTP20, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 268, DEF_SUBTP20, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 279) && (msY < sY + 290))
+			PutString2(sX + 75, sY + 279, DEF_SUBTP21, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 279, DEF_SUBTP21, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 279, DEF_SUBTP21, 65, 65, 65);//
+   /********Elv********/
+   /********Dungeon********/
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 81) && (msY < sY + 92))
+			PutString2(sX + 120, sY + 81, DEF_SUBTP22, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 81, DEF_SUBTP22, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 81, DEF_SUBTP22, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 92) && (msY < sY + 103))
+			PutString2(sX + 120, sY + 92, DEF_SUBTP23, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 92, DEF_SUBTP23, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 92, DEF_SUBTP23, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 103) && (msY < sY + 114))
+			PutString2(sX + 120, sY + 103, DEF_SUBTP24, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 103, DEF_SUBTP24, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 103, DEF_SUBTP24, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 114) && (msY < sY + 125))
+			PutString2(sX + 120, sY + 114, DEF_SUBTP25, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 114, DEF_SUBTP25, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 114, DEF_SUBTP25, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 125) && (msY < sY + 136))
+			PutString2(sX + 120, sY + 125, DEF_SUBTP26, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 125, DEF_SUBTP26, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 125, DEF_SUBTP26, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 136) && (msY < sY + 147))
+			PutString2(sX + 120, sY + 136, DEF_SUBTP27, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 136, DEF_SUBTP27, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 136, DEF_SUBTP27, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
 		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 147) && (msY < sY + 158))
-		{
-			strcpy(m_cChatMsg, "/summon ManaStone ");
-
-			PlaySound('E', 14, 5);
-		}
+			PutString2(sX + 120, sY + 147, DEF_SUBTP28, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 147, DEF_SUBTP28, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 147, DEF_SUBTP28, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
 		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 158) && (msY < sY + 169))
-		{
-			strcpy(m_cChatMsg, "/summon GHK ");
-
-			PlaySound('E', 14, 5);
-		}
+			PutString2(sX + 120, sY + 158, DEF_SUBTP29, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 158, DEF_SUBTP29, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 158, DEF_SUBTP29, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
 		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 169) && (msY < sY + 180))
-		{
-			strcpy(m_cChatMsg, "/summon TK ");
-
-			PlaySound('E', 14, 5);
-		}
+			PutString2(sX + 120, sY + 169, DEF_SUBTP30, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 169, DEF_SUBTP30, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 169, DEF_SUBTP30, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
 		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 180) && (msY < sY + 191))
-		{
-			strcpy(m_cChatMsg, "/summon BG ");
-
-			PlaySound('E', 14, 5);
-		}
-		/********Sade********/
-		/********Elite********/
-		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 81) && (msY < sY + 92))
-		{
-			strcpy(m_cChatMsg, "/summon Liche ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 92) && (msY < sY + 103))
-		{
-			strcpy(m_cChatMsg, "/summon Demon ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 103) && (msY < sY + 114))
-		{
-			strcpy(m_cChatMsg, "/summon Ettin ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 114) && (msY < sY + 125))
-		{
-			strcpy(m_cChatMsg, "/summon Stalker ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 125) && (msY < sY + 136))
-		{
-			strcpy(m_cChatMsg, "/summon Gagoyle ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 136) && (msY < sY + 147))
-		{
-			strcpy(m_cChatMsg, "/summon Beholder ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 147) && (msY < sY + 158))
-		{
-			strcpy(m_cChatMsg, "/summon Dark-Elf ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 158) && (msY < sY + 169))
-		{
-			strcpy(m_cChatMsg, "/summon Barlog ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 169) && (msY < sY + 180))
-		{
-			strcpy(m_cChatMsg, "/summon Centaurus ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 180) && (msY < sY + 191))
-		{
-			strcpy(m_cChatMsg, "/summon Giant-Lizard ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 191) && (msY < sY + 202))
-		{
-			strcpy(m_cChatMsg, "/summon MasterMage-Orc ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 202) && (msY < sY + 213))
-		{
-			strcpy(m_cChatMsg, "/summon Minotaurs ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 213) && (msY < sY + 224))
-		{
-			strcpy(m_cChatMsg, "/summon Nizie ");
-
-			PlaySound('E', 14, 5);
-		}
-		/********Elite********/
-		/********Boss********/
-		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 235) && (msY < sY + 246))
-		{
-			strcpy(m_cChatMsg, "/summon Abaddon ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 246) && (msY < sY + 257))
-		{
-			strcpy(m_cChatMsg, "/summon Fire-Wyvern ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 257) && (msY < sY + 268))
-		{
-			strcpy(m_cChatMsg, "/summon Wyvern ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 268) && (msY < sY + 279))
-		{
-			strcpy(m_cChatMsg, "/summon Tigerworm ");
-
-			PlaySound('E', 14, 5);
-		}
-		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 279) && (msY < sY + 290))
-		{
-			strcpy(m_cChatMsg, "/summon Hellclaw ");
-
-			PlaySound('E', 14, 5);
-		}
-		/********Boss********/
-#ifdef RES_HIGH
-		StartInputString(10, 532, sizeof(m_cChatMsg), m_cChatMsg);
-#else
-		StartInputString(10, 414, sizeof(m_cChatMsg), m_cChatMsg);
-#endif
+			PutString2(sX + 120, sY + 180, DEF_SUBTP31, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 180, DEF_SUBTP31, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 180, DEF_SUBTP31, 65, 65, 65);//
+   /********Dungeon********/
+   /********Others********/
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 202) && (msY < sY + 213))
+			PutString2(sX + 120, sY + 202, DEF_SUBTP47, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 202, DEF_SUBTP47, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 202, DEF_SUBTP47, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 213) && (msY < sY + 224))
+			PutString2(sX + 120, sY + 213, DEF_SUBTP48, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 213, DEF_SUBTP48, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 213, DEF_SUBTP48, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 224) && (msY < sY + 235))
+			PutString2(sX + 120, sY + 224, DEF_SUBTP49, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 224, DEF_SUBTP49, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 224, DEF_SUBTP49, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 235) && (msY < sY + 246))
+			PutString2(sX + 120, sY + 235, DEF_SUBTP50, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 235, DEF_SUBTP50, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 235, DEF_SUBTP50, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 246) && (msY < sY + 257))
+			PutString2(sX + 120, sY + 246, DEF_SUBTP51, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 246, DEF_SUBTP51, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 246, DEF_SUBTP51, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 257) && (msY < sY + 268))
+			PutString2(sX + 120, sY + 257, DEF_SUBTP52, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 257, DEF_SUBTP52, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 257, DEF_SUBTP52, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 268) && (msY < sY + 279))
+			PutString2(sX + 120, sY + 268, DEF_SUBTP53, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 268, DEF_SUBTP53, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 268, DEF_SUBTP53, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 279) && (msY < sY + 290))
+			PutString2(sX + 120, sY + 279, DEF_SUBTP54, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 279, DEF_SUBTP54, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 279, DEF_SUBTP54, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 290) && (msY < sY + 301))
+			PutString2(sX + 120, sY + 290, DEF_SUBTP55, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 290, DEF_SUBTP55, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 290, DEF_SUBTP55, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 301) && (msY < sY + 312))
+			PutString2(sX + 120, sY + 301, DEF_SUBTP56, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 301, DEF_SUBTP56, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 301, DEF_SUBTP56, 65, 65, 65);//
+   /********Others********/
+   /********Event********/
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 81) && (msY < sY + 92))
+			PutString2(sX + 175, sY + 81, DEF_SUBTP32, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 81, DEF_SUBTP32, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 81, DEF_SUBTP32, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 92) && (msY < sY + 103))
+			PutString2(sX + 175, sY + 92, DEF_SUBTP33, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 92, DEF_SUBTP33, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 92, DEF_SUBTP33, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 103) && (msY < sY + 114))
+			PutString2(sX + 175, sY + 103, DEF_SUBTP34, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 103, DEF_SUBTP34, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 103, DEF_SUBTP34, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 114) && (msY < sY + 125))
+			PutString2(sX + 175, sY + 114, DEF_SUBTP35, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 114, DEF_SUBTP35, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 114, DEF_SUBTP35, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 125) && (msY < sY + 136))
+			PutString2(sX + 175, sY + 125, DEF_SUBTP36, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 125, DEF_SUBTP36, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 125, DEF_SUBTP36, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 136) && (msY < sY + 147))
+			PutString2(sX + 175, sY + 136, DEF_SUBTP37, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 136, DEF_SUBTP37, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 136, DEF_SUBTP37, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 147) && (msY < sY + 158))
+			PutString2(sX + 175, sY + 147, DEF_SUBTP38, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 147, DEF_SUBTP38, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 147, DEF_SUBTP38, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 158) && (msY < sY + 169))
+			PutString2(sX + 175, sY + 158, DEF_SUBTP39, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 158, DEF_SUBTP39, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 158, DEF_SUBTP39, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 169) && (msY < sY + 180))
+			PutString2(sX + 175, sY + 169, DEF_SUBTP40, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 169, DEF_SUBTP40, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 169, DEF_SUBTP40, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 180) && (msY < sY + 191))
+			PutString2(sX + 175, sY + 180, DEF_SUBTP41, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 180, DEF_SUBTP41, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 180, DEF_SUBTP41, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 191) && (msY < sY + 202))
+			PutString2(sX + 175, sY + 191, DEF_SUBTP42, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 191, DEF_SUBTP42, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 191, DEF_SUBTP42, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 202) && (msY < sY + 213))
+			PutString2(sX + 175, sY + 202, DEF_SUBTP43, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 202, DEF_SUBTP43, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 202, DEF_SUBTP43, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 213) && (msY < sY + 224))
+			PutString2(sX + 175, sY + 213, DEF_SUBTP44, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 213, DEF_SUBTP44, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 213, DEF_SUBTP44, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 224) && (msY < sY + 235))
+			PutString2(sX + 175, sY + 224, DEF_SUBTP45, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 224, DEF_SUBTP45, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 224, DEF_SUBTP45, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 220) && (msY > sY + 235) && (msY < sY + 246))
+			PutString2(sX + 175, sY + 235, DEF_SUBTP46, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 235, DEF_SUBTP46, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 235, DEF_SUBTP46, 65, 65, 65);//
+   /********Event********/
 		break;
-	}
-}
-
-void CGame::DrawDialogBox_GMPanel_Summon(short msX, short msY)
-{
-	short sX, sY, szX;
-	char cTxt[120];
-
-	sX = m_stDialogBoxInfo[54].sX;
-	sY = m_stDialogBoxInfo[54].sY;
-	szX = m_stDialogBoxInfo[54].sSizeX;
-
-	DrawNewDialogBox(DEF_SPRID_INTERFACE_ND_GAME2, sX, sY, 2, FALSE, m_bDialogTrans);
-	switch (m_stDialogBoxInfo[54].cMode) {
-	case 0:
+	case 2:
 		PutString_SprFont(sX + 55, sY + 35, "GameMaster Panel", 1, 1, 8);//"GameMaster Panel"
 		PutString_SprFont(sX + 75, sY + 50, "Summon List", 1, 1, 8);//"Summon List"
 		PutString2(sX + 30, sY + 70, DEF_SUBSUMMON_CATE_COMMON, 255, 200, 0);//"Common"
@@ -6475,617 +6821,618 @@ void CGame::DrawDialogBox_GMPanel_Summon(short msX, short msY)
 		PutString2(sX + 175, sY + 70, DEF_SUBSUMMON_CATE_ELITE, 255, 200, 0);//"Elite"
 		PutString2(sX + 175, sY + 224, DEF_SUBSUMMON_CATE_BOSS, 255, 200, 0);//"Boss"
 		/********Common********/
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 81) && (msY < sY + 92))
-				PutString2(sX + 30, sY + 81, DEF_SUBSUMMON30, 255, 255, 255);//
-			else PutString2(sX + 30, sY + 81, DEF_SUBSUMMON30, 4, 0, 50);//
-		}
-		else PutString2(sX + 30, sY + 81, DEF_SUBSUMMON30, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 92) && (msY < sY + 103))
-				PutString2(sX + 30, sY + 92, DEF_SUBSUMMON31, 255, 255, 255);//
-			else PutString2(sX + 30, sY + 92, DEF_SUBSUMMON31, 4, 0, 50);//
-		}
-		else PutString2(sX + 30, sY + 92, DEF_SUBSUMMON31, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 103) && (msY < sY + 114))
-				PutString2(sX + 30, sY + 103, DEF_SUBSUMMON32, 255, 255, 255);//
-			else PutString2(sX + 30, sY + 103, DEF_SUBSUMMON32, 4, 0, 50);//
-		}
-		else PutString2(sX + 30, sY + 103, DEF_SUBSUMMON32, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 114) && (msY < sY + 125))
-				PutString2(sX + 30, sY + 114, DEF_SUBSUMMON33, 255, 255, 255);//
-			else PutString2(sX + 30, sY + 114, DEF_SUBSUMMON33, 4, 0, 50);//
-		}
-		else PutString2(sX + 30, sY + 114, DEF_SUBSUMMON33, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 125) && (msY < sY + 136))
-				PutString2(sX + 30, sY + 125, DEF_SUBSUMMON34, 255, 255, 255);//
-			else PutString2(sX + 30, sY + 125, DEF_SUBSUMMON34, 4, 0, 50);//
-		}
-		else PutString2(sX + 30, sY + 125, DEF_SUBSUMMON34, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 136) && (msY < sY + 147))
-				PutString2(sX + 30, sY + 136, DEF_SUBSUMMON35, 255, 255, 255);//
-			else PutString2(sX + 30, sY + 136, DEF_SUBSUMMON35, 4, 0, 50);//
-		}
-		else PutString2(sX + 30, sY + 136, DEF_SUBSUMMON35, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 147) && (msY < sY + 158))
-				PutString2(sX + 30, sY + 147, DEF_SUBSUMMON36, 255, 255, 255);//
-			else PutString2(sX + 30, sY + 147, DEF_SUBSUMMON36, 4, 0, 50);//
-		}
-		else PutString2(sX + 30, sY + 147, DEF_SUBSUMMON36, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 158) && (msY < sY + 169))
-				PutString2(sX + 30, sY + 158, DEF_SUBSUMMON37, 255, 255, 255);//
-			else PutString2(sX + 30, sY + 158, DEF_SUBSUMMON37, 4, 0, 50);//
-		}
-		else PutString2(sX + 30, sY + 158, DEF_SUBSUMMON37, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 169) && (msY < sY + 180))
-				PutString2(sX + 30, sY + 169, DEF_SUBSUMMON38, 255, 255, 255);//
-			else PutString2(sX + 30, sY + 169, DEF_SUBSUMMON38, 4, 0, 50);//
-		}
-		else PutString2(sX + 30, sY + 169, DEF_SUBSUMMON38, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 180) && (msY < sY + 191))
-				PutString2(sX + 30, sY + 180, DEF_SUBSUMMON39, 255, 255, 255);//
-			else PutString2(sX + 30, sY + 180, DEF_SUBSUMMON39, 4, 0, 50);//
-		}
-		else PutString2(sX + 30, sY + 180, DEF_SUBSUMMON39, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 191) && (msY < sY + 202))
-				PutString2(sX + 30, sY + 191, DEF_SUBSUMMON40, 255, 255, 255);//
-			else PutString2(sX + 30, sY + 191, DEF_SUBSUMMON40, 4, 0, 50);//
-		}
-		else PutString2(sX + 30, sY + 191, DEF_SUBSUMMON40, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 202) && (msY < sY + 213))
-				PutString2(sX + 30, sY + 202, DEF_SUBSUMMON41, 255, 255, 255);//
-			else PutString2(sX + 30, sY + 202, DEF_SUBSUMMON41, 4, 0, 50);//
-		}
-		else PutString2(sX + 30, sY + 202, DEF_SUBSUMMON41, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 213) && (msY < sY + 224))
-				PutString2(sX + 30, sY + 213, DEF_SUBSUMMON42, 255, 255, 255);//
-			else PutString2(sX + 30, sY + 213, DEF_SUBSUMMON42, 4, 0, 50);//
-		}
-		else PutString2(sX + 30, sY + 213, DEF_SUBSUMMON42, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 224) && (msY < sY + 235))
-				PutString2(sX + 30, sY + 224, DEF_SUBSUMMON43, 255, 255, 255);//
-			else PutString2(sX + 30, sY + 224, DEF_SUBSUMMON43, 4, 0, 50);//
-		}
-		else PutString2(sX + 30, sY + 224, DEF_SUBSUMMON43, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 235) && (msY < sY + 246))
-				PutString2(sX + 30, sY + 235, DEF_SUBSUMMON44, 255, 255, 255);//
-			else PutString2(sX + 30, sY + 235, DEF_SUBSUMMON44, 4, 0, 50);//
-		}
-		else PutString2(sX + 30, sY + 235, DEF_SUBSUMMON44, 65, 65, 65);//
-		/********Common********/
-		/********Misc********/
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 30) && (msX < sX + 54) && (msY > sY + 257) && (msY < sY + 268))
-				PutString2(sX + 30, sY + 257, DEF_SUBSUMMON45A, 255, 255, 255);//
-			else PutString2(sX + 30, sY + 257, DEF_SUBSUMMON45A, 4, 0, 50);//
-		}
-		else PutString2(sX + 30, sY + 257, DEF_SUBSUMMON45A, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 54) && (msX < sX + 68) && (msY > sY + 257) && (msY < sY + 268))
-				PutString2(sX + 54, sY + 257, DEF_SUBSUMMON45E, 255, 255, 255);//
-			else PutString2(sX + 54, sY + 257, DEF_SUBSUMMON45E, 4, 0, 50);//
-		}
-		else PutString2(sX + 54, sY + 257, DEF_SUBSUMMON45E, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 68) && (msX < sX + 75) && (msY > sY + 257) && (msY < sY + 268))
-				PutString2(sX + 68, sY + 257, DEF_SUBSUMMON45N, 255, 255, 255);//
-			else PutString2(sX + 68, sY + 257, DEF_SUBSUMMON45N, 4, 0, 50);//
-		}
-		else PutString2(sX + 68, sY + 257, DEF_SUBSUMMON45N, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 268) && (msY < sY + 279))
-				PutString2(sX + 30, sY + 268, DEF_SUBSUMMON46, 255, 255, 255);//
-			else PutString2(sX + 30, sY + 268, DEF_SUBSUMMON46, 4, 0, 50);//
-		}
-		else PutString2(sX + 30, sY + 268, DEF_SUBSUMMON46, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 279) && (msY < sY + 290))
-				PutString2(sX + 30, sY + 279, DEF_SUBSUMMON47, 255, 255, 255);//
-			else PutString2(sX + 30, sY + 279, DEF_SUBSUMMON47, 4, 0, 50);//
-		}
-		else PutString2(sX + 30, sY + 279, DEF_SUBSUMMON47, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 290) && (msY < sY + 301))
-				PutString2(sX + 30, sY + 290, DEF_SUBSUMMON48, 255, 255, 255);//
-			else PutString2(sX + 30, sY + 290, DEF_SUBSUMMON48, 4, 0, 50);//
-		}
-		else PutString2(sX + 30, sY + 290, DEF_SUBSUMMON48, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 301) && (msY < sY + 312))
-				PutString2(sX + 30, sY + 301, DEF_SUBSUMMON49, 255, 255, 255);//
-			else PutString2(sX + 30, sY + 301, DEF_SUBSUMMON49, 4, 0, 50);//
-		}
-		else PutString2(sX + 30, sY + 301, DEF_SUBSUMMON49, 65, 65, 65);//
-		/********Misc********/
-		/********Master********/
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 81) && (msY < sY + 92))
-				PutString2(sX + 75, sY + 81, DEF_SUBSUMMON19, 255, 255, 255);//
-			else PutString2(sX + 75, sY + 81, DEF_SUBSUMMON19, 4, 0, 50);//
-		}
-		else PutString2(sX + 75, sY + 81, DEF_SUBSUMMON19, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 92) && (msY < sY + 103))
-				PutString2(sX + 75, sY + 92, DEF_SUBSUMMON20, 255, 255, 255);//
-			else PutString2(sX + 75, sY + 92, DEF_SUBSUMMON20, 4, 0, 50);//
-		}
-		else PutString2(sX + 75, sY + 92, DEF_SUBSUMMON20, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 103) && (msY < sY + 114))
-				PutString2(sX + 75, sY + 103, DEF_SUBSUMMON21, 255, 255, 255);//
-			else PutString2(sX + 75, sY + 103, DEF_SUBSUMMON21, 4, 0, 50);//
-		}
-		else PutString2(sX + 75, sY + 103, DEF_SUBSUMMON21, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 114) && (msY < sY + 125))
-				PutString2(sX + 75, sY + 114, DEF_SUBSUMMON22, 255, 255, 255);//
-			else PutString2(sX + 75, sY + 114, DEF_SUBSUMMON22, 4, 0, 50);//
-		}
-		else PutString2(sX + 75, sY + 114, DEF_SUBSUMMON22, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 125) && (msY < sY + 136))
-				PutString2(sX + 75, sY + 125, DEF_SUBSUMMON23, 255, 255, 255);//
-			else PutString2(sX + 75, sY + 125, DEF_SUBSUMMON23, 4, 0, 50);//
-		}
-		else PutString2(sX + 75, sY + 125, DEF_SUBSUMMON23, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 136) && (msY < sY + 147))
-				PutString2(sX + 75, sY + 136, DEF_SUBSUMMON24, 255, 255, 255);//
-			else PutString2(sX + 75, sY + 136, DEF_SUBSUMMON24, 4, 0, 50);//
-		}
-		else PutString2(sX + 75, sY + 136, DEF_SUBSUMMON24, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 147) && (msY < sY + 158))
-				PutString2(sX + 75, sY + 147, DEF_SUBSUMMON25, 255, 255, 255);//
-			else PutString2(sX + 75, sY + 147, DEF_SUBSUMMON25, 4, 0, 50);//
-		}
-		else PutString2(sX + 75, sY + 147, DEF_SUBSUMMON25, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 158) && (msY < sY + 169))
-				PutString2(sX + 75, sY + 158, DEF_SUBSUMMON26, 255, 255, 255);//
-			else PutString2(sX + 75, sY + 158, DEF_SUBSUMMON26, 4, 0, 50);//
-		}
-		else PutString2(sX + 75, sY + 158, DEF_SUBSUMMON26, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 169) && (msY < sY + 180))
-				PutString2(sX + 75, sY + 169, DEF_SUBSUMMON27, 255, 255, 255);//
-			else PutString2(sX + 75, sY + 169, DEF_SUBSUMMON27, 4, 0, 50);//
-		}
-		else PutString2(sX + 75, sY + 169, DEF_SUBSUMMON27, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 180) && (msY < sY + 191))
-				PutString2(sX + 75, sY + 180, DEF_SUBSUMMON28, 255, 255, 255);//
-			else PutString2(sX + 75, sY + 180, DEF_SUBSUMMON28, 4, 0, 50);//
-		}
-		else PutString2(sX + 75, sY + 180, DEF_SUBSUMMON28, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 191) && (msY < sY + 202))
-				PutString2(sX + 75, sY + 191, DEF_SUBSUMMON29, 255, 255, 255);//
-			else PutString2(sX + 75, sY + 191, DEF_SUBSUMMON29, 4, 0, 50);//
-		}
-		else PutString2(sX + 75, sY + 191, DEF_SUBSUMMON29, 65, 65, 65);//
-		/********Master********/
-		/********Helde********/
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 85) && (msX < sX + 115) && (msY > sY + 213) && (msY < sY + 224))
-				PutString2(sX + 85, sY + 213, DEF_SUBSUMMON50A, 255, 255, 255);//
-			else PutString2(sX + 85, sY + 213, DEF_SUBSUMMON50A, 4, 0, 50);//
-		}
-		else PutString2(sX + 85, sY + 213, DEF_SUBSUMMON50A, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 115) && (msX < sX + 120) && (msY > sY + 213) && (msY < sY + 224))
-				PutString2(sX + 115, sY + 213, DEF_SUBSUMMON50E, 255, 255, 255);//
-			else PutString2(sX + 115, sY + 213, DEF_SUBSUMMON50E, 4, 0, 50);//
-		}
-		else PutString2(sX + 115, sY + 213, DEF_SUBSUMMON50E, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 85) && (msX < sX + 120) && (msY > sY + 224) && (msY < sY + 235))
-				PutString2(sX + 85, sY + 224, DEF_SUBSUMMON51A, 255, 255, 255);//
-			else PutString2(sX + 85, sY + 224, DEF_SUBSUMMON51A, 4, 0, 50);//
-		}
-		else PutString2(sX + 85, sY + 224, DEF_SUBSUMMON51A, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 120) && (msX < sX + 125) && (msY > sY + 224) && (msY < sY + 235))
-				PutString2(sX + 120, sY + 224, DEF_SUBSUMMON51E, 255, 255, 255);//
-			else PutString2(sX + 120, sY + 224, DEF_SUBSUMMON51E, 4, 0, 50);//
-		}
-		else PutString2(sX + 120, sY + 224, DEF_SUBSUMMON51E, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 85) && (msX < sX + 125) && (msY > sY + 235) && (msY < sY + 246))
-				PutString2(sX + 85, sY + 235, DEF_SUBSUMMON52A, 255, 255, 255);//
-			else PutString2(sX + 85, sY + 235, DEF_SUBSUMMON52A, 4, 0, 50);//
-		}
-		else PutString2(sX + 85, sY + 235, DEF_SUBSUMMON52A, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 125) && (msX < sX + 130) && (msY > sY + 235) && (msY < sY + 246))
-				PutString2(sX + 125, sY + 235, DEF_SUBSUMMON52E, 255, 255, 255);//
-			else PutString2(sX + 125, sY + 235, DEF_SUBSUMMON52E, 4, 0, 50);//
-		}
-		else PutString2(sX + 125, sY + 235, DEF_SUBSUMMON52E, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 85) && (msX < sX + 128) && (msY > sY + 246) && (msY < sY + 257))
-				PutString2(sX + 85, sY + 246, DEF_SUBSUMMON53A, 255, 255, 255);//
-			else PutString2(sX + 85, sY + 246, DEF_SUBSUMMON53A, 4, 0, 50);//
-		}
-		else PutString2(sX + 85, sY + 246, DEF_SUBSUMMON53A, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 128) && (msX < sX + 133) && (msY > sY + 246) && (msY < sY + 257))
-				PutString2(sX + 128, sY + 246, DEF_SUBSUMMON53E, 255, 255, 255);//
-			else PutString2(sX + 128, sY + 246, DEF_SUBSUMMON53E, 4, 0, 50);//
-		}
-		else PutString2(sX + 128, sY + 246, DEF_SUBSUMMON53E, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 85) && (msX < sX + 125) && (msY > sY + 257) && (msY < sY + 268))
-				PutString2(sX + 85, sY + 257, DEF_SUBSUMMON54A, 255, 255, 255);//
-			else PutString2(sX + 85, sY + 257, DEF_SUBSUMMON54A, 4, 0, 50);//
-		}
-		else PutString2(sX + 85, sY + 257, DEF_SUBSUMMON54A, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 125) && (msX < sX + 130) && (msY > sY + 257) && (msY < sY + 268))
-				PutString2(sX + 125, sY + 257, DEF_SUBSUMMON54E, 255, 255, 255);//
-			else PutString2(sX + 125, sY + 257, DEF_SUBSUMMON54E, 4, 0, 50);//
-		}
-		else PutString2(sX + 125, sY + 257, DEF_SUBSUMMON54E, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 85) && (msX < sX + 124) && (msY > sY + 268) && (msY < sY + 279))
-				PutString2(sX + 85, sY + 268, DEF_SUBSUMMON55A, 255, 255, 255);//
-			else PutString2(sX + 85, sY + 268, DEF_SUBSUMMON55A, 4, 0, 50);//
-		}
-		else PutString2(sX + 85, sY + 268, DEF_SUBSUMMON55A, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 124) && (msX < sX + 129) && (msY > sY + 268) && (msY < sY + 279))
-				PutString2(sX + 124, sY + 268, DEF_SUBSUMMON55E, 255, 255, 255);//
-			else PutString2(sX + 124, sY + 268, DEF_SUBSUMMON55E, 4, 0, 50);//
-		}
-		else PutString2(sX + 124, sY + 268, DEF_SUBSUMMON55E, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 85) && (msX < sX + 115) && (msY > sY + 279) && (msY < sY + 290))
-				PutString2(sX + 85, sY + 279, DEF_SUBSUMMON56A, 255, 255, 255);//
-			else PutString2(sX + 85, sY + 279, DEF_SUBSUMMON56A, 4, 0, 50);//
-		}
-		else PutString2(sX + 85, sY + 279, DEF_SUBSUMMON56A, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 115) && (msX < sX + 120) && (msY > sY + 279) && (msY < sY + 290))
-				PutString2(sX + 115, sY + 279, DEF_SUBSUMMON56E, 255, 255, 255);//
-			else PutString2(sX + 115, sY + 279, DEF_SUBSUMMON56E, 4, 0, 50);//
-		}
-		else PutString2(sX + 115, sY + 279, DEF_SUBSUMMON56E, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 85) && (msX < sX + 120) && (msY > sY + 290) && (msY < sY + 301))
-				PutString2(sX + 85, sY + 290, DEF_SUBSUMMON57A, 255, 255, 255);//
-			else PutString2(sX + 85, sY + 290, DEF_SUBSUMMON57A, 4, 0, 50);//
-		}
-		else PutString2(sX + 85, sY + 290, DEF_SUBSUMMON57A, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 120) && (msX < sX + 125) && (msY > sY + 290) && (msY < sY + 301))
-				PutString2(sX + 120, sY + 290, DEF_SUBSUMMON57E, 255, 255, 255);//
-			else PutString2(sX + 120, sY + 290, DEF_SUBSUMMON57E, 4, 0, 50);//
-		}
-		else PutString2(sX + 120, sY + 290, DEF_SUBSUMMON57E, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 85) && (msX < sX + 125) && (msY > sY + 301) && (msY < sY + 312))
-				PutString2(sX + 85, sY + 301, DEF_SUBSUMMON58A, 255, 255, 255);//
-			else PutString2(sX + 85, sY + 301, DEF_SUBSUMMON58A, 4, 0, 50);//
-		}
-		else PutString2(sX + 85, sY + 301, DEF_SUBSUMMON58A, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 125) && (msX < sX + 130) && (msY > sY + 301) && (msY < sY + 312))
-				PutString2(sX + 125, sY + 301, DEF_SUBSUMMON58E, 255, 255, 255);//
-			else PutString2(sX + 125, sY + 301, DEF_SUBSUMMON58E, 4, 0, 50);//
-		}
-		else PutString2(sX + 125, sY + 301, DEF_SUBSUMMON58E, 65, 65, 65);//
-		/********Helde********/
-		/********Sade********/
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 120) && (msX < sX + 150) && (msY > sY + 81) && (msY < sY + 92))
-				PutString2(sX + 120, sY + 81, DEF_SUBSUMMON59A, 255, 255, 255);//
-			else PutString2(sX + 120, sY + 81, DEF_SUBSUMMON59A, 4, 0, 50);//
-		}
-		else PutString2(sX + 120, sY + 81, DEF_SUBSUMMON59A, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 150) && (msX < sX + 165) && (msY > sY + 81) && (msY < sY + 92))
-				PutString2(sX + 150, sY + 81, DEF_SUBSUMMON59E, 255, 255, 255);//
-			else PutString2(sX + 150, sY + 81, DEF_SUBSUMMON59E, 4, 0, 50);//
-		}
-		else PutString2(sX + 150, sY + 81, DEF_SUBSUMMON59E, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 120) && (msX < sX + 150) && (msY > sY + 92) && (msY < sY + 103))
-				PutString2(sX + 120, sY + 92, DEF_SUBSUMMON60A, 255, 255, 255);//
-			else PutString2(sX + 120, sY + 92, DEF_SUBSUMMON60A, 4, 0, 50);//
-		}
-		else PutString2(sX + 120, sY + 92, DEF_SUBSUMMON60A, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 150) && (msX < sX + 165) && (msY > sY + 92) && (msY < sY + 103))
-				PutString2(sX + 150, sY + 92, DEF_SUBSUMMON60E, 255, 255, 255);//
-			else PutString2(sX + 150, sY + 92, DEF_SUBSUMMON60E, 4, 0, 50);//
-		}
-		else PutString2(sX + 150, sY + 92, DEF_SUBSUMMON60E, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 120) && (msX < sX + 155) && (msY > sY + 103) && (msY < sY + 114))
-				PutString2(sX + 120, sY + 103, DEF_SUBSUMMON61A, 255, 255, 255);//
-			else PutString2(sX + 120, sY + 103, DEF_SUBSUMMON61A, 4, 0, 50);//
-		}
-		else PutString2(sX + 120, sY + 103, DEF_SUBSUMMON61A, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 155) && (msX < sX + 165) && (msY > sY + 103) && (msY < sY + 114))
-				PutString2(sX + 155, sY + 103, DEF_SUBSUMMON61E, 255, 255, 255);//
-			else PutString2(sX + 155, sY + 103, DEF_SUBSUMMON61E, 4, 0, 50);//
-		}
-		else PutString2(sX + 155, sY + 103, DEF_SUBSUMMON61E, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 120) && (msX < sX + 150) && (msY > sY + 114) && (msY < sY + 125))
-				PutString2(sX + 120, sY + 114, DEF_SUBSUMMON62A, 255, 255, 255);//
-			else PutString2(sX + 120, sY + 114, DEF_SUBSUMMON62A, 4, 0, 50);//
-		}
-		else PutString2(sX + 120, sY + 114, DEF_SUBSUMMON62A, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 150) && (msX < sX + 165) && (msY > sY + 114) && (msY < sY + 125))
-				PutString2(sX + 150, sY + 114, DEF_SUBSUMMON62E, 255, 255, 255);//
-			else PutString2(sX + 150, sY + 114, DEF_SUBSUMMON62E, 4, 0, 50);//
-		}
-		else PutString2(sX + 150, sY + 114, DEF_SUBSUMMON62E, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 120) && (msX < sX + 150) && (msY > sY + 125) && (msY < sY + 136))
-				PutString2(sX + 120, sY + 125, DEF_SUBSUMMON63A, 255, 255, 255);//
-			else PutString2(sX + 120, sY + 125, DEF_SUBSUMMON63A, 4, 0, 50);//
-		}
-		else PutString2(sX + 120, sY + 125, DEF_SUBSUMMON63A, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 150) && (msX < sX + 165) && (msY > sY + 125) && (msY < sY + 136))
-				PutString2(sX + 150, sY + 125, DEF_SUBSUMMON63E, 255, 255, 255);//
-			else PutString2(sX + 150, sY + 125, DEF_SUBSUMMON63E, 4, 0, 50);//
-		}
-		else PutString2(sX + 150, sY + 125, DEF_SUBSUMMON63E, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 120) && (msX < sX + 160) && (msY > sY + 136) && (msY < sY + 147))
-				PutString2(sX + 120, sY + 136, DEF_SUBSUMMON64A, 255, 255, 255);//
-			else PutString2(sX + 120, sY + 136, DEF_SUBSUMMON64A, 4, 0, 50);//
-		}
-		else PutString2(sX + 120, sY + 136, DEF_SUBSUMMON64A, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 160) && (msX < sX + 165) && (msY > sY + 136) && (msY < sY + 147))
-				PutString2(sX + 160, sY + 136, DEF_SUBSUMMON64E, 255, 255, 255);//
-			else PutString2(sX + 160, sY + 136, DEF_SUBSUMMON64E, 4, 0, 50);//
-		}
-		else PutString2(sX + 160, sY + 136, DEF_SUBSUMMON64E, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 147) && (msY < sY + 158))
-				PutString2(sX + 120, sY + 147, DEF_SUBSUMMON65, 255, 255, 255);//
-			else PutString2(sX + 120, sY + 147, DEF_SUBSUMMON65, 4, 0, 50);//
-		}
-		else PutString2(sX + 120, sY + 147, DEF_SUBSUMMON65, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 158) && (msY < sY + 169))
-				PutString2(sX + 120, sY + 158, DEF_SUBSUMMON66, 255, 255, 255);//
-			else PutString2(sX + 120, sY + 158, DEF_SUBSUMMON66, 4, 0, 50);//
-		}
-		else PutString2(sX + 120, sY + 158, DEF_SUBSUMMON66, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 169) && (msY < sY + 180))
-				PutString2(sX + 120, sY + 169, DEF_SUBSUMMON67, 255, 255, 255);//
-			else PutString2(sX + 120, sY + 169, DEF_SUBSUMMON67, 4, 0, 50);//
-		}
-		else PutString2(sX + 120, sY + 169, DEF_SUBSUMMON67, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 180) && (msY < sY + 191))
-				PutString2(sX + 120, sY + 180, DEF_SUBSUMMON68, 255, 255, 255);//
-			else PutString2(sX + 120, sY + 180, DEF_SUBSUMMON68, 4, 0, 50);//
-		}
-		else PutString2(sX + 120, sY + 180, DEF_SUBSUMMON68, 65, 65, 65);//
-		/********Sade********/
-		/********Elite********/
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 81) && (msY < sY + 92))
-				PutString2(sX + 175, sY + 81, DEF_SUBSUMMON6, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 81, DEF_SUBSUMMON6, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 81, DEF_SUBSUMMON6, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 92) && (msY < sY + 103))
-				PutString2(sX + 175, sY + 92, DEF_SUBSUMMON7, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 92, DEF_SUBSUMMON7, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 92, DEF_SUBSUMMON7, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 103) && (msY < sY + 114))
-				PutString2(sX + 175, sY + 103, DEF_SUBSUMMON8, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 103, DEF_SUBSUMMON8, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 103, DEF_SUBSUMMON8, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 114) && (msY < sY + 125))
-				PutString2(sX + 175, sY + 114, DEF_SUBSUMMON9, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 114, DEF_SUBSUMMON9, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 114, DEF_SUBSUMMON9, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 125) && (msY < sY + 136))
-				PutString2(sX + 175, sY + 125, DEF_SUBSUMMON10, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 125, DEF_SUBSUMMON10, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 125, DEF_SUBSUMMON10, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 136) && (msY < sY + 147))
-				PutString2(sX + 175, sY + 136, DEF_SUBSUMMON11, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 136, DEF_SUBSUMMON11, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 136, DEF_SUBSUMMON11, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 147) && (msY < sY + 158))
-				PutString2(sX + 175, sY + 147, DEF_SUBSUMMON12, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 147, DEF_SUBSUMMON12, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 147, DEF_SUBSUMMON12, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 158) && (msY < sY + 169))
-				PutString2(sX + 175, sY + 158, DEF_SUBSUMMON13, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 158, DEF_SUBSUMMON13, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 158, DEF_SUBSUMMON13, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 169) && (msY < sY + 180))
-				PutString2(sX + 175, sY + 169, DEF_SUBSUMMON14, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 169, DEF_SUBSUMMON14, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 169, DEF_SUBSUMMON14, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 180) && (msY < sY + 191))
-				PutString2(sX + 175, sY + 180, DEF_SUBSUMMON15, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 180, DEF_SUBSUMMON15, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 180, DEF_SUBSUMMON15, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 191) && (msY < sY + 202))
-				PutString2(sX + 175, sY + 191, DEF_SUBSUMMON16, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 191, DEF_SUBSUMMON16, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 191, DEF_SUBSUMMON16, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 202) && (msY < sY + 213))
-				PutString2(sX + 175, sY + 202, DEF_SUBSUMMON17, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 202, DEF_SUBSUMMON17, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 202, DEF_SUBSUMMON17, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 213) && (msY < sY + 224))
-				PutString2(sX + 175, sY + 213, DEF_SUBSUMMON18, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 213, DEF_SUBSUMMON18, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 213, DEF_SUBSUMMON18, 65, 65, 65);//
-		/********Elite********/
-		/********Boss********/
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 235) && (msY < sY + 246))
-				PutString2(sX + 175, sY + 235, DEF_SUBSUMMON1, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 235, DEF_SUBSUMMON1, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 235, DEF_SUBSUMMON1, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 246) && (msY < sY + 257))
-				PutString2(sX + 175, sY + 246, DEF_SUBSUMMON2, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 246, DEF_SUBSUMMON2, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 246, DEF_SUBSUMMON2, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 257) && (msY < sY + 268))
-				PutString2(sX + 175, sY + 257, DEF_SUBSUMMON3, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 257, DEF_SUBSUMMON3, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 257, DEF_SUBSUMMON3, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 268) && (msY < sY + 279))
-				PutString2(sX + 175, sY + 268, DEF_SUBSUMMON4, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 268, DEF_SUBSUMMON4, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 268, DEF_SUBSUMMON4, 65, 65, 65);//
-		if (m_bCitizen == FALSE)//Verifica si eres Traveler
-		{
-			if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 279) && (msY < sY + 290))
-				PutString2(sX + 175, sY + 279, DEF_SUBSUMMON5, 255, 255, 255);//
-			else PutString2(sX + 175, sY + 279, DEF_SUBSUMMON5, 4, 0, 50);//
-		}
-		else PutString2(sX + 175, sY + 279, DEF_SUBSUMMON5, 65, 65, 65);//
-		/********Boss********/
+		//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+		//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 81) && (msY < sY + 92))
+			PutString2(sX + 30, sY + 81, DEF_SUBSUMMON30, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 81, DEF_SUBSUMMON30, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 81, DEF_SUBSUMMON30, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 92) && (msY < sY + 103))
+			PutString2(sX + 30, sY + 92, DEF_SUBSUMMON31, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 92, DEF_SUBSUMMON31, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 92, DEF_SUBSUMMON31, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 103) && (msY < sY + 114))
+			PutString2(sX + 30, sY + 103, DEF_SUBSUMMON32, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 103, DEF_SUBSUMMON32, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 103, DEF_SUBSUMMON32, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 114) && (msY < sY + 125))
+			PutString2(sX + 30, sY + 114, DEF_SUBSUMMON33, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 114, DEF_SUBSUMMON33, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 114, DEF_SUBSUMMON33, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 125) && (msY < sY + 136))
+			PutString2(sX + 30, sY + 125, DEF_SUBSUMMON34, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 125, DEF_SUBSUMMON34, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 125, DEF_SUBSUMMON34, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 75) && (msY > sY + 136) && (msY < sY + 147))
+			PutString2(sX + 30, sY + 136, DEF_SUBSUMMON35, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 136, DEF_SUBSUMMON35, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 136, DEF_SUBSUMMON35, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 147) && (msY < sY + 158))
+			PutString2(sX + 30, sY + 147, DEF_SUBSUMMON36, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 147, DEF_SUBSUMMON36, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 147, DEF_SUBSUMMON36, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 158) && (msY < sY + 169))
+			PutString2(sX + 30, sY + 158, DEF_SUBSUMMON37, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 158, DEF_SUBSUMMON37, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 158, DEF_SUBSUMMON37, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 169) && (msY < sY + 180))
+			PutString2(sX + 30, sY + 169, DEF_SUBSUMMON38, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 169, DEF_SUBSUMMON38, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 169, DEF_SUBSUMMON38, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 180) && (msY < sY + 191))
+			PutString2(sX + 30, sY + 180, DEF_SUBSUMMON39, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 180, DEF_SUBSUMMON39, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 180, DEF_SUBSUMMON39, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 191) && (msY < sY + 202))
+			PutString2(sX + 30, sY + 191, DEF_SUBSUMMON40, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 191, DEF_SUBSUMMON40, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 191, DEF_SUBSUMMON40, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 202) && (msY < sY + 213))
+			PutString2(sX + 30, sY + 202, DEF_SUBSUMMON41, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 202, DEF_SUBSUMMON41, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 202, DEF_SUBSUMMON41, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 213) && (msY < sY + 224))
+			PutString2(sX + 30, sY + 213, DEF_SUBSUMMON42, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 213, DEF_SUBSUMMON42, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 213, DEF_SUBSUMMON42, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 224) && (msY < sY + 235))
+			PutString2(sX + 30, sY + 224, DEF_SUBSUMMON43, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 224, DEF_SUBSUMMON43, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 224, DEF_SUBSUMMON43, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 235) && (msY < sY + 246))
+			PutString2(sX + 30, sY + 235, DEF_SUBSUMMON44, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 235, DEF_SUBSUMMON44, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 235, DEF_SUBSUMMON44, 65, 65, 65);//
+   /********Common********/
+   /********Misc********/
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 54) && (msY > sY + 257) && (msY < sY + 268))
+			PutString2(sX + 30, sY + 257, DEF_SUBSUMMON45A, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 257, DEF_SUBSUMMON45A, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 257, DEF_SUBSUMMON45A, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 54) && (msX < sX + 68) && (msY > sY + 257) && (msY < sY + 268))
+			PutString2(sX + 54, sY + 257, DEF_SUBSUMMON45E, 255, 255, 255);//
+		else PutString2(sX + 54, sY + 257, DEF_SUBSUMMON45E, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 54, sY + 257, DEF_SUBSUMMON45E, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 68) && (msX < sX + 75) && (msY > sY + 257) && (msY < sY + 268))
+			PutString2(sX + 68, sY + 257, DEF_SUBSUMMON45N, 255, 255, 255);//
+		else PutString2(sX + 68, sY + 257, DEF_SUBSUMMON45N, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 68, sY + 257, DEF_SUBSUMMON45N, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 268) && (msY < sY + 279))
+			PutString2(sX + 30, sY + 268, DEF_SUBSUMMON46, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 268, DEF_SUBSUMMON46, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 268, DEF_SUBSUMMON46, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 279) && (msY < sY + 290))
+			PutString2(sX + 30, sY + 279, DEF_SUBSUMMON47, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 279, DEF_SUBSUMMON47, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 279, DEF_SUBSUMMON47, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 290) && (msY < sY + 301))
+			PutString2(sX + 30, sY + 290, DEF_SUBSUMMON48, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 290, DEF_SUBSUMMON48, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 290, DEF_SUBSUMMON48, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 30) && (msX < sX + 65) && (msY > sY + 301) && (msY < sY + 312))
+			PutString2(sX + 30, sY + 301, DEF_SUBSUMMON49, 255, 255, 255);//
+		else PutString2(sX + 30, sY + 301, DEF_SUBSUMMON49, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 30, sY + 301, DEF_SUBSUMMON49, 65, 65, 65);//
+   /********Misc********/
+   /********Master********/
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 81) && (msY < sY + 92))
+			PutString2(sX + 75, sY + 81, DEF_SUBSUMMON19, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 81, DEF_SUBSUMMON19, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 81, DEF_SUBSUMMON19, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 92) && (msY < sY + 103))
+			PutString2(sX + 75, sY + 92, DEF_SUBSUMMON20, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 92, DEF_SUBSUMMON20, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 92, DEF_SUBSUMMON20, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 103) && (msY < sY + 114))
+			PutString2(sX + 75, sY + 103, DEF_SUBSUMMON21, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 103, DEF_SUBSUMMON21, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 103, DEF_SUBSUMMON21, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 114) && (msY < sY + 125))
+			PutString2(sX + 75, sY + 114, DEF_SUBSUMMON22, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 114, DEF_SUBSUMMON22, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 114, DEF_SUBSUMMON22, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 125) && (msY < sY + 136))
+			PutString2(sX + 75, sY + 125, DEF_SUBSUMMON23, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 125, DEF_SUBSUMMON23, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 125, DEF_SUBSUMMON23, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 136) && (msY < sY + 147))
+			PutString2(sX + 75, sY + 136, DEF_SUBSUMMON24, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 136, DEF_SUBSUMMON24, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 136, DEF_SUBSUMMON24, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 147) && (msY < sY + 158))
+			PutString2(sX + 75, sY + 147, DEF_SUBSUMMON25, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 147, DEF_SUBSUMMON25, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 147, DEF_SUBSUMMON25, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 158) && (msY < sY + 169))
+			PutString2(sX + 75, sY + 158, DEF_SUBSUMMON26, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 158, DEF_SUBSUMMON26, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 158, DEF_SUBSUMMON26, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 169) && (msY < sY + 180))
+			PutString2(sX + 75, sY + 169, DEF_SUBSUMMON27, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 169, DEF_SUBSUMMON27, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 169, DEF_SUBSUMMON27, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 180) && (msY < sY + 191))
+			PutString2(sX + 75, sY + 180, DEF_SUBSUMMON28, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 180, DEF_SUBSUMMON28, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 180, DEF_SUBSUMMON28, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 75) && (msX < sX + 120) && (msY > sY + 191) && (msY < sY + 202))
+			PutString2(sX + 75, sY + 191, DEF_SUBSUMMON29, 255, 255, 255);//
+		else PutString2(sX + 75, sY + 191, DEF_SUBSUMMON29, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 75, sY + 191, DEF_SUBSUMMON29, 65, 65, 65);//
+   /********Master********/
+   /********Helde********/
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 85) && (msX < sX + 115) && (msY > sY + 213) && (msY < sY + 224))
+			PutString2(sX + 85, sY + 213, DEF_SUBSUMMON50A, 255, 255, 255);//
+		else PutString2(sX + 85, sY + 213, DEF_SUBSUMMON50A, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 85, sY + 213, DEF_SUBSUMMON50A, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 115) && (msX < sX + 120) && (msY > sY + 213) && (msY < sY + 224))
+			PutString2(sX + 115, sY + 213, DEF_SUBSUMMON50E, 255, 255, 255);//
+		else PutString2(sX + 115, sY + 213, DEF_SUBSUMMON50E, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 115, sY + 213, DEF_SUBSUMMON50E, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 85) && (msX < sX + 120) && (msY > sY + 224) && (msY < sY + 235))
+			PutString2(sX + 85, sY + 224, DEF_SUBSUMMON51A, 255, 255, 255);//
+		else PutString2(sX + 85, sY + 224, DEF_SUBSUMMON51A, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 85, sY + 224, DEF_SUBSUMMON51A, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 125) && (msY > sY + 224) && (msY < sY + 235))
+			PutString2(sX + 120, sY + 224, DEF_SUBSUMMON51E, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 224, DEF_SUBSUMMON51E, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 224, DEF_SUBSUMMON51E, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 85) && (msX < sX + 125) && (msY > sY + 235) && (msY < sY + 246))
+			PutString2(sX + 85, sY + 235, DEF_SUBSUMMON52A, 255, 255, 255);//
+		else PutString2(sX + 85, sY + 235, DEF_SUBSUMMON52A, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 85, sY + 235, DEF_SUBSUMMON52A, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 125) && (msX < sX + 130) && (msY > sY + 235) && (msY < sY + 246))
+			PutString2(sX + 125, sY + 235, DEF_SUBSUMMON52E, 255, 255, 255);//
+		else PutString2(sX + 125, sY + 235, DEF_SUBSUMMON52E, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 125, sY + 235, DEF_SUBSUMMON52E, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 85) && (msX < sX + 128) && (msY > sY + 246) && (msY < sY + 257))
+			PutString2(sX + 85, sY + 246, DEF_SUBSUMMON53A, 255, 255, 255);//
+		else PutString2(sX + 85, sY + 246, DEF_SUBSUMMON53A, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 85, sY + 246, DEF_SUBSUMMON53A, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 128) && (msX < sX + 133) && (msY > sY + 246) && (msY < sY + 257))
+			PutString2(sX + 128, sY + 246, DEF_SUBSUMMON53E, 255, 255, 255);//
+		else PutString2(sX + 128, sY + 246, DEF_SUBSUMMON53E, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 128, sY + 246, DEF_SUBSUMMON53E, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 85) && (msX < sX + 125) && (msY > sY + 257) && (msY < sY + 268))
+			PutString2(sX + 85, sY + 257, DEF_SUBSUMMON54A, 255, 255, 255);//
+		else PutString2(sX + 85, sY + 257, DEF_SUBSUMMON54A, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 85, sY + 257, DEF_SUBSUMMON54A, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 125) && (msX < sX + 130) && (msY > sY + 257) && (msY < sY + 268))
+			PutString2(sX + 125, sY + 257, DEF_SUBSUMMON54E, 255, 255, 255);//
+		else PutString2(sX + 125, sY + 257, DEF_SUBSUMMON54E, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 125, sY + 257, DEF_SUBSUMMON54E, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 85) && (msX < sX + 124) && (msY > sY + 268) && (msY < sY + 279))
+			PutString2(sX + 85, sY + 268, DEF_SUBSUMMON55A, 255, 255, 255);//
+		else PutString2(sX + 85, sY + 268, DEF_SUBSUMMON55A, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 85, sY + 268, DEF_SUBSUMMON55A, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 124) && (msX < sX + 129) && (msY > sY + 268) && (msY < sY + 279))
+			PutString2(sX + 124, sY + 268, DEF_SUBSUMMON55E, 255, 255, 255);//
+		else PutString2(sX + 124, sY + 268, DEF_SUBSUMMON55E, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 124, sY + 268, DEF_SUBSUMMON55E, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 85) && (msX < sX + 115) && (msY > sY + 279) && (msY < sY + 290))
+			PutString2(sX + 85, sY + 279, DEF_SUBSUMMON56A, 255, 255, 255);//
+		else PutString2(sX + 85, sY + 279, DEF_SUBSUMMON56A, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 85, sY + 279, DEF_SUBSUMMON56A, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 115) && (msX < sX + 120) && (msY > sY + 279) && (msY < sY + 290))
+			PutString2(sX + 115, sY + 279, DEF_SUBSUMMON56E, 255, 255, 255);//
+		else PutString2(sX + 115, sY + 279, DEF_SUBSUMMON56E, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 115, sY + 279, DEF_SUBSUMMON56E, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 85) && (msX < sX + 120) && (msY > sY + 290) && (msY < sY + 301))
+			PutString2(sX + 85, sY + 290, DEF_SUBSUMMON57A, 255, 255, 255);//
+		else PutString2(sX + 85, sY + 290, DEF_SUBSUMMON57A, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 85, sY + 290, DEF_SUBSUMMON57A, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 125) && (msY > sY + 290) && (msY < sY + 301))
+			PutString2(sX + 120, sY + 290, DEF_SUBSUMMON57E, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 290, DEF_SUBSUMMON57E, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 290, DEF_SUBSUMMON57E, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 85) && (msX < sX + 125) && (msY > sY + 301) && (msY < sY + 312))
+			PutString2(sX + 85, sY + 301, DEF_SUBSUMMON58A, 255, 255, 255);//
+		else PutString2(sX + 85, sY + 301, DEF_SUBSUMMON58A, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 85, sY + 301, DEF_SUBSUMMON58A, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 125) && (msX < sX + 130) && (msY > sY + 301) && (msY < sY + 312))
+			PutString2(sX + 125, sY + 301, DEF_SUBSUMMON58E, 255, 255, 255);//
+		else PutString2(sX + 125, sY + 301, DEF_SUBSUMMON58E, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 125, sY + 301, DEF_SUBSUMMON58E, 65, 65, 65);//
+   /********Helde********/
+   /********Sade********/
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 150) && (msY > sY + 81) && (msY < sY + 92))
+			PutString2(sX + 120, sY + 81, DEF_SUBSUMMON59A, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 81, DEF_SUBSUMMON59A, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 81, DEF_SUBSUMMON59A, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 150) && (msX < sX + 165) && (msY > sY + 81) && (msY < sY + 92))
+			PutString2(sX + 150, sY + 81, DEF_SUBSUMMON59E, 255, 255, 255);//
+		else PutString2(sX + 150, sY + 81, DEF_SUBSUMMON59E, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 150, sY + 81, DEF_SUBSUMMON59E, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 150) && (msY > sY + 92) && (msY < sY + 103))
+			PutString2(sX + 120, sY + 92, DEF_SUBSUMMON60A, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 92, DEF_SUBSUMMON60A, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 92, DEF_SUBSUMMON60A, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 150) && (msX < sX + 165) && (msY > sY + 92) && (msY < sY + 103))
+			PutString2(sX + 150, sY + 92, DEF_SUBSUMMON60E, 255, 255, 255);//
+		else PutString2(sX + 150, sY + 92, DEF_SUBSUMMON60E, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 150, sY + 92, DEF_SUBSUMMON60E, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 155) && (msY > sY + 103) && (msY < sY + 114))
+			PutString2(sX + 120, sY + 103, DEF_SUBSUMMON61A, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 103, DEF_SUBSUMMON61A, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 103, DEF_SUBSUMMON61A, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 155) && (msX < sX + 165) && (msY > sY + 103) && (msY < sY + 114))
+			PutString2(sX + 155, sY + 103, DEF_SUBSUMMON61E, 255, 255, 255);//
+		else PutString2(sX + 155, sY + 103, DEF_SUBSUMMON61E, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 155, sY + 103, DEF_SUBSUMMON61E, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 150) && (msY > sY + 114) && (msY < sY + 125))
+			PutString2(sX + 120, sY + 114, DEF_SUBSUMMON62A, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 114, DEF_SUBSUMMON62A, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 114, DEF_SUBSUMMON62A, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 150) && (msX < sX + 165) && (msY > sY + 114) && (msY < sY + 125))
+			PutString2(sX + 150, sY + 114, DEF_SUBSUMMON62E, 255, 255, 255);//
+		else PutString2(sX + 150, sY + 114, DEF_SUBSUMMON62E, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 150, sY + 114, DEF_SUBSUMMON62E, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 150) && (msY > sY + 125) && (msY < sY + 136))
+			PutString2(sX + 120, sY + 125, DEF_SUBSUMMON63A, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 125, DEF_SUBSUMMON63A, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 125, DEF_SUBSUMMON63A, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 150) && (msX < sX + 165) && (msY > sY + 125) && (msY < sY + 136))
+			PutString2(sX + 150, sY + 125, DEF_SUBSUMMON63E, 255, 255, 255);//
+		else PutString2(sX + 150, sY + 125, DEF_SUBSUMMON63E, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 150, sY + 125, DEF_SUBSUMMON63E, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 160) && (msY > sY + 136) && (msY < sY + 147))
+			PutString2(sX + 120, sY + 136, DEF_SUBSUMMON64A, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 136, DEF_SUBSUMMON64A, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 136, DEF_SUBSUMMON64A, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 160) && (msX < sX + 165) && (msY > sY + 136) && (msY < sY + 147))
+			PutString2(sX + 160, sY + 136, DEF_SUBSUMMON64E, 255, 255, 255);//
+		else PutString2(sX + 160, sY + 136, DEF_SUBSUMMON64E, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 160, sY + 136, DEF_SUBSUMMON64E, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 147) && (msY < sY + 158))
+			PutString2(sX + 120, sY + 147, DEF_SUBSUMMON65, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 147, DEF_SUBSUMMON65, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 147, DEF_SUBSUMMON65, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 158) && (msY < sY + 169))
+			PutString2(sX + 120, sY + 158, DEF_SUBSUMMON66, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 158, DEF_SUBSUMMON66, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 158, DEF_SUBSUMMON66, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 169) && (msY < sY + 180))
+			PutString2(sX + 120, sY + 169, DEF_SUBSUMMON67, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 169, DEF_SUBSUMMON67, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 169, DEF_SUBSUMMON67, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 120) && (msX < sX + 165) && (msY > sY + 180) && (msY < sY + 191))
+			PutString2(sX + 120, sY + 180, DEF_SUBSUMMON68, 255, 255, 255);//
+		else PutString2(sX + 120, sY + 180, DEF_SUBSUMMON68, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 120, sY + 180, DEF_SUBSUMMON68, 65, 65, 65);//
+   /********Sade********/
+   /********Elite********/
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 81) && (msY < sY + 92))
+			PutString2(sX + 175, sY + 81, DEF_SUBSUMMON6, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 81, DEF_SUBSUMMON6, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 81, DEF_SUBSUMMON6, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 92) && (msY < sY + 103))
+			PutString2(sX + 175, sY + 92, DEF_SUBSUMMON7, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 92, DEF_SUBSUMMON7, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 92, DEF_SUBSUMMON7, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 103) && (msY < sY + 114))
+			PutString2(sX + 175, sY + 103, DEF_SUBSUMMON8, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 103, DEF_SUBSUMMON8, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 103, DEF_SUBSUMMON8, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 114) && (msY < sY + 125))
+			PutString2(sX + 175, sY + 114, DEF_SUBSUMMON9, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 114, DEF_SUBSUMMON9, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 114, DEF_SUBSUMMON9, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 125) && (msY < sY + 136))
+			PutString2(sX + 175, sY + 125, DEF_SUBSUMMON10, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 125, DEF_SUBSUMMON10, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 125, DEF_SUBSUMMON10, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 136) && (msY < sY + 147))
+			PutString2(sX + 175, sY + 136, DEF_SUBSUMMON11, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 136, DEF_SUBSUMMON11, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 136, DEF_SUBSUMMON11, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 147) && (msY < sY + 158))
+			PutString2(sX + 175, sY + 147, DEF_SUBSUMMON12, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 147, DEF_SUBSUMMON12, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 147, DEF_SUBSUMMON12, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 158) && (msY < sY + 169))
+			PutString2(sX + 175, sY + 158, DEF_SUBSUMMON13, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 158, DEF_SUBSUMMON13, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 158, DEF_SUBSUMMON13, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 169) && (msY < sY + 180))
+			PutString2(sX + 175, sY + 169, DEF_SUBSUMMON14, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 169, DEF_SUBSUMMON14, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 169, DEF_SUBSUMMON14, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 180) && (msY < sY + 191))
+			PutString2(sX + 175, sY + 180, DEF_SUBSUMMON15, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 180, DEF_SUBSUMMON15, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 180, DEF_SUBSUMMON15, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 191) && (msY < sY + 202))
+			PutString2(sX + 175, sY + 191, DEF_SUBSUMMON16, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 191, DEF_SUBSUMMON16, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 191, DEF_SUBSUMMON16, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 202) && (msY < sY + 213))
+			PutString2(sX + 175, sY + 202, DEF_SUBSUMMON17, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 202, DEF_SUBSUMMON17, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 202, DEF_SUBSUMMON17, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 213) && (msY < sY + 224))
+			PutString2(sX + 175, sY + 213, DEF_SUBSUMMON18, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 213, DEF_SUBSUMMON18, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 213, DEF_SUBSUMMON18, 65, 65, 65);//
+   /********Elite********/
+   /********Boss********/
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 235) && (msY < sY + 246))
+			PutString2(sX + 175, sY + 235, DEF_SUBSUMMON1, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 235, DEF_SUBSUMMON1, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 235, DEF_SUBSUMMON1, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 246) && (msY < sY + 257))
+			PutString2(sX + 175, sY + 246, DEF_SUBSUMMON2, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 246, DEF_SUBSUMMON2, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 246, DEF_SUBSUMMON2, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 257) && (msY < sY + 268))
+			PutString2(sX + 175, sY + 257, DEF_SUBSUMMON3, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 257, DEF_SUBSUMMON3, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 257, DEF_SUBSUMMON3, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 268) && (msY < sY + 279))
+			PutString2(sX + 175, sY + 268, DEF_SUBSUMMON4, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 268, DEF_SUBSUMMON4, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 268, DEF_SUBSUMMON4, 65, 65, 65);//
+	//if (m_bCitizen == FALSE)//Verifica si eres Traveler
+	//{
+		if ((msX > sX + 175) && (msX < sX + 210) && (msY > sY + 279) && (msY < sY + 290))
+			PutString2(sX + 175, sY + 279, DEF_SUBSUMMON5, 255, 255, 255);//
+		else PutString2(sX + 175, sY + 279, DEF_SUBSUMMON5, 4, 0, 50);//
+	//}
+	//else PutString2(sX + 175, sY + 279, DEF_SUBSUMMON5, 65, 65, 65);//
+   /********Boss********/
 		break;
 	}
 }
+
 
 void CGame::DrawDialogBox_Shop2(short msX, short msY, short msZ, char cLB) // MORLA 2.4 - Shop2
 {
@@ -17890,12 +18237,6 @@ void CGame::DrawDialogBoxs(short msX, short msY, short msZ, char cLB)
 				break;
 			case 52: //50Cent - Repair All
 				DrawDialogBox_RepairAll(msX, msY, msZ); //@@@
-				break;
-			case 53: //50Cent - GMPanel - Teleport
-				DrawDialogBox_GMPanel_Teleport(msX, msY);
-				break;
-			case 54: //50Cent - GMPanel - Summon
-				DrawDialogBox_GMPanel_Summon(msX, msY);
 				break;
 			case 56: //50Cent - GMPanel
 				DrawDialogBox_GMPanel(msX, msY);

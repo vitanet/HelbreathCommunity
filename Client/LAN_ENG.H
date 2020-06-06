@@ -2001,20 +2001,19 @@
 
 
 //50Cent - GMPanel
+#define DEF_WARNING "*No deberias estar viendo esto. D:<*"
+
 #define DEF_CATEG_STATUSTOOLS "GM Status & Tools"
 #define DEF_CATEG_SERVERMANIP "Server Manipulation"
 #define DEF_CATEG_PLAYERMANIP "Player Manipulation"
-// Centuu : Player Panel
-#define DEF_CATEG_CHARCOMMANDS "Player Commands"
-#define DEF_CATEG_TRADEEKLIST  "Trade Ek List"
 
 #define DEF_ENABLE				"Enable Admin Cmd"
 
 #define DEF_KILL				"Kill Cmd"
 #define DEF_REVIVE				"Revive Cmd"
 #define DEF_CLOSECON			"Close Con. Cmd"
-#define DEF_SEND				"Check Ek"
-#define DEF_GOTO				"Paralise All"
+#define DEF_SEND				"Send Cmd"
+#define DEF_GOTO				"GoTo Cmd"
 #define DEF_SUMMONALL			"Summon All Cmd"
 #define DEF_SUMMONPLAYER		"Summon Player Cmd"
 #define DEF_SHUTUP				"Shutup Cmd"
@@ -2030,48 +2029,48 @@
 #define DEF_OBSERVERMODE_ON		"Obs. Mode On/"
 #define DEF_OBSERVERMODE_OFF	"Off"
 #define DEF_TELEPORT			"Teleport"
-#define DEF_GMATTACK			"Admin Attack Cmd"
+#define DEF_POLYMORPH			"Polymorph Cmd"
 #define DEF_INVI_ON				"Invi On/"
 #define DEF_INVI_OFF			"Off"
-#define DEF_EVENT_ON			"Event On/"
-#define DEF_EVENT_OFF			"Off"
+#define DEF_ZERK_ON				"Zerk On/"
+#define DEF_ZERK_OFF			"Off"
 #define DEF_SUMMON				"Summon Cmd"
 #define DEF_CREATEITEM			"Create Item Cmd"
-#define DEF_EVENTTP_OFF			"Event Tp Cmd"
+#define DEF_STORM				"Storm Cmd"
+
 
 #define DEF_SUBTP_CATE_ARE	"Ares"
 #define DEF_SUBTP_CATE_ELV	"Elv"
 #define DEF_SUBTP_CATE_DUN	"Dungeon"
 #define DEF_SUBTP_CATE_EVE	"Event"
 #define DEF_SUBTP_CATE_OTH	"Other"
-
 //Ares&Elv:
-//#define DEF_SUBTP1	"Farm"//arefarm//elvfarm
-//#define DEF_SUBTP2	"Brk. 1"//arebrk11//arebrk11
-//#define DEF_SUBTP3	"Brk. 1"//arebrk12//arebrk12
-//#define DEF_SUBTP4	"Brk. 2"//arebrk21//arebrk21
-//#define DEF_SUBTP5	"Brk. 2"//arebrk22//arebrk22
-//#define DEF_SUBTP6	"Dungeon"//aresdend1//elvined1
+#define DEF_SUBTP1	"Farm"//arefarm//elvfarm
+#define DEF_SUBTP2	"Brk. 1"//arebrk11//arebrk11
+#define DEF_SUBTP3	"Brk. 1"//arebrk12//arebrk12
+#define DEF_SUBTP4	"Brk. 2"//arebrk21//arebrk21
+#define DEF_SUBTP5	"Brk. 2"//arebrk22//arebrk22
+#define DEF_SUBTP6	"Dungeon"//aresdend1//elvined1
 #define DEF_SUBTP7	"City"//aresden//elvine
-//#define DEF_SUBTP8	"BS"//bsmith_1//bsmith_2
+#define DEF_SUBTP8	"BS"//bsmith_1//bsmith_2
 #define DEF_SUBTP9	"CH"//cityhall_1//cityhall_2
-//#define DEF_SUBTP10	"GH"//gldhall_1//gldhall_2
+#define DEF_SUBTP10	"GH"//gldhall_1//gldhall_2
 #define DEF_SUBTP11	"Shop"//gshop_1//gshop_2
-//#define DEF_SUBTP12	"M.Tower"//wzdtwr_1//wzdtwr_2
+#define DEF_SUBTP12	"M.Tower"//wzdtwr_1//wzdtwr_2
 #define DEF_SUBTP13	"WH"//wrhus_1//wrhus_2
-//#define DEF_SUBTP14	"WHF"//arewrhus//elvwrhus
-//#define DEF_SUBTP15	"Church"//cath_1//cath_2
-//#define DEF_SUBTP18	"R.Zone"//resurr1//resurr2
-//#define DEF_SUBTP19	"Garden"//areuni//elvuni
+#define DEF_SUBTP14	"WHF"//arewrhus//elvwrhus
+#define DEF_SUBTP15	"Church"//cath_1//cath_2
+#define DEF_SUBTP18	"R.Zone"//resurr1//resurr2
+#define DEF_SUBTP19	"Garden"//areuni//elvuni
 #define DEF_SUBTP20	"Jail"//arejail//elvjail
-//#define DEF_SUBTP21	"Co.Hall"//CmdHall_1//CmdHall_2
+#define DEF_SUBTP21	"Co.Hall"//CmdHall_1//CmdHall_2
 
 //Dungeons:
-//#define DEF_SUBTP22	"Dun.L2"//dglv2
-//#define DEF_SUBTP23	"Dun.L3"//dglv3
+#define DEF_SUBTP22	"Dun.L2"//dglv2
+#define DEF_SUBTP23	"Dun.L3"//dglv3
 #define DEF_SUBTP24	"Dun.L4"//dglv4
-//#define DEF_SUBTP25	"ML Mine"//middled1x
-//#define DEF_SUBTP26	"ML Dun."//midddlen
+#define DEF_SUBTP25	"ML Mine"//middled1x
+#define DEF_SUBTP26	"ML Dun."//midddlen
 #define DEF_SUBTP27	"Dru.City"//druncncity
 #define DEF_SUBTP28	"Inf. A"//inferniaA
 #define DEF_SUBTP29	"Inf. B"//inferniaB
@@ -2097,17 +2096,15 @@
 
 //Others:
 #define DEF_SUBTP47	"Beg.Zone"//default
-//#define DEF_SUBTP48	"R.High."//huntzone1
-//#define DEF_SUBTP49	"E.Field"//huntzone2
-//#define DEF_SUBTP50	"D.Valley"//huntzone3
-//#define DEF_SUBTP51	"S.Wood"//huntzone4
-//#define DEF_SUBTP52	"TOH.1"//toh1
-//#define DEF_SUBTP53	"TOH.2"//toh2
+#define DEF_SUBTP48	"R.High."//huntzone1
+#define DEF_SUBTP49	"E.Field"//huntzone2
+#define DEF_SUBTP50	"D.Valley"//huntzone3
+#define DEF_SUBTP51	"S.Wood"//huntzone4
+#define DEF_SUBTP52	"TOH.1"//toh1
+#define DEF_SUBTP53	"TOH.2"//toh2
 #define DEF_SUBTP54	"TOH.3"//toh3
-//#define DEF_SUBTP55	"PL"//2ndmiddle
+#define DEF_SUBTP55	"PL"//2ndmiddle
 #define DEF_SUBTP56	"Proce."//procella
-#define DEF_SUBTP57	"DeathMach."//procella
-//#define DEF_SUBTP58	"Massacre."//procella
 
 #define DEF_SUBSUMMON_CATE_BOSS "Boss"
 #define DEF_SUBSUMMON1	"Aba"
@@ -2170,7 +2167,7 @@
 #define DEF_SUBSUMMON48	"Cat"
 #define DEF_SUBSUMMON49	"Crop"
 
-#define DEF_SUBSUMMON_CATE_HELDE "Helde"
+#define DEF_SUBSUMMON_CATE_HELDE "Held."
 #define DEF_SUBSUMMON50A	"CP.A/"
 #define DEF_SUBSUMMON50E	"E"
 #define DEF_SUBSUMMON51A	"Sor.A/"
@@ -2207,21 +2204,6 @@
 #define DEF_SUBSUMMON66		"GHKnight"
 #define DEF_SUBSUMMON67		"TKnight"
 #define DEF_SUBSUMMON68		"BGolem"
-
-// Centuu : Player Panel
-#define DEF_CATEG_CHARCOMMANDS "Player Commands"
-#define DEF_CATEG_TRADEEKLIST  "Trade Ek List"
-
-#define DEF_CLICK "Under Construction"
-
-#define DEF_TPEVENT "Tp Event Cmd"
-#define DEF_REP_MAS "Rep Cmd + / "
-#define DEF_REP_MENOS "-"
-#define DEF_WHISP "Whisp Cmd"
-#define DEF_CHANGE "Change City Cmd"
-#define DEF_SUMMONG "Summon Guild Cmd"
-#define DEF_DKSET "Dk Set Cmd"
-#define DEF_SAVE "Save Cmd"
 
 
 #define	NOTIFYMSG_ITEMTRADE	"You bought a %s with %d Points." // MORLA 2.4 - Cuando compra un item por eks y dgs
