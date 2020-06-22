@@ -24010,7 +24010,7 @@ char CGame::cGetNextMoveArea(short sOwnerH, short sX, short sY, short dstX, shor
 	cDir = m_Misc.cGetNextMoveDir(dX, dY, iResX, iResY);
 
 	if (cTurn == 0) {
-		for (i = cDir; i <= cDir + 7; i++) {
+		for (i = cDir; i <= cDir + 2; i++) {
 			cTmpDir = i;
 			if (cTmpDir != 0) {
 				if (cTmpDir > 8) cTmpDir -= 8;
@@ -24023,7 +24023,7 @@ char CGame::cGetNextMoveArea(short sOwnerH, short sX, short sY, short dstX, shor
 		}
 	}
 	else if (cTurn == 1) {
-		for (i = cDir; i >= cDir - 7; i--) {
+		for (i = cDir; i >= cDir - 2; i--) {
 			cTmpDir = i;
 			if (cTmpDir < 1) cTmpDir += 8;
 			aX = _tmp_cTmpDirX[cTmpDir];
@@ -24053,7 +24053,7 @@ char CGame::cGetNextMoveDir(short sX, short sY, short dstX, short dstY, char cMa
 	cDir = m_Misc.cGetNextMoveDir(dX, dY, iResX, iResY);
 	
 	if (cTurn == 0) {
-		for (i = cDir; i <= cDir + 7; i++) {
+		for (i = cDir; i <= cDir + 2; i++) {
 			cTmpDir = i;
 			if (cTmpDir > 8) cTmpDir -= 8;
 			aX = _tmp_cTmpDirX[cTmpDir];
@@ -24062,7 +24062,7 @@ char CGame::cGetNextMoveDir(short sX, short sY, short dstX, short dstY, char cMa
 		}
 	}
 	else if (cTurn == 1) {
-		for (i = cDir; i >= cDir - 7; i--) {
+		for (i = cDir; i >= cDir - 2; i--) {
 			cTmpDir = i;
 			if (cTmpDir < 1) cTmpDir += 8;
 			aX = _tmp_cTmpDirX[cTmpDir];
