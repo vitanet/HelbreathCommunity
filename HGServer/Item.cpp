@@ -5124,8 +5124,8 @@ void CGame::ReqRepairItemCofirmHandler(int iClientH, char cItemID, char* pString
 {
 	short    sRemainLife, sPrice;
 	char* cp, cItemCategory, cData[120];
-	double   d1, d2, d3, dV1, dV2, dV3;
-	DWORD* dwp, dwGoldCount, dwSWEType, dwSWEValue;
+	double   d1, d2, d3;
+	DWORD* dwp, dwGoldCount;
 	WORD* wp;
 	int      iRet, iGoldWeight;
 

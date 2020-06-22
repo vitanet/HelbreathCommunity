@@ -2740,8 +2740,6 @@ bool CGame::SpecialWeapon_DS(int iClientH)
 
 void CGame::CalcExpStock(int iClientH)
 {
-	BOOL bIsLevelUp;
-	class CItem* pItem;
 
 	if (m_pClientList[iClientH] == NULL) return;
 	if (m_pClientList[iClientH]->m_bIsInitComplete == FALSE) return;
@@ -8215,8 +8213,7 @@ void CGame::ClientKilledHandler(int iClientH, int iAttackerH, char cAttackerType
  short sAttackerWeapon;
  int   * ip, i, iExH;
  BOOL  bIsSAattacked = FALSE;
- char KilledMessage1[45], KilledMessage2[45], KilledMessage3[45], KilledMessage4[45], KilledMessage5[45], KilledMessage6[45];
- int Killedi, KMRand;
+ int Killedi;
 	
 	if (m_pClientList[iClientH] == NULL) return;
 	if (m_pClientList[iClientH]->m_bIsInitComplete == FALSE) return;
@@ -17643,15 +17640,13 @@ void CGame::AdminOrder_CheckRep(int iClientH, char *pData,DWORD dwMsgSize)
 
 void CGame::AdminOrder_Pushplayer(int iClientH, char * pData, DWORD dwMsgSize)
 {
-//Push Player- By:ACiDx  Monday , September 2004
-	//Teleports a Defined Player to Defined Destination
-	// /push playername mapname sX dX
- char   seps[] = "= \t\n";
- char   * token, cBuff[256], cMapName[21], cName[11], cTargetName[11];
- class  CStrTok * pStrTok;
- int dX, dY;
-  int i;
- BOOL   bFlag = FALSE;
+	char   seps[] = "= \t\n";
+	char   * token, cBuff[256], cMapName[21], cTargetName[11];
+	class  CStrTok * pStrTok;
+	int dX, dY;
+	int i;
+	BOOL bFlag = FALSE;
+
 	ZeroMemory(cTargetName, sizeof(cTargetName));
 	ZeroMemory(cBuff, sizeof(cBuff));
 	ZeroMemory(cMapName, sizeof(cMapName));
@@ -22947,7 +22942,7 @@ void CGame::DeathmatchGame()
 void CGame::AdminOrder_Revive(int iClientH, char * pData, DWORD dwMsgSize)
 {
 	char   seps[] = "= \t\n";
-	char   * token, cName[11], cTargetName[11], cBuff[256], cNpcName[21], cNpcWaypoint[11];
+	char   * token, cTargetName[11], cBuff[256], cNpcName[21], cNpcWaypoint[11];
 	class  CStrTok * pStrTok;
 	register int i;
 	int sAttackerWeapon, sDamage, sHP;
