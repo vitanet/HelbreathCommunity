@@ -604,7 +604,8 @@ private:
 	BOOL _bGetIsStringIsNumber(char* pStr);
 	BOOL _bInitItemAttr(class CItem* pItem, char* pItemName);
 	BOOL bReadProgramConfigFile(char* cFn);
-	BOOL bReadProgramConfigFile2(char* cFn);
+	//LifeX Dont use this anymore
+	//BOOL bReadProgramConfigFile2(char* cFn);
 
 	void InitPlayerData(int iClientH, char* pData, DWORD dwSize);
 	void ResponsePlayerDataHandler(char* pData, DWORD dwSize);

@@ -591,11 +591,12 @@ BOOL CGame::bInit()
 		PutLogList("(!!!) CRITICAL ERROR! Cannot execute server! GServer.cfg file contents error!");
 		return FALSE;	
 	}
-	if (bReadProgramConfigFile2("..\\GameConfigs\\Server.cfg") == FALSE) {
+	//LifeX Dont use this anymore
+	/*if (bReadProgramConfigFile2("..\\GameConfigs\\Server.cfg") == FALSE) {
 		PutLogList(" ");
 		PutLogList("(!!!) CRITICAL ERROR! Cannot execute server! Server.cfg file contents error!");
 		return FALSE;
-	}
+	}*/
 	/****MODIFICATION****/
 	if (bReadSettingsConfigFile("..\\GameConfigs\\Settings.cfg") == FALSE) {
 		PutLogList(" ");
@@ -3260,20 +3261,315 @@ void CGame::ResponsePlayerDataHandler(char * pData, DWORD dwSize)
 	PutLogList(cTxt);
 }
 
-/*********************************************************************************************************************
-**  BOOL CGame::bReadProgramConfigFile(char * cFn)																	**
-**  DESCRIPTION			:: function that reads GServer.cfg															**
-**  LAST_UPDATED		:: March 17, 2005; 12:09 PM; Hypnotoad														**
-**	RETURN_VALUE		:: void																						**
-**  NOTES				::	- with DMZ walkaround is internet and lan option necissary?								**
-**							- does dns work? (unable to test)														**
-**	MODIFICATION		::	- game-server-internal-address (internal lan ip address)								**
-**							- game-server-external-address (DNS Server)												**
-**							- game-server-mode (if inside LAN put "LAN" if not put "INTERNET" (without quotes)		**
-**							- gate-server-dns (if set to "true" put in alphabetical dns address)					**
-**							- log-server-dns (both dns options benefitial if ip is dynamic and server is no-ip.com	**
-**********************************************************************************************************************/
 BOOL CGame::bReadProgramConfigFile(char * cFn)
+{
+	FILE * pFile;
+	HANDLE hFile;
+	DWORD  dwFileSize;
+	char * cp, *token, cReadMode, cTxt[120], cGSMode[16] = "";
+	char seps[] = "= \t\n";
+	class CStrTok * pStrTok;
+	bool bGateDNS = false;
+	bool bLogDNS = false;
+
+	cReadMode = 0;
+
+	hFile = CreateFile(cFn, GENERIC_READ, NULL, NULL, OPEN_EXISTING, NULL, NULL);
+	dwFileSize = GetFileSize(hFile, NULL);
+	if (hFile != INVALID_HANDLE_VALUE) CloseHandle(hFile);
+
+	pFile = fopen(cFn, "rt");
+	if (pFile == NULL)
+	{
+		return FALSE;
+	}
+	else {
+		PutLogList("(!) Reading configuration file...");
+		cp = new char[dwFileSize + 2];
+		ZeroMemory(cp, dwFileSize + 2);
+		fread(cp, dwFileSize, 1, pFile);
+
+		pStrTok = new class CStrTok(cp, seps);
+		token = pStrTok->pGet();
+		//token = strtok( cp, seps );   
+		while (token != NULL) {
+
+			if (cReadMode != 0) {
+				switch (cReadMode) {
+				case 1:
+					ZeroMemory(m_cServerName, sizeof(m_cServerName));
+					if (strlen(token) > 10)
+					{
+						wsprintf(cTxt, "(!!!) Game server name(%s) must within 10 chars!", token);
+						PutLogList(cTxt);
+						return FALSE;
+					}
+					strcpy(m_cServerName, token);
+					wsprintf(cTxt, "(*) Game server name : %s", m_cServerName);
+					PutLogList(cTxt);
+					cReadMode = 0;
+					break;
+
+				case 2:
+					ZeroMemory(m_cGameServerAddr, sizeof(m_cGameServerAddr));
+					char ServerAddr[50];
+					::gethostname(ServerAddr, 50);
+					struct hostent *pHostEnt;
+					pHostEnt = ::gethostbyname(ServerAddr);
+					if (pHostEnt != NULL) {
+						wsprintf(ServerAddr, "%d.%d.%d.%d",
+							(pHostEnt->h_addr_list[0][0] & 0x00ff),
+							(pHostEnt->h_addr_list[0][1] & 0x00ff),
+							(pHostEnt->h_addr_list[0][2] & 0x00ff),
+							(pHostEnt->h_addr_list[0][3] & 0x00ff));
+					}
+					strcpy(m_cGameServerAddr, ServerAddr);
+
+					wsprintf(cTxt, "(*) Game server address : %s", m_cGameServerAddr);
+					PutLogList(cTxt);
+
+					m_iGameServerPort = atoi(token);
+					wsprintf(cTxt, "(*) Game server port : %d", m_iGameServerPort);
+					PutLogList(cTxt);
+					cReadMode = 0;
+					break;
+
+				case 3:
+					ZeroMemory(m_cLogServerAddr, sizeof(m_cLogServerAddr));
+
+					if (bLogDNS == true)
+					{
+						PutLogList(cTxt);
+						char *cAddress = token;
+						char cDnsResult[40];
+						struct hostent *host_entry;
+
+						host_entry = gethostbyname(cAddress);
+						if (host_entry == NULL) {
+							wsprintf(cTxt, "(!)DNS (%s) failed", token);
+							PutLogList(cTxt);
+							return FALSE;
+						}
+
+						wsprintf(cDnsResult, "%d.%d.%d.%d",
+							(pHostEnt->h_addr_list[0][0] & 0x00ff),
+							(pHostEnt->h_addr_list[0][1] & 0x00ff),
+							(pHostEnt->h_addr_list[0][2] & 0x00ff),
+							(pHostEnt->h_addr_list[0][3] & 0x00ff));
+
+						wsprintf(cTxt, "(!)DNS from (%s) to (%s) success!", token, cDnsResult);
+						PutLogList(cTxt);
+						strcpy(m_cLogServerAddr, cDnsResult);
+						wsprintf(cTxt, "(*) Log server address : %s", m_cLogServerAddr);
+						PutLogList(cTxt);
+						cReadMode = 0;
+						break;
+					}
+
+					if (strlen(token) > 20)
+					{
+						wsprintf(cTxt, "(!!!) Log server address(%s) must within 20 chars!", token);
+						PutLogList(cTxt);
+						return FALSE;
+					}
+					strcpy(m_cLogServerAddr, token);
+					wsprintf(cTxt, "(*) Log server address : %s", m_cLogServerAddr);
+					PutLogList(cTxt);
+					cReadMode = 0;
+					break;
+
+
+				case 4:
+					m_iLogServerPort = atoi(token);
+					wsprintf(cTxt, "(*) Log server port : %d", m_iLogServerPort);
+					PutLogList(cTxt);
+					cReadMode = 0;
+					break;
+
+				case 5:
+					if (strlen(token) > 10)
+					{
+						wsprintf(cTxt, "(!!!) CRITICAL ERROR! Map name(%s) must within 10 chars!", token);
+						PutLogList(cTxt);
+						return FALSE;
+					}
+					if (_bRegisterMap(token) == FALSE) {
+						return FALSE;
+					}
+					cReadMode = 0;
+					break;
+
+				case 6:
+					ZeroMemory(m_cGateServerAddr, sizeof(m_cGateServerAddr));
+					if (bGateDNS == true)
+					{
+						PutLogList(cTxt);
+						char *cAddress = token;
+						char cDnsResult[40];
+						struct hostent *host_entry;
+
+						host_entry = gethostbyname(cAddress);
+						if (host_entry == NULL) {
+							wsprintf(cTxt, "(!)DNS (%s) failed", token);
+							PutLogList(cTxt);
+							return FALSE;
+						}
+
+						wsprintf(cDnsResult, "%d.%d.%d.%d",
+							(host_entry->h_addr_list[0][0] & 0x00ff),
+							(host_entry->h_addr_list[0][1] & 0x00ff),
+							(host_entry->h_addr_list[0][2] & 0x00ff),
+							(host_entry->h_addr_list[0][3] & 0x00ff));
+
+						wsprintf(cTxt, "(!)DNS from (%s) to (%s) success!", token, cDnsResult);
+						PutLogList(cTxt);
+						strcpy(m_cGateServerAddr, cDnsResult);
+						wsprintf(cTxt, "(*) Gate server address : %s", m_cGateServerAddr);
+						PutLogList(cTxt);
+						cReadMode = 0;
+						break;
+					}
+
+					if (strlen(token) > 20)
+					{
+						wsprintf(cTxt, "(!!!) Gate server address(%s) must within 20 chars!", token);
+						PutLogList(cTxt);
+						return FALSE;
+					}
+					strcpy(m_cGateServerAddr, token);
+					wsprintf(cTxt, "(*) Gate server address : %s", m_cGateServerAddr);
+					PutLogList(cTxt);
+					cReadMode = 0;
+					break;
+					break;
+
+				case 7:
+					m_iGateServerPort = atoi(token);
+					wsprintf(cTxt, "(*) Gate server port : %d", m_iGateServerPort);
+					PutLogList(cTxt);
+					cReadMode = 0;
+					break;
+
+				case 8:
+					ZeroMemory(m_cGameServerAddrInternal, sizeof(m_cGameServerAddrInternal));
+					if (strlen(token) > 15)
+					{
+						wsprintf(cTxt, "(!!!) Internal (LAN) Game server address(%s) must within 15 chars!", token);
+						PutLogList(cTxt);
+						return FALSE;
+					}
+					strcpy(m_cGameServerAddrInternal, token);
+					wsprintf(cTxt, "(*) Internal (LAN) Game server address : %s", m_cGameServerAddrInternal);
+					PutLogList(cTxt);
+					cReadMode = 0;
+					break;
+
+
+				case 9:
+					ZeroMemory(m_cGameServerAddrExternal, sizeof(m_cGameServerAddrExternal));
+					if (strlen(token) > 15)
+					{
+						wsprintf(cTxt, "(!!!) External (Internet) Game server address(%s) must within 15 chars!", token);
+						PutLogList(cTxt);
+						return FALSE;
+					}
+					strcpy(m_cGameServerAddrExternal, token);
+					wsprintf(cTxt, "(*) External (Internet) Game server address : %s", m_cGameServerAddrExternal);
+					PutLogList(cTxt);
+					cReadMode = 0;
+					break;
+
+				case 10:
+					ZeroMemory(m_cGameServerAddr, sizeof(m_cGameServerAddr));
+					if (strlen(token) > 15)
+					{
+						wsprintf(cTxt, "(!!!) Game server address(%s) must within 15 chars!", token);
+						PutLogList(cTxt);
+						return FALSE;
+					}
+					strcpy(m_cGameServerAddr, token);
+					wsprintf(cTxt, "(*) Game server address : %s", m_cGameServerAddr);
+					PutLogList(cTxt);
+					cReadMode = 0;
+					break;
+
+				case 11:
+					if ((memcmp(token, "lan", 3) == 0) || (memcmp(token, "LAN", 3) == 0))
+					{
+						m_iGameServerMode = 1;
+						memcpy(cGSMode, "LAN", 3);
+					}
+					if ((memcmp(token, "internet", 3) == 0) || (memcmp(token, "INTERNET", 3) == 0))
+					{
+						m_iGameServerMode = 2;
+						memcpy(cGSMode, "INTERNET", 8);
+					}
+					if (m_iGameServerMode == 0)
+					{
+						wsprintf(cTxt, "(!!!) Game server mode(%s) must be either LAN/lan/INTERNET/internet", token);
+						PutLogList(cTxt);
+						return FALSE;
+					}
+					wsprintf(cTxt, "(*) Game server mode : %s", cGSMode);
+					PutLogList(cTxt);
+					cReadMode = 0;
+					break;
+
+				case 12:
+					if (memcmp(token, "true", 4) == 0) {
+						bGateDNS = TRUE;
+					}
+					else bGateDNS = FALSE;
+					wsprintf(cTxt, "Gate DNS is set to %i", bGateDNS);
+					PutLogList(cTxt);
+					cReadMode = 0;
+					break;
+
+				case 13:
+					if (memcmp(token, "true", 4) == 0) {
+						bLogDNS = TRUE;
+					}
+					else bLogDNS = FALSE;
+					wsprintf(cTxt, "Log DNS is set to %i", bLogDNS);
+					PutLogList(cTxt);
+					cReadMode = 0;
+					break;
+				}
+			}
+			else
+			{
+				if (memcmp(token, "game-server-name", 16) == 0)			cReadMode = 1;
+				if (memcmp(token, "game-server-port", 16) == 0)			cReadMode = 2;
+				if (memcmp(token, "log-server-address", 18) == 0)		cReadMode = 3;
+				if (memcmp(token, "internal-log-server-port", 24) == 0) cReadMode = 4;
+				if (memcmp(token, "game-server-map", 15) == 0)			cReadMode = 5;
+				if (memcmp(token, "gate-server-address", 19) == 0)		cReadMode = 6;
+				if (memcmp(token, "gate-server-port", 16) == 0)			cReadMode = 7;
+				if (memcmp(token, "game-server-internal-address", 28) == 0)			cReadMode = 8;
+				if (memcmp(token, "game-server-external-address", 28) == 0)			cReadMode = 9;
+				if (memcmp(token, "game-server-address", 19) == 0)		cReadMode = 10;
+				if (memcmp(token, "game-server-mode", 16) == 0)			cReadMode = 11;
+				if (memcmp(token, "gate-server-dns", 15) == 0) cReadMode = 12;
+				if (memcmp(token, "log-server-dns", 14) == 0) cReadMode = 13;
+			}
+			token = pStrTok->pGet();
+		}
+		delete pStrTok;
+		delete cp;
+	}
+	if (pFile != NULL) fclose(pFile);
+
+	if (m_iGameServerMode == 0) {
+		wsprintf(cTxt, "(!!!) Game server mode cannot be empty. It must be either LAN/lan/INTERNET/internet", token);
+		PutLogList(cTxt);
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
+//LifeX Dont use this anymore
+/*BOOL CGame::bReadProgramConfigFile(char * cFn)
 {	
 	FILE * pFile;
 	HANDLE hFile;
@@ -3354,6 +3650,7 @@ BOOL CGame::bReadProgramConfigFile(char * cFn)
 	return FALSE;
 }
 
+//LifeX Dont use this anymore
 BOOL CGame::bReadProgramConfigFile2(char* cFn)
 {
 	FILE* pFile;
@@ -3520,7 +3817,7 @@ BOOL CGame::bReadProgramConfigFile2(char* cFn)
 	}
 
 	return FALSE;
-}
+}*/
 
 /*********************************************************************************************************************
 **  BOOL CGame::_bDecodePlayerDatafileContents(int iClientH, char * pData, DWORD dwSize)							**

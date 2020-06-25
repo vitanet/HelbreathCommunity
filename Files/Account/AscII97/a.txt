@@ -1,0 +1,33 @@
+Account-generated:  Time(2020/6/25/10/3)  IP(192.168.1.155)
+
+[NAME]
+
+account-name     = a
+
+[PASSWORD]
+
+account-password = a
+
+[ACCOUNT-STATUS]
+
+account-valid-time = 0
+account-valid-date = 2020 7 2
+
+account-change-password = 2020 6 25
+[ETC]
+
+account-Gender   =  
+account-Age      = 
+account-Birth-Year =  
+account-Birth-Month =  
+account-Birth-Day   =  
+account-RealName = 
+account-SSN      = -
+account-Email    = a@yahoo.com
+account-Quiz     = asda
+account-Answer   = asd
+account-created-by = 
+
+[CHARACTERS]
+account-character  = LifeX
+
