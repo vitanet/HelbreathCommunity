@@ -662,7 +662,7 @@ BOOL CGame::bInit(HWND hWnd, HINSTANCE hInst, char * pCmdLine)
 	m_Misc.ColorTransfer(m_DDraw.m_cPixelFormat, RGB(    75,     10,     10),  &m_wR[14], &m_wG[14], &m_wB[14]); // Red
 	m_Misc.ColorTransfer(m_DDraw.m_cPixelFormat, RGB(  0x30,   0x30,   0x30),  &m_wR[15], &m_wG[15], &m_wB[15]); // Black
 
-
+	GetIPByDNS();
 
 	_LoadGameMsgTextContents();
 	ZeroMemory(m_cWorldServerName, sizeof(m_cWorldServerName));
@@ -3567,6 +3567,7 @@ void CGame::UpdateScreen_OnLoading(bool bActive)
 		}
 		break;
 	}
+	GetIPByDNS();
 }
 /*********************************************************************************************************************
 ** 	void CGame::UpdateScreen_OnLoading_Progress()																	**
@@ -22915,9 +22916,9 @@ void CGame::UpdateScreen_OnCreateNewAccount()
 				return;
 			}
 			m_pLSock = new class XSocket(m_hWnd, DEF_SOCKETBLOCKLIMIT);
+			GetIPByDNS();
 			m_pLSock->bConnect(m_cLogServerAddr, m_iLogServerPort, WM_USER_LOGSOCKETEVENT);
 			m_pLSock->bInitBufferSize(30000);
-
 			ChangeGameMode(DEF_GAMEMODE_ONCONNECTING);
 			m_dwConnectMode = MSGID_REQUEST_CREATENEWACCOUNT;
 			ZeroMemory(m_cMsg, sizeof(m_cMsg));
@@ -22985,6 +22986,7 @@ void CGame::UpdateScreen_OnCreateNewAccount()
 			}
 
 			m_pLSock = new class XSocket(m_hWnd, DEF_SOCKETBLOCKLIMIT);
+			GetIPByDNS();
 			m_pLSock->bConnect(m_cLogServerAddr, m_iLogServerPort, WM_USER_LOGSOCKETEVENT);
 			m_pLSock->bInitBufferSize(30000);
 			ChangeGameMode(DEF_GAMEMODE_ONCONNECTING);

@@ -430,23 +430,20 @@ int CGame::__iSearchForQuest(int iClientH, int iWho, int* pQuestType, int* pMode
 		SFQ_SKIP:;
 		}
 
-	// iIndex°³ ¸¸Å­ÀÇ Á¶°Ç¿¡ ¸¸Á·ÇÏ´Â Äù½ºÆ®¸¦ Ã£¾Ò´Ù. ±× Áß¿¡¼­ ·£´ýÇÏ°Ô 1°³¸¦ ¼±ÅÃÇÑ´Ù.
 	if (iIndex == 0) return -1;
 	iQuest = (iDice(1, iIndex)) - 1;
 	iQuestIndex = iQuestList[iQuest];
-	// Äù½ºÆ® ÀÎµ¦½º 
 	iReward = iDice(1, 3);
-	*pMode = m_pQuestConfigList[iQuestIndex]->m_iResponseMode;					// Äù½ºÆ® ÀÀ´ä ¸ðµå 
-	*pRewardType = m_pQuestConfigList[iQuestIndex]->m_iRewardType[iReward];	// Äù½ºÆ® »óÇ° Á¾·ù 
-	// SNOOPY: Added a trap for item non existing on the server...
+	*pMode = m_pQuestConfigList[iQuestIndex]->m_iResponseMode;					
+	*pRewardType = m_pQuestConfigList[iQuestIndex]->m_iRewardType[iReward];
 	if (m_pItemConfigList[m_pQuestConfigList[iQuestIndex]->m_iRewardType[iReward]] == NULL)
 	{
 		*pRewardAmount = -1; // Replaces by Experience				
 	}
-	else *pRewardAmount = m_pQuestConfigList[iQuestIndex]->m_iRewardAmount[iReward];	// Äù½ºÆ® »óÇ° °¹¼ö 
-	*pContribution = m_pQuestConfigList[iQuestIndex]->m_iContribution;			// Äù½ºÆ® ÇØ°á½Ã ¿Ã¶ó°¡´Â °øÇåµµ 
+	else *pRewardAmount = m_pQuestConfigList[iQuestIndex]->m_iRewardAmount[iReward];	
+	*pContribution = m_pQuestConfigList[iQuestIndex]->m_iContribution;			
 
-	strcpy(pTargetName, m_pQuestConfigList[iQuestIndex]->m_cTargetName);			// Äù½ºÆ® ¸Ê ÀÌ¸§ ¼ö·Ï 
+	strcpy(pTargetName, m_pQuestConfigList[iQuestIndex]->m_cTargetName);
 	*pX = m_pQuestConfigList[iQuestIndex]->m_sX;
 	*pY = m_pQuestConfigList[iQuestIndex]->m_sY;
 	*pRange = m_pQuestConfigList[iQuestIndex]->m_iRange;
