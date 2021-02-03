@@ -23381,17 +23381,12 @@ void CGame::OnKeyUp(WPARAM wParam)
 		m_bCtrlPressed = FALSE;
 		break;
 
-	case 65://'A'
-		
+	case 65://'A'		
 		break;
 
-	case 81://'Q'
-		if( ( m_bCtrlPressed == TRUE ) && ( m_cGameMode == DEF_GAMEMODE_ONMAINGAME ) )
-		{
-			if (m_bIsDialogEnabled[56] == FALSE)
-				EnableDialogBox(56, NULL, NULL, NULL);
-			else DisableDialogBox(56);
-		}
+	case 67: // 'C' //LifeX Add Criticals
+		if (m_bCtrlPressed && m_cGameMode == DEF_GAMEMODE_ONMAINGAME && (!m_bInputStatus))
+			bSendCommand(DEF_LIFEX_1, 0, 0, 0, 0, 0, NULL, 0);
 		break;
 
 	case 69://'E'
@@ -23410,6 +23405,71 @@ void CGame::OnKeyUp(WPARAM wParam)
 		}
 		break;
 
+	case 68://'D'
+		if (m_bCtrlPressed == TRUE && m_cGameMode == DEF_GAMEMODE_ONMAINGAME && (!m_bInputStatus))
+		{
+			m_cDetailLevel++;
+			if (m_cDetailLevel > 2) m_cDetailLevel = 0;
+			switch (m_cDetailLevel) {
+			case 0:
+				AddEventList(NOTIFY_MSG_DETAIL_LEVEL_LOW, 10);
+				break;
+			case 1:
+				AddEventList(NOTIFY_MSG_DETAIL_LEVEL_MEDIUM, 10);
+				break;
+			case 2:
+				AddEventList(NOTIFY_MSG_DETAIL_LEVEL_HIGH, 10);
+				break;
+			}
+		}
+		break;
+
+	case 70: //'F'
+		if (m_bCtrlPressed && m_cGameMode == DEF_GAMEMODE_ONMAINGAME && (!m_bInputStatus))
+		{
+			if (m_bIsDialogEnabled[43] == FALSE)
+			{
+				EnableDialogBox(43, NULL, NULL, NULL);
+				char buf[1024]; int konieclinii; unsigned long linie = 0;
+				FILE * f = fopen("contents\\FriendList.txt", "rt");
+				if (f == NULL) break; // Centuu: si el archivo no existe, crash
+				else
+				{
+					m_iTotalFriends = 0;
+					while (fgets(buf, 1024, f)) {
+						konieclinii = 0;
+						int i = strlen(buf);
+						if (i > 0 && buf[--i] == '\n') {
+							buf[i] = 0; // kasujemy znak konca linii
+							konieclinii = 1;
+							linie++;
+						}
+						if (linie - 1 < 13) {
+							strcpy(m_cFriends[linie - 1], buf);
+							m_iTotalFriends++;
+						}
+					}
+					if (m_iTotalFriends > 12) m_iTotalFriends = 12;
+					fclose(f);
+				}
+			}
+			else DisableDialogBox(43);
+		}
+		break;
+
+	case 72: // 'H' // Snoopy: Mimics VK_F1
+		if (m_bCtrlPressed && m_cGameMode == DEF_GAMEMODE_ONMAINGAME && (!m_bInputStatus))
+		{
+			if (m_bIsDialogEnabled[35] == FALSE)
+				EnableDialogBox(35, NULL, NULL, NULL);
+			else
+			{
+				DisableDialogBox(35);
+				DisableDialogBox(18);
+			}
+		}
+		break;
+
 	case 79://'O'
 		if( ( m_bCtrlPressed == TRUE ) && ( m_cGameMode == DEF_GAMEMODE_ONMAINGAME ) )
 		{	if (m_bIsDialogEnabled[60] == FALSE)
@@ -23422,62 +23482,16 @@ void CGame::OnKeyUp(WPARAM wParam)
 		}	}
 		break;
 
-	case 68://'D'
-		if (m_bCtrlPressed == TRUE && m_cGameMode == DEF_GAMEMODE_ONMAINGAME && (!m_bInputStatus) )
-		{	m_cDetailLevel++;
-			if( m_cDetailLevel > 2 ) m_cDetailLevel = 0;
-			switch( m_cDetailLevel ) {
-			case 0:
-				AddEventList( NOTIFY_MSG_DETAIL_LEVEL_LOW, 10 );
-				break;
-			case 1:
-				AddEventList( NOTIFY_MSG_DETAIL_LEVEL_MEDIUM, 10 );
-				break;
-			case 2:
-				AddEventList( NOTIFY_MSG_DETAIL_LEVEL_HIGH, 10 );
-				break;
-		}	}
+	case 81://'Q'
+		if ((m_bCtrlPressed == TRUE) && (m_cGameMode == DEF_GAMEMODE_ONMAINGAME))
+		{
+			if (m_bIsDialogEnabled[56] == FALSE)
+				EnableDialogBox(56, NULL, NULL, NULL);
+			else DisableDialogBox(56);
+		}
 		break;
 
-	case 70: //'F'
-		if (m_bCtrlPressed && m_cGameMode == DEF_GAMEMODE_ONMAINGAME && (!m_bInputStatus) )
-		{	if (m_bIsDialogEnabled[43] == FALSE)
-			{	EnableDialogBox(43, NULL, NULL, NULL);
-				char buf[1024]; int konieclinii; unsigned long linie = 0;
-				FILE * f = fopen("contents\\FriendList.txt", "rt");
-				if (f == NULL) break; // Centuu: si el archivo no existe, crash
-				else
-				{
-					m_iTotalFriends = 0;
-					while(fgets(buf, 1024, f)) {
-						konieclinii = 0;
-						int i = strlen(buf);
-						if (i > 0 && buf[--i] == '\n') {
-							buf[i] = 0; // kasujemy znak konca linii
-							konieclinii = 1;
-							linie++;
-						}
-						if (linie-1 < 13) {
-							strcpy(m_cFriends[linie-1], buf);
-							m_iTotalFriends++;
-						}
-					}
-					if (m_iTotalFriends > 12) m_iTotalFriends = 12;
-					fclose(f);
-				}
-			}else DisableDialogBox(43);
-		} 
-		break;
-
-	case 72: // 'H' // Snoopy: Mimics VK_F1
-		if (m_bCtrlPressed && m_cGameMode == DEF_GAMEMODE_ONMAINGAME && (!m_bInputStatus) )
-		{	if (m_bIsDialogEnabled[35] == FALSE)
-				EnableDialogBox(35, NULL, NULL, NULL);
-			else
-			{	DisableDialogBox(35);
-				DisableDialogBox(18);
-		}	}
-		break;
+	
 
 	case 87: // 'W' // Snoopy: mimics VK_F11 Togles transparency
 		if (m_bCtrlPressed && m_cGameMode == DEF_GAMEMODE_ONMAINGAME && (!m_bInputStatus) )

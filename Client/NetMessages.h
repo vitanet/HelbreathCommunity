@@ -607,9 +607,5 @@
 
 #define MSGID_PARTYOPERATION						0x3C00123A
 
-
-
-
-
-
-
+//LifeX New Stuffs
+#define DEF_LIFEX_1					0x0FC970B1 //LifeX Add Criticals

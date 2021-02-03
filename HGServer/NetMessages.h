@@ -15,8 +15,6 @@
 #define DEF_NOTIFY_ANGEL_FAILED					0x0BF4 // Failed receiving an Angel pandent
 #define DEF_NOTIFY_ANGEL_RECEIVED				0x0BF5 // "You have received the Tutelary Angel"
 
-
-
 //News Addons - ZeroEoyPnk
 #define DEF_SEND_PARTYCOORDS				0x1F07
 #define DEF_SEND_PARTYHP					0x1F08
@@ -647,3 +645,6 @@
 // Ressurection
 #define DEF_REQUEST_RESURRECTPLAYER_NO				0x0FC94215
 #define DEF_REQUEST_RESURRECTPLAYER_YES				0x0FC94214
+
+//LifeX New Stuffs
+#define DEF_LIFEX_1					0x0FC970B1 //LifeX Add Criticals

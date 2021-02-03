@@ -7537,15 +7537,15 @@ int CGame::iClientMotion_Attack_Handler(int iClientH, short sX, short sY, short 
 
 void CGame::MsgProcess()
 {
- char   * pData, cFrom, cKey;
- DWORD    dwMsgSize, * dwpMsgID;
- WORD   * wpMsgType, * wp;
- int      i, iClientH;
- char   m_msgBuff[100];
+	char   * pData, cFrom, cKey;
+	DWORD    dwMsgSize, * dwpMsgID;
+	WORD   * wpMsgType, * wp;
+	int      i, iClientH;
+	char   m_msgBuff[100];
 
- char *cp, cData[120];
-DWORD dwTime = timeGetTime();
-DWORD * dwp, dwTimeRcv;
+	 char *cp, cData[120];
+	DWORD dwTime = timeGetTime();
+	DWORD * dwp, dwTimeRcv;
 	char cBuffer[256];
 	int iRet;
 
@@ -7811,6 +7811,12 @@ DWORD * dwp, dwTimeRcv;
 
 			dwpMsgID = (DWORD *)(pData + DEF_INDEX4_MSGID);
 			switch (*dwpMsgID) { // 84148741
+
+			//LifeX Add Criticals
+			case DEF_LIFEX_1:
+				if (m_pClientList[iClientH] == NULL) break;
+					GetCrits(iClientH);
+				break;
 
 			case MSGID_REQUEST_ONLINE:
 				

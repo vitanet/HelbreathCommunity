@@ -1092,6 +1092,9 @@ private:
 
 	//LifeX Fix Revive 14/10/2019
 	void AdminOrder_Revive(int iClientH, char * pData, DWORD dwMsgSize);
+
+	//LifeX Add Criticals
+	void GetCrits(int iClientH);
 };
 
 #endif // !defined(AFX_GAME_H__C3D29FC5_755B_11D2_A8E6_00001C7030A6__INCLUDED_)
