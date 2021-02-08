@@ -22208,59 +22208,107 @@ void CGame::RequestTeleportHandler(int iClientH, char * pData, char * cMapName, 
 		return;
 	}
 	else {
-		switch (pData[0]) {
-		case '0':
-		case '1':
+		switch (pData[0])
+		{
+			//LifeX Fix Recall Portal Bug
+			case '0':
 			ZeroMemory(cTempMapName, sizeof(cTempMapName));
-			if (m_pClientList[iClientH]->m_cSide == 0) { 
-				strcpy(cTempMapName, "default"); 
+			if (memcmp(m_pClientList[iClientH]->m_cLocation, "NONE", 4) == 0)
+			{
+				strcpy(cTempMapName, "default");
 			}
-			else if (m_pClientList[iClientH]->m_iLevel > 80) {
-				if (m_pClientList[iClientH]->m_cSide == 1) {
-					strcpy(cTempMapName, "aresden");
-				}
-				else {
-					strcpy(cTempMapName, "elvine");
-				}
+			else if (memcmp(m_pClientList[iClientH]->m_cLocation, "arehunter", 9) == 0)
+			{
+				strcpy(cTempMapName, "aresden");
 			}
-			else if (m_pClientList[iClientH]->m_cSide == 1) {
-				strcpy(cTempMapName, "arefarm");
+			else if (memcmp(m_pClientList[iClientH]->m_cLocation, "elvhunter", 9) == 0) {
+				strcpy(cTempMapName, "elvine");
 			}
-			else {
-				strcpy(cTempMapName, "elvfarm");
-			}
+			else strcpy(cTempMapName, m_pClientList[iClientH]->m_cLocation);
+
+			// Crusade
 			if ((strcmp(m_pClientList[iClientH]->m_cLockedMapName, "NONE") != 0) && (m_pClientList[iClientH]->m_iLockedMapTime > 0)) {
 				bIsLockedMapNotify = TRUE;
 				ZeroMemory(cTempMapName, sizeof(cTempMapName));
 				strcpy(cTempMapName, m_pClientList[iClientH]->m_cLockedMapName);
 			}
-			for (i = 0; i < DEF_MAXMAPS; i++) {
-				if ((m_pMapList[i] != NULL) && (memcmp(m_pMapList[i]->m_cName, cTempMapName, 10) == 0)) {
-					
-					short playerCoordX = m_pClientList[iClientH]->m_sX;
-					short playerCoordY = m_pClientList[iClientH]->m_sY;
 
-					GetMapInitialPoint(i, &m_pClientList[iClientH]->m_sX, &m_pClientList[iClientH]->m_sY, m_pClientList[iClientH]->m_cLocation);
+			for (i = 0; i < DEF_MAXMAPS; i++)
+				if (m_pMapList[i] != NULL) {
+					if (memcmp(m_pMapList[i]->m_cName, cTempMapName, 10) == 0) {
+						GetMapInitialPoint(i, &m_pClientList[iClientH]->m_sX, &m_pClientList[iClientH]->m_sY, m_pClientList[iClientH]->m_cLocation);
 
-					if (playerCoordX == m_pClientList[iClientH]->m_sX && playerCoordY == m_pClientList[iClientH]->m_sY)
-					{
-						RequestTeleportHandler(iClientH, "1");
-						return;
+						m_pClientList[iClientH]->m_cMapIndex = i;
+						ZeroMemory(m_pClientList[iClientH]->m_cMapName, sizeof(m_pClientList[iClientH]->m_cMapName));
+						memcpy(m_pClientList[iClientH]->m_cMapName, cTempMapName, 10);
+						goto RTH_NEXTSTEP;
 					}
-
-					m_pClientList[iClientH]->m_cMapIndex = i;
-					ZeroMemory(m_pClientList[iClientH]->m_cMapName, sizeof(m_pClientList[iClientH]->m_cMapName));
-					memcpy(m_pClientList[iClientH]->m_cMapName, m_pMapList[i]->m_cName, 10);
-					goto RTH_NEXTSTEP;
 				}
-			}
-			m_pClientList[iClientH]->m_sX   = -1;
-			m_pClientList[iClientH]->m_sY   = -1;
+
+			m_pClientList[iClientH]->m_sX = -1;
+			m_pClientList[iClientH]->m_sY = -1;
+
 			ZeroMemory(m_pClientList[iClientH]->m_cMapName, sizeof(m_pClientList[iClientH]->m_cMapName));
 			memcpy(m_pClientList[iClientH]->m_cMapName, cTempMapName, 10);
-			SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_MAGICEFFECTOFF, DEF_MAGICTYPE_CONFUSE, m_pClientList[iClientH]->m_cMagicEffectStatus[DEF_MAGICTYPE_CONFUSE], NULL, NULL);
-			SetSlateFlag(iClientH, DEF_NOTIFY_SLATECLEAR, FALSE);	
-			bSendMsgToLS(MSGID_REQUEST_SAVEPLAYERDATA_REPLY, iClientH, FALSE, FALSE);
+
+			SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_MAGICEFFECTOFF, DEF_MAGICTYPE_CONFUSE,
+				m_pClientList[iClientH]->m_cMagicEffectStatus[DEF_MAGICTYPE_CONFUSE], NULL, NULL);
+			SetSlateFlag(iClientH, DEF_NOTIFY_SLATECLEAR, FALSE);
+
+			bSendMsgToLS(MSGID_REQUEST_SAVEPLAYERDATA_REPLY, iClientH, FALSE);
+
+			m_pClientList[iClientH]->m_bIsOnServerChange = TRUE;
+			m_pClientList[iClientH]->m_bIsOnWaitingProcess = TRUE;
+			return;
+
+		case '1':
+			ZeroMemory(cTempMapName, sizeof(cTempMapName));
+			if (memcmp(m_pClientList[iClientH]->m_cLocation, "NONE", 4) == 0) {
+				strcpy(cTempMapName, "default");
+			}
+			else {
+				if (m_pClientList[iClientH]->m_iLevel > 80)
+					if (memcmp(m_pClientList[iClientH]->m_cLocation, "are", 3) == 0)
+						strcpy(cTempMapName, "aresden");
+					else strcpy(cTempMapName, "elvine");
+				else {
+					if (memcmp(m_pClientList[iClientH]->m_cLocation, "are", 3) == 0)
+						strcpy(cTempMapName, "aresden");
+					else strcpy(cTempMapName, "elvine");
+				}
+			}
+			// Crusade
+			if ((strcmp(m_pClientList[iClientH]->m_cLockedMapName, "NONE") != 0) && (m_pClientList[iClientH]->m_iLockedMapTime > 0))
+			{
+				bIsLockedMapNotify = TRUE;
+				ZeroMemory(cTempMapName, sizeof(cTempMapName));
+				strcpy(cTempMapName, m_pClientList[iClientH]->m_cLockedMapName);
+			}
+
+			for (i = 0; i < DEF_MAXMAPS; i++)
+				if (m_pMapList[i] != NULL)
+				{
+					if (memcmp(m_pMapList[i]->m_cName, cTempMapName, 10) == 0) {
+						GetMapInitialPoint(i, &m_pClientList[iClientH]->m_sX, &m_pClientList[iClientH]->m_sY, m_pClientList[iClientH]->m_cLocation);
+
+						m_pClientList[iClientH]->m_cMapIndex = i;
+						ZeroMemory(m_pClientList[iClientH]->m_cMapName, sizeof(m_pClientList[iClientH]->m_cMapName));
+						memcpy(m_pClientList[iClientH]->m_cMapName, m_pMapList[i]->m_cName, 10);
+						goto RTH_NEXTSTEP;
+					}
+				}
+
+			m_pClientList[iClientH]->m_sX = -1;
+			m_pClientList[iClientH]->m_sY = -1;
+
+			ZeroMemory(m_pClientList[iClientH]->m_cMapName, sizeof(m_pClientList[iClientH]->m_cMapName));
+			memcpy(m_pClientList[iClientH]->m_cMapName, cTempMapName, 10);
+
+			SendNotifyMsg(NULL, iClientH, DEF_NOTIFY_MAGICEFFECTOFF, DEF_MAGICTYPE_CONFUSE,
+				m_pClientList[iClientH]->m_cMagicEffectStatus[DEF_MAGICTYPE_CONFUSE], NULL, NULL);
+			SetSlateFlag(iClientH, DEF_NOTIFY_SLATECLEAR, FALSE);
+
+			bSendMsgToLS(MSGID_REQUEST_SAVEPLAYERDATA_REPLY, iClientH, FALSE);
 			m_pClientList[iClientH]->m_bIsOnServerChange = TRUE;
 			m_pClientList[iClientH]->m_bIsOnWaitingProcess = TRUE;
 			return;
