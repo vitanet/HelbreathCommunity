@@ -5458,15 +5458,10 @@ void CGame::InitPlayerCharacteristics(char * pData)
 	m_iCharisma = *ip;
 	cp += 4;
 
-	// CLEROTH - LU
+	//LifeX Fix 3 stats Upon Login 10/02
 	ip = (int *)cp;
-	m_iLU_Point = *ip;//*wp - 3;
-	//cp += 7; // 2 + 5
+	m_iLU_Point = *ip - 3;
 	cp += 4;
-
-	/*ip   = (int *)cp;
-	m_iExp = *ip;
-	cp += 4;*/
 
 	lp = (unsigned long long *)cp;
 	m_iExp = *lp;
