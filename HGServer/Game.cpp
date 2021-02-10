@@ -1338,7 +1338,7 @@ void CGame::RequestInitDataHandler(int iClientH, char * pData, char cKey, BOOL b
  DWORD * dwp;
  WORD  * wp;
  char  * cp, cPlayerName[11], cTxt[120], cPoints;
- int   * ip, i, iTotalItemA, iTotalItemB, iSize, iRet;
+ int   * ip, i, iTotalItemA, iTotalItemB, iSize, iRet, iStats; //LifeX Fix 3 stats Upon Login 10/02
  SYSTEMTIME SysTime;
  char  * pBuffer = NULL;
  int iMapSide, iMapSide2;
@@ -1424,7 +1424,11 @@ void CGame::RequestInitDataHandler(int iClientH, char * pData, char cKey, BOOL b
 	*ip  = m_pClientList[iClientH]->m_iCharisma;
 	cp  += 4;
 //54
-	ip = (int *)cp; 
+	//LifeX Fix 3 stats Upon Login 10/02
+	iStats = (m_pClientList[iClientH]->m_iStr + m_pClientList[iClientH]->m_iDex + m_pClientList[iClientH]->m_iVit +
+		m_pClientList[iClientH]->m_iInt + m_pClientList[iClientH]->m_iMag + m_pClientList[iClientH]->m_iCharisma);
+	m_pClientList[iClientH]->m_iLU_Pool = (m_pClientList[iClientH]->m_iLevel * 3) - (iStats - 70);
+	ip = (int *)cp;
 	*ip = m_pClientList[iClientH]->m_iLU_Pool;
 	cp += 4;
 //56
